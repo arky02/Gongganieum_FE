@@ -5,11 +5,11 @@ export default function Document() {
   return (
     <Html lang='kr'>
       <Head>
-        <script
-          async
+        <Script
+          strategy='beforeInteractive'
           type='text/javascript'
-          src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NAVER_MAP_CLIENT_ID}`}
-        ></script>
+          src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NAVER_MAP_CLIENT_ID}&submodules=geocoder&callback=initMap`}
+        ></Script>
       </Head>
       <body>
         <Main />
