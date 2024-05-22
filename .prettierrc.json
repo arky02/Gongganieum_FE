@@ -1,0 +1,22 @@
+{
+  "tabWidth": 2,
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "importOrder": [
+    "^@/hooks/(.*)$",
+    "^@/store/(.*)$",
+    "^@/utils/(.*)$",
+    "^@/apis/(.*)$",
+    "^@/types/(.*)$",
+    "^@/pages/(.*)$",
+    "^@/components/(.*)$",
+    "^@/styles/(.*)$",
+    "^@/public/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSortSpecifiers": true,
+  "plugins": [
+    "@trivago/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss"
+  ]
+}
