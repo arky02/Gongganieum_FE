@@ -4,7 +4,7 @@ const MapPage = () => {
   const initMap = () => {
     const map = new window.naver.maps.Map('map', {
       // center: new naver.maps.LatLng(37.3595704, 127.105399),
-      zoom: 10,
+      zoom: 11,
       zoomControl: true,
       zoomControlOptions: {
         position: naver.maps.Position.TOP_RIGHT,
