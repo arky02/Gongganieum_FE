@@ -2,16 +2,17 @@ import { POPUP_MOCK_DATA } from 'mock/popup';
 import { ChangeEvent, useEffect, useState } from 'react';
 import useKakaoMap from 'hooks/useKakaoMap';
 
-// import { searchAddress } from 'utils/searchAddress';
-
 const MapPage = () => {
+  const [map, setMap] = useState<any>();
+
   const initMap = () => {
     const mapContainer = document.getElementById('map');
     const mapOption = {
-      center: new window.kakao.maps.LatLng(37.54, 126.9786567),
+      center: new window.kakao.maps.LatLng(37.53, 126.9786567),
       level: 7,
     };
     const map = new window.kakao.maps.Map(mapContainer, mapOption);
+    setMap(map);
 
     const geocoder = new window.kakao.maps.services.Geocoder();
 
@@ -33,20 +34,36 @@ const MapPage = () => {
 
   const [address, setAddress] = useState('');
 
-  const onAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
     setAddress(e.target.value);
   };
 
-  const [coords, setCoords] = useState<any[]>([]);
+  const handleClick = () => {
+    if (!map) {
+      return;
+    }
 
-  const getAddress = () => {};
+    const placeService = new window.kakao.maps.services.Places();
+
+    placeService.keywordSearch(address, (data: any, status: any) => {
+      if (status === window.kakao.maps.services.Status.OK) {
+        const bounds = new window.kakao.maps.LatLngBounds();
+
+        for (let i = 0; i < data.length; i++) {
+          bounds.extend(new window.kakao.maps.LatLng(data[i].y, data[i].x));
+        }
+
+        map.setBounds(bounds);
+      }
+    });
+  };
 
   return (
     <>
       <div className='relative h-screen w-screen'>
         <div className='fixed left-0 top-0 z-floating h-44 w-240 bg-green-700 p-8'>
-          <input onChange={onAddressChange} className='h-full' />
-          <button onClick={getAddress} className='ml-4 h-full w-40 bg-red-500'>
+          <input onChange={handleAddressChange} className='h-full' />
+          <button onClick={handleClick} className='ml-4 h-full w-40 bg-red-500'>
             검색
           </button>
         </div>
