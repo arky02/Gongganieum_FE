@@ -1,4 +1,4 @@
-import { POPUP_MOCK_DATA } from 'mock/popup';
+import { POPUP_MOCK_DATA, PopupType } from 'mock/popup';
 import { ChangeEvent, useEffect, useState } from 'react';
 import useKakaoMap from 'hooks/useKakaoMap';
 
@@ -6,28 +6,47 @@ const MapPage = () => {
   const [map, setMap] = useState<any>();
 
   const initMap = () => {
-    const mapContainer = document.getElementById('map');
-    const mapOption = {
-      center: new window.kakao.maps.LatLng(37.53, 126.9786567),
-      level: 7,
-    };
-    const map = new window.kakao.maps.Map(mapContainer, mapOption);
-    setMap(map);
+    window.kakao?.maps?.load(() => {
+      const mapContainer = document.getElementById('map');
+      const mapOption = {
+        center: new window.kakao.maps.LatLng(37.53, 126.9786567),
+        level: 7,
+      };
+      const map = new window.kakao.maps.Map(mapContainer, mapOption);
+      setMap(map);
 
-    const geocoder = new window.kakao.maps.services.Geocoder();
+      const geocoder = new window.kakao.maps.services.Geocoder();
 
-    POPUP_MOCK_DATA.forEach((data) => {
-      geocoder.addressSearch(data.address, (result: any, status: any) => {
-        if (status === window.kakao.maps.services.Status.OK) {
-          const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
-
-          const marker = new window.kakao.maps.Marker({
-            map: map,
-            position: coords,
-          });
-          marker.setMap(map);
-        }
+      const clusterer = new window.kakao.maps.MarkerClusterer({
+        map,
+        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+        minLevel: 10, // 클러스터 할 최소 지도 레벨
       });
+
+      const addMarker = (data: PopupType) => {
+        console.log(data);
+        geocoder.addressSearch(data.address, (result: any, status: any) => {
+          if (status === window.kakao.maps.services.Status.OK) {
+            const coord = new window.kakao.maps.LatLng(
+              result[0].y,
+              result[0].x,
+            );
+            console.log(coord);
+
+            const marker = new window.kakao.maps.Marker({
+              map,
+              position: coord,
+            });
+
+            marker.setMap(map);
+            clusterer.addMarker(marker);
+          }
+        });
+      };
+
+      for (let i = 0; i < POPUP_MOCK_DATA.length; i++) {
+        addMarker(POPUP_MOCK_DATA[i]);
+      }
     });
   };
   useKakaoMap({ callbackFn: initMap });

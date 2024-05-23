@@ -1,3 +1,9 @@
+export interface PopupType {
+  name: string;
+  date: string;
+  address: string;
+}
+
 export const POPUP_MOCK_DATA = [
   {
     name: '서울국제소싱페어',
