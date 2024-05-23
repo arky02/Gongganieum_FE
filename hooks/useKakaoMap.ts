@@ -1,6 +1,11 @@
 import { useEffect } from 'react';
 
-const useKakaoMap = () => {
+interface Props {
+  callbackFn?: () => void;
+  deps?: any[];
+}
+
+const useKakaoMap = ({ callbackFn, deps = [] }: Props) => {
   useEffect(() => {
     const mapScript = document.createElement('script');
 
@@ -10,16 +15,13 @@ const useKakaoMap = () => {
     document.head.appendChild(mapScript);
 
     const onLoadKakaoMap = () => {
-      window.kakao.maps.load(() => {
-        const mapContainer = document.getElementById('map');
-        const mapOption = {
-          center: new window.kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-          level: 3, // 지도의 확대 레벨
-        };
-        new window.kakao.maps.Map(mapContainer, mapOption);
-      });
+      window.kakao.maps.load(callbackFn);
     };
     mapScript.addEventListener('load', onLoadKakaoMap);
+
+    return () => {
+      mapScript.removeEventListener('load', onLoadKakaoMap);
+    };
   }, []);
 };
 

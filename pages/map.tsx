@@ -5,7 +5,16 @@ import useKakaoMap from 'hooks/useKakaoMap';
 // import { searchAddress } from 'utils/searchAddress';
 
 const MapPage = () => {
-  useKakaoMap();
+  const initMap = () => {
+    const mapContainer = document.getElementById('map');
+    const mapOption = {
+      center: new window.kakao.maps.LatLng(37.54, 126.9786567),
+      level: 7,
+    };
+    new window.kakao.maps.Map(mapContainer, mapOption);
+  };
+  useKakaoMap({ callbackFn: initMap });
+
   const [address, setAddress] = useState('');
 
   const onAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
