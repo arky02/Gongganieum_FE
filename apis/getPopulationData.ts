@@ -9,5 +9,5 @@ export const getPopulationData = async (
 ) => {
   const URL = `http://openapi.seoul.go.kr:8088/${SECRET_KEY}/xml/citydata_ppltn/${startIndex}/${endIndex}/${areaName}`;
   const response = await axios.get(URL);
-  return response;
+  return response.data;
 };

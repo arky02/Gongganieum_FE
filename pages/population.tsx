@@ -11,9 +11,13 @@ const Population = () => {
     setSearchValue(e.target.value);
   };
 
+  const getData = async () => {
+    const result = await getPopulationData(searchValue); // 리스폰스 (xml 데이터)
+    console.log(result);
+  };
+
   useEffect(() => {
-    const response = getPopulationData(searchValue);
-    console.log(response);
+    getData();
   }, [debouncedSearchText]);
 
   return (
