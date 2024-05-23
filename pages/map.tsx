@@ -11,7 +11,23 @@ const MapPage = () => {
       center: new window.kakao.maps.LatLng(37.54, 126.9786567),
       level: 7,
     };
-    new window.kakao.maps.Map(mapContainer, mapOption);
+    const map = new window.kakao.maps.Map(mapContainer, mapOption);
+
+    const geocoder = new window.kakao.maps.services.Geocoder();
+
+    POPUP_MOCK_DATA.forEach((data) => {
+      geocoder.addressSearch(data.address, (result: any, status: any) => {
+        if (status === window.kakao.maps.services.Status.OK) {
+          const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+
+          const marker = new window.kakao.maps.Marker({
+            map: map,
+            position: coords,
+          });
+          marker.setMap(map);
+        }
+      });
+    });
   };
   useKakaoMap({ callbackFn: initMap });
 
