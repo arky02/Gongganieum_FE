@@ -1,3 +1,4 @@
+import { SIGU } from 'constants/regions';
 import { POPUP_MOCK_DATA, PopupType } from 'mock/popup';
 import { ChangeEvent, useEffect, useState } from 'react';
 import useKakaoMap from 'hooks/useKakaoMap';
@@ -16,7 +17,7 @@ const MapPage = () => {
       setMap(map);
 
       const geocoder = new window.kakao.maps.services.Geocoder();
-      const markers: any[] = [];
+      const buildingMarkers: any[] = [];
 
       const addBuildingMarker = (data: PopupType, isLast: boolean) => {
         geocoder.addressSearch(data.address, (result: any, status: any) => {
@@ -30,23 +31,20 @@ const MapPage = () => {
               map,
               position: coord,
             });
-            markers.push(marker);
+            buildingMarkers.push(marker);
             marker.setMap(null);
 
             if (isLast) {
               window.kakao.maps.event.addListener(map, 'zoom_changed', () => {
-                console.log(map.getLevel());
                 const zoomLevel = map.getLevel();
 
                 if (zoomLevel <= 6) {
-                  markers.forEach((marker) => {
+                  buildingMarkers.forEach((marker) => {
                     marker.setMap(map);
-                    console.log(marker);
                   });
                 } else {
-                  markers.forEach((marker) => {
+                  buildingMarkers.forEach((marker) => {
                     marker.setMap(null);
-                    console.log(marker);
                   });
                 }
               });
@@ -58,6 +56,59 @@ const MapPage = () => {
       for (let i = 0; i < POPUP_MOCK_DATA.length; i++) {
         addBuildingMarker(POPUP_MOCK_DATA[i], i === POPUP_MOCK_DATA.length - 1);
       }
+
+      const siguMarkers: any[] = [];
+      const siguOverlays: any[] = [];
+
+      for (const sigu in SIGU) {
+        const coord = new window.kakao.maps.LatLng(
+          SIGU[sigu as keyof typeof SIGU][0],
+          SIGU[sigu as keyof typeof SIGU][1],
+        );
+
+        const marker = new window.kakao.maps.Marker({
+          map,
+          position: coord,
+        });
+        siguMarkers.push(marker);
+        marker.setMap(map);
+
+        const content =
+          '<div class="relative w-fit bg-gray-300 px-12 py-8 text-black">' +
+          sigu +
+          '<div class="absolute -bottom-12 right-1/2 translate-x-1/2">' +
+          '</div>' +
+          '</div>';
+
+        const customOverlay = new window.kakao.maps.CustomOverlay({
+          map: map,
+          position: coord,
+          content: content,
+          yAnchor: 2,
+        });
+        siguOverlays.push(customOverlay);
+        customOverlay.setMap(map);
+      }
+
+      window.kakao.maps.event.addListener(map, 'zoom_changed', () => {
+        const zoomLevel = map.getLevel();
+
+        if (zoomLevel <= 6) {
+          siguMarkers.forEach((marker) => {
+            marker.setMap(null);
+          });
+          siguOverlays.forEach((overlay) => {
+            overlay.setMap(null);
+          });
+        } else {
+          siguMarkers.forEach((marker) => {
+            marker.setMap(map);
+          });
+          siguOverlays.forEach((overlay) => {
+            overlay.setMap(map);
+          });
+        }
+      });
     });
   };
   useKakaoMap({ callbackFn: initMap });
