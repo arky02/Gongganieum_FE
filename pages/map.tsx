@@ -1,3 +1,4 @@
+import { POPUP_MOCK_DATA } from 'mock/popup';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { searchAddress } from 'utils/searchAddress';
 
@@ -22,7 +23,6 @@ const MapPage = () => {
 
   useEffect(() => {
     initMap();
-    console.log(window.naver.maps);
   }, []);
 
   const [address, setAddress] = useState('');
@@ -31,9 +31,33 @@ const MapPage = () => {
     setAddress(e.target.value);
   };
 
+  const [coords, setCoords] = useState<any[]>([]);
+
   const getAddress = () => {
-    searchAddress(map, address);
+    console.log(coords);
   };
+
+  useEffect(() => {
+    if (!map) {
+      return;
+    }
+
+    POPUP_MOCK_DATA.forEach((data) => {
+      searchAddress(data.address, (status, response) => {
+        setCoords((prev) => [...prev, response.v2.addresses[0]]);
+
+        const position = new naver.maps.LatLng(
+          Number(response.v2.addresses[0].y),
+          Number(response.v2.addresses[0].x),
+        );
+
+        const marker = new naver.maps.Marker({
+          position: position,
+          map: map,
+        });
+      });
+    });
+  }, [map]);
 
   return (
     <div className='relative h-screen w-screen'>
