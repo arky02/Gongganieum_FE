@@ -16,36 +16,47 @@ const MapPage = () => {
       setMap(map);
 
       const geocoder = new window.kakao.maps.services.Geocoder();
+      const markers: any[] = [];
 
-      const clusterer = new window.kakao.maps.MarkerClusterer({
-        map,
-        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-        minLevel: 10, // 클러스터 할 최소 지도 레벨
-      });
-
-      const addMarker = (data: PopupType) => {
-        console.log(data);
+      const addBuildingMarker = (data: PopupType, isLast: boolean) => {
         geocoder.addressSearch(data.address, (result: any, status: any) => {
           if (status === window.kakao.maps.services.Status.OK) {
             const coord = new window.kakao.maps.LatLng(
               result[0].y,
               result[0].x,
             );
-            console.log(coord);
 
             const marker = new window.kakao.maps.Marker({
               map,
               position: coord,
             });
+            markers.push(marker);
+            marker.setMap(null);
 
-            marker.setMap(map);
-            clusterer.addMarker(marker);
+            if (isLast) {
+              window.kakao.maps.event.addListener(map, 'zoom_changed', () => {
+                console.log(map.getLevel());
+                const zoomLevel = map.getLevel();
+
+                if (zoomLevel <= 6) {
+                  markers.forEach((marker) => {
+                    marker.setMap(map);
+                    console.log(marker);
+                  });
+                } else {
+                  markers.forEach((marker) => {
+                    marker.setMap(null);
+                    console.log(marker);
+                  });
+                }
+              });
+            }
           }
         });
       };
 
       for (let i = 0; i < POPUP_MOCK_DATA.length; i++) {
-        addMarker(POPUP_MOCK_DATA[i]);
+        addBuildingMarker(POPUP_MOCK_DATA[i], i === POPUP_MOCK_DATA.length - 1);
       }
     });
   };
