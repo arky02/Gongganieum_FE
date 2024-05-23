@@ -5,5 +5,5 @@ export const searchAddress = async (
     response: naver.maps.Service.GeocodeResponse,
   ) => void,
 ) => {
-  window.naver.maps.Service.geocode({ query: address }, callback);
+  window.naver.maps?.Service?.geocode({ query: address }, callback);
 };
