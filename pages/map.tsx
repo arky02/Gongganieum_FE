@@ -4,6 +4,14 @@ import { POPUP_MOCK_DATA, PopupType } from 'mock/popup';
 import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import useKakaoMap from 'hooks/useKakaoMap';
 
+const HOT_PLACE_COLOR = [
+  'bg-[#fffae1]',
+  'bg-[#ffea75]',
+  'bg-[#ffa53d]',
+  'bg-[#ff6338]',
+  'bg-[#ff370f]',
+];
+
 const MapPage = () => {
   const [map, setMap] = useState<any>();
 
@@ -91,6 +99,7 @@ const MapPage = () => {
 
       let gungu: GunguType;
       for (gungu in GUNGU) {
+        const buildingCnt = buildingsInRegion[gungu];
         if (buildingsInRegion[gungu] === 0) {
           continue;
         }
@@ -107,9 +116,21 @@ const MapPage = () => {
         gunguMarkers.push(marker);
         marker.setMap(map);
 
+        const hotColor =
+          buildingCnt <= 10
+            ? HOT_PLACE_COLOR[0]
+            : buildingCnt <= 20
+              ? HOT_PLACE_COLOR[1]
+              : buildingCnt <= 40
+                ? HOT_PLACE_COLOR[2]
+                : buildingCnt <= 60
+                  ? HOT_PLACE_COLOR[3]
+                  : HOT_PLACE_COLOR[4];
+
         const content =
-          '<div class="bg-slate-200 p-4 border border-black">' +
+          `<div class="p-4 border border-black rounded-md ${hotColor}">` +
           gungu +
+          ' ' +
           buildingsInRegion[gungu] +
           '</div>';
 
