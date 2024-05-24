@@ -1,10 +1,10 @@
 import { populationDataFilter } from 'constants/populationDataFilter';
-import { PopulationDataFilterKeysType } from 'types/client.types';
+import { PopulationObjKeys } from 'types/client.types';
 
 export const populationDataSpliter = (
   populationData: string,
-  category: PopulationDataFilterKeysType,
+  category: PopulationObjKeys,
 ) => {
-  const areaNameSplit = populationData.split(populationDataFilter[category][0]);
-  return areaNameSplit[1].split(populationDataFilter[category][1])[0];
+  const splitFieces = populationData.split(populationDataFilter[category][0]);
+  return splitFieces[1]?.split(populationDataFilter[category][1])[0];
 };
