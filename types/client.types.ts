@@ -3,14 +3,14 @@ export interface PopulationObjType {
   updateTime: string;
   areaState: string;
   areaCongestionMessage: string;
-  maleRate: number;
-  femaleRate: number;
-  ageTeenager: number;
-  ageTwenties: number;
-  ageThirties: number;
-  ageForties: number;
-  ageFifties: number;
-  ageSixties: number;
+  maleRate: string;
+  femaleRate: string;
+  ageTeenager: string;
+  ageTwenties: string;
+  ageThirties: string;
+  ageForties: string;
+  ageFifties: string;
+  ageSixties: string;
 }
 
 export type PopulationObjKeys = keyof PopulationObjType;

@@ -2,24 +2,36 @@ import { useEffect, useState } from 'react';
 import useDebounce from 'hooks/useDebounce';
 import { populationDataSpliter } from 'utils/populationDataSpliter';
 import { getPopulationData } from 'apis/getPopulationData';
-
-// TODO: 이제 상태 여러 개를 관리할 useState 객체 만들기
+import { PopulationObjKeys, PopulationObjType } from 'types/client.types';
 
 const Population = () => {
+  const initialValue = {
+    areaName: '',
+    updateTime: '',
+    areaState: '',
+    areaCongestionMessage: '',
+    maleRate: '',
+    femaleRate: '',
+    ageTeenager: '',
+    ageTwenties: '',
+    ageThirties: '',
+    ageForties: '',
+    ageFifties: '',
+    ageSixties: '',
+  };
+
   const [searchValue, setSearchValue] = useState('');
   const [populationData, setPopulationData] = useState('');
-  const [areaName, setAreaName] = useState('');
-  const [areaMessage, setAreaMessage] = useState('');
-  const [twenties, setTwenties] = useState('');
-  const debouncedSearchText = useDebounce(searchValue, 1000);
+  const [population, setPopulation] = useState<PopulationObjType>(initialValue);
+  const debouncedSearchText = useDebounce(searchValue, 500);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
 
   const getData = async () => {
-    const result = await getPopulationData(searchValue); // 리스폰스 (xml 데이터)
-    setPopulationData(result);
+    const response = await getPopulationData(searchValue); // 리스폰스 (xml 데이터)
+    setPopulationData(response);
   };
 
   useEffect(() => {
@@ -27,14 +39,17 @@ const Population = () => {
   }, [debouncedSearchText]);
 
   useEffect(() => {
-    populationDataSpliter(populationData, 'areaName', setAreaName);
-    populationDataSpliter(
-      populationData,
-      'areaCongestionMessage',
-      setAreaMessage,
-    );
-    populationDataSpliter(populationData, 'ageTwenties', setTwenties);
+    const populationObj = { ...initialValue };
+    let key: PopulationObjKeys;
+    for (key in populationObj) {
+      const content = populationDataSpliter(populationData, key);
+      populationObj[key] = content;
+    }
+
+    setPopulation({ ...populationObj });
   }, [populationData]);
+
+  console.log(population);
 
   return (
     <div className='m-100 flex flex-col items-center'>
@@ -44,12 +59,16 @@ const Population = () => {
         onChange={handleChange}
         placeholder='검색할 장소를 작성해주세요'
       />
-      {areaName && (
+      {population.areaName && (
         <div className='mt-60	 w-9/12'>
-          <h1 className='mb-12 text-3xl font-bold'>[{areaName}]</h1>
+          <h1 className='mb-12 text-3xl font-bold'>[{population.areaName}]</h1>
           <p className='mb-12'>
-            <strong>{areaMessage}</strong> <br />
-            20대 비율: <strong>{twenties}</strong>
+            <strong>{population.areaCongestionMessage}</strong> <br />
+            10대 비율: <strong>{population.ageTwenties}</strong> <br />
+            20대 비율: <strong>{population.ageTwenties}</strong> <br />
+            30대 비율: <strong>{population.ageThirties}</strong> <br />
+            40대 비율: <strong>{population.ageForties}</strong> <br />
+            50대 비율: <strong>{population.ageFifties}</strong> <br />
           </p>
         </div>
       )}

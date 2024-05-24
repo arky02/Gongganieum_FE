@@ -1,5 +1,22 @@
 import { populationDataFilter } from 'constants/populationDataFilter';
-import { PopulationObjKeys } from 'types/client.types';
+import { PopulationObjKeys, PopulationObjType } from 'types/client.types';
+
+export const populationDataSpliter0 = (populationData: string) => {
+  const ret: PopulationObjType = {
+    areaName: '',
+    updateTime: '',
+    areaState: '',
+    areaCongestionMessage: '',
+    maleRate: '',
+    femaleRate: '',
+    ageTeenager: '',
+    ageTwenties: '',
+    ageThirties: '',
+    ageForties: '',
+    ageFifties: '',
+    ageSixties: '',
+  };
+};
 
 export const populationDataSpliter = (
   populationData: string,
