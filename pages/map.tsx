@@ -1,6 +1,7 @@
-import { SIGU } from 'constants/regions';
+import axios from 'axios';
+import { GUNGU, GunguType } from 'constants/regions';
 import { POPUP_MOCK_DATA, PopupType } from 'mock/popup';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import useKakaoMap from 'hooks/useKakaoMap';
 
 const MapPage = () => {
@@ -11,13 +12,40 @@ const MapPage = () => {
       const mapContainer = document.getElementById('map');
       const mapOption = {
         center: new window.kakao.maps.LatLng(37.53, 126.9786567),
-        level: 7,
+        level: 8,
       };
       const map = new window.kakao.maps.Map(mapContainer, mapOption);
       setMap(map);
 
       const geocoder = new window.kakao.maps.services.Geocoder();
       const buildingMarkers: any[] = [];
+      const buildingsInRegion = {
+        강남구: 0,
+        강동구: 0,
+        강북구: 0,
+        강서구: 0,
+        관악구: 0,
+        광진구: 0,
+        구로구: 0,
+        금천구: 0,
+        노원구: 0,
+        도봉구: 0,
+        동대문구: 0,
+        동작구: 0,
+        마포구: 0,
+        서대문구: 0,
+        서초구: 0,
+        성동구: 0,
+        성북구: 0,
+        송파구: 0,
+        양천구: 0,
+        영등포구: 0,
+        용산구: 0,
+        은평구: 0,
+        종로구: 0,
+        중구: 0,
+        중랑구: 0,
+      };
 
       const addBuildingMarker = (data: PopupType, isLast: boolean) => {
         geocoder.addressSearch(data.address, (result: any, status: any) => {
@@ -55,29 +83,34 @@ const MapPage = () => {
 
       for (let i = 0; i < POPUP_MOCK_DATA.length; i++) {
         addBuildingMarker(POPUP_MOCK_DATA[i], i === POPUP_MOCK_DATA.length - 1);
+        buildingsInRegion[POPUP_MOCK_DATA[i].gungu]++;
       }
 
-      const siguMarkers: any[] = [];
-      const siguOverlays: any[] = [];
+      const gunguMarkers: any[] = [];
+      const gunguOverlays: any[] = [];
 
-      for (const sigu in SIGU) {
+      let gungu: GunguType;
+      for (gungu in GUNGU) {
+        if (buildingsInRegion[gungu] === 0) {
+          continue;
+        }
+
         const coord = new window.kakao.maps.LatLng(
-          SIGU[sigu as keyof typeof SIGU][0],
-          SIGU[sigu as keyof typeof SIGU][1],
+          GUNGU[gungu][0],
+          GUNGU[gungu][1],
         );
 
         const marker = new window.kakao.maps.Marker({
           map,
           position: coord,
         });
-        siguMarkers.push(marker);
+        gunguMarkers.push(marker);
         marker.setMap(map);
 
         const content =
-          '<div class="relative w-fit bg-gray-300 px-12 py-8 text-black">' +
-          sigu +
-          '<div class="absolute -bottom-12 right-1/2 translate-x-1/2">' +
-          '</div>' +
+          '<div class="bg-slate-200 p-4 border border-black">' +
+          gungu +
+          buildingsInRegion[gungu] +
           '</div>';
 
         const customOverlay = new window.kakao.maps.CustomOverlay({
@@ -86,7 +119,7 @@ const MapPage = () => {
           content: content,
           yAnchor: 2,
         });
-        siguOverlays.push(customOverlay);
+        gunguOverlays.push(customOverlay);
         customOverlay.setMap(map);
       }
 
@@ -94,17 +127,17 @@ const MapPage = () => {
         const zoomLevel = map.getLevel();
 
         if (zoomLevel <= 6) {
-          siguMarkers.forEach((marker) => {
+          gunguMarkers.forEach((marker) => {
             marker.setMap(null);
           });
-          siguOverlays.forEach((overlay) => {
+          gunguOverlays.forEach((overlay) => {
             overlay.setMap(null);
           });
         } else {
-          siguMarkers.forEach((marker) => {
+          gunguMarkers.forEach((marker) => {
             marker.setMap(map);
           });
-          siguOverlays.forEach((overlay) => {
+          gunguOverlays.forEach((overlay) => {
             overlay.setMap(map);
           });
         }
@@ -119,7 +152,8 @@ const MapPage = () => {
     setAddress(e.target.value);
   };
 
-  const handleClick = () => {
+  const handleClick = (e: SyntheticEvent) => {
+    e.preventDefault();
     if (!map) {
       return;
     }
@@ -142,12 +176,19 @@ const MapPage = () => {
   return (
     <>
       <div className='relative h-screen w-screen'>
-        <div className='fixed left-0 top-0 z-floating h-44 w-240 bg-green-700 p-8'>
-          <input onChange={handleAddressChange} className='h-full' />
-          <button onClick={handleClick} className='ml-4 h-full w-40 bg-red-500'>
+        <form
+          onSubmit={handleClick}
+          className='w-250 fixed left-0 top-0 z-floating flex h-60 bg-transparent p-12'
+        >
+          <input
+            onChange={handleAddressChange}
+            placeholder='지역을 검색해보세요!'
+            className='h-full rounded-md border border-gray-400 p-4 shadow-md'
+          />
+          <button className='ml-4 h-full w-60 rounded-md border border-gray-400 bg-orange-400 shadow-md'>
             검색
           </button>
-        </div>
+        </form>
         <div id='map' className='h-full w-full' />
       </div>
     </>
