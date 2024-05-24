@@ -1,5 +1,3 @@
-import { populationDataFilter } from 'constants/populationDataFilter';
-
 export interface PopulationObjType {
   areaName: string;
   updateTime: string;
@@ -15,4 +13,4 @@ export interface PopulationObjType {
   ageSixties: number;
 }
 
-export type PopulationDataFilterKeysType = keyof typeof populationDataFilter;
+export type PopulationObjKeys = keyof PopulationObjType;
