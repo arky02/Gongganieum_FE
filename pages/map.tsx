@@ -35,10 +35,10 @@ const MapPage = ({ popups }: Props) => {
   const [map, setMap] = useState<any>();
 
   const initMap = () => {
-    const tmp = popups.splice(0, 100);
+    // const tmp = popups.splice(0, 100);
 
     window.kakao?.maps?.load(() => {
-      const popups = tmp;
+      // const popups = tmp;
 
       const mapContainer = document.getElementById('map');
       const mapOption = {
@@ -250,30 +250,3 @@ const getHotRate = (popups: PopupType[]) => {
 
   return popupsInRegion;
 };
-
-[
-  {
-    id: 1,
-    name: '더현대',
-    address: '성동구 서울숲',
-    count: 12,
-    current: false,
-    coord: [10, 10],
-    popups: [
-      {
-        name: '무신사',
-        type: '패션',
-        address: '성동구',
-        date: '12.10',
-        keyword: '패션,패션',
-      },
-      {
-        name: '무신사',
-        type: '패션',
-        address: '성동구',
-        date: '12.10',
-        keyword: '패션,패션',
-      },
-    ],
-  },
-];
