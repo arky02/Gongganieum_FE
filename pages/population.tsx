@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useDebounce from 'hooks/useDebounce';
 import { populationDataSpliter } from 'utils/populationDataSpliter';
 import { getPopulationData } from 'apis/getPopulationData';
-import { PopulationObjKeysType, PopulationObjType } from 'types/client.types';
+import { PopulationKeysType, PopulationType } from 'types/client.types';
 
 const Population = () => {
   const initialValue = {
@@ -22,7 +22,7 @@ const Population = () => {
 
   const [searchValue, setSearchValue] = useState('');
   const [populationData, setPopulationData] = useState('');
-  const [population, setPopulation] = useState<PopulationObjType>(initialValue);
+  const [population, setPopulation] = useState<PopulationType>(initialValue);
   const debouncedSearchText = useDebounce(searchValue, 500);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +54,7 @@ const Population = () => {
 
   useEffect(() => {
     const populationObj = { ...initialValue };
-    let key: PopulationObjKeysType;
+    let key: PopulationKeysType;
     for (key in populationObj) {
       const content = populationDataSpliter(populationData, key);
       populationObj[key] = content;
