@@ -1,4 +1,9 @@
-export interface PopulationObjType {
+export interface PopupType {
+  name: string;
+  date: string;
+  address: string;
+}
+export interface PopulationType {
   areaName: string;
   updateTime: string;
   areaState: string;
@@ -13,4 +18,4 @@ export interface PopulationObjType {
   ageSixties: string;
 }
 
-export type PopulationObjKeysType = keyof PopulationObjType;
+export type PopulationKeysType = keyof PopulationType;
