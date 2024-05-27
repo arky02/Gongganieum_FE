@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useDebounce from 'hooks/useDebounce';
 import { populationDataSpliter } from 'utils/populationDataSpliter';
 import { getPopulationData } from 'apis/getPopulationData';
-import { PopulationObjKeys, PopulationObjType } from 'types/client.types';
+import { PopulationObjKeysType, PopulationObjType } from 'types/client.types';
 
 const Population = () => {
   const initialValue = {
@@ -55,7 +55,7 @@ const Population = () => {
 
   useEffect(() => {
     const populationObj = { ...initialValue };
-    let key: PopulationObjKeys;
+    let key: PopulationObjKeysType;
     for (key in populationObj) {
       const content = populationDataSpliter(populationData, key);
       populationObj[key] = content;
@@ -67,7 +67,7 @@ const Population = () => {
   return (
     <div className='m-100 flex flex-col items-center gap-40'>
       <input
-        className='mb-40 h-80 w-300 rounded-3xl bg-gray-300 p-32 text-xl font-bold text-gray-600	placeholder:text-gray-400'
+        className='mb-40 h-80 w-300 rounded-3xl bg-gray-300 p-32 text-xl font-bold text-gray-600 placeholder:text-gray-400'
         value={searchValue}
         onChange={handleChange}
         placeholder='검색할 장소를 작성해주세요'
@@ -81,7 +81,7 @@ const Population = () => {
               <span className='text-rose-500'> {population.areaState}</span>
             </p>
           </div>
-          <p className='flex justify-end text-xs	text-gray-500'>
+          <p className='flex justify-end text-xs text-gray-500'>
             업데이트 시간: {population.updateTime}
           </p>
           <div className='text-pretty rounded-lg border-2 border-solid border-gray-300 p-12'>

@@ -13,4 +13,4 @@ export interface PopulationObjType {
   ageSixties: string;
 }
 
-export type PopulationObjKeys = keyof PopulationObjType;
+export type PopulationObjKeysType = keyof PopulationObjType;
