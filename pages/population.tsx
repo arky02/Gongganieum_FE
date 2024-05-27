@@ -34,7 +34,6 @@ const Population = () => {
     setPopulationData(response);
   };
 
-  let popularAge;
   const getPopularAgeValue = () => {
     const ageArray = [
       population.ageTeenager,
@@ -45,7 +44,7 @@ const Population = () => {
     ].map((el) => Number(el));
 
     const maxValue = Math.max(...ageArray);
-    popularAge = (ageArray.indexOf(maxValue) + 1) * 10;
+    const popularAge = (ageArray.indexOf(maxValue) + 1) * 10;
     return popularAge;
   };
 
