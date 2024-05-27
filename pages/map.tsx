@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { GUNGU, GUNGU_COORD, GunguType } from 'constants/regions';
-import { POPUP_MOCK_DATA, PopupType } from 'mock/popup';
+import { POPUP_MOCK_DATA } from 'mock/popup';
 import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import useKakaoMap from 'hooks/useKakaoMap';
+import { PopupType } from 'types/client.types';
 
 export const getServerSideProps = async () => {
   const res = await axios(
@@ -30,6 +31,7 @@ interface Props {
 }
 
 const MapPage = ({ popups }: Props) => {
+  // console.log(popups);
   const [map, setMap] = useState<any>();
 
   const initMap = () => {
@@ -49,8 +51,8 @@ const MapPage = ({ popups }: Props) => {
       const geocoder = new window.kakao.maps.services.Geocoder();
       const buildingMarkers: any[] = [];
 
-      const addBuildingMarker = (popups: PopupType, isLast: boolean) => {
-        geocoder.addressSearch(popups.address, (result: any, status: any) => {
+      const addBuildingMarker = (popup: PopupType, isLast: boolean) => {
+        geocoder.addressSearch(popup.address, (result: any, status: any) => {
           if (status === window.kakao.maps.services.Status.OK) {
             const coord = new window.kakao.maps.LatLng(
               result[0].y,
@@ -168,6 +170,7 @@ const MapPage = ({ popups }: Props) => {
 
   const handleClick = (e: SyntheticEvent) => {
     e.preventDefault();
+
     if (!map) {
       return;
     }
@@ -247,3 +250,30 @@ const getHotRate = (popups: PopupType[]) => {
 
   return popupsInRegion;
 };
+
+[
+  {
+    id: 1,
+    name: '더현대',
+    address: '성동구 서울숲',
+    count: 12,
+    current: false,
+    coord: [10, 10],
+    popups: [
+      {
+        name: '무신사',
+        type: '패션',
+        address: '성동구',
+        date: '12.10',
+        keyword: '패션,패션',
+      },
+      {
+        name: '무신사',
+        type: '패션',
+        address: '성동구',
+        date: '12.10',
+        keyword: '패션,패션',
+      },
+    ],
+  },
+];

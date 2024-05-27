@@ -1,26 +1,20 @@
-import { GunguType } from 'constants/regions';
-
-export interface PopupType {
-  name: string;
-  date: string;
-  address: string;
-}
+import { PopupType } from 'types/client.types';
 
 export const POPUP_MOCK_DATA: PopupType[] = [
   {
     name: '서울국제소싱페어',
     date: '23.11.29 - 23.12.01',
-    address: '서울특별시 강남구 영동대로 513 코엑스 C홀',
+    address: '서울특별시 성동구 서울숲길6길 14',
   },
   {
     name: '낼나 팝업스토어',
     date: '23.08.04 - 23.08.25',
-    address: '서울특별시 마포구 동교로25길 54 데스커 디자인 스토어 1층',
+    address: '서울특별시 용산구 한강대로38길 21',
   },
   {
     name: '최고심: 고심약국',
     date: '23.03.01 - 23.04.30',
-    address: '서울특별시 마포구 와우산로35길 13 오브젝트 서교점 1층',
+    address: '서울특별시 용산구 원효로 236',
   },
   {
     name: 'YOZM 팝업 카페',
