@@ -3,17 +3,17 @@ import { GUNGU, GUNGU_COORD, GunguType } from 'constants/regions';
 import { POPUP_MOCK_DATA } from 'mock/popup';
 import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import useKakaoMap from 'hooks/useKakaoMap';
-import { PopupType } from 'types/client.types';
+import { BuildingsType, PopupType } from 'types/client.types';
 
 export const getServerSideProps = async () => {
   const res = await axios(
-    'http://ec2-3-23-49-89.us-east-2.compute.amazonaws.com:8080/api/infos',
+    'http://ec2-3-23-49-89.us-east-2.compute.amazonaws.com:8080/api/info/buildings',
   );
-  const popups = res.data;
+  const buildings = res.data;
 
   return {
     props: {
-      popups,
+      buildings,
     },
   };
 };
@@ -27,19 +27,14 @@ const HOT_PLACE_COLOR = [
 ];
 
 interface Props {
-  popups: PopupType[];
+  buildings: BuildingsType[];
 }
 
-const MapPage = ({ popups }: Props) => {
-  // console.log(popups);
+const MapPage = ({ buildings }: Props) => {
   const [map, setMap] = useState<any>();
 
   const initMap = () => {
-    // const tmp = popups.splice(0, 100);
-
     window.kakao?.maps?.load(() => {
-      // const popups = tmp;
-
       const mapContainer = document.getElementById('map');
       const mapOption = {
         center: new window.kakao.maps.LatLng(37.53, 126.9786567),
@@ -48,47 +43,34 @@ const MapPage = ({ popups }: Props) => {
       const map = new window.kakao.maps.Map(mapContainer, mapOption);
       setMap(map);
 
-      const geocoder = new window.kakao.maps.services.Geocoder();
       const buildingMarkers: any[] = [];
 
-      const addBuildingMarker = (popup: PopupType, isLast: boolean) => {
-        geocoder.addressSearch(popup.address, (result: any, status: any) => {
-          if (status === window.kakao.maps.services.Status.OK) {
-            const coord = new window.kakao.maps.LatLng(
-              result[0].y,
-              result[0].x,
-            );
-
-            const marker = new window.kakao.maps.Marker({
-              map,
-              position: coord,
-            });
-            buildingMarkers.push(marker);
-            marker.setMap(null);
-
-            if (isLast) {
-              window.kakao.maps.event.addListener(map, 'zoom_changed', () => {
-                const zoomLevel = map.getLevel();
-
-                if (zoomLevel <= 6) {
-                  buildingMarkers.forEach((marker) => {
-                    marker.setMap(map);
-                  });
-                } else {
-                  buildingMarkers.forEach((marker) => {
-                    marker.setMap(null);
-                  });
-                }
-              });
-            }
-          }
+      buildings.forEach((building) => {
+        const coord = building.coord.split(', ');
+        const position = new window.kakao.maps.LatLng(coord[0], coord[1]);
+        const marker = new window.kakao.maps.Marker({
+          map,
+          position,
         });
-      };
+        buildingMarkers.push(marker);
+        marker.setMap(null);
+      });
 
-      const hotRate = getHotRate(popups);
-      popups.forEach((popup, i) =>
-        addBuildingMarker(popup, i === popups.length - 1),
-      );
+      window.kakao.maps.event.addListener(map, 'zoom_changed', () => {
+        const zoomLevel = map.getLevel();
+
+        if (zoomLevel <= 6) {
+          buildingMarkers.forEach((marker) => {
+            marker.setMap(map);
+          });
+        } else {
+          buildingMarkers.forEach((marker) => {
+            marker.setMap(null);
+          });
+        }
+      });
+
+      const hotRate = getHotRate(buildings);
 
       const gunguMarkers: any[] = [];
       const gunguOverlays: any[] = [];
@@ -214,7 +196,7 @@ const MapPage = ({ popups }: Props) => {
 
 export default MapPage;
 
-const getHotRate = (popups: PopupType[]) => {
+const getHotRate = (buildings: BuildingsType[]) => {
   const popupsInRegion = {
     강남구: 0,
     강동구: 0,
@@ -243,9 +225,13 @@ const getHotRate = (popups: PopupType[]) => {
     중랑구: 0,
   };
 
-  popups.forEach((popup) => {
-    const gungu = popup.address.split(' ')[1] as GunguType;
-    popupsInRegion[gungu]++;
+  buildings.forEach((building) => {
+    const gungu = building.address.split(' ')[1] as GunguType;
+    if (!building.popups) {
+      console.log(building);
+      return;
+    }
+    popupsInRegion[gungu] += building.popups.length;
   });
 
   return popupsInRegion;
