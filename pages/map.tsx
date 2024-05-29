@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { GUNGU, GUNGU_COORD, GunguType } from 'constants/regions';
-import { POPUP_MOCK_DATA } from 'mock/popup';
 import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import useKakaoMap from 'hooks/useKakaoMap';
-import { BuildingsType, PopupType } from 'types/client.types';
+import { BuildingType } from 'types/client.types';
+import DescriptionTab from 'components/pages/map/DescriptionTab';
 
 export const getServerSideProps = async () => {
   const res = await axios(
@@ -27,11 +27,16 @@ const HOT_PLACE_COLOR = [
 ];
 
 interface Props {
-  buildings: BuildingsType[];
+  buildings: BuildingType[];
 }
 
 const MapPage = ({ buildings }: Props) => {
   const [map, setMap] = useState<any>();
+  const [descriptionTab, setDescriptionTab] = useState<BuildingType | null>();
+
+  const closeDescriptionTab = () => {
+    setDescriptionTab(null);
+  };
 
   const initMap = () => {
     window.kakao?.maps?.load(() => {
@@ -51,6 +56,11 @@ const MapPage = ({ buildings }: Props) => {
         const marker = new window.kakao.maps.Marker({
           map,
           position,
+          clickable: true,
+        });
+        window.kakao.maps.event.addListener(marker, 'click', () => {
+          console.log(building);
+          setDescriptionTab(building);
         });
         buildingMarkers.push(marker);
         marker.setMap(null);
@@ -90,6 +100,7 @@ const MapPage = ({ buildings }: Props) => {
           map,
           position: coord,
         });
+
         gunguMarkers.push(marker);
         marker.setMap(map);
 
@@ -173,30 +184,34 @@ const MapPage = ({ buildings }: Props) => {
   };
 
   return (
-    <>
-      <div className='relative h-screen w-screen'>
-        <form
-          onSubmit={handleClick}
-          className='w-250 fixed left-0 top-0 z-floating flex h-60 bg-transparent p-12'
-        >
-          <input
-            onChange={handleAddressChange}
-            placeholder='지역을 검색해보세요!'
-            className='h-full rounded-md border border-gray-400 p-4 shadow-md'
-          />
-          <button className='ml-4 h-full w-60 rounded-md border border-gray-400 bg-orange-400 shadow-md'>
-            검색
-          </button>
-        </form>
-        <div id='map' className='h-full w-full' />
-      </div>
-    </>
+    <div className='relative h-screen w-screen'>
+      {descriptionTab && (
+        <DescriptionTab
+          building={descriptionTab}
+          closeTab={closeDescriptionTab}
+        />
+      )}
+      <form
+        onSubmit={handleClick}
+        className='w-250 fixed left-0 top-0 z-nav flex h-60 bg-transparent p-12'
+      >
+        <input
+          onChange={handleAddressChange}
+          placeholder='지역을 검색해보세요!'
+          className='h-full rounded-md border border-gray-400 p-4 shadow-md'
+        />
+        <button className='ml-4 h-full w-60 rounded-md border border-gray-400 bg-orange-400 shadow-md'>
+          검색
+        </button>
+      </form>
+      <div id='map' className='h-full w-full' />
+    </div>
   );
 };
 
 export default MapPage;
 
-const getHotRate = (buildings: BuildingsType[]) => {
+const getHotRate = (buildings: BuildingType[]) => {
   const popupsInRegion = {
     강남구: 0,
     강동구: 0,

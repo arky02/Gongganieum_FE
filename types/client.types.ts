@@ -7,7 +7,7 @@ export interface PopupType {
   keyword: string;
 }
 
-export interface BuildingsType {
+export interface BuildingType {
   id: number;
   name: string;
   address: string;
