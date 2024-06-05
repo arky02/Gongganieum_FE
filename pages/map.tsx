@@ -59,7 +59,6 @@ const MapPage = ({ buildings }: Props) => {
           clickable: true,
         });
         window.kakao.maps.event.addListener(marker, 'click', () => {
-          console.log(building);
           setDescriptionTab(building);
         });
         buildingMarkers.push(marker);
@@ -99,6 +98,11 @@ const MapPage = ({ buildings }: Props) => {
         const marker = new window.kakao.maps.Marker({
           map,
           position: coord,
+        });
+
+        window.kakao.maps.event.addListener(marker, 'click', () => {
+          map.setLevel(6);
+          map.setCenter(coord);
         });
 
         gunguMarkers.push(marker);
@@ -243,7 +247,6 @@ const getHotRate = (buildings: BuildingType[]) => {
   buildings.forEach((building) => {
     const gungu = building.address.split(' ')[1] as GunguType;
     if (!building.popups) {
-      console.log(building);
       return;
     }
     popupsInRegion[gungu] += building.popups.length;
