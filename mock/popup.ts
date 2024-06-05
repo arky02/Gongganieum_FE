@@ -1,6 +1,4 @@
-import { PopupType } from 'types/client.types';
-
-export const POPUP_MOCK_DATA: PopupType[] = [
+export const POPUP_MOCK_DATA = [
   {
     name: '서울국제소싱페어',
     date: '23.11.29 - 23.12.01',

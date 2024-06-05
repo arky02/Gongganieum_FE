@@ -1,8 +1,21 @@
 export interface PopupType {
   name: string;
-  date: string;
   address: string;
+  date: string;
+  building: string;
+  type: string;
+  keyword: string;
 }
+
+export interface BuildingType {
+  id: number;
+  name: string;
+  address: string;
+  coord: string;
+  iscurrent: number;
+  popups: PopupType[];
+}
+
 export interface PopulationType {
   areaName: string;
   updateTime: string;
