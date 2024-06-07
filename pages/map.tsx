@@ -187,9 +187,9 @@ const MapPage = ({ buildings }: Props) => {
   const [tabKeyword, setTabKeyword] = useState<string | number | null>(null);
 
   return (
-    <div className='relative h-screen w-screen'>
+    <div className='relative flex h-screen w-screen justify-end'>
       <Tab type={tabType} keyword={tabKeyword} />
-      <div id='map' className='h-full w-full' />
+      <div id='map' className='h-full w-[calc(100%-372px)]' />
     </div>
   );
 };
