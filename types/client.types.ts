@@ -32,3 +32,5 @@ export interface PopulationType {
 }
 
 export type PopulationKeysType = keyof PopulationType;
+
+export type TabType = 'recommend' | 'region' | 'building' | 'search';
