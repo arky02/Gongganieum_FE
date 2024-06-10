@@ -1,21 +1,33 @@
 import axios from 'axios';
 import { GUNGU, GUNGU_COORD, GunguType } from 'constants/regions';
-import { ChangeEvent, SyntheticEvent, useState } from 'react';
+import { BUILDINGS_MOCK_DATA } from 'mock/popup';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import useKakaoMap from 'hooks/useKakaoMap';
 import { BuildingType } from 'types/client.types';
-import DescriptionTab from 'components/pages/map/DescriptionTab';
+import Tab from 'components/pages/map/Tab';
 
 export const getServerSideProps = async () => {
-  const res = await axios(
-    'http://ec2-3-23-49-89.us-east-2.compute.amazonaws.com:8080/api/info/buildings',
-  );
-  const buildings = res.data;
+  // const buildings = BUILDINGS_MOCK_DATA;
 
-  return {
-    props: {
-      buildings,
-    },
-  };
+  try {
+    const res = await axios(
+      'http://ec2-3-23-49-89.us-east-2.compute.amazonaws.com:8080/api/building/infos',
+    );
+    if (res.status !== 200) {
+      throw new Error('Failed to fetch data');
+    }
+    const buildings = res.data;
+    return {
+      props: {
+        buildings,
+      },
+    };
+  } catch (error) {
+    return {
+      props: { error },
+    };
+  }
 };
 
 const HOT_PLACE_COLOR = [
@@ -31,22 +43,17 @@ interface Props {
 }
 
 const MapPage = ({ buildings }: Props) => {
-  const [map, setMap] = useState<any>();
-  const [descriptionTab, setDescriptionTab] = useState<BuildingType | null>();
-
-  const closeDescriptionTab = () => {
-    setDescriptionTab(null);
-  };
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
 
   const initMap = () => {
     window.kakao?.maps?.load(() => {
       const mapContainer = document.getElementById('map');
       const mapOption = {
-        center: new window.kakao.maps.LatLng(37.53, 126.9786567),
+        center: new window.kakao.maps.LatLng(37.545, 126.91),
         level: 8,
       };
       const map = new window.kakao.maps.Map(mapContainer, mapOption);
-      setMap(map);
 
       const buildingMarkers: any[] = [];
 
@@ -59,7 +66,7 @@ const MapPage = ({ buildings }: Props) => {
           clickable: true,
         });
         window.kakao.maps.event.addListener(marker, 'click', () => {
-          setDescriptionTab(building);
+          router.push({ query: { building: building._id } });
         });
         buildingMarkers.push(marker);
         marker.setMap(null);
@@ -103,6 +110,12 @@ const MapPage = ({ buildings }: Props) => {
         window.kakao.maps.event.addListener(marker, 'click', () => {
           map.setLevel(6);
           map.setCenter(coord);
+          router.push({
+            query: {
+              as: '지역명',
+              q: gungu,
+            },
+          });
         });
 
         gunguMarkers.push(marker);
@@ -155,59 +168,43 @@ const MapPage = ({ buildings }: Props) => {
           });
         }
       });
+
+      setIsLoading(false);
     });
   };
   useKakaoMap({ callbackFn: initMap });
 
-  const [address, setAddress] = useState('');
+  // const [address, setAddress] = useState('');
 
-  const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setAddress(e.target.value);
-  };
+  // const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   setAddress(e.target.value);
+  // };
 
-  const handleClick = (e: SyntheticEvent) => {
-    e.preventDefault();
+  // const handleClick = (e: SyntheticEvent) => {
+  //   e.preventDefault();
 
-    if (!map) {
-      return;
-    }
+  //   if (!map) {
+  //     return;
+  //   }
 
-    const placeService = new window.kakao.maps.services.Places();
+  //   const placeService = new window.kakao.maps.services.Places();
 
-    placeService.keywordSearch(address, (popups: any, status: any) => {
-      if (status === window.kakao.maps.services.Status.OK) {
-        const bounds = new window.kakao.maps.LatLngBounds();
+  //   placeService.keywordSearch(address, (popups: any, status: any) => {
+  //     if (status === window.kakao.maps.services.Status.OK) {
+  //       const bounds = new window.kakao.maps.LatLngBounds();
 
-        for (let i = 0; i < popups.length; i++) {
-          bounds.extend(new window.kakao.maps.LatLng(popups[i].y, popups[i].x));
-        }
+  //       for (let i = 0; i < popups.length; i++) {
+  //         bounds.extend(new window.kakao.maps.LatLng(popups[i].y, popups[i].x));
+  //       }
 
-        map.setBounds(bounds);
-      }
-    });
-  };
+  //       map.setBounds(bounds);
+  //     }
+  //   });
+  // };
 
   return (
-    <div className='relative h-screen w-screen'>
-      {descriptionTab && (
-        <DescriptionTab
-          building={descriptionTab}
-          closeTab={closeDescriptionTab}
-        />
-      )}
-      <form
-        onSubmit={handleClick}
-        className='w-250 fixed left-0 top-0 z-nav flex h-60 bg-transparent p-12'
-      >
-        <input
-          onChange={handleAddressChange}
-          placeholder='지역을 검색해보세요!'
-          className='h-full rounded-md border border-gray-400 p-4 shadow-md'
-        />
-        <button className='ml-4 h-full w-60 rounded-md border border-gray-400 bg-orange-400 shadow-md'>
-          검색
-        </button>
-      </form>
+    <div className='relative flex h-screen w-screen justify-end'>
+      <Tab />
       <div id='map' className='h-full w-full' />
     </div>
   );

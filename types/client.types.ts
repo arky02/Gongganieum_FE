@@ -8,7 +8,7 @@ export interface PopupType {
 }
 
 export interface BuildingType {
-  id: number;
+  _id: number;
   name: string;
   address: string;
   coord: string;
