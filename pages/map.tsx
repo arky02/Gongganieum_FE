@@ -1,22 +1,33 @@
 import axios from 'axios';
 import { GUNGU, GUNGU_COORD, GunguType } from 'constants/regions';
-import { ChangeEvent, SyntheticEvent, useState } from 'react';
+import { BUILDINGS_MOCK_DATA } from 'mock/popup';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import useKakaoMap from 'hooks/useKakaoMap';
-import { BuildingType, TabType } from 'types/client.types';
-import DescriptionTab from 'components/pages/map/DescriptionTab';
+import { BuildingType } from 'types/client.types';
 import Tab from 'components/pages/map/Tab';
 
 export const getServerSideProps = async () => {
-  const res = await axios(
-    'http://ec2-3-23-49-89.us-east-2.compute.amazonaws.com:8080/api/info/buildings',
-  );
-  const buildings = res.data;
+  // const buildings = BUILDINGS_MOCK_DATA;
 
-  return {
-    props: {
-      buildings,
-    },
-  };
+  try {
+    const res = await axios(
+      'http://ec2-3-23-49-89.us-east-2.compute.amazonaws.com:8080/api/building/infos',
+    );
+    if (res.status !== 200) {
+      throw new Error('Failed to fetch data');
+    }
+    const buildings = res.data;
+    return {
+      props: {
+        buildings,
+      },
+    };
+  } catch (error) {
+    return {
+      props: { error },
+    };
+  }
 };
 
 const HOT_PLACE_COLOR = [
@@ -32,7 +43,8 @@ interface Props {
 }
 
 const MapPage = ({ buildings }: Props) => {
-  const [map, setMap] = useState<any>();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
 
   const initMap = () => {
     window.kakao?.maps?.load(() => {
@@ -42,7 +54,6 @@ const MapPage = ({ buildings }: Props) => {
         level: 8,
       };
       const map = new window.kakao.maps.Map(mapContainer, mapOption);
-      setMap(map);
 
       const buildingMarkers: any[] = [];
 
@@ -55,7 +66,7 @@ const MapPage = ({ buildings }: Props) => {
           clickable: true,
         });
         window.kakao.maps.event.addListener(marker, 'click', () => {
-          // setTab(building);
+          router.push({ query: { building: building._id } });
         });
         buildingMarkers.push(marker);
         marker.setMap(null);
@@ -99,6 +110,12 @@ const MapPage = ({ buildings }: Props) => {
         window.kakao.maps.event.addListener(marker, 'click', () => {
           map.setLevel(6);
           map.setCenter(coord);
+          router.push({
+            query: {
+              as: '지역명',
+              q: gungu,
+            },
+          });
         });
 
         gunguMarkers.push(marker);
@@ -151,6 +168,8 @@ const MapPage = ({ buildings }: Props) => {
           });
         }
       });
+
+      setIsLoading(false);
     });
   };
   useKakaoMap({ callbackFn: initMap });
@@ -183,12 +202,9 @@ const MapPage = ({ buildings }: Props) => {
   //   });
   // };
 
-  const [tabType, setTabType] = useState<TabType>('recommend');
-  const [tabKeyword, setTabKeyword] = useState<string | number | null>(null);
-
   return (
     <div className='relative flex h-screen w-screen justify-end'>
-      <Tab type={tabType} keyword={tabKeyword} />
+      <Tab />
       <div id='map' className='h-full w-full' />
     </div>
   );

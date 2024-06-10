@@ -8,7 +8,7 @@ export interface PopupType {
 }
 
 export interface BuildingType {
-  id: number;
+  _id: number;
   name: string;
   address: string;
   coord: string;
@@ -32,5 +32,3 @@ export interface PopulationType {
 }
 
 export type PopulationKeysType = keyof PopulationType;
-
-export type TabType = 'recommend' | 'region' | 'building' | 'search';

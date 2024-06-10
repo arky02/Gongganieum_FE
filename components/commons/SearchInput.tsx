@@ -1,9 +1,16 @@
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  SyntheticEvent,
+  useRef,
+} from 'react';
 import Dropdown from './Dropdown';
 
 interface Props {
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
+  onSubmit: () => void;
   dropdownMenu?: string[];
   selectedMenu?: string;
   setSelectedMenu?: Dispatch<SetStateAction<string>>;
@@ -12,19 +19,27 @@ interface Props {
 const SearchInput = ({
   value,
   setValue,
+  onSubmit,
   dropdownMenu,
   selectedMenu,
   setSelectedMenu,
 }: Props) => {
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(String(e.target.value));
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = (e: SyntheticEvent) => {
+    e.preventDefault();
+    if (!inputRef.current) {
+      return;
+    }
+    setValue(String(inputRef.current.value));
+    onSubmit();
   };
 
   return (
-    <form className='flex h-52 w-full'>
+    <form onSubmit={handleSubmit} className='flex h-52 w-full'>
       <input
-        value={value}
-        onChange={handleChange}
+        ref={inputRef}
+        defaultValue={value}
         className='w-full border border-black'
       />
       {dropdownMenu && selectedMenu && setSelectedMenu && (

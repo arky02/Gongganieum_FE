@@ -1,17 +1,13 @@
+import { SEARCH_AS } from 'constants/dropdown';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { TabType } from 'types/client.types';
+import useMapSearch from 'hooks/useMapSearch';
 import SearchInput from 'components/commons/SearchInput';
-import DescriptionTab from './DescriptionTab';
+import BuildingTab from './BuildingTab';
 import RecommendTab from './RecommendTab';
-import RegionTab from './RegionTab';
 import SearchTab from './SearchTab';
 
-interface TabProps {
-  type: TabType;
-  keyword: string | number | null;
-}
-
-const Tab = ({ type, keyword }: TabProps) => {
+const Tab = () => {
   const [tab, setTab] = useState(true);
 
   const openTab = () => {
@@ -22,6 +18,23 @@ const Tab = ({ type, keyword }: TabProps) => {
     setTab(false);
   };
 
+  const { q, setQ, as, setAs } = useMapSearch();
+  const router = useRouter();
+
+  const handleSearch = () => {
+    console.log(as, q);
+  };
+
+  const renderTab = () => {
+    if (router.query['building']) {
+      return <BuildingTab id={Number(router.query['building'])} />;
+    } else if (q && as) {
+      return <SearchTab />;
+    } else {
+      return <RecommendTab />;
+    }
+  };
+
   return (
     <>
       {tab ? (
@@ -29,12 +42,16 @@ const Tab = ({ type, keyword }: TabProps) => {
           <button onClick={closeTab} className='h-32 w-32 border border-black'>
             X
           </button>
-          <SearchInput />
+          <SearchInput
+            value={q}
+            setValue={setQ}
+            onSubmit={handleSearch}
+            dropdownMenu={SEARCH_AS}
+            selectedMenu={as}
+            setSelectedMenu={setAs}
+          />
           <div className='h-32' />
-          {type === 'recommend' && <RecommendTab />}
-          {type === 'building' && <DescriptionTab id={Number(keyword)} />}
-          {type === 'region' && <RegionTab region={String(keyword)} />}
-          {type === 'search' && <SearchTab />}
+          {renderTab()}
         </div>
       ) : (
         <button
