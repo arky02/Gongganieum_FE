@@ -18,8 +18,8 @@ const CARD_COLOR = [
 ];
 
 const CARD_STYLE = {
-  Banner: 'h-600 w-1000',
-  Carousel: 'h-200 w-1000',
+  banner: 'h-600 w-1000',
+  carousel: 'h-200 w-1000',
 };
 
 const Slider = ({ mode }: SliderProps) => {
@@ -53,7 +53,7 @@ const Slider = ({ mode }: SliderProps) => {
         slidesPerView={mode === 'Banner' ? 1 : 3}
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
-        className={mode === 'Banner' ? CARD_STYLE.Banner : CARD_STYLE.Carousel}
+        className={mode === 'Banner' ? CARD_STYLE.banner : CARD_STYLE.carousel}
       >
         {slides.map((slideContent, index) => (
           <SwiperSlide
