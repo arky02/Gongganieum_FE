@@ -38,7 +38,7 @@ const MapPage = ({ buildings }: Props) => {
     window.kakao?.maps?.load(() => {
       const mapContainer = document.getElementById('map');
       const mapOption = {
-        center: new window.kakao.maps.LatLng(37.53, 126.9786567),
+        center: new window.kakao.maps.LatLng(37.545, 126.91),
         level: 8,
       };
       const map = new window.kakao.maps.Map(mapContainer, mapOption);
@@ -189,7 +189,7 @@ const MapPage = ({ buildings }: Props) => {
   return (
     <div className='relative flex h-screen w-screen justify-end'>
       <Tab type={tabType} keyword={tabKeyword} />
-      <div id='map' className='h-full w-[calc(100%-372px)]' />
+      <div id='map' className='h-full w-full' />
     </div>
   );
 };

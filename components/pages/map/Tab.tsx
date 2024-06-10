@@ -39,7 +39,7 @@ const Tab = ({ type, keyword }: TabProps) => {
       ) : (
         <button
           onClick={openTab}
-          className='fixed left-0 top-1/2 h-32 w-32 border border-black'
+          className='fixed left-0 top-1/2 z-popup h-32 w-32 border border-black bg-white'
         >
           {'>'}
         </button>
