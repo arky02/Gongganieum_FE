@@ -3,7 +3,7 @@ import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/navigation';
 import { Autoplay, Navigation } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 
 interface SliderProps {
   mode: 'Banner' | 'Carousel';
@@ -27,7 +27,7 @@ const Slider = ({ mode }: SliderProps) => {
     (el, index) => `Slide ${index + 1}`,
   );
 
-  const swiperRef = useRef(null);
+  const swiperRef = useRef<SwiperRef>(null);
 
   const handlePrev = () => {
     if (swiperRef.current) {
