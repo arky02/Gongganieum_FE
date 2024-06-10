@@ -9,7 +9,7 @@ interface SliderProps {
   mode: 'Banner' | 'Carousel';
 }
 
-const CardColor = [
+const CARD_COLOR = [
   'bg-blue-100',
   'bg-blue-200',
   'bg-blue-300',
@@ -17,7 +17,7 @@ const CardColor = [
   'bg-blue-500',
 ];
 
-const CardStyle = {
+const CARD_STYLE = {
   Banner: 'h-600 w-1000',
   Carousel: 'h-200 w-1000',
 };
@@ -53,13 +53,13 @@ const Slider = ({ mode }: SliderProps) => {
         slidesPerView={mode === 'Banner' ? 1 : 3}
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
-        className={mode === 'Banner' ? CardStyle.Banner : CardStyle.Carousel}
+        className={mode === 'Banner' ? CARD_STYLE.Banner : CARD_STYLE.Carousel}
       >
         {slides.map((slideContent, index) => (
           <SwiperSlide
             key={slideContent}
             virtualIndex={index}
-            className={`${CardColor[index]}`}
+            className={`${CARD_COLOR[index]}`}
           >
             {slideContent}
           </SwiperSlide>
