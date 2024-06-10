@@ -5,7 +5,11 @@ import 'swiper/css/navigation';
 import { Autoplay, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-const Style = [
+interface SliderProps {
+  mode: 'Banner' | 'Carousel';
+}
+
+const CardColor = [
   'bg-blue-100',
   'bg-blue-200',
   'bg-blue-300',
@@ -13,7 +17,12 @@ const Style = [
   'bg-blue-500',
 ];
 
-const Slider = () => {
+const CardStyle = {
+  Banner: 'h-600 w-1000',
+  Carousel: 'h-200 w-1000',
+};
+
+const Slider = ({ mode }: SliderProps) => {
   const slides = Array.from({ length: 5 }).map(
     (el, index) => `Slide ${index + 1}`,
   );
@@ -41,16 +50,16 @@ const Slider = () => {
         autoplay={{ delay: 3000, disableOnInteraction: false }}
         loop={true}
         spaceBetween={30}
-        slidesPerView={1}
+        slidesPerView={mode === 'Banner' ? 1 : 3}
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
-        className='h-600 w-1000'
+        className={mode === 'Banner' ? CardStyle.Banner : CardStyle.Carousel}
       >
         {slides.map((slideContent, index) => (
           <SwiperSlide
             key={slideContent}
             virtualIndex={index}
-            className={`${Style[index]}`}
+            className={`${CardColor[index]}`}
           >
             {slideContent}
           </SwiperSlide>
