@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { useRef, useState } from 'react';
 
 const defaultProfileImage =
   'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
@@ -7,29 +6,6 @@ const defaultProfileImage =
 const CIRCLE_RADIUS = 152;
 
 const Profile = () => {
-  const [image, setImage] = useState('');
-  const fileInput = useRef<HTMLInputElement>(null);
-
-  const handelClickImg = () => {
-    if (fileInput.current) fileInput.current.click();
-  };
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setImage(reader.result as string);
-        }
-      };
-    }
-  };
-
   return (
     <div className='flex items-center justify-center gap-40'>
       <div>
@@ -37,20 +13,11 @@ const Profile = () => {
           <Image
             width={CIRCLE_RADIUS}
             height={CIRCLE_RADIUS}
-            src={image || defaultProfileImage}
+            src={defaultProfileImage}
             alt='프로필 사진'
-            onClick={handelClickImg}
-            className='cursor-pointer rounded-full'
+            className='cursor-pointer rounded-full bg-cover'
           />
         </div>
-        <input
-          ref={fileInput}
-          type='file'
-          accept='image/jpg,impge/png,image/jpeg'
-          name='profile_img'
-          onChange={onChange}
-          className='hidden'
-        />
       </div>
       <div className='flex flex-col gap-32'>
         <div className='flex items-center gap-40'>
