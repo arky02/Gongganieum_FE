@@ -1,10 +1,6 @@
 export interface PopupType {
   name: string;
-  address: string;
   date: string;
-  building: string;
-  type: string;
-  keyword: string;
 }
 
 export interface BuildingType {
