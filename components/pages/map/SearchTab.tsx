@@ -1,6 +1,6 @@
 import BuildingCard from './BuildingCard';
 
-const SearchTab = () => {
+const SearchTab = ({}) => {
   return (
     <div className='w-full overflow-y-auto'>
       <div className='flex flex-col gap-8'>

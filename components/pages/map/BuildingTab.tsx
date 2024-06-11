@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { BUILDINGS_MOCK_DATA } from 'mock/popup';
 import { useRouter } from 'next/router';
+import { getBuildingInfo } from 'apis/api';
 import { instance } from 'apis/config/default';
 import PopupCard from './PopupCard';
 
@@ -10,12 +11,6 @@ interface Props {
 
 const BuildingTab = ({ id }: Props) => {
   const router = useRouter();
-
-  // const getBuildingInfo = async (id: number) => {
-  //   console.log('RUN');
-  //   const res = await instance.get('/building/infos', { params: id });
-  //   return res.data;
-  // };
 
   // const { data: buildingInfo } = useQuery({
   //   queryKey: ['buildingInfo', id],

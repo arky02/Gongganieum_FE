@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import { instance } from 'apis/config/default';
+import { getSearchResult } from 'apis/api';
 import { AsType } from 'types/client.types';
 
 interface Props {
@@ -26,14 +26,3 @@ const useFetch = ({ as, q }: Props) => {
 };
 
 export default useFetch;
-
-const getSearchResult = async (as: AsType, q: string) => {
-  const res = await instance.get('/building/search', {
-    params: {
-      as,
-      q,
-    },
-  });
-
-  return res.data;
-};

@@ -3,7 +3,6 @@ import { BUILDINGS_MOCK_DATA } from 'mock/popup';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import useKakaoMap from 'hooks/useKakaoMap';
-import { instance } from 'apis/config/default';
 import { BuildingType } from 'types/client.types';
 import Tab from 'components/pages/map/Tab';
 
