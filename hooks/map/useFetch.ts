@@ -19,6 +19,7 @@ const useFetch = ({ as, q }: Props) => {
   const { createMarkers, deleteMarkers } = useMarkers();
 
   const handleFetch = async () => {
+    deleteMarkers();
     const res = await refetch();
     const data = res.data;
     createMarkers(data);

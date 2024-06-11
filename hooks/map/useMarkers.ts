@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useStore } from 'store';
 import { BuildingType } from 'types/client.types';
 
@@ -9,9 +9,14 @@ const useMarkers = () => {
     map: state.map,
   }));
   const [markers, setMarkers] = useState<any[]>([]);
+  const [initialBuildings, setInitialBuildings] = useState<BuildingType[]>();
 
   const createMarkers = (buildings: BuildingType[] | undefined) => {
-    if (!buildings) {
+    if (!initialBuildings) {
+      setInitialBuildings(buildings);
+    }
+
+    if (!map || !buildings) {
       return;
     }
 
@@ -20,7 +25,7 @@ const useMarkers = () => {
       const position = new window.kakao.maps.LatLng(coord[0], coord[1]);
 
       const imageSrc = '/icons/dot.png';
-      const imageSize = new window.kakao.maps.Size(64, 69);
+      const imageSize = new window.kakao.maps.Size(20, 20);
       const markerImage = new window.kakao.maps.MarkerImage(
         imageSrc,
         imageSize,
@@ -36,21 +41,7 @@ const useMarkers = () => {
         router.push({ query: { building: building._id } });
       });
       setMarkers((prev) => [...prev, marker]);
-      marker.setMap(null);
-    });
-
-    window.kakao.maps.event.addListener(map, 'zoom_changed', () => {
-      const zoomLevel = map.getLevel();
-
-      if (zoomLevel <= 6) {
-        markers.forEach((marker) => {
-          marker.setMap(map);
-        });
-      } else {
-        markers.forEach((marker) => {
-          marker.setMap(null);
-        });
-      }
+      marker.setMap(map);
     });
   };
 
@@ -58,6 +49,11 @@ const useMarkers = () => {
     markers.forEach((marker) => marker.setMap(null));
     setMarkers([]);
   };
+
+  useEffect(() => {
+    console.log(initialBuildings, map);
+    createMarkers(initialBuildings);
+  }, [map, initialBuildings]);
 
   return { createMarkers, deleteMarkers };
 };
