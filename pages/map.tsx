@@ -1,16 +1,15 @@
 import { GUNGU, GUNGU_COORD, GunguType } from 'constants/regions';
 import { BUILDINGS_MOCK_DATA } from 'mock/popup';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import useKakaoMap from 'hooks/useKakaoMap';
+import { getBuildings } from 'apis/api';
 import { BuildingType } from 'types/client.types';
 import Tab from 'components/pages/map/Tab';
 
 export const getServerSideProps = async () => {
-  const buildings = BUILDINGS_MOCK_DATA;
+  // const buildings = BUILDINGS_MOCK_DATA;
 
-  // const res = await instance.get('/building/infos');
-  // const buildings = res.data;
+  const buildings = await getBuildings();
 
   return {
     props: {
@@ -33,7 +32,6 @@ interface Props {
 
 const MapPage = ({ buildings }: Props) => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
 
   const initMap = () => {
     window.kakao?.maps?.load(() => {
@@ -157,8 +155,6 @@ const MapPage = ({ buildings }: Props) => {
           });
         }
       });
-
-      setIsLoading(false);
     });
   };
   useKakaoMap({ callbackFn: initMap });

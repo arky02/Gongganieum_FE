@@ -1,29 +1,17 @@
+import { BuildingType } from 'types/client.types';
 import BuildingCard from './BuildingCard';
 
-const SearchTab = ({}) => {
+interface Props {
+  buildings: BuildingType[] | undefined;
+}
+
+const SearchTab = ({ buildings }: Props) => {
   return (
     <div className='w-full overflow-y-auto'>
       <div className='flex flex-col gap-8'>
-        <BuildingCard />
-        <BuildingCard />
-        <BuildingCard />
-        <BuildingCard />
-        <BuildingCard />
-        <BuildingCard />
-        <BuildingCard />
-        <BuildingCard />
-        <BuildingCard />
-        <BuildingCard />
-        <BuildingCard />
-        <BuildingCard />
-        <BuildingCard />
-        <BuildingCard />
-        <BuildingCard />
-        <BuildingCard />
-        <BuildingCard />
-        <BuildingCard />
-        <BuildingCard />
-        <BuildingCard />
+        {buildings?.map((building) => (
+          <BuildingCard building={building} key={building._id} />
+        ))}
       </div>
     </div>
   );

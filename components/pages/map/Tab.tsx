@@ -27,7 +27,7 @@ const Tab = () => {
     if (router.query['building']) {
       return <BuildingTab id={Number(router.query['building'])} />;
     } else if (q && as) {
-      return <SearchTab />;
+      return <SearchTab buildings={searchResult} />;
     } else {
       return <RecommendTab />;
     }

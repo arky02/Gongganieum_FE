@@ -7,8 +7,8 @@ export const getBuildings = async () => {
 };
 
 export const getBuildingInfo = async (id: number) => {
-  const res = await instance.get('/building/infos', { params: id });
-  return res.data as BuildingType;
+  const res = await instance.get('/building/infos', { params: { id } });
+  return res.data[0] as BuildingType;
 };
 
 export const getSearchResult = async (as: AsType, q: string) => {
