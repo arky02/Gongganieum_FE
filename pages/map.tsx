@@ -1,19 +1,18 @@
-import axios from 'axios';
 import { GUNGU, GUNGU_COORD, GunguType } from 'constants/regions';
 import { BUILDINGS_MOCK_DATA } from 'mock/popup';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import useKakaoMap from 'hooks/useKakaoMap';
+import { instance } from 'apis/config/default';
 import { BuildingType } from 'types/client.types';
 import Tab from 'components/pages/map/Tab';
 
 export const getServerSideProps = async () => {
   const buildings = BUILDINGS_MOCK_DATA;
 
-  // const res = await axios(
-  //   'http://ec2-3-23-49-89.us-east-2.compute.amazonaws.com:8080/api/building/infos',
-  // );
+  // const res = await instance.get('/building/infos');
   // const buildings = res.data;
+
   return {
     props: {
       buildings,
