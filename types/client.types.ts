@@ -32,3 +32,5 @@ export interface PopulationType {
 }
 
 export type PopulationKeysType = keyof PopulationType;
+
+export type AsType = '지역명' | '빌딩명' | '팝업명';

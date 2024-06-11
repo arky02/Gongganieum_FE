@@ -8,26 +8,17 @@ import { BuildingType } from 'types/client.types';
 import Tab from 'components/pages/map/Tab';
 
 export const getServerSideProps = async () => {
-  // const buildings = BUILDINGS_MOCK_DATA;
+  const buildings = BUILDINGS_MOCK_DATA;
 
-  try {
-    const res = await axios(
-      'http://ec2-3-23-49-89.us-east-2.compute.amazonaws.com:8080/api/building/infos',
-    );
-    if (res.status !== 200) {
-      throw new Error('Failed to fetch data');
-    }
-    const buildings = res.data;
-    return {
-      props: {
-        buildings,
-      },
-    };
-  } catch (error) {
-    return {
-      props: { error },
-    };
-  }
+  // const res = await axios(
+  //   'http://ec2-3-23-49-89.us-east-2.compute.amazonaws.com:8080/api/building/infos',
+  // );
+  // const buildings = res.data;
+  return {
+    props: {
+      buildings,
+    },
+  };
 };
 
 const HOT_PLACE_COLOR = [

@@ -1,17 +1,21 @@
 import { Dispatch, SetStateAction, useRef } from 'react';
 import useOutsideClick from 'hooks/useOutsideClick';
 
-interface Props {
-  elements: string[];
-  selected: string;
-  setSelected: Dispatch<SetStateAction<string>>;
+interface Props<T> {
+  elements: T[];
+  selected: T;
+  setSelected: Dispatch<SetStateAction<T>>;
 }
 
-const Dropdown = ({ elements, selected, setSelected }: Props) => {
+const Dropdown = <T extends string>({
+  elements,
+  selected,
+  setSelected,
+}: Props<T>) => {
   const ref = useRef(null);
   const [isVisible, setIsVisible] = useOutsideClick(ref, false);
 
-  const handleMenuClick = (e: string) => {
+  const handleMenuClick = (e: T) => {
     setSelected(e);
     setIsVisible(false);
   };
@@ -27,13 +31,13 @@ const Dropdown = ({ elements, selected, setSelected }: Props) => {
       </button>
       {isVisible && (
         <ul className='absolute'>
-          {elements.map((e) => (
+          {elements.map((el) => (
             <li
-              onClick={() => handleMenuClick(e)}
-              key={e}
+              onClick={() => handleMenuClick(el)}
+              key={el}
               className='h-28 w-100 border border-black'
             >
-              {e}
+              {el}
             </li>
           ))}
         </ul>

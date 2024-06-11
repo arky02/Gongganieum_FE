@@ -1,29 +1,23 @@
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  SyntheticEvent,
-  useRef,
-} from 'react';
+import { Dispatch, SetStateAction, SyntheticEvent, useRef } from 'react';
 import Dropdown from './Dropdown';
 
-interface Props {
+interface Props<T> {
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
-  onSubmit: () => void;
-  dropdownMenu?: string[];
-  selectedMenu?: string;
-  setSelectedMenu?: Dispatch<SetStateAction<string>>;
+  onSubmit?: () => void;
+  dropdownMenu?: T[];
+  selectedMenu?: T;
+  setSelectedMenu?: Dispatch<SetStateAction<T>>;
 }
 
-const SearchInput = ({
+const SearchInput = <T extends string>({
   value,
   setValue,
   onSubmit,
   dropdownMenu,
   selectedMenu,
   setSelectedMenu,
-}: Props) => {
+}: Props<T>) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: SyntheticEvent) => {
@@ -32,7 +26,7 @@ const SearchInput = ({
       return;
     }
     setValue(String(inputRef.current.value));
-    onSubmit();
+    onSubmit?.();
   };
 
   return (
