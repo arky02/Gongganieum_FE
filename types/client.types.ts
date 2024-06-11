@@ -8,9 +8,22 @@ export interface BuildingType {
   name: string;
   address: string;
   coord: string;
-  iscurrent: number;
   popups: PopupType[];
+  tag: string;
+  cate: CategoryType;
+  isours: boolean;
 }
+
+export type CategoryType =
+  | '패션'
+  | '뷰티'
+  | 'FNB'
+  | '캐릭터'
+  | '미디어'
+  | '금융'
+  | '예술'
+  | '생활'
+  | 'IT';
 
 export interface PopulationType {
   areaName: string;

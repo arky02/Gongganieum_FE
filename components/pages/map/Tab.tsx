@@ -33,8 +33,6 @@ const Tab = () => {
     }
   };
 
-  console.log(searchResult);
-
   return (
     <>
       {tab ? (

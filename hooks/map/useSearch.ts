@@ -27,13 +27,16 @@ const useSearch = () => {
   const [as, setAs] = useState<AsType>(initialQuery.as);
 
   useEffect(() => {
-    if (router.query['building']) {
+    if (!router.isReady || router.query['building']) {
       return;
     }
     router.push({ query: { as, q } });
   }, [as, q]);
 
   useEffect(() => {
+    if (!router.isReady) {
+      return;
+    }
     const query = getQuery();
     setQ(query.q);
     setAs(query.as);
