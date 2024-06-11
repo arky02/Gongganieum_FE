@@ -12,9 +12,13 @@ const useFetch = ({ as, q }: Props) => {
   const { data: searchResult, refetch } = useQuery({
     queryKey: ['search', as, q],
     queryFn: () => getSearchResult(as, q),
+    enabled: !!q,
   });
 
   useEffect(() => {
+    if (!q) {
+      return;
+    }
     refetch();
   }, [as, q]);
 
