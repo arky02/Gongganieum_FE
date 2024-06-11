@@ -1,5 +1,6 @@
 import { GUNGU, GUNGU_COORD, GunguType } from 'constants/regions';
 import { useRouter } from 'next/router';
+import { useStore } from 'store';
 import useKakaoMap from 'hooks/useKakaoMap';
 import { BuildingType } from 'types/client.types';
 
@@ -13,6 +14,9 @@ const HOT_PLACE_COLOR = [
 
 const useInitMap = (buildings: BuildingType[] | undefined) => {
   const router = useRouter();
+  const { setMap } = useStore((state) => ({
+    setMap: state.setMap,
+  }));
 
   const initMap = async () => {
     if (!buildings) {
@@ -26,6 +30,7 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
         level: 8,
       };
       const map = new window.kakao.maps.Map(mapContainer, mapOption);
+      setMap(map);
 
       const buildingMarkers: any[] = [];
 

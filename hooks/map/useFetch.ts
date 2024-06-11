@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { getSearchResult } from 'apis/api';
-import { AsType } from 'types/client.types';
+import { AsType, BuildingType } from 'types/client.types';
+import useMarkers from './useMarkers';
 
 interface Props {
   as: AsType;
@@ -15,11 +16,19 @@ const useFetch = ({ as, q }: Props) => {
     enabled: !!q,
   });
 
+  const { createMarkers, deleteMarkers } = useMarkers();
+
+  const handleFetch = async () => {
+    const res = await refetch();
+    const data = res.data;
+    createMarkers(data);
+  };
+
   useEffect(() => {
     if (!q) {
       return;
     }
-    refetch();
+    handleFetch();
   }, [as, q]);
 
   return { searchResult };
