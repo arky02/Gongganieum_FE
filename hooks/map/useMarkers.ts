@@ -36,6 +36,7 @@ const useMarkers = () => {
         position,
         image: markerImage,
         clickable: true,
+        zIndex: 99,
       });
       window.kakao.maps.event.addListener(marker, 'click', () => {
         router.push({ query: { building: building._id } });

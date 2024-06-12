@@ -27,6 +27,7 @@ const useFetch = ({ as, q }: Props) => {
 
   useEffect(() => {
     if (!q) {
+      deleteMarkers();
       return;
     }
     handleFetch();

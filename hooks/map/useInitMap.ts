@@ -46,7 +46,8 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
           router.push({ query: { building: building._id } });
         });
         buildingMarkers.push(marker);
-        marker.setMap(null);
+        marker.setMap(map);
+        marker.setVisible(false);
       });
 
       window.kakao.maps.event.addListener(map, 'zoom_changed', () => {
@@ -54,11 +55,11 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
 
         if (zoomLevel <= 6) {
           buildingMarkers.forEach((marker) => {
-            marker.setMap(map);
+            marker.setVisible(true);
           });
         } else {
           buildingMarkers.forEach((marker) => {
-            marker.setMap(null);
+            marker.setVisible(false);
           });
         }
       });
@@ -131,17 +132,17 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
 
         if (zoomLevel <= 6) {
           gunguMarkers.forEach((marker) => {
-            marker.setMap(null);
+            marker.setVisible(false);
           });
           gunguOverlays.forEach((overlay) => {
-            overlay.setMap(null);
+            overlay.setVisible(false);
           });
         } else {
           gunguMarkers.forEach((marker) => {
-            marker.setMap(map);
+            marker.setVisible(true);
           });
           gunguOverlays.forEach((overlay) => {
-            overlay.setMap(map);
+            overlay.setVisible(true);
           });
         }
       });
