@@ -88,12 +88,6 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
         window.kakao.maps.event.addListener(marker, 'click', () => {
           map.setLevel(6);
           map.setCenter(coord);
-          router.push({
-            query: {
-              as: '지역명',
-              q: gungu,
-            },
-          });
         });
 
         gunguMarkers.push(marker);

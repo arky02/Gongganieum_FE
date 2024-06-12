@@ -21,7 +21,7 @@ const Tab = () => {
 
   const router = useRouter();
   const { as, setAs, q, setQ } = useSearch();
-  const { searchResult } = useFetch({ as, q });
+  const { searchResult, refetch } = useFetch({ as, q });
 
   const renderTab = () => {
     if (router.query['building']) {
@@ -43,6 +43,7 @@ const Tab = () => {
           <SearchInput
             value={q}
             setValue={setQ}
+            onSubmit={refetch}
             dropdownMenu={SEARCH_AS}
             selectedMenu={as}
             setSelectedMenu={setAs}

@@ -20,9 +20,12 @@ const useMarkers = () => {
       return;
     }
 
+    const bound = new window.kakao.maps.LatLngBounds();
+
     buildings.forEach((building) => {
       const coord = building.coord.split(', ');
       const position = new window.kakao.maps.LatLng(coord[0], coord[1]);
+      bound.extend(position);
 
       const imageSrc = '/icons/dot.png';
       const imageSize = new window.kakao.maps.Size(20, 20);
@@ -44,6 +47,8 @@ const useMarkers = () => {
       setMarkers((prev) => [...prev, marker]);
       marker.setMap(map);
     });
+
+    map.panTo(bound);
   };
 
   const deleteMarkers = () => {
@@ -52,7 +57,6 @@ const useMarkers = () => {
   };
 
   useEffect(() => {
-    console.log(initialBuildings, map);
     createMarkers(initialBuildings);
   }, [map, initialBuildings]);
 

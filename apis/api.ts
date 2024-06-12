@@ -12,9 +12,11 @@ export const getBuildingInfo = async (id: number) => {
 };
 
 export const getSearchResult = async (as: AsType, q: string) => {
+  const parsedAs =
+    as === '빌딩명' ? 'building' : as === '팝업명' ? 'popup' : 'address';
   const res = await instance.get('/building/search', {
     params: {
-      as,
+      as: parsedAs,
       q,
     },
   });
