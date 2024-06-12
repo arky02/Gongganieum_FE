@@ -1,5 +1,6 @@
 import { GUNGU, GUNGU_COORD, GunguType } from 'constants/regions';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { useStore } from 'store';
 import useKakaoMap from 'hooks/useKakaoMap';
 import { BuildingType } from 'types/client.types';
@@ -42,9 +43,11 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
           position,
           clickable: true,
         });
+
         window.kakao.maps.event.addListener(marker, 'click', () => {
           router.push({ query: { building: building._id } });
         });
+
         buildingMarkers.push(marker);
         marker.setMap(map);
         marker.setVisible(false);
