@@ -1,8 +1,9 @@
 import { SEARCH_AS } from 'constants/dropdown';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { AsType } from 'types/client.types';
 
-const useMapSearch = () => {
+const useSearch = () => {
   const router = useRouter();
 
   const getQuery = () => {
@@ -13,24 +14,29 @@ const useMapSearch = () => {
     const unparsedAs = Array.isArray(router.query['as'])
       ? router.query['as'][0]
       : router.query['as'] ?? '';
-    const as = SEARCH_AS.includes(unparsedAs) ? unparsedAs : SEARCH_AS[0];
+    const as = (SEARCH_AS as ReadonlyArray<string>).includes(unparsedAs)
+      ? unparsedAs
+      : SEARCH_AS[0];
 
-    return { q, as };
+    return { q, as } as { q: string; as: AsType };
   };
 
   const initialQuery = getQuery();
 
   const [q, setQ] = useState(initialQuery.q);
-  const [as, setAs] = useState<(typeof SEARCH_AS)[number]>(initialQuery.as);
+  const [as, setAs] = useState<AsType>(initialQuery.as);
 
   useEffect(() => {
-    if (router.query['building']) {
+    if (!router.isReady || router.query['building']) {
       return;
     }
     router.push({ query: { as, q } });
   }, [as, q]);
 
   useEffect(() => {
+    if (!router.isReady) {
+      return;
+    }
     const query = getQuery();
     setQ(query.q);
     setAs(query.as);
@@ -39,4 +45,4 @@ const useMapSearch = () => {
   return { q, setQ, as, setAs };
 };
 
-export default useMapSearch;
+export default useSearch;

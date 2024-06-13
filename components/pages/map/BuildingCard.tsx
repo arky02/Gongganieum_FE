@@ -1,9 +1,40 @@
-const BuildingCard = () => {
+import { useRouter } from 'next/router';
+import { useStore } from 'store';
+import { BuildingType } from 'types/client.types';
+
+interface Props {
+  building: BuildingType;
+}
+
+const BuildingCard = ({ building }: Props) => {
+  const router = useRouter();
+  const { map } = useStore((state) => ({
+    map: state.map,
+  }));
+
+  const handleClick = () => {
+    if (!map) {
+      return;
+    }
+
+    router.push({ query: { building: building._id } });
+
+    const coord = building.coord.split(', ');
+    const position = new window.kakao.maps.LatLng(coord[0], coord[1]);
+    const bound = new window.kakao.maps.LatLngBounds();
+    bound.extend(position);
+    map.panTo(bound);
+  };
+
   return (
-    <div className='h-100 border border-black p-12'>
-      <p className='text-lg font-bold'>더 현대 서울</p>
-      <p>서울특별시 영등포구 여의대로 108</p>
-    </div>
+    <button
+      onClick={handleClick}
+      type='button'
+      className='h-100 border border-black p-12 text-left'
+    >
+      <p className='text-lg font-bold'>{building?.name}</p>
+      <p>{building?.address}</p>
+    </button>
   );
 };
 

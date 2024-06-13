@@ -1,7 +1,8 @@
 import { SEARCH_AS } from 'constants/dropdown';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import useMapSearch from 'hooks/useMapSearch';
+import useFetch from 'hooks/map/useFetch';
+import useSearch from 'hooks/map/useSearch';
 import SearchInput from 'components/commons/SearchInput';
 import BuildingTab from './BuildingTab';
 import RecommendTab from './RecommendTab';
@@ -18,18 +19,15 @@ const Tab = () => {
     setTab(false);
   };
 
-  const { q, setQ, as, setAs } = useMapSearch();
   const router = useRouter();
-
-  const handleSearch = () => {
-    console.log(as, q);
-  };
+  const { as, setAs, q, setQ } = useSearch();
+  const { searchResult, refetch } = useFetch({ as, q });
 
   const renderTab = () => {
     if (router.query['building']) {
       return <BuildingTab id={Number(router.query['building'])} />;
     } else if (q && as) {
-      return <SearchTab />;
+      return <SearchTab buildings={searchResult} />;
     } else {
       return <RecommendTab />;
     }
@@ -45,7 +43,7 @@ const Tab = () => {
           <SearchInput
             value={q}
             setValue={setQ}
-            onSubmit={handleSearch}
+            onSubmit={refetch}
             dropdownMenu={SEARCH_AS}
             selectedMenu={as}
             setSelectedMenu={setAs}
