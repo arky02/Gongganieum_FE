@@ -1,56 +1,51 @@
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import Input from 'components/commons/Input';
 
 interface FormValues {
-  password: string;
-  newPassword: string;
-  newPasswordCheck: string;
+  name: string;
+  phoneNumber: string;
+  email: string;
+  content: string;
 }
 
 const Contact = () => {
+  const { handleSubmit, control } = useForm<FormValues>({
+    defaultValues: {
+      name: '',
+      phoneNumber: '',
+      email: '',
+      content: '',
+    },
+    mode: 'onBlur',
+  });
+
+  const submitContactUs: SubmitHandler<FormValues> = (formData) => {
+    console.log(formData);
+  };
+
   return (
     <main className='flex h-screen w-screen items-center justify-center'>
-      <form className='border p-24'>
+      <form onSubmit={handleSubmit(submitContactUs)} className='border p-24'>
         <h1 className='text-4xl'>고객 문의</h1>
-        <div className=''>
-          <label htmlFor='contact-name' className='text-xl'>
-            이름
-          </label>
-          <input
-            id='contact-name'
-            placeholder='이름'
-            className='w-full rounded-lg border border-gray-300 p-8'
-          />
-        </div>
-        <div className=''>
-          <label htmlFor='contact-name' className='text-xl'>
-            휴대폰 번호
-          </label>
-          <input
-            id='contact-name'
-            placeholder='휴대폰 번호'
-            className='w-full rounded-lg border border-gray-300 p-8'
-          />
-        </div>
-        <div className=''>
-          <label htmlFor='contact-name' className='text-xl'>
-            이메일
-          </label>
-          <input
-            id='contact-name'
-            placeholder='이메일'
-            className='w-full rounded-lg border border-gray-300 p-8'
-          />
-        </div>
-        <div className=''>
-          <label htmlFor='contact-name' className='text-xl'>
-            문의 내용
-          </label>
-          <input
-            id='contact-name'
-            placeholder='문의 내용'
-            className='w-full rounded-lg border border-gray-300 p-8'
-          />
-        </div>
+        <Input name='name' placeholder='홍길동' control={control}>
+          이름
+        </Input>
+        <Input name='phoneNumber' placeholder='010-1234-5678' control={control}>
+          전화번호
+        </Input>
+        <Input name='email' placeholder='neulpum@gmail.com' control={control}>
+          이메일
+        </Input>
+        <Input
+          name='content'
+          placeholder='문의 내용을 입력해주세요.'
+          control={control}
+        >
+          문의 내용
+        </Input>
+        <button className='w-full border border-gray-500 text-center'>
+          제출하기
+        </button>
       </form>
     </main>
   );
