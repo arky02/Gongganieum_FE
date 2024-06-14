@@ -1,5 +1,5 @@
-import KakaoLogoImg from '../../../public/images/KakaoLogo.svg';
-import NaverLogoImg from '../../../public/images/NaverLogo.svg';
+import KakaoLogoImg from '/public/images/KakaoLogo.svg';
+import NaverLogoImg from '/public/images/NaverLogo.svg';
 
 const LoginButton = (props: { mode: 'naver' | 'kakao' }) => {
   const { mode } = props;
