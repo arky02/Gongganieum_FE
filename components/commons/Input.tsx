@@ -11,12 +11,12 @@ interface Props<T extends FieldValues> extends UseControllerProps<T> {
   type?: HTMLInputTypeAttribute;
 }
 
-function Input<T extends FieldValues>({
+const Input = <T extends FieldValues>({
   children,
   placeholder,
   type: initialType = 'text',
   ...controls
-}: Props<T>) {
+}: Props<T>) => {
   const { field, fieldState } = useController(controls);
   const [type, setType] = useState<HTMLInputTypeAttribute>(initialType);
 
@@ -50,6 +50,6 @@ function Input<T extends FieldValues>({
       <div className='mt-4 h-8 text-red-600'>{fieldState?.error?.message}</div>
     </div>
   );
-}
+};
 
 export default Input;
