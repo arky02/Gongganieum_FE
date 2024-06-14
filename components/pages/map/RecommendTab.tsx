@@ -1,5 +1,3 @@
-import BuildingCard from './BuildingCard';
-
 const RecommendTab = () => {
   return (
     <div className='w-full overflow-y-auto'>

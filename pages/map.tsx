@@ -3,7 +3,7 @@ import useInitMap from 'hooks/map/useInitMap';
 import { getBuildings } from 'apis/api';
 import Tab from 'components/pages/map/Tab';
 
-const MapPage = () => {
+const Map = () => {
   const { data: buildings } = useQuery({
     queryKey: ['buildings'],
     queryFn: getBuildings,
@@ -19,4 +19,4 @@ const MapPage = () => {
   );
 };
 
-export default MapPage;
+export default Map;

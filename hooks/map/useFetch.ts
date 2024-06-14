@@ -9,7 +9,9 @@ interface Props {
   q: string;
 }
 
-const useFetch = ({ as, q }: Props) => {
+const useFetch = (props: { as: AsType; q: string }) => {
+  const { as, q } = props;
+
   const { data: searchResult, refetch } = useQuery({
     queryKey: ['search', as, q],
     queryFn: () => getSearchResult(as, q),
