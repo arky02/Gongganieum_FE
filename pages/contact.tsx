@@ -1,4 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
+import ConsentCheckBox from 'components/commons/ConsentCheckbox';
 import Input from 'components/commons/Input';
 
 interface FormValues {
@@ -6,6 +7,7 @@ interface FormValues {
   phoneNumber: string;
   email: string;
   content: string;
+  agreed: boolean;
 }
 
 const Contact = () => {
@@ -15,6 +17,7 @@ const Contact = () => {
       phoneNumber: '',
       email: '',
       content: '',
+      agreed: false,
     },
     mode: 'onBlur',
   });
@@ -43,6 +46,7 @@ const Contact = () => {
         >
           문의 내용
         </Input>
+        <ConsentCheckBox name='agreed' control={control} />
         <button className='w-full border border-gray-500 text-center'>
           제출하기
         </button>
