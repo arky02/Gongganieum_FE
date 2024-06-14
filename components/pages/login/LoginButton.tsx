@@ -1,13 +1,31 @@
-import Image from 'next/image';
+import KakaoLogoImg from '../../../public/images/KakaoLogo.svg';
+import NaverLogoImg from '../../../public/images/NaverLogo.svg';
 
-const LoginButton = () => {
+const LoginButton = (props: { mode: 'naver' | 'kakao' }) => {
+  const { mode } = props;
+
+  const modeObj = {
+    kakao: {
+      content: '카카오',
+      icon: <KakaoLogoImg />,
+      backgroundColor: 'bg-[#FEE500]',
+    },
+    naver: {
+      content: '네이버',
+      icon: <NaverLogoImg />,
+      backgroundColor: 'bg-[#03C75A]',
+    },
+  };
   return (
-    <div className='flex h-56 w-600 items-center justify-center gap-16 rounded-xl bg-[#FEE500] px-216 py-16'>
-      <div>
-        <Image src={''} alt='로그인 버튼 이미지' width={20} height={20} />
+    <button
+      className={`flex h-56 w-600 items-center justify-center gap-16 rounded-xl ${mode === 'kakao' ? modeObj.kakao.backgroundColor : modeObj.naver.backgroundColor} px-216 py-16`}
+    >
+      {mode === 'kakao' ? modeObj.kakao.icon : modeObj.naver.icon}
+      <div className='text-lg font-black'>
+        {mode === 'kakao' ? modeObj.kakao.content : modeObj.naver.content}로
+        시작하기
       </div>
-      <div className='text-lg font-black'>카카오로 시작하기</div>
-    </div>
+    </button>
   );
 };
 
