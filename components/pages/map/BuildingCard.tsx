@@ -2,11 +2,9 @@ import { useRouter } from 'next/router';
 import { useStore } from 'store';
 import { BuildingType } from 'types/client.types';
 
-interface Props {
-  building: BuildingType;
-}
+const BuildingCard = (props: { building: BuildingType }) => {
+  const { building } = props;
 
-const BuildingCard = ({ building }: Props) => {
   const router = useRouter();
   const { map } = useStore((state) => ({
     map: state.map,

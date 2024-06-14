@@ -1,17 +1,13 @@
 import { Dispatch, SetStateAction, useRef } from 'react';
 import useOutsideClick from 'hooks/useOutsideClick';
 
-interface Props<T> {
+const Dropdown = <T extends string>(props: {
   elements: T[];
   selected: T;
   setSelected: Dispatch<SetStateAction<T>>;
-}
+}) => {
+  const { elements, selected, setSelected } = props;
 
-const Dropdown = <T extends string>({
-  elements,
-  selected,
-  setSelected,
-}: Props<T>) => {
   const ref = useRef(null);
   const [isVisible, setIsVisible] = useOutsideClick(ref, false);
 
