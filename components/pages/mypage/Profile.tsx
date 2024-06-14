@@ -14,14 +14,13 @@ const Profile = (props: {
   return (
     <div className='flex items-center justify-center gap-40'>
       <div
-        className={`flex items-center justify-center overflow-hidden rounded-full`}
+        className={`relative h-${CIRCLE_RADIUS} w-${CIRCLE_RADIUS} overflow-hidden rounded-full`}
       >
         <Image
-          width={CIRCLE_RADIUS}
-          height={CIRCLE_RADIUS}
           src={profileImage || DEFAULT_PROFILE_IMAGE}
           alt='프로필 사진'
-          className='rounded-full object-cover'
+          fill
+          className='object-cover'
         />
       </div>
       <div className='flex flex-col gap-32'>
