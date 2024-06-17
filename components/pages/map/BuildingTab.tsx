@@ -23,7 +23,7 @@ const BuildingTab = (props: { id: number }) => {
       return;
     }
 
-    const coord = buildingInfo.coord.split(', ');
+    const coord = buildingInfo.coord.split(',');
     const position = new window.kakao.maps.LatLng(
       Number(coord[0]) + 0.0002,
       coord[1],
