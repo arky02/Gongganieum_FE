@@ -20,10 +20,6 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
   }));
 
   const initMap = async () => {
-    if (!buildings) {
-      return;
-    }
-
     window.kakao?.maps?.load(() => {
       const mapContainer = document.getElementById('map');
       const mapOption = {
@@ -35,7 +31,7 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
 
       const buildingMarkers: any[] = [];
 
-      buildings.forEach((building) => {
+      buildings?.forEach((building) => {
         const coord = building.coord.split(', ');
         const position = new window.kakao.maps.LatLng(coord[0], coord[1]);
         const marker = new window.kakao.maps.Marker({
@@ -67,7 +63,7 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
         }
       });
 
-      const hotRate = getHotRate(buildings);
+      const hotRate = getHotRate(buildings!);
 
       const gunguMarkers: any[] = [];
       const gunguOverlays: any[] = [];
