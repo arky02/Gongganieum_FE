@@ -46,6 +46,31 @@ const config: Config = {
     fontFamily: {
       sans: ['Pretendard', 'Arial'],
     },
+    borderRadius: {
+      none: '0px',
+      8: '0.8rem',
+      10: '1rem',
+      12: '1.2rem',
+      16: '1.6rem',
+      24: '2.4rem',
+      full: '9999px',
+    },
+    colors: {
+      transparent: 'transparent',
+      white: 'rgb(var(--white) / <alpha-value>)',
+      black: 'rgb(var(--white) / <alpha-value>)',
+      gray: {
+        100: 'rgb(var(--gray-100) / <alpha-value>)',
+        200: 'rgb(var(--gray-200) / <alpha-value>)',
+        300: 'rgb(var(--gray-300) / <alpha-value>)',
+        400: 'rgb(var(--gray-400) / <alpha-value>)',
+      },
+      red: 'rgb(var(--red) / <alpha-value>)',
+      green: {
+        DEFAULT: 'rgb(var(--green) / <alpha-value>)',
+        light: 'rgb(var(--green-light) / <alpha-value>)',
+      },
+    },
   },
   plugins: [],
 };
