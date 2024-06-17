@@ -26,6 +26,26 @@ const config: Config = {
       popup: '999',
       floating: '1000',
     },
+    fontSize: {
+      12: '1.2rem',
+      14: '1.4rem',
+      16: '1.6rem',
+      18: '1.8rem',
+      20: '2.0rem',
+      24: '2.4rem',
+      28: '2.8rem',
+      32: '3.2rem',
+    },
+    fontWeight: {
+      400: '400',
+      500: '500',
+      600: '600',
+      700: '700',
+      800: '800',
+    },
+    fontFamily: {
+      sans: ['Pretendard', 'Arial'],
+    },
   },
   plugins: [],
 };
