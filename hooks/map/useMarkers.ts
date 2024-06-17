@@ -23,7 +23,7 @@ const useMarkers = () => {
     const bound = new window.kakao.maps.LatLngBounds();
 
     buildings.forEach((building) => {
-      const coord = building.coord.split(', ');
+      const coord = building.coord.split(',');
       const position = new window.kakao.maps.LatLng(coord[0], coord[1]);
       bound.extend(position);
 

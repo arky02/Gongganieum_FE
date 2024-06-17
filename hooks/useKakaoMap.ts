@@ -10,10 +10,6 @@ const useKakaoMap = (props: { callbackFn: () => void; deps?: any[] }) => {
   const { callbackFn, deps = [] } = props;
 
   useEffect(() => {
-    if (!deps[0]) {
-      return;
-    }
-
     const isScript = document.getElementById('mapScript');
     const mapScript = document.createElement('script');
 

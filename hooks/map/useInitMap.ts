@@ -1,6 +1,6 @@
 import { GUNGU, GUNGU_COORD, GunguType } from 'constants/regions';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useStore } from 'store';
 import useKakaoMap from 'hooks/useKakaoMap';
 import { BuildingType } from 'types/client.types';
@@ -15,7 +15,8 @@ const HOT_PLACE_COLOR = [
 
 const useInitMap = (buildings: BuildingType[] | undefined) => {
   const router = useRouter();
-  const { setMap } = useStore((state) => ({
+  const { map, setMap } = useStore((state) => ({
+    map: state.map,
     setMap: state.setMap,
   }));
 
@@ -28,120 +29,130 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
       };
       const map = new window.kakao.maps.Map(mapContainer, mapOption);
       setMap(map);
-
-      const buildingMarkers: any[] = [];
-
-      buildings?.forEach((building) => {
-        const coord = building.coord.split(', ');
-        const position = new window.kakao.maps.LatLng(coord[0], coord[1]);
-        const marker = new window.kakao.maps.Marker({
-          map,
-          position,
-          clickable: true,
-        });
-
-        window.kakao.maps.event.addListener(marker, 'click', () => {
-          router.push({ query: { building: building._id } });
-        });
-
-        buildingMarkers.push(marker);
-        marker.setMap(map);
-        marker.setVisible(false);
-      });
-
-      window.kakao.maps.event.addListener(map, 'zoom_changed', () => {
-        const zoomLevel = map.getLevel();
-
-        if (zoomLevel <= 6) {
-          buildingMarkers.forEach((marker) => {
-            marker.setVisible(true);
-          });
-        } else {
-          buildingMarkers.forEach((marker) => {
-            marker.setVisible(false);
-          });
-        }
-      });
-
-      const hotRate = getHotRate(buildings!);
-
-      const gunguMarkers: any[] = [];
-      const gunguOverlays: any[] = [];
-
-      GUNGU.forEach((gungu) => {
-        const popupCnt = hotRate[gungu];
-        if (popupCnt === 0) {
-          return;
-        }
-
-        const coord = new window.kakao.maps.LatLng(
-          GUNGU_COORD[gungu][0],
-          GUNGU_COORD[gungu][1],
-        );
-
-        const marker = new window.kakao.maps.Marker({
-          map,
-          position: coord,
-        });
-
-        window.kakao.maps.event.addListener(marker, 'click', () => {
-          map.setLevel(6);
-          map.setCenter(coord);
-        });
-
-        gunguMarkers.push(marker);
-        marker.setMap(map);
-
-        const hotColor =
-          popupCnt <= 10
-            ? HOT_PLACE_COLOR[0]
-            : popupCnt <= 20
-              ? HOT_PLACE_COLOR[1]
-              : popupCnt <= 40
-                ? HOT_PLACE_COLOR[2]
-                : popupCnt <= 60
-                  ? HOT_PLACE_COLOR[3]
-                  : HOT_PLACE_COLOR[4];
-
-        const content =
-          `<div class="p-4 border border-black rounded-md ${hotColor}">` +
-          gungu +
-          ' ' +
-          popupCnt +
-          '</div>';
-
-        const customOverlay = new window.kakao.maps.CustomOverlay({
-          map: map,
-          position: coord,
-          content: content,
-          yAnchor: 2,
-        });
-        gunguOverlays.push(customOverlay);
-        customOverlay.setMap(map);
-      });
-
-      window.kakao.maps.event.addListener(map, 'zoom_changed', () => {
-        const zoomLevel = map.getLevel();
-
-        if (zoomLevel <= 6) {
-          gunguMarkers.forEach((marker) => {
-            marker.setVisible(false);
-          });
-          gunguOverlays.forEach((overlay) => {
-            overlay.setVisible(false);
-          });
-        } else {
-          gunguMarkers.forEach((marker) => {
-            marker.setVisible(true);
-          });
-          gunguOverlays.forEach((overlay) => {
-            overlay.setVisible(true);
-          });
-        }
-      });
     });
   };
-  useKakaoMap({ callbackFn: initMap, deps: [buildings] });
+
+  useKakaoMap({ callbackFn: initMap });
+
+  const setMarkers = () => {
+    if (!buildings || !map) {
+      return;
+    }
+
+    const buildingMarkers: any[] = [];
+    buildings.forEach((building) => {
+      const coord = building.coord.split(',');
+      const position = new window.kakao.maps.LatLng(coord[0], coord[1]);
+      const marker = new window.kakao.maps.Marker({
+        map,
+        position,
+        clickable: true,
+      });
+
+      window.kakao.maps.event.addListener(marker, 'click', () => {
+        router.push({ query: { building: building._id } });
+      });
+
+      buildingMarkers.push(marker);
+      marker.setMap(map);
+      marker.setVisible(false);
+    });
+
+    window.kakao.maps.event.addListener(map, 'zoom_changed', () => {
+      const zoomLevel = map.getLevel();
+
+      if (zoomLevel <= 6) {
+        buildingMarkers.forEach((marker) => {
+          marker.setVisible(true);
+        });
+      } else {
+        buildingMarkers.forEach((marker) => {
+          marker.setVisible(false);
+        });
+      }
+    });
+
+    const hotRate = getHotRate(buildings!);
+
+    const gunguMarkers: any[] = [];
+    const gunguOverlays: any[] = [];
+
+    GUNGU.forEach((gungu) => {
+      const popupCnt = hotRate[gungu];
+      if (popupCnt === 0) {
+        return;
+      }
+
+      const coord = new window.kakao.maps.LatLng(
+        GUNGU_COORD[gungu][0],
+        GUNGU_COORD[gungu][1],
+      );
+
+      const marker = new window.kakao.maps.Marker({
+        map,
+        position: coord,
+      });
+
+      window.kakao.maps.event.addListener(marker, 'click', () => {
+        map.setLevel(6);
+        map.setCenter(coord);
+      });
+
+      gunguMarkers.push(marker);
+      marker.setMap(map);
+
+      const hotColor =
+        popupCnt <= 10
+          ? HOT_PLACE_COLOR[0]
+          : popupCnt <= 20
+            ? HOT_PLACE_COLOR[1]
+            : popupCnt <= 40
+              ? HOT_PLACE_COLOR[2]
+              : popupCnt <= 60
+                ? HOT_PLACE_COLOR[3]
+                : HOT_PLACE_COLOR[4];
+
+      const content =
+        `<div class="p-4 border border-black rounded-md ${hotColor}">` +
+        gungu +
+        ' ' +
+        popupCnt +
+        '</div>';
+
+      const customOverlay = new window.kakao.maps.CustomOverlay({
+        map: map,
+        position: coord,
+        content: content,
+        yAnchor: 2,
+      });
+      gunguOverlays.push(customOverlay);
+      customOverlay.setMap(map);
+    });
+
+    window.kakao.maps.event.addListener(map, 'zoom_changed', () => {
+      const zoomLevel = map.getLevel();
+
+      if (zoomLevel <= 6) {
+        gunguMarkers.forEach((marker) => {
+          marker.setVisible(false);
+        });
+        gunguOverlays.forEach((overlay) => {
+          overlay.setVisible(false);
+        });
+      } else {
+        gunguMarkers.forEach((marker) => {
+          marker.setVisible(true);
+        });
+        gunguOverlays.forEach((overlay) => {
+          overlay.setVisible(true);
+        });
+      }
+    });
+  };
+
+  useEffect(() => {
+    setMarkers();
+  }, [map, buildings]);
 };
 
 export default useInitMap;
