@@ -2,7 +2,7 @@ import LoginButton from './LoginButton';
 
 const LoginBoxContainer = () => {
   return (
-    <div className='flex w-768 flex-col items-center justify-center gap-36 rounded-2xl border-2 border-solid px-84 py-64'>
+    <div className='flex w-768 flex-col items-center justify-center gap-36 rounded-2xl bg-white px-84 py-64'>
       <div className='text-[32px] font-extrabold'>공간이음 로그인</div>
       <div className='flex flex-col gap-20'>
         <LoginButton mode='kakao' />
