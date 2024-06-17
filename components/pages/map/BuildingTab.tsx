@@ -5,11 +5,9 @@ import { useStore } from 'store';
 import { getBuildingInfo } from 'apis/api';
 import PopupCard from './PopupCard';
 
-interface Props {
-  id: number;
-}
+const BuildingTab = (props: { id: number }) => {
+  const { id } = props;
 
-const BuildingTab = ({ id }: Props) => {
   const router = useRouter();
   const { map } = useStore((state) => ({
     map: state.map,
@@ -25,7 +23,7 @@ const BuildingTab = ({ id }: Props) => {
       return;
     }
 
-    const coord = buildingInfo.coord.split(', ');
+    const coord = buildingInfo.coord.split(',');
     const position = new window.kakao.maps.LatLng(
       Number(coord[0]) + 0.0002,
       coord[1],

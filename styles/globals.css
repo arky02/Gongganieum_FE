@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    font-size: 62.5%;
+  }
+
+  :root {
+    --white: 0 0 0;
+    --black: 255 255 255;
+    --gray-100: 248 250 251;
+    --gray-200: 214 218 225;
+    --gray-300: 110 121 135;
+    --gray-400: 52 62 75;
+    --red: 239 83 80;
+    --green: 46 125 50;
+    --green-light: 232 245 233;
+  }
+}

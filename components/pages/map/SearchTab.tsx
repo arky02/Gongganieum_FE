@@ -5,7 +5,9 @@ interface Props {
   buildings: BuildingType[] | undefined;
 }
 
-const SearchTab = ({ buildings }: Props) => {
+const SearchTab = (props: { buildings: BuildingType[] | undefined }) => {
+  const { buildings } = props;
+
   return (
     <div className='w-full overflow-y-auto'>
       <div className='flex flex-col gap-8'>

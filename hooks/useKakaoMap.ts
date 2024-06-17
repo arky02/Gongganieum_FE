@@ -1,17 +1,14 @@
 import { useEffect } from 'react';
 
-interface Props {
-  callbackFn: () => void;
-  deps?: any[];
-}
-
 /**
  * 카카오맵 스크립트를 불러오는 함수
  * @param {function} parameter.callbackFn 스크립트 로드 이후에 부를 함수
  * @param {any[]?} parameter.deps useEffect dependency 배열
  */
 
-const useKakaoMap = ({ callbackFn, deps = [] }: Props) => {
+const useKakaoMap = (props: { callbackFn: () => void; deps?: any[] }) => {
+  const { callbackFn, deps = [] } = props;
+
   useEffect(() => {
     const isScript = document.getElementById('mapScript');
     const mapScript = document.createElement('script');
