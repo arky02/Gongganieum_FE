@@ -58,7 +58,7 @@ const config: Config = {
     colors: {
       transparent: 'transparent',
       white: 'rgb(var(--white) / <alpha-value>)',
-      black: 'rgb(var(--white) / <alpha-value>)',
+      black: 'rgb(var(--black) / <alpha-value>)',
       gray: {
         100: 'rgb(var(--gray-100) / <alpha-value>)',
         200: 'rgb(var(--gray-200) / <alpha-value>)',
