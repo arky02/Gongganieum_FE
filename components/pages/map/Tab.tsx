@@ -36,10 +36,10 @@ const Tab = () => {
   return (
     <>
       {tab ? (
-        <div className='fixed bottom-0 left-0 top-0 z-popup w-372 overflow-y-auto bg-white p-32'>
-          <button onClick={closeTab} className='h-32 w-32 border border-black'>
+        <div className='fixed bottom-0 left-0 top-0 z-popup flex w-400 flex-col gap-24 overflow-y-auto bg-white p-24'>
+          {/* <button onClick={closeTab} className='h-32 w-32 border border-black'>
             X
-          </button>
+          </button> */}
           <SearchInput
             value={q}
             setValue={setQ}
@@ -48,7 +48,6 @@ const Tab = () => {
             selectedMenu={as}
             setSelectedMenu={setAs}
           />
-          <div className='h-32' />
           {renderTab()}
         </div>
       ) : (
