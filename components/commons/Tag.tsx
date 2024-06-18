@@ -14,7 +14,7 @@ import {
 } from 'public/icons';
 
 const TAG_STYLE = {
-  일반: 'border border-gray-200 bg-white text-gray-300 font-400',
+  일반: 'border border-gray-200 bg-white text-gray-300 font-500',
   직영: 'bg-black text-white font-700',
   팝업진행중: 'bg-green-light text-green font-700',
   카테고리: 'bg-[#F3F5F8] text-gray-400 font-700',
@@ -63,7 +63,7 @@ const Tag = (props: { type?: TagType; text?: string }) => {
         );
       case '일반':
       default:
-        return text;
+        return `#${text}`;
     }
   };
 
