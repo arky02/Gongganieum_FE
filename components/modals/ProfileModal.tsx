@@ -31,13 +31,13 @@ const ProfileModal = () => {
   return (
     <form
       onSubmit={handleSubmit(submitProfileSettings)}
-      className='rounded-24 flex h-full w-600 flex-col border-2 border-solid p-24'
+      className='rounded-24 flex h-full w-600 flex-col gap-8 border-2 border-solid p-24'
     >
       <div className='text-24 font-800'>기본 프로필 설정</div>
-      <div className='text-16 font-400 text-gray-400'>
+      <div className='text-16 font-400 mb-16 text-gray-400'>
         공간이음 서비스를 이용하기 전 기본 프로필을 설정해 주세요.
       </div>
-      <div className='flex flex-col gap-16 px-8'>
+      <div className='mb-24 flex flex-col gap-16'>
         <Input
           name='nickname'
           placeholder='닉네임을 입력해 주세요.'

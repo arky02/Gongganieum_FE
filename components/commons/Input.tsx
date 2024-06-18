@@ -30,13 +30,15 @@ const Input = <T extends FieldValues>({
 
   return (
     <div className='relative'>
-      <label htmlFor={field.name}>{children}</label>
+      <label htmlFor={field.name} className='text-16 font-700'>
+        {children}
+      </label>
       <input
         id={field.name}
         placeholder={placeholder}
         type={type}
         {...field}
-        className={`w-full rounded-lg border border-gray-300 p-8 ${fieldState?.error && 'border-red-600'}`}
+        className={`rounded-8 font-500 text-14 mt-8 w-full border-[1px] border-gray-200 bg-gray-100 p-12 outline-none placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400 ${fieldState?.error && 'border-red-600'}`}
       />
       {initialType === 'password' && (
         <button
