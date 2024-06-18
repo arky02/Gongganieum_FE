@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Button from 'components/commons/Button';
 
 const WelcomeModal = () => {
   return (
@@ -16,7 +17,10 @@ const WelcomeModal = () => {
         공간이음 서비스를 원활하게 이용하기 위한
         <br /> 필수 단계인 기본 프로필 설정 단계로 넘어가겠습니다!
       </span>
-      <button>버튼 공통 컴포넌트 만들기</button>
+      {/* TODO: 기본 프로필 설정 모달 켜기 */}
+      <Button onClick={() => console.log('hi')}>
+        기본 프로필 설정 <span>&gt;</span>
+      </Button>
     </div>
   );
 };
