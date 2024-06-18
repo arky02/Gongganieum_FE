@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-const Button = (props: { children: ReactNode; onClick: () => void }) => {
+const Button = (props: { children: ReactNode; onClick?: () => void }) => {
   const { children, onClick } = props;
   return (
     <button
