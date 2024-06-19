@@ -42,7 +42,7 @@ export const generateRandomNickname = () => {
       '강아지',
       '거북이',
       '토끼',
-      ' 뱀',
+      '뱀',
       '사자',
       '호랑이',
       '표범',

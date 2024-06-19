@@ -70,13 +70,18 @@ const ProfileModal = () => {
         >
           브랜드명
         </Input>
-        <Input
-          name='productOrServiceName'
-          placeholder='주요 제품 및 서비스명을 입력해 주세요.'
-          control={control}
-        >
-          주요 제품 및 서비스명
-        </Input>
+        <div className='relative'>
+          <Input
+            name='productOrServiceName'
+            placeholder='주요 제품 및 서비스명을 입력해 주세요.'
+            control={control}
+          >
+            주요 제품 및 서비스명
+          </Input>
+          <span className='absolute bottom-24 right-12 text-14 font-500 text-[#8A909F]'>
+            20
+          </span>
+        </div>
         <Input
           name='interests'
           placeholder='관심분야를 입력해 주세요.'
@@ -84,13 +89,18 @@ const ProfileModal = () => {
         >
           관심 분야
         </Input>
-        <Input
-          name='introduction'
-          placeholder='한 줄 소개를 입력해 주세요.'
-          control={control}
-        >
-          한 줄 소개
-        </Input>
+        <div className='relative'>
+          <Input
+            name='introduction'
+            placeholder='한 줄 소개를 입력해 주세요.'
+            control={control}
+          >
+            한 줄 소개
+          </Input>
+          <span className='absolute bottom-24 right-12 text-14 font-500 text-[#8A909F]'>
+            50
+          </span>
+        </div>
       </div>
       {/* TODO: onClick 로직 추가 */}
       <Button type='submit'>기본 프로필 설정</Button>
