@@ -14,7 +14,7 @@ const TABS = [
 const Header = () => {
   return (
     <header className='sticky top-0 z-nav h-72 w-full border-b border-[#000]/5 bg-white'>
-      <div className='m-auto flex h-full max-w-1200 items-center justify-between'>
+      <div className='m-auto flex h-full max-w-1224 items-center justify-between px-24'>
         <Link href='/'>
           <IconLogo />
         </Link>
