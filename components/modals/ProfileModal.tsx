@@ -1,4 +1,6 @@
+import { ChangeEvent } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { generateRandomNickname } from 'utils/generateRandomNickname';
 import Button from 'components/commons/Button';
 import Input from 'components/commons/Input';
 import { IconCirculation } from 'public/icons';
@@ -13,7 +15,7 @@ interface FormValues {
 }
 
 const ProfileModal = () => {
-  const { control, handleSubmit } = useForm<FormValues>({
+  const { control, handleSubmit, register, setValue } = useForm<FormValues>({
     defaultValues: {
       nickname: '',
       companyName: '',
@@ -23,6 +25,16 @@ const ProfileModal = () => {
       introduction: '',
     },
   });
+
+  const handleChangeNickname = (e: ChangeEvent<HTMLInputElement>) => {
+    const newNickname = e.target.value;
+    setValue('nickname', newNickname);
+  };
+
+  const handleRandomNickname = () => {
+    const randomNickname = generateRandomNickname();
+    setValue('nickname', randomNickname);
+  };
 
   //TODO: 바꿀 로직
   const submitProfileSettings: SubmitHandler<FormValues> = (formData) => {
@@ -39,26 +51,11 @@ const ProfileModal = () => {
         공간이음 서비스를 이용하기 전 기본 프로필을 설정해 주세요.
       </div>
       <div className='mb-24 flex flex-col gap-16'>
-        <div className='flex items-end gap-16'>
-          <div className='w-full'>
-            <Input
-              name='nickname'
-              placeholder='닉네임을 입력해 주세요.'
-              control={control}
-            >
-              닉네임
-            </Input>
-          </div>
-          <button
-            onClick={() => console.log('hi')}
-            className='mb-12 flex h-48 w-fit items-center justify-center whitespace-nowrap rounded-8 bg-gray-100 px-12 py-20 text-16 font-500'
-          >
-            <div className='flex items-center gap-8'>
-              <IconCirculation />
-              <span>닉네임 랜덤 생성</span>
-            </div>
-          </button>
-        </div>
+        <NicknameInput
+          register={register}
+          onChangeNickname={handleChangeNickname}
+          onRandomNickname={handleRandomNickname}
+        />
         <Input
           name='companyName'
           placeholder='회사명을 입력해 주세요.'
@@ -103,4 +100,37 @@ const ProfileModal = () => {
 
 export default ProfileModal;
 
-// TODO: 닉네임 랜덤 생성기, 관심분야 태그
+const NicknameInput = (props: {
+  register: any;
+  onChangeNickname: (e: ChangeEvent<HTMLInputElement>) => void;
+  onRandomNickname: () => void;
+}) => {
+  const { register, onChangeNickname, onRandomNickname } = props;
+  return (
+    <div className='flex items-end gap-16'>
+      <div className='relative w-full'>
+        <label htmlFor='nickname' className='text-16 font-700'>
+          닉네임
+        </label>
+        <input
+          id='nickname'
+          placeholder={'닉네임을 입력해 주세요.'}
+          {...register('nickname', {
+            onChange: onChangeNickname,
+          })}
+          className={`mt-8 w-full rounded-8 border-[1px] border-gray-200 bg-gray-100 p-12 text-14 font-500 outline-none placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400`}
+        />
+      </div>
+      <button
+        type='button'
+        onClick={onRandomNickname}
+        className='flex h-48 w-fit items-center justify-center whitespace-nowrap rounded-8 bg-gray-100 px-12 py-20 text-16 font-500'
+      >
+        <div className='flex items-center gap-8'>
+          <IconCirculation />
+          <span>닉네임 랜덤 생성</span>
+        </div>
+      </button>
+    </div>
+  );
+};

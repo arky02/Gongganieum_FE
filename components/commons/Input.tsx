@@ -38,7 +38,7 @@ const Input = <T extends FieldValues>({
         placeholder={placeholder}
         type={type}
         {...field}
-        className={`rounded-8 font-500 text-14 mt-8 w-full border-[1px] border-gray-200 bg-gray-100 p-12 outline-none placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400 ${fieldState?.error && 'border-red-600'}`}
+        className={`mt-8 w-full rounded-8 border-[1px] border-gray-200 bg-gray-100 p-12 text-14 font-500 outline-none placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400 ${fieldState?.error && 'border-red-600'}`}
       />
       {initialType === 'password' && (
         <button
@@ -49,7 +49,7 @@ const Input = <T extends FieldValues>({
           {type === 'password' ? <div>off</div> : <div>on</div>}
         </button>
       )}
-      <div className='mt-4 h-8 text-red-600'>{fieldState?.error?.message}</div>
+      <div className='text-red-600 mt-4 h-8'>{fieldState?.error?.message}</div>
     </div>
   );
 };
