@@ -89,18 +89,7 @@ const ProfileModal = () => {
         >
           관심 분야
         </Input>
-        <div className='relative'>
-          <Input
-            name='introduction'
-            placeholder='한 줄 소개를 입력해 주세요.'
-            control={control}
-          >
-            한 줄 소개
-          </Input>
-          <span className='absolute bottom-24 right-12 text-14 font-500 text-[#8A909F]'>
-            50
-          </span>
-        </div>
+        <IntroductionInput register={register} />
       </div>
       {/* TODO: onClick 로직 추가 */}
       <Button type='submit'>기본 프로필 설정</Button>
@@ -141,6 +130,28 @@ const NicknameInput = (props: {
           <span>닉네임 랜덤 생성</span>
         </div>
       </button>
+    </div>
+  );
+};
+
+const IntroductionInput = (props: { register: any }) => {
+  const { register } = props;
+  return (
+    <div className='relative'>
+      <div className='relative w-full'>
+        <label htmlFor='introduction' className='text-16 font-700'>
+          한 줄 소개
+        </label>
+        <textarea
+          id='introduction'
+          placeholder={'한 줄 소개를 입력해 주세요.'}
+          {...register('introduction')}
+          className={`text mt-8 h-76 w-full rounded-8 border-[1px] border-gray-200 bg-gray-100 px-12 py-8 text-14 font-500 outline-none placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400`}
+        />
+      </div>
+      <span className='absolute right-12 top-40 text-14 font-500 text-[#8A909F]'>
+        50
+      </span>
     </div>
   );
 };
