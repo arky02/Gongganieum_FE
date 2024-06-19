@@ -12,6 +12,7 @@ import IconFood from './food.svg';
 import IconGame from './game.svg';
 import IconIt from './it.svg';
 import IconKakaoLogo from './kakao-logo.svg';
+import IconLogo from './logo.svg';
 import IconNaverLogo from './naver-logo.svg';
 import IconSearch from './search.svg';
 
@@ -32,4 +33,5 @@ export {
   IconEntertainment,
   IconArt,
   IconEtc,
+  IconLogo,
 };

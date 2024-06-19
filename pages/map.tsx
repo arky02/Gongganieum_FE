@@ -12,7 +12,7 @@ const Map = () => {
   useInitMap(buildings);
 
   return (
-    <div className='relative flex h-screen w-screen justify-end'>
+    <div className='relative flex h-[calc(100dvh-72px)] w-screen justify-end overflow-hidden'>
       <Tab />
       <div id='map' className='h-full w-full' />
     </div>
