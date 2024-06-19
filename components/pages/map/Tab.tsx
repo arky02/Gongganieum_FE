@@ -16,24 +16,42 @@ const Tab = () => {
     if (router.query['building']) {
       return <BuildingTab id={Number(router.query['building'])} />;
     } else if (q && as) {
-      return <SearchTab buildings={searchResult} />;
+      return (
+        <>
+          <div className='p-24 pb-0'>
+            <SearchInput
+              value={q}
+              setValue={setQ}
+              onSubmit={refetch}
+              dropdownMenu={SEARCH_AS}
+              selectedMenu={as}
+              setSelectedMenu={setAs}
+            />
+          </div>
+          <SearchTab buildings={searchResult} />
+        </>
+      );
     } else {
-      return <RecommendTab />;
+      return (
+        <>
+          <div className='p-24 pb-0'>
+            <SearchInput
+              value={q}
+              setValue={setQ}
+              onSubmit={refetch}
+              dropdownMenu={SEARCH_AS}
+              selectedMenu={as}
+              setSelectedMenu={setAs}
+            />
+          </div>
+          <RecommendTab />
+        </>
+      );
     }
   };
 
   return (
     <div className='fixed bottom-0 left-0 top-0 z-popup flex w-400 flex-col gap-24 overflow-y-auto bg-white'>
-      <div className='p-24 pb-0'>
-        <SearchInput
-          value={q}
-          setValue={setQ}
-          onSubmit={refetch}
-          dropdownMenu={SEARCH_AS}
-          selectedMenu={as}
-          setSelectedMenu={setAs}
-        />
-      </div>
       {renderTab()}
     </div>
   );
