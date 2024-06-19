@@ -10,6 +10,7 @@ const SearchInput = <T extends string>(props: {
   selectedMenu?: T;
   setSelectedMenu?: Dispatch<SetStateAction<T>>;
   size?: 'sm' | 'lg';
+  placeholder?: string;
 }) => {
   const {
     value,
@@ -19,6 +20,7 @@ const SearchInput = <T extends string>(props: {
     selectedMenu,
     setSelectedMenu,
     size = 'lg',
+    placeholder,
   } = props;
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -47,7 +49,7 @@ const SearchInput = <T extends string>(props: {
       <input
         ref={inputRef}
         defaultValue={value}
-        placeholder={`${selectedMenu}을 입력하세요.`}
+        placeholder={placeholder ?? `${selectedMenu}을 입력하세요.`}
         className='w-full rounded-8 border border-gray-200 bg-gray-100 p-12 text-14 font-500 placeholder:text-gray-300'
       />
 

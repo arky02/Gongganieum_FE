@@ -25,9 +25,14 @@ const Header = () => {
             </TabButton>
           ))}
         </div>
-        <SearchBar />
-        <div>
-          <Link href='/login'>로그인</Link>
+        <div className='flex items-center gap-12'>
+          <SearchBar />
+          <Link
+            href='/login'
+            className='flex h-40 w-68 items-center justify-center rounded-8 bg-black text-14 font-600 text-white'
+          >
+            로그인
+          </Link>
         </div>
       </div>
     </header>
@@ -60,7 +65,7 @@ const SearchBar = () => {
   const router = useRouter();
 
   const handleSubmit = (value: string) => {
-    router.push({ pathname: '/list', query: { as: '빌딩명', q: value } });
+    router.push({ pathname: '/list', query: { as: '지역명', q: value } });
   };
 
   return (
@@ -68,7 +73,7 @@ const SearchBar = () => {
       <SearchInput
         value={value}
         setValue={setValue}
-        selectedMenu='빌딩명'
+        placeholder='지역명을 입력해보세요.'
         onSubmit={handleSubmit}
         size='sm'
       />
