@@ -9,7 +9,7 @@
 
   :root {
     --white: 255 255 255;
-    --black: 0 0 0;
+    --black: 25 31 40;
     --gray-100: 248 250 251;
     --gray-200: 214 218 225;
     --gray-300: 110 121 135;
@@ -17,5 +17,9 @@
     --red: 239 83 80;
     --green: 46 125 50;
     --green-light: 232 245 233;
+  }
+
+  body {
+    @apply text-14 font-400 text-black;
   }
 }

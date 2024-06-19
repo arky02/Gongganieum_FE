@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, SyntheticEvent, useRef } from 'react';
+import { IconSearch } from 'public/icons';
 import Dropdown from './Dropdown';
 
 const SearchInput = <T extends string>(props: {
@@ -30,12 +31,7 @@ const SearchInput = <T extends string>(props: {
   };
 
   return (
-    <form onSubmit={handleSubmit} className='flex h-52 w-full'>
-      <input
-        ref={inputRef}
-        defaultValue={value}
-        className='w-full border border-black'
-      />
+    <form onSubmit={handleSubmit} className='relative flex h-48 w-full gap-12'>
       {dropdownMenu && selectedMenu && setSelectedMenu && (
         <Dropdown
           elements={dropdownMenu}
@@ -43,7 +39,16 @@ const SearchInput = <T extends string>(props: {
           setSelected={setSelectedMenu}
         />
       )}
-      <button className='w-52 border border-black'>검색</button>
+      <input
+        ref={inputRef}
+        defaultValue={value}
+        placeholder={`${selectedMenu}을 입력하세요.`}
+        className='w-full rounded-8 border border-gray-200 bg-gray-100 p-12 text-14 font-500 placeholder:text-gray-300'
+      />
+
+      <button className='absolute right-8 top-1/2 -translate-y-1/2'>
+        <IconSearch />
+      </button>
     </form>
   );
 };
