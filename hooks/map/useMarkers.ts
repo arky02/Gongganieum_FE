@@ -48,7 +48,9 @@ const useMarkers = () => {
       marker.setMap(map);
     });
 
-    map.panTo(bound);
+    if (buildings.length) {
+      map.panTo(bound);
+    }
   };
 
   const deleteMarkers = () => {
