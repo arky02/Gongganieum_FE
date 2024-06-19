@@ -21,7 +21,7 @@ const FiveLayout = (props: { imageUrls: string[] }) => {
   const { imageUrls } = props;
 
   return (
-    <div className='grid h-176 w-full grid-cols-4 grid-rows-2 gap-4'>
+    <div className='grid h-176 w-full flex-shrink-0 grid-cols-4 grid-rows-2 gap-4'>
       <div className='relative col-span-2 col-start-1 row-span-2 row-start-1 overflow-hidden rounded-l-16'>
         <Image
           src={imageUrls[0]}
@@ -62,7 +62,7 @@ const FiveLayout = (props: { imageUrls: string[] }) => {
           alt='빌딩 사진'
         />
         {imageUrls.length > 5 && (
-          <div className='absolute flex h-full w-full items-center justify-center bg-[rgb(0,0,0)]/50 text-24 font-800 text-white'>
+          <div className='absolute flex h-full w-full items-center justify-center bg-[rgb(0,0,0)]/50 text-24 font-700 text-white'>
             +{imageUrls.length - 4}
           </div>
         )}
@@ -75,7 +75,7 @@ const TwoLayout = (props: { imageUrls: string[] }) => {
   const { imageUrls } = props;
 
   return (
-    <div className='grid h-176 w-full grid-cols-2 gap-4'>
+    <div className='grid h-176 w-full flex-shrink-0 grid-cols-2 gap-4'>
       <div className='relative overflow-hidden rounded-l-16'>
         <Image
           src={imageUrls[0]}

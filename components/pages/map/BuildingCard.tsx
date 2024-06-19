@@ -29,6 +29,7 @@ const BuildingCard = (props: { building: BuildingType }) => {
   };
 
   const parsedTags = building?.tag === 'NULL' ? [] : building?.tag?.split(',');
+  const isPopup = new Date(building?.latest_end_date ?? '') > new Date();
 
   return (
     <button
@@ -47,11 +48,9 @@ const BuildingCard = (props: { building: BuildingType }) => {
       <Description name={building?.name} address={building?.address} />
       <div className='flex flex-wrap gap-8'>
         {!!building?.isours && <Tag type='직영' />}
-        {/* {!!building?.popups && <Tag type='팝업진행중' />} */}
+        {isPopup && <Tag type='팝업진행중' />}
         <Tag type='카테고리' text={building?.cate} />
-        {parsedTags.map((tag) => (
-          <Tag key={tag} type='일반' text={tag} />
-        ))}
+        {parsedTags?.map((tag) => <Tag key={tag} type='일반' text={tag} />)}
       </div>
     </button>
   );
