@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useRef } from 'react';
 import useOutsideClick from 'hooks/useOutsideClick';
+import { IconArrowDown } from 'public/icons';
 
 const Dropdown = <T extends string>(props: {
   elements: T[];
@@ -21,17 +22,18 @@ const Dropdown = <T extends string>(props: {
       <button
         onClick={() => setIsVisible((prev) => !prev)}
         type='button'
-        className='h-full w-72 border border-black'
+        className='flex h-full w-120 items-center justify-between rounded-8 border border-gray-200 bg-gray-100 p-12 text-14 font-500 text-gray-300'
       >
         {selected}
+        <IconArrowDown />
       </button>
       {isVisible && (
-        <ul className='absolute'>
+        <ul className='absolute z-floating w-120 translate-y-8 overflow-hidden rounded-8 border border-gray-200 bg-white'>
           {elements.map((el) => (
             <li
               onClick={() => handleMenuClick(el)}
               key={el}
-              className='h-28 w-100 border border-black'
+              className='flex h-48 w-full items-center p-12 text-14 font-500 text-gray-300 hover:bg-gray-200'
             >
               {el}
             </li>
