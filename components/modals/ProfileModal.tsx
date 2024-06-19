@@ -1,6 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Button from 'components/commons/Button';
 import Input from 'components/commons/Input';
+import { IconCirculation } from 'public/icons';
 
 interface FormValues {
   nickname: string;
@@ -31,20 +32,33 @@ const ProfileModal = () => {
   return (
     <form
       onSubmit={handleSubmit(submitProfileSettings)}
-      className='rounded-24 flex h-full w-600 flex-col gap-8 border-2 border-solid p-24'
+      className='flex h-full w-600 flex-col gap-8 rounded-24 border-2 border-solid p-24'
     >
       <div className='text-24 font-800'>기본 프로필 설정</div>
-      <div className='text-16 font-400 mb-16 text-gray-400'>
+      <div className='mb-16 text-16 font-400 text-gray-400'>
         공간이음 서비스를 이용하기 전 기본 프로필을 설정해 주세요.
       </div>
       <div className='mb-24 flex flex-col gap-16'>
-        <Input
-          name='nickname'
-          placeholder='닉네임을 입력해 주세요.'
-          control={control}
-        >
-          닉네임
-        </Input>
+        <div className='flex items-end gap-16'>
+          <div className='w-full'>
+            <Input
+              name='nickname'
+              placeholder='닉네임을 입력해 주세요.'
+              control={control}
+            >
+              닉네임
+            </Input>
+          </div>
+          <button
+            onClick={() => console.log('hi')}
+            className='mb-12 flex h-48 w-fit items-center justify-center whitespace-nowrap rounded-8 bg-gray-100 px-12 py-20 text-16 font-500'
+          >
+            <div className='flex items-center gap-8'>
+              <IconCirculation />
+              <span>닉네임 랜덤 생성</span>
+            </div>
+          </button>
+        </div>
         <Input
           name='companyName'
           placeholder='회사명을 입력해 주세요.'
@@ -89,4 +103,4 @@ const ProfileModal = () => {
 
 export default ProfileModal;
 
-// TODO: 모달 사용법도 PR에 반영하기
+// TODO: 닉네임 랜덤 생성기, 관심분야 태그
