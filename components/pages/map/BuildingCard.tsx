@@ -28,8 +28,6 @@ const BuildingCard = (props: { building: BuildingType }) => {
     map.panTo(bound);
   };
 
-  console.log(building);
-
   const parsedTags = building?.tag === 'NULL' ? [] : building?.tag?.split(',');
 
   return (

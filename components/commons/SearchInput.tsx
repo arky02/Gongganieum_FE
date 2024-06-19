@@ -5,10 +5,12 @@ import Dropdown from './Dropdown';
 const SearchInput = <T extends string>(props: {
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
-  onSubmit?: () => void;
+  onSubmit?: (value: string) => void;
   dropdownMenu?: T[];
   selectedMenu?: T;
   setSelectedMenu?: Dispatch<SetStateAction<T>>;
+  size?: 'sm' | 'lg';
+  placeholder?: string;
 }) => {
   const {
     value,
@@ -17,6 +19,8 @@ const SearchInput = <T extends string>(props: {
     dropdownMenu,
     selectedMenu,
     setSelectedMenu,
+    size = 'lg',
+    placeholder,
   } = props;
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -27,11 +31,14 @@ const SearchInput = <T extends string>(props: {
       return;
     }
     setValue(String(inputRef.current.value));
-    onSubmit?.();
+    onSubmit?.(inputRef.current.value);
   };
 
   return (
-    <form onSubmit={handleSubmit} className='relative flex h-48 w-full gap-12'>
+    <form
+      onSubmit={handleSubmit}
+      className={`relative flex w-full gap-12 ${size === 'lg' ? 'h-48' : 'h-40'}`}
+    >
       {dropdownMenu && selectedMenu && setSelectedMenu && (
         <Dropdown
           elements={dropdownMenu}
@@ -42,7 +49,7 @@ const SearchInput = <T extends string>(props: {
       <input
         ref={inputRef}
         defaultValue={value}
-        placeholder={`${selectedMenu}을 입력하세요.`}
+        placeholder={placeholder ?? `${selectedMenu}을 입력하세요.`}
         className='w-full rounded-8 border border-gray-200 bg-gray-100 p-12 text-14 font-500 placeholder:text-gray-300'
       />
 

@@ -51,7 +51,7 @@ const Tab = () => {
   };
 
   return (
-    <div className='fixed bottom-0 left-0 top-0 z-popup flex w-400 flex-col gap-24 overflow-y-auto bg-white'>
+    <div className='fixed bottom-0 left-0 top-72 z-popup flex w-400 flex-col gap-24 bg-white'>
       {renderTab()}
     </div>
   );
