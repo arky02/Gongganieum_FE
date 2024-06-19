@@ -57,7 +57,7 @@ const Tag = (props: { type?: TagType; text?: string }) => {
       case '카테고리':
         return (
           <>
-            {CATEGORY_ICON[(text as CategoryType) ?? '기타'] ?? null}
+            {CATEGORY_ICON[(text as CategoryType) ?? '기타']}
             <span>{text}</span>
           </>
         );
