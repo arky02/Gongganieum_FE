@@ -1,4 +1,4 @@
-import { SEARCH_AS } from 'constants/dropdown';
+import { SEARCH_AS } from 'constants/common';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { AsType } from 'types/client.types';

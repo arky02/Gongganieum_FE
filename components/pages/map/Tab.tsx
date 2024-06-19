@@ -1,4 +1,4 @@
-import { SEARCH_AS } from 'constants/dropdown';
+import { SEARCH_AS } from 'constants/common';
 import { useRouter } from 'next/router';
 import useFetch from 'hooks/map/useFetch';
 import useSearch from 'hooks/map/useSearch';

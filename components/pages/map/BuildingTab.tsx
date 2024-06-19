@@ -64,12 +64,14 @@ const BuildingTab = (props: { id: number }) => {
     };
   }, [map, buildingInfo]);
 
+  console.log(buildingInfo);
+
   return (
     <div className='flex h-full w-full flex-col overflow-y-auto overflow-x-hidden p-24'>
       <ImageLayout imageUrls={MOCK_BUILDING_IMAGE_URLS} />
       <Title buildingInfo={buildingInfo} />
       <div className='flex flex-col gap-24'>
-        <PopupInfo />
+        <PopupInfo popups={buildingInfo?.popups ?? []} />
         <BuildingInfo />
         <RegionInfo />
         <LocationInfo />
