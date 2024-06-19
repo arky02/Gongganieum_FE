@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { generateRandomNickname } from 'utils/generateRandomNickname';
 import Button from 'components/commons/Button';
@@ -25,6 +25,21 @@ const ProfileModal = () => {
       introduction: '',
     },
   });
+
+  const [tags, setTags] = useState<string[]>([]);
+
+  const addTags = (e: KeyboardEvent<HTMLInputElement>) => {
+    const inputVal = (e.target as HTMLInputElement).value;
+    if (e.key === 'Enter' && inputVal !== '' && !tags.includes(inputVal)) {
+      setTags([...tags, inputVal]);
+      (e.target as HTMLInputElement).value = '';
+    }
+  };
+
+  const removeTags = (indexToRemove: number) => {
+    const filteredTags = tags.filter((_, index) => index !== indexToRemove);
+    setTags(filteredTags);
+  };
 
   const handleChangeNickname = (e: ChangeEvent<HTMLInputElement>) => {
     const newNickname = e.target.value;
@@ -82,13 +97,12 @@ const ProfileModal = () => {
             20
           </span>
         </div>
-        <Input
-          name='interests'
-          placeholder='관심분야를 입력해 주세요.'
-          control={control}
-        >
-          관심 분야
-        </Input>
+        <InterestInput
+          register={register}
+          tags={tags}
+          addTag={addTags}
+          removeTags={removeTags}
+        />
         <IntroductionInput register={register} />
       </div>
       {/* TODO: onClick 로직 추가 */}
@@ -130,6 +144,49 @@ const NicknameInput = (props: {
           <span>닉네임 랜덤 생성</span>
         </div>
       </button>
+    </div>
+  );
+};
+
+const InterestInput = (props: {
+  register: any;
+  tags: string[];
+  addTag: (e: KeyboardEvent<HTMLInputElement>) => void;
+  removeTags: (indexToRemove: number) => void;
+}) => {
+  const { register, tags, addTag, removeTags } = props;
+  return (
+    <div className='relative w-full'>
+      <label htmlFor='interests' className='text-16 font-700'>
+        관심 분야
+      </label>
+      <div
+        className={`mt-8 flex w-full flex-col ${tags.length && 'gap-4'} rounded-8 border-[1px] border-gray-200 bg-gray-100 p-8 placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400`}
+      >
+        <input
+          id='introduction'
+          className='bg-gray-100 p-4 text-14 font-500 outline-none placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400'
+          placeholder={'관심 분야를 입력해 주세요.'}
+          onKeyUp={(e) => addTag(e)}
+          {...register('interests')}
+        />
+        <ul id='tags' className='flex flex-wrap gap-4'>
+          {tags.map((tag, index) => (
+            <li
+              key={index}
+              className='flex items-center justify-center rounded-8 bg-gray-200 px-8 py-4'
+            >
+              <span
+                id='tag-title'
+                className='text-12 font-700'
+                onClick={() => removeTags(index)}
+              >
+                #{tag}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
