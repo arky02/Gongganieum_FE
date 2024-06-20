@@ -17,13 +17,14 @@ export interface BuildingType {
 export type CategoryType =
   | '패션'
   | '뷰티'
-  | 'FNB'
+  | 'F&B'
   | '캐릭터'
   | '미디어'
   | '금융'
   | '예술'
   | '생활'
-  | 'IT';
+  | 'IT'
+  | '기타';
 
 export interface PopulationType {
   areaName: string;

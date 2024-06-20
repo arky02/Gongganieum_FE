@@ -18,4 +18,8 @@
     --green: 46 125 50;
     --green-light: 232 245 233;
   }
+
+  body {
+    @apply text-14 font-400 text-black;
+  }
 }
