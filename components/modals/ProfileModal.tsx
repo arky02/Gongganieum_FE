@@ -59,7 +59,7 @@ const ProfileModal = () => {
   return (
     <form
       onSubmit={handleSubmit(submitProfileSettings)}
-      className='flex h-full w-600 flex-col gap-8 rounded-24 border-2 border-solid p-24'
+      className='flex h-full w-600 flex-col gap-8 rounded-24 p-24'
     >
       <div className='text-24 font-800'>기본 프로필 설정</div>
       <div className='mb-16 text-16 font-400 text-gray-400'>
