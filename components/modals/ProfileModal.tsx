@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { generateRandomNickname } from 'utils/generateRandomNickname';
 import Button from 'components/commons/Button';
@@ -106,7 +106,9 @@ const ProfileModal = () => {
         <IntroductionInput register={register} />
       </div>
       {/* TODO: onClick 로직 추가 */}
-      <Button type='submit'>기본 프로필 설정</Button>
+      <Button type='button' onClick={handleSubmit(submitProfileSettings)}>
+        기본 프로필 설정
+      </Button>
     </form>
   );
 };
