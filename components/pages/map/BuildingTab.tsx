@@ -67,7 +67,11 @@ const BuildingTab = (props: { id: number }) => {
       <ImageLayout imageUrls={MOCK_BUILDING_IMAGE_URLS} />
       <Title buildingInfo={buildingInfo} />
       <div className='flex flex-col gap-24'>
-        <Description popups={buildingInfo?.popups ?? []} />
+        <Description
+          popups={buildingInfo?.popups ?? []}
+          address={buildingInfo?.address ?? ''}
+          region={buildingInfo?.address?.split(' ')?.[1] ?? ''}
+        />
       </div>
     </div>
   );
