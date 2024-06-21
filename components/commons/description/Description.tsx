@@ -1,10 +1,11 @@
 import { PopupType } from 'types/client.types';
+import BuildingInfoCard from './BuildingInfoCard';
 import DescriptionCard from './DescriptionCard';
 import PopupHistoryCard from './PopupHistoryCard';
 import PopupRankingCard from './PopupRankingCard';
 
-const Description = (props: { popups: PopupType[] }) => {
-  const { popups } = props;
+const Description = (props: { popups: PopupType[]; address: string }) => {
+  const { popups, address } = props;
 
   return (
     <div className='flex flex-col gap-36'>
@@ -17,9 +18,7 @@ const Description = (props: { popups: PopupType[] }) => {
       </div>
       <div>
         <h3 className='mb-16 text-24 font-800'>건물 정보</h3>
-        <div className='flex flex-col gap-24'>
-          <DescriptionCard></DescriptionCard>
-        </div>
+        <BuildingInfoCard address={address} />
       </div>
       <div>
         <h3 className='mb-16 text-24 font-800'>XX시 지역 데이터</h3>
