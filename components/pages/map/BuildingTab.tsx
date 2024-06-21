@@ -6,11 +6,7 @@ import { getBuildingInfo } from 'apis/api';
 import { BuildingType } from 'types/client.types';
 import ImageLayout from 'components/commons/ImageLayout';
 import Tag from 'components/commons/Tag';
-import BuildingInfo from 'components/commons/description/BuildingInfo';
-import DescriptionCard from 'components/commons/description/DescriptionCard';
-import LocationInfo from 'components/commons/description/LocationInfo';
-import PopupInfo from 'components/commons/description/PopupInfo';
-import RegionInfo from 'components/commons/description/RegionInfo';
+import Description from 'components/commons/description/Description';
 import { IconMarker } from 'public/icons';
 
 const MOCK_BUILDING_IMAGE_URLS = [
@@ -71,10 +67,7 @@ const BuildingTab = (props: { id: number }) => {
       <ImageLayout imageUrls={MOCK_BUILDING_IMAGE_URLS} />
       <Title buildingInfo={buildingInfo} />
       <div className='flex flex-col gap-24'>
-        <PopupInfo popups={buildingInfo?.popups ?? []} />
-        <BuildingInfo />
-        <RegionInfo />
-        <LocationInfo />
+        <Description popups={buildingInfo?.popups ?? []} />
       </div>
     </div>
   );
