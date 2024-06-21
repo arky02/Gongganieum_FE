@@ -3,6 +3,7 @@ import IconArt from './art.svg';
 import IconBeauty from './beauty.svg';
 import IconBuilding from './building.svg';
 import IconCharacter from './character.svg';
+import IconCirculation from './circulation.svg';
 import IconEntertainment from './entertainment.svg';
 import IconEtc from './etc.svg';
 import IconFashion from './fashion.svg';
@@ -34,4 +35,5 @@ export {
   IconArt,
   IconEtc,
   IconLogo,
+  IconCirculation,
 };
