@@ -1,6 +1,7 @@
 import IconArrowDown from './arrow-down.svg';
 import IconArt from './art.svg';
 import IconBeauty from './beauty.svg';
+import IconBlankLike from './blank-like.svg';
 import IconBuilding from './building.svg';
 import IconCharacter from './character.svg';
 import IconEntertainment from './entertainment.svg';
@@ -14,6 +15,7 @@ import IconIt from './it.svg';
 import IconKakaoLogo from './kakao-logo.svg';
 import IconLogo from './logo.svg';
 import IconNaverLogo from './naver-logo.svg';
+import IconRedLike from './red-like.svg';
 import IconSearch from './search.svg';
 
 export {
@@ -34,4 +36,6 @@ export {
   IconArt,
   IconEtc,
   IconLogo,
+  IconRedLike,
+  IconBlankLike,
 };
