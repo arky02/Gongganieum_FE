@@ -11,12 +11,16 @@ const PortalModal = (props: { children: ReactElement }) => {
   }, []);
 
   // CSR을 마친 후, window객체가 있을 때만 동작 (SSR 단계에서는 에러)
-  if (typeof window === 'undefined') return <></>;
+  if (typeof window === 'undefined') return;
 
-  return mounted ? (
-    createPortal(children, document.getElementById('modal-root') as HTMLElement)
-  ) : (
-    <></>
+  return (
+    <>
+      {mounted &&
+        createPortal(
+          children,
+          document.getElementById('modal-root') as HTMLElement,
+        )}
+    </>
   );
 };
 

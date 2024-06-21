@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { generateRandomNickname } from 'utils/generateRandomNickname';
 import Button from 'components/commons/Button';
@@ -15,16 +15,17 @@ interface FormValues {
 }
 
 const ProfileModal = () => {
-  const { control, handleSubmit, register, setValue } = useForm<FormValues>({
-    defaultValues: {
-      nickname: '',
-      companyName: '',
-      brandName: '',
-      productOrServiceName: '',
-      interests: '',
-      introduction: '',
-    },
-  });
+  const { control, handleSubmit, register, setValue, reset } =
+    useForm<FormValues>({
+      defaultValues: {
+        nickname: '',
+        companyName: '',
+        brandName: '',
+        productOrServiceName: '',
+        interests: '',
+        introduction: '',
+      },
+    });
 
   const [tags, setTags] = useState<string[]>([]);
 
@@ -32,7 +33,7 @@ const ProfileModal = () => {
     const inputVal = (e.target as HTMLInputElement).value;
     if (e.key === 'Enter' && inputVal !== '' && !tags.includes(inputVal)) {
       setTags([...tags, inputVal]);
-      (e.target as HTMLInputElement).value = '';
+      setValue('interests', '');
     }
   };
 
@@ -54,6 +55,7 @@ const ProfileModal = () => {
   //TODO: 바꿀 로직
   const submitProfileSettings: SubmitHandler<FormValues> = (formData) => {
     console.log(formData);
+    reset();
   };
 
   return (
@@ -133,7 +135,7 @@ const NicknameInput = (props: {
           {...register('nickname', {
             onChange: onChangeNickname,
           })}
-          className={`mt-8 w-full rounded-8 border-[1px] border-gray-200 bg-gray-100 p-12 text-14 font-500 outline-none placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400`}
+          className={`mt-8 w-full rounded-8 border border-gray-200 bg-gray-100 p-12 text-14 font-500 outline-none placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400`}
         />
       </div>
       <button
@@ -163,7 +165,7 @@ const InterestInput = (props: {
         관심 분야
       </label>
       <div
-        className={`mt-8 flex w-full flex-col ${tags.length && 'gap-4'} rounded-8 border-[1px] border-gray-200 bg-gray-100 p-8 placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400`}
+        className={`mt-8 flex w-full flex-col ${tags.length && 'gap-4'} rounded-8 border border-gray-200 bg-gray-100 p-8 placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400`}
       >
         <input
           id='introduction'
@@ -205,7 +207,7 @@ const IntroductionInput = (props: { register: any }) => {
           id='introduction'
           placeholder={'한 줄 소개를 입력해 주세요.'}
           {...register('introduction')}
-          className={`text mt-8 h-76 w-full rounded-8 border-[1px] border-gray-200 bg-gray-100 px-12 py-8 text-14 font-500 outline-none placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400`}
+          className={`text mt-8 h-76 w-full resize-none rounded-8 border border-gray-200 bg-gray-100 px-12 py-8 text-14 font-500 outline-none placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400`}
         />
       </div>
       <span className='absolute right-12 top-40 text-14 font-500 text-[#8A909F]'>
