@@ -1,6 +1,7 @@
 import IconArrowDown from './arrow-down.svg';
 import IconArt from './art.svg';
 import IconBeauty from './beauty.svg';
+import IconBuildingPin from './building-pin.svg';
 import IconBuilding from './building.svg';
 import IconCharacter from './character.svg';
 import IconEntertainment from './entertainment.svg';
@@ -36,4 +37,5 @@ export {
   IconEtc,
   IconLogo,
   IconMarker,
+  IconBuildingPin,
 };

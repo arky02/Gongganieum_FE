@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 import { getPopulationData } from 'apis/getPopulationData';
 import { PopupType } from 'types/client.types';
 import AgeRatioCard from './AgeRatioCard';
 import BuildingInfoCard from './BuildingInfoCard';
-import DescriptionCard from './DescriptionCard';
 import GenderRatioCard from './GenderRatioCard';
+import MapCard from './MapCard';
 import PopupHistoryCard from './PopupHistoryCard';
 import PopupRankingCard from './PopupRankingCard';
 import ResidentRatioCard from './ResidentRatioCard';
@@ -13,15 +14,17 @@ const Description = (props: {
   popups: PopupType[];
   address: string;
   region: string;
+  coord: string[];
 }) => {
-  const { popups, address, region } = props;
+  const { popups, address, region, coord } = props;
 
   const { data } = useQuery({
     queryKey: ['region', region],
     queryFn: () => getPopulationData('성수카페거리'),
   });
 
-  console.log(data);
+  const router = useRouter();
+  const showMap = router.pathname === '/map' ? false : true;
 
   return (
     <div className='flex flex-col gap-36'>
@@ -58,10 +61,12 @@ const Description = (props: {
           />
         </div>
       </div>
-      <div>
-        <h3 className='mb-16 text-24 font-800'>찾아오시는 길</h3>
-        <DescriptionCard></DescriptionCard>
-      </div>
+      {showMap && (
+        <div>
+          <h3 className='mb-16 text-24 font-800'>찾아오시는 길</h3>
+          <MapCard coord={coord} />
+        </div>
+      )}
     </div>
   );
 };
