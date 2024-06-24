@@ -1,10 +1,10 @@
 import React from 'react';
-import BuildingCard from 'components/pages/list/BuildingCard';
+import ListBuildingCard from 'components/pages/list/ListBuildingCard';
 
 const list = () => {
   return (
     <div className='mx-344 my-212'>
-      <BuildingCard />
+      <ListBuildingCard />
     </div>
   );
 };

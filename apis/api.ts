@@ -22,3 +22,7 @@ export const getSearchResult = async (as: AsType, q: string) => {
   });
   return res.data as BuildingType[];
 };
+
+export const postLikeToggle = async (userId: number, buildingId: number) => {
+  await instance.post(`/user/building/likes?user=${userId}&id=${buildingId}`);
+};

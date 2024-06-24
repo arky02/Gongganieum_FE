@@ -1,12 +1,27 @@
+import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useState } from 'react';
+import { postLikeToggle } from 'apis/api';
 import Tag from 'components/commons/Tag';
 import { IconBlankLike, IconRedLike } from 'public/icons';
 
 const MOCK_BUILDING_IMAGE_URL = '/images/mock-building-image.jpg';
 
-const BuildingCard = () => {
+// TODO: props에 빌딩 데이터 받아오기
+const ListBuildingCard = () => {
   const [isLike, setIsLike] = useState(false);
+
+  const likeMutation = useMutation({
+    // TODO: 각각의 빌딩의 유저id와 빌딩id 넣기
+    // TODO: 응답에 따른 하트 상태 관리
+    mutationFn: () => postLikeToggle(1, 57),
+  });
+
+  // TODO: 옵티미스틱 업데이트 추가
+  const handleClickLikeButton = () => {
+    setIsLike(!isLike);
+    likeMutation.mutate();
+  };
   return (
     <div className='relative flex w-396 flex-col text-start'>
       <div className='relative mb-20 h-352 w-full overflow-hidden rounded-12'>
@@ -17,10 +32,9 @@ const BuildingCard = () => {
           alt='빌딩 이미지'
         />
       </div>
-      {/* TODO: 찜하기 버튼 공용 컴포넌트로 분리하기 */}
       <button
         className='absolute right-20 top-20'
-        onClick={() => setIsLike(!isLike)}
+        onClick={handleClickLikeButton}
       >
         {isLike ? <IconRedLike /> : <IconBlankLike />}
       </button>
@@ -36,7 +50,7 @@ const BuildingCard = () => {
   );
 };
 
-export default BuildingCard;
+export default ListBuildingCard;
 
 const Description = (props: { name: string; address: string }) => {
   const { name, address } = props;
