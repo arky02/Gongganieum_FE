@@ -30,7 +30,7 @@ const Ranking = (props: { data: [CategoryType, number]; rank: number }) => {
         {CATEGORY_ICON[data[0]]}
         <span className='text-16 font-500'>{data[0]}</span>
       </div>
-      <div className='ml-auto text-gray-300'>{data[1]}%</div>
+      <div className='ml-auto text-16 font-500'>{data[1]}%</div>
     </div>
   );
 };
@@ -86,7 +86,7 @@ const getRanking = (typeRatio: { [type: string]: number }) => {
   sorted.sort((a, b) => b[1] - a[1]);
 
   const ranking = sorted
-    .slice(0, 3)
+    .slice(0, 5)
     .map((el) => [el[0], Math.round((el[1] / totalCnt) * 100)]);
 
   return ranking;
