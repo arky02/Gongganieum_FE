@@ -8,6 +8,7 @@ import { getBuildings } from 'apis/api';
 import SearchInput from 'components/commons/SearchInput';
 import ListBuildingCard from 'components/pages/list/ListBuildingCard';
 import ListCategoryTabs from 'components/pages/list/ListCategoryTabs';
+import ListCheckBoxs from 'components/pages/list/ListCheckBoxs';
 
 const List = () => {
   const { data: buildingListData } = useQuery({
@@ -37,8 +38,8 @@ const List = () => {
             setSelectedMenu={setAs}
           />
         </div>
-        <div className='flex'>
-          <div>체크박스</div>
+        <div className='flex items-center gap-8'>
+          <ListCheckBoxs />
           <div>정렬</div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import IconArrowDown from './arrow-down.svg';
 import IconArt from './art.svg';
 import IconBeauty from './beauty.svg';
+import IconBlackCheck from './black-check.svg';
 import IconBlankLike from './blank-like.svg';
 import IconBuilding from './building.svg';
 import IconCharacter from './character.svg';
@@ -40,4 +41,5 @@ export {
   IconRedLike,
   IconBlankLike,
   IconCirculation,
+  IconBlackCheck,
 };
