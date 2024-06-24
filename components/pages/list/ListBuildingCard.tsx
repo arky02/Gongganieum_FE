@@ -8,7 +8,6 @@ import { IconBlankLike, IconRedLike } from 'public/icons';
 
 const MOCK_BUILDING_IMAGE_URL = '/images/mock-building-image2.jpg';
 
-// TODO: props에 빌딩 데이터 받아오기
 const ListBuildingCard = (props: {
   name: string;
   address: string;
