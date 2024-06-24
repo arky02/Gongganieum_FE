@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { IconKakaoLogo, IconNaverLogo } from 'public/icons';
 
 const MODE_OBJECT = {
@@ -13,12 +14,14 @@ const MODE_OBJECT = {
   },
 };
 
-const LoginButton = (props: { mode: 'naver' | 'kakao' }) => {
-  const { mode } = props;
+const LoginButton = (props: { mode: 'naver' | 'kakao'; href: string}) => {
+  const { mode, href } = props;
+
 
   return (
-    <button
+    <Link
       className={`rounded-12 flex h-56 w-600 items-center justify-center gap-16 ${mode === 'kakao' ? MODE_OBJECT.kakao.backgroundColor : MODE_OBJECT.naver.backgroundColor} px-216 py-16`}
+      href={href}
     >
       {mode === 'kakao' ? MODE_OBJECT.kakao.icon : MODE_OBJECT.naver.icon}
       <div className='text-18 font-800 font-black'>
@@ -27,7 +30,7 @@ const LoginButton = (props: { mode: 'naver' | 'kakao' }) => {
           : MODE_OBJECT.naver.content}
         로 시작하기
       </div>
-    </button>
+    </Link>
   );
 };
 
