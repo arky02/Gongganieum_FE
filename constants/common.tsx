@@ -9,6 +9,7 @@ import {
   IconFinance,
   IconFood,
   IconIt,
+  IconLife,
 } from 'public/icons';
 
 export const SEARCH_AS = ['지역명', '빌딩명', '팝업명'] as AsType[];
@@ -34,7 +35,7 @@ export const CATEGORY_ICON = {
   미디어: <IconEntertainment />,
   금융: <IconFinance />,
   예술: <IconArt />,
-  생활: <IconFood />, // 추후 아이콘 수정 필요
+  생활: <IconLife />,
   IT: <IconIt />,
   기타: <IconEtc />,
 };
