@@ -41,6 +41,8 @@ export interface PopulationType {
   ageForties: string;
   ageFifties: string;
   ageSixties: string;
+  residentRate: string;
+  noneResidentRate: string;
 }
 
 export type PopulationKeysType = keyof PopulationType;

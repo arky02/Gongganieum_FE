@@ -26,6 +26,8 @@ export const getPopulationData = async (
     ageForties: '',
     ageFifties: '',
     ageSixties: '',
+    residentRate: '',
+    noneResidentRate: '',
   };
 
   let key: PopulationKeysType;

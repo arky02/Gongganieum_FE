@@ -7,6 +7,7 @@ import DescriptionCard from './DescriptionCard';
 import GenderRatioCard from './GenderRatioCard';
 import PopupHistoryCard from './PopupHistoryCard';
 import PopupRankingCard from './PopupRankingCard';
+import ResidentRatioCard from './ResidentRatioCard';
 
 const Description = (props: {
   popups: PopupType[];
@@ -50,8 +51,11 @@ const Description = (props: {
             ageFifties={Number(data?.ageFifties) ?? 0}
             ageSixties={Number(data?.ageSixties) ?? 0}
           />
-          <DescriptionCard title='실시간 인구 및 혼잡도 추이 현황'></DescriptionCard>
-          <DescriptionCard title='실시간 인구 구성 비율'></DescriptionCard>
+          {/* <DescriptionCard title='실시간 인구 및 혼잡도 추이 현황'></DescriptionCard> */}
+          <ResidentRatioCard
+            resident={Number(data?.residentRate) ?? 50}
+            noneResident={Number(data?.noneResidentRate) ?? 50}
+          />
         </div>
       </div>
       <div>
