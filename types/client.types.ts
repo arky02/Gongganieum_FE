@@ -12,6 +12,7 @@ export interface BuildingType {
   tag: string;
   cate: CategoryType;
   isours: boolean;
+  latest_end_date: Date;
 }
 
 export type CategoryType =

@@ -1,19 +1,32 @@
 import { useMutation } from '@tanstack/react-query';
+import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
 import { useState } from 'react';
 import { postLikeToggle } from 'apis/api';
 import Tag from 'components/commons/Tag';
 import { IconBlankLike, IconRedLike } from 'public/icons';
 
-const MOCK_BUILDING_IMAGE_URL = '/images/mock-building-image.jpg';
+const MOCK_BUILDING_IMAGE_URL = '/images/mock-building-image2.jpg';
 
 // TODO: props에 빌딩 데이터 받아오기
-const ListBuildingCard = () => {
+const ListBuildingCard = (props: {
+  name: string;
+  address: string;
+  isours: boolean;
+  tag?: string;
+  cate: string;
+  img?: string | StaticImport;
+  latest_end_date: Date | string;
+}) => {
+  const { name, address, isours, tag, cate, img, latest_end_date } = props;
   const [isLike, setIsLike] = useState(false);
+
+  const isPopup = new Date(latest_end_date ?? '') > new Date();
+  const parsedTags = tag === 'NULL' ? [] : tag?.split(',');
 
   const likeMutation = useMutation({
     // TODO: 각각의 빌딩의 유저id와 빌딩id 넣기
-    // TODO: 응답에 따른 하트 상태 관리
+    // TODO: 하트 상태 관리
     mutationFn: () => postLikeToggle(1, 57),
   });
 
@@ -30,6 +43,7 @@ const ListBuildingCard = () => {
           fill
           className='cursor-pointer object-cover '
           alt='빌딩 이미지'
+          quality={100}
         />
       </div>
       <button
@@ -38,12 +52,12 @@ const ListBuildingCard = () => {
       >
         {isLike ? <IconRedLike /> : <IconBlankLike />}
       </button>
-      <Description name={'노송 오재'} address={'전라도 전주시'} />
+      <Description name={name} address={address} />
       <div className='flex flex-wrap gap-8'>
-        <Tag type='직영' />
-        <Tag type='팝업진행중' />
-        <Tag type='카테고리' text={'송민혁'} />
-        <Tag type='일반' text={'퇴근'} />
+        {Boolean(isours) && <Tag type='직영' />}
+        {isPopup && <Tag type='팝업진행중' />}
+        <Tag type='카테고리' text={cate} />
+        {parsedTags?.map((tag) => <Tag key={tag} type='일반' text={tag} />)}
       </div>
       <div className='flex flex-wrap gap-8'></div>
     </div>
