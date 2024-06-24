@@ -11,17 +11,39 @@ import ListCategoryTabs from 'components/pages/list/ListCategoryTabs';
 import ListCheckBoxs from 'components/pages/list/ListCheckBoxs';
 
 const List = () => {
-  const { data: buildingListData } = useQuery({
+  const { data: buildingListData, refetch } = useQuery({
     queryKey: ['buildingListData'],
     queryFn: () => getBuildings(),
+    enabled: false,
   });
 
   const router = useRouter();
   const { cate } = router.query;
   const { as, setAs, q, setQ } = useSearch();
-  const { searchResult, refetch } = useFetch({ as, q });
+  const { searchResult, refetch: searchRefetch } = useFetch({ as, q });
 
-  // console.log(buildingListData);
+  const handleClickOurs = () => {
+    const { isours, ...otherQueries } = router.query;
+
+    if (isours === '1') {
+      router.push({
+        pathname: router.pathname,
+        query: otherQueries,
+      });
+    } else {
+      router.push({
+        pathname: router.pathname,
+        query: {
+          ...otherQueries,
+          isours: '1',
+        },
+      });
+    }
+
+    refetch();
+  };
+
+  // TODO: 진행중인 팝업 클릭 시 함수 추가
 
   return (
     <div className='my-76 flex flex-col justify-center gap-24 px-344'>
@@ -32,14 +54,17 @@ const List = () => {
           <SearchInput
             value={q}
             setValue={setQ}
-            onSubmit={refetch}
+            onSubmit={searchRefetch}
             dropdownMenu={SEARCH_AS}
             selectedMenu={as}
             setSelectedMenu={setAs}
           />
         </div>
         <div className='flex items-center gap-8'>
-          <ListCheckBoxs />
+          <ListCheckBoxs
+            onClickOurs={handleClickOurs}
+            onClickPopup={handleClickOurs}
+          />
           <div>정렬</div>
         </div>
       </div>

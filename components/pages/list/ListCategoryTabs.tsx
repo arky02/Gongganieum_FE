@@ -1,3 +1,4 @@
+// TODO: props에 데이터 페칭 함수 넣기
 const ListCategoryTabs = (props: { cate?: string | string[] }) => {
   const { cate } = props;
   const categoryTabs = [

@@ -1,21 +1,29 @@
-// TODO: 체크박스 패칭 함수 props으로 받아오기
-const ListCheckBoxs = () => {
+const ListCheckBoxs = (props: {
+  onClickPopup: () => void;
+  onClickOurs: () => void;
+}) => {
+  const { onClickPopup, onClickOurs } = props;
   return (
     <div className='flex gap-[10px] py-8'>
-      <CheckBoxInput text='진행중인 팝업' />
-      <CheckBoxInput text='직영 건물' />
+      <CheckBoxInput text='진행중인 팝업' onChange={onClickPopup} />
+      {/* TODO: onChange 함수 변경 */}
+      <CheckBoxInput text='직영 건물' onChange={onClickOurs} />
     </div>
   );
 };
 
 export default ListCheckBoxs;
 
-const CheckBoxInput = ({ text }: { text: string }) => (
-  <div className='flex items-center justify-center gap-8'>
-    <input
-      type='checkbox'
-      className='h-16	w-16 appearance-none rounded-4 border border-solid bg-gray-100 checked:border-0 checked:bg-[url("/icons/black-check.svg")] checked:bg-auto checked:bg-center checked:bg-no-repeat'
-    />
-    <span className='text-14 font-500'>{text}</span>
-  </div>
-);
+const CheckBoxInput = (props: { text: string; onChange: () => void }) => {
+  const { text, onChange } = props;
+  return (
+    <div className='flex items-center justify-center gap-8'>
+      <input
+        type='checkbox'
+        onChange={onChange}
+        className='h-16	w-16 appearance-none rounded-4 border border-solid bg-gray-100 checked:border-0 checked:bg-[url("/icons/black-check.svg")] checked:bg-auto checked:bg-center checked:bg-no-repeat'
+      />
+      <span className='text-14 font-500'>{text}</span>
+    </div>
+  );
+};
