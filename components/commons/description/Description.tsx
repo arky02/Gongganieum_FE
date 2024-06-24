@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getPopulationData } from 'apis/getPopulationData';
 import { PopupType } from 'types/client.types';
+import AgeRatioCard from './AgeRatioCard';
 import BuildingInfoCard from './BuildingInfoCard';
 import DescriptionCard from './DescriptionCard';
 import GenderRatioCard from './GenderRatioCard';
@@ -41,7 +42,14 @@ const Description = (props: {
             male={Number(data?.maleRate) ?? 50}
             female={Number(data?.femaleRate) ?? 50}
           />
-          <DescriptionCard title='연령대별 비율'></DescriptionCard>
+          <AgeRatioCard
+            ageTeenager={Number(data?.ageTeenager) ?? 0}
+            ageTwenties={Number(data?.ageTwenties) ?? 0}
+            ageThirties={Number(data?.ageThirties) ?? 0}
+            ageForties={Number(data?.ageForties) ?? 0}
+            ageFifties={Number(data?.ageFifties) ?? 0}
+            ageSixties={Number(data?.ageSixties) ?? 0}
+          />
           <DescriptionCard title='실시간 인구 및 혼잡도 추이 현황'></DescriptionCard>
           <DescriptionCard title='실시간 인구 구성 비율'></DescriptionCard>
         </div>
