@@ -1,3 +1,4 @@
+import IconArrowBack from './arrow-back.svg';
 import IconArrowDown from './arrow-down.svg';
 import IconBeauty from './beauty.svg';
 import IconBuildingPin from './building-pin.svg';
@@ -18,6 +19,7 @@ export {
   IconKakaoLogo,
   IconNaverLogo,
   IconArrowDown,
+  IconArrowBack,
   IconSearch,
   IconBuilding,
   IconFlag,
