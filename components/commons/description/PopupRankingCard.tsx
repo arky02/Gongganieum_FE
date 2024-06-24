@@ -45,29 +45,9 @@ const getTypeRatio = (popups: PopupType[]) => {
   const typeRatio: { [type: string]: number } = {};
 
   popups.forEach((popup) => {
-    let type = popup.type;
-    switch (type) {
-      case 'it':
-        type = 'IT';
-        break;
-      case '게임':
-      case '완구':
-        type = '생활';
-        break;
-      case '화장품':
-        type = '뷰티';
-        break;
-      case '미술':
-        type = '예술';
-        break;
-      case '만화':
-        type = '캐릭터';
-        break;
-    }
-    if (!CATEGORY.includes(type as CategoryType)) {
-      type = '기타';
-    }
-
+    const type = CATEGORY.includes(popup.type as CategoryType)
+      ? popup.type
+      : '기타';
     typeRatio[type] ? typeRatio[type]++ : (typeRatio[type] = 1);
   });
 
