@@ -26,6 +26,8 @@ const Description = (props: {
   const router = useRouter();
   const showMap = router.pathname === '/map' ? false : true;
 
+  console.log(data);
+
   return (
     <div className='flex flex-col gap-36'>
       <div>
@@ -57,10 +59,10 @@ const Description = (props: {
               ageFifties={Number(data.ageFifties) ?? 0}
               ageSixties={Number(data.ageSixties) ?? 0}
             />
-            {/* <CongestionCard
+            <CongestionCard
               time={data.congestion?.time ?? []}
               value={data.congestion?.value ?? []}
-            /> */}
+            />
             <ResidentRatioCard
               resident={Number(data.residentRate) ?? 50}
               noneResident={Number(data.noneResidentRate) ?? 50}

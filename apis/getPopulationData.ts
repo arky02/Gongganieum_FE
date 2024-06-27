@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { HOT_PLACE_COORD } from 'constants/regions';
-import { populationDataSplitter } from 'utils/populationDataSplitter';
+import {
+  congestionDataSplitter,
+  populationDataSplitter,
+} from 'utils/populationDataSplitter';
 import { PopulationKeysType, PopulationType } from 'types/client.types';
 
 const SECRET_KEY = process.env.NEXT_PUBLIC_SEOUL_PUBLIC_API_KEY;
@@ -35,7 +38,7 @@ export const getPopulationData = async (
   const response = await axios.get(URL);
   const data = response.data;
 
-  const parsedData: PopulationType = {
+  const parsedPopulationData: PopulationType = {
     areaName: '',
     updateTime: '',
     areaState: '',
@@ -53,10 +56,12 @@ export const getPopulationData = async (
   };
 
   let key: PopulationKeysType;
-  for (key in parsedData) {
+  for (key in parsedPopulationData) {
     const content = populationDataSplitter(data, key);
-    parsedData[key] = content;
+    parsedPopulationData[key] = content;
   }
 
-  return parsedData;
+  const parsedCongestionData = congestionDataSplitter(data);
+
+  return { ...parsedPopulationData, congestion: { ...parsedCongestionData } };
 };
