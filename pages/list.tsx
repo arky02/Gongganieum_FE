@@ -9,6 +9,7 @@ import SearchInput from 'components/commons/SearchInput';
 import ListBuildingCard from 'components/pages/list/ListBuildingCard';
 import ListCategoryTabs from 'components/pages/list/ListCategoryTabs';
 import ListCheckBoxs from 'components/pages/list/ListCheckBoxs';
+import ListSortingButton from 'components/pages/list/ListSortingButton';
 
 const List = () => {
   const router = useRouter();
@@ -49,6 +50,10 @@ const List = () => {
         cate: category,
       },
     });
+  };
+
+  const handleSelectSortButton = () => {
+    console.log('hh');
   };
 
   const handleClickOurs = () => {
@@ -102,7 +107,7 @@ const List = () => {
             onClickOurs={handleClickOurs}
             onClickIsPopup={handleClickIsPopup}
           />
-          <div>정렬</div>
+          <ListSortingButton onSelected={handleSelectSortButton} />
         </div>
       </div>
       {/* card-list */}
