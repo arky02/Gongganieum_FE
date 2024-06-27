@@ -4,6 +4,7 @@ import { getPopulationData } from 'apis/getPopulationData';
 import { PopupType } from 'types/client.types';
 import AgeRatioCard from './AgeRatioCard';
 import BuildingInfoCard from './BuildingInfoCard';
+import CongestionCard from './CongestionCard';
 import GenderRatioCard from './GenderRatioCard';
 import MapCard from './MapCard';
 import PopupHistoryCard from './PopupHistoryCard';
@@ -54,7 +55,10 @@ const Description = (props: {
             ageFifties={Number(data?.ageFifties) ?? 0}
             ageSixties={Number(data?.ageSixties) ?? 0}
           />
-          {/* <DescriptionCard title='실시간 인구 및 혼잡도 추이 현황'></DescriptionCard> */}
+          <CongestionCard
+            time={data?.congestion?.time ?? []}
+            value={data?.congestion?.value ?? []}
+          />
           <ResidentRatioCard
             resident={Number(data?.residentRate) ?? 50}
             noneResident={Number(data?.noneResidentRate) ?? 50}
