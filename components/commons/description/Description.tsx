@@ -14,14 +14,13 @@ import ResidentRatioCard from './ResidentRatioCard';
 const Description = (props: {
   popups: PopupType[];
   address: string;
-  region: string;
   coord: string[];
 }) => {
-  const { popups, address, region, coord } = props;
+  const { popups, address, coord } = props;
 
   const { data } = useQuery({
-    queryKey: ['region', region],
-    queryFn: () => getPopulationData('성수카페거리'),
+    queryKey: ['region', coord],
+    queryFn: () => getPopulationData(coord),
   });
 
   const router = useRouter();
@@ -40,31 +39,36 @@ const Description = (props: {
         <h3 className='mb-16 text-24 font-800'>건물 정보</h3>
         <BuildingInfoCard address={address} />
       </div>
-      <div>
-        <h3 className='mb-16 text-24 font-800'>XX시 지역 데이터</h3>
-        <div className='flex flex-col gap-24'>
-          <GenderRatioCard
-            male={Number(data?.maleRate) ?? 50}
-            female={Number(data?.femaleRate) ?? 50}
-          />
-          <AgeRatioCard
-            ageTeenager={Number(data?.ageTeenager) ?? 0}
-            ageTwenties={Number(data?.ageTwenties) ?? 0}
-            ageThirties={Number(data?.ageThirties) ?? 0}
-            ageForties={Number(data?.ageForties) ?? 0}
-            ageFifties={Number(data?.ageFifties) ?? 0}
-            ageSixties={Number(data?.ageSixties) ?? 0}
-          />
-          <CongestionCard
-            time={data?.congestion?.time ?? []}
-            value={data?.congestion?.value ?? []}
-          />
-          <ResidentRatioCard
-            resident={Number(data?.residentRate) ?? 50}
-            noneResident={Number(data?.noneResidentRate) ?? 50}
-          />
+      {data && (
+        <div>
+          <h3 className='mb-16 text-24 font-800'>
+            {data.areaName} 지역 데이터
+          </h3>
+          <div className='flex flex-col gap-24'>
+            <GenderRatioCard
+              male={Number(data.maleRate) ?? 50}
+              female={Number(data.femaleRate) ?? 50}
+            />
+            <AgeRatioCard
+              ageTeenager={Number(data.ageTeenager) ?? 0}
+              ageTwenties={Number(data.ageTwenties) ?? 0}
+              ageThirties={Number(data.ageThirties) ?? 0}
+              ageForties={Number(data.ageForties) ?? 0}
+              ageFifties={Number(data.ageFifties) ?? 0}
+              ageSixties={Number(data.ageSixties) ?? 0}
+            />
+            {/* <CongestionCard
+              time={data.congestion?.time ?? []}
+              value={data.congestion?.value ?? []}
+            /> */}
+            <ResidentRatioCard
+              resident={Number(data.residentRate) ?? 50}
+              noneResident={Number(data.noneResidentRate) ?? 50}
+            />
+          </div>
         </div>
-      </div>
+      )}
+
       {showMap && (
         <div>
           <h3 className='mb-16 text-24 font-800'>찾아오시는 길</h3>
