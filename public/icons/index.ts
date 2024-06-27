@@ -4,6 +4,7 @@ import IconBeauty from './beauty.svg';
 import IconBuildingPin from './building-pin.svg';
 import IconBuilding from './building.svg';
 import IconCharacter from './character.svg';
+import IconCirculation from './circulation.svg';
 import IconEntertainment from './entertainment.svg';
 import IconEtc from './etc.svg';
 import IconFashion from './fashion.svg';
@@ -32,4 +33,5 @@ export {
   IconLogo,
   IconMarker,
   IconBuildingPin,
+  IconCirculation,
 };
