@@ -1,12 +1,11 @@
 const ListCheckBoxs = (props: {
-  onClickPopup: () => void;
+  onClickIsPopup: () => void;
   onClickOurs: () => void;
 }) => {
-  const { onClickPopup, onClickOurs } = props;
+  const { onClickIsPopup, onClickOurs } = props;
   return (
     <div className='flex gap-[10px] py-8'>
-      <CheckBoxInput text='진행중인 팝업' onChange={onClickPopup} />
-      {/* TODO: onChange 함수 변경 */}
+      <CheckBoxInput text='진행중인 팝업' onChange={onClickIsPopup} />
       <CheckBoxInput text='직영 건물' onChange={onClickOurs} />
     </div>
   );

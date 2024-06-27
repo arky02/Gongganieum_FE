@@ -1,6 +1,9 @@
 // TODO: props에 데이터 페칭 함수 넣기
-const ListCategoryTabs = (props: { cate?: string | string[] }) => {
-  const { cate } = props;
+const ListCategoryTabs = (props: {
+  cate?: string | string[];
+  onClickCategoryTab: (category: string) => void;
+}) => {
+  const { cate, onClickCategoryTab } = props;
   const categoryTabs = [
     '전체',
     '음식', // 'FNB'
@@ -18,6 +21,7 @@ const ListCategoryTabs = (props: { cate?: string | string[] }) => {
       {categoryTabs.map((el, index) => (
         <button
           key={index}
+          onClick={() => onClickCategoryTab(el)}
           className={`${(cate === el || cate === 'FNB') && 'border-b-2 border-black'} px-16 py-20 text-14 font-600`}
         >
           {el}
