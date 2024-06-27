@@ -1,4 +1,6 @@
-const ListSortingButton = (props: { onSelected: () => void }) => {
+const ListSortingButton = (props: {
+  onSelected: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}) => {
   const { onSelected } = props;
   return (
     <div className='px-16 py-8'>

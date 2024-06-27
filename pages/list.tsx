@@ -37,7 +37,6 @@ const List = () => {
 
   const { data: buildingListData, refetch } = useQuery({
     queryKey: ['buildingListData'],
-    // queryFn: () => getBuildings(),
     queryFn: () => getCertainBuildings(queryParams),
     enabled: false,
   });
@@ -52,8 +51,15 @@ const List = () => {
     });
   };
 
-  const handleSelectSortButton = () => {
-    console.log('hh');
+  const handleSelectSortButton = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const order = e.target.value;
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        order: order,
+      },
+    });
   };
 
   const handleClickOurs = () => {
