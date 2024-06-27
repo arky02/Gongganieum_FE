@@ -1,7 +1,7 @@
 import { populationDataFilter } from 'constants/populationDataFilter';
 import { PopulationKeysType } from 'types/client.types';
 
-export const populationDataSpliter = (
+export const populationDataSplitter = (
   populationData: string,
   category: PopulationKeysType,
 ) => {

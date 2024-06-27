@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { HOT_PLACE_COORD } from 'constants/regions';
-import { populationDataSpliter } from 'utils/populationDataSpliter';
+import { populationDataSplitter } from 'utils/populationDataSplitter';
 import { PopulationKeysType, PopulationType } from 'types/client.types';
 
 const SECRET_KEY = process.env.NEXT_PUBLIC_SEOUL_PUBLIC_API_KEY;
@@ -54,7 +54,7 @@ export const getPopulationData = async (
 
   let key: PopulationKeysType;
   for (key in parsedData) {
-    const content = populationDataSpliter(data, key);
+    const content = populationDataSplitter(data, key);
     parsedData[key] = content;
   }
 
