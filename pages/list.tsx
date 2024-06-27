@@ -2,9 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { SEARCH_AS } from 'constants/dropdown';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import useFetch from 'hooks/map/useFetch';
 import useSearch from 'hooks/map/useSearch';
-import { getCertainBuildings } from 'apis/api';
+import { getFilteredBuildings } from 'apis/api';
 import SearchInput from 'components/commons/SearchInput';
 import ListBuildingCard from 'components/pages/list/ListBuildingCard';
 import ListCategoryTabs from 'components/pages/list/ListCategoryTabs';
@@ -14,9 +13,7 @@ import ListSortingButton from 'components/pages/list/ListSortingButton';
 const List = () => {
   const router = useRouter();
   const { cate, q: urlQ, order, isours: urlIsOurs, as: urlAs } = router.query;
-
   const { as, setAs, q, setQ } = useSearch();
-  const { searchResult, refetch: searchRefetch } = useFetch({ as, q });
 
   const queryParams = {
     q: urlQ as string | undefined,
@@ -25,10 +22,11 @@ const List = () => {
       | '전체'
       | '패션'
       | '뷰티'
-      | 'FNB'
+      | 'F&B'
       | '캐릭터'
       | '미디어'
-      | '생활'
+      | '예술'
+      | '기타'
       | undefined,
     isours:
       urlIsOurs === 'true' ? true : urlIsOurs === 'false' ? false : undefined,
@@ -37,18 +35,28 @@ const List = () => {
 
   const { data: buildingListData, refetch } = useQuery({
     queryKey: ['buildingListData'],
-    queryFn: () => getCertainBuildings(queryParams),
+    queryFn: () => getFilteredBuildings(queryParams),
     enabled: false,
   });
 
   const handleClickCategoryTab = (category: string) => {
-    router.push({
-      pathname: router.pathname,
-      query: {
-        ...router.query,
-        cate: category,
-      },
-    });
+    if (category === '음식') {
+      router.push({
+        pathname: router.pathname,
+        query: {
+          ...router.query,
+          cate: 'F&B',
+        },
+      });
+    } else {
+      router.push({
+        pathname: router.pathname,
+        query: {
+          ...router.query,
+          cate: category,
+        },
+      });
+    }
   };
 
   const handleSelectSortButton = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -102,7 +110,6 @@ const List = () => {
           <SearchInput
             value={q}
             setValue={setQ}
-            onSubmit={searchRefetch}
             dropdownMenu={SEARCH_AS}
             selectedMenu={as}
             setSelectedMenu={setAs}

@@ -8,10 +8,18 @@ export const getBuildings = async () => {
 };
 
 // 건물 리스트 조회
-export const getCertainBuildings = async (params: {
+export const getFilteredBuildings = async (params: {
   q?: string;
   order?: 'new' | 'popular' | 'likes';
-  cate?: '전체' | '패션' | '뷰티' | 'FNB' | '캐릭터' | '미디어' | '생활';
+  cate?:
+    | '전체'
+    | '패션'
+    | '뷰티'
+    | 'F&B'
+    | '캐릭터'
+    | '미디어'
+    | '예술'
+    | '기타';
   isours?: boolean;
   as?: 'address' | 'building' | 'popup';
 }) => {
@@ -19,14 +27,15 @@ export const getCertainBuildings = async (params: {
 
   if (params.q) query.append('q', params.q);
   if (params.order) query.append('order', params.order);
-  if (params.cate) query.append('cate', params.cate);
+  if (params.cate && params.cate !== '전체') query.append('cate', params.cate);
   if (params.isours !== undefined)
     query.append('isours', String(params.isours));
   if (params.as) query.append('as', params.as);
 
-  console.log(query.toString());
+  let path = `/building/search?q=&${query.toString()}`;
+  if (params.q) path = `/building/search?${query.toString()}`;
 
-  const res = await instance.get(`/building/search?${query.toString()}`);
+  const res = await instance.get(path);
   return res.data as BuildingType[];
 };
 
