@@ -6,7 +6,7 @@ const TAG_STYLE = {
   일반: 'border border-gray-200 bg-white text-gray-300 font-500',
   직영: 'bg-black text-white font-700',
   팝업진행중: 'bg-green-light text-green font-700',
-  카테고리: 'bg-[#F3F5F8] text-gray-400 font-700',
+  카테고리: 'border border-gray-200 bg-[#F3F5F8] text-gray-400 font-700',
 };
 
 type TagType = '일반' | '직영' | '팝업진행중' | '카테고리';

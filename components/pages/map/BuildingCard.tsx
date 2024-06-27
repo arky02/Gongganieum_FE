@@ -35,22 +35,22 @@ const BuildingCard = (props: { building: BuildingType }) => {
     <button
       onClick={handleClick}
       type='button'
-      className='flex flex-col text-start'
+      className='border-[rgba(0,0,0,0.06)} flex flex-col rounded-12 border bg-gray-300/5 p-16 text-start'
     >
-      <div className='relative mb-20 h-352 w-full overflow-hidden rounded-12'>
+      <Description name={building?.name} address={building?.address} />
+      <div className='mb-12 flex flex-wrap gap-8'>
+        {!!building?.isours && <Tag type='직영' />}
+        {isPopup && <Tag type='팝업진행중' />}
+        <Tag type='카테고리' text={building?.cate} />
+        {parsedTags?.map((tag) => <Tag key={tag} type='일반' text={tag} />)}
+      </div>
+      <div className='relative h-148 w-full overflow-hidden rounded-12'>
         <Image
           src={MOCK_BUILDING_IMAGE_URL}
           fill
           className='object-cover'
           alt='빌딩 이미지'
         />
-      </div>
-      <Description name={building?.name} address={building?.address} />
-      <div className='flex flex-wrap gap-8'>
-        {!!building?.isours && <Tag type='직영' />}
-        {isPopup && <Tag type='팝업진행중' />}
-        <Tag type='카테고리' text={building?.cate} />
-        {parsedTags?.map((tag) => <Tag key={tag} type='일반' text={tag} />)}
       </div>
     </button>
   );
@@ -62,9 +62,9 @@ const Description = (props: { name: string; address: string }) => {
   const { name, address } = props;
 
   return (
-    <div className='mb-12 flex flex-col gap-4'>
-      <h3 className='text-20 font-700'>{name}</h3>
-      <span className='text-16 text-gray-400'>{address}</span>
+    <div className='mb-8 flex flex-col gap-4'>
+      <h3 className='text-18 font-700'>{name}</h3>
+      <span className='text-14 text-gray-400'>{address}</span>
     </div>
   );
 };
