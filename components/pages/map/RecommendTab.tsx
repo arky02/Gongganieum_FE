@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { getSearchResult } from 'apis/api';
+import { getFilteredBuildings } from 'apis/api';
 import BuildingCard from './BuildingCard';
 
 const RecommendTab = () => {
   const { data: buildings } = useQuery({
     queryKey: ['recommend'],
-    queryFn: () => getSearchResult('지역명', '성수'),
+    queryFn: () => getFilteredBuildings({ as: '지역명', q: '성수' }),
   });
 
   return (

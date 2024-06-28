@@ -17,7 +17,7 @@ const ListBuildingCard = (props: {
   img?: string | StaticImport;
   latest_end_date: Date | string;
 }) => {
-  const { name, address, isours, tag, cate, img, latest_end_date } = props;
+  const { name, address, isours, tag, cate, latest_end_date } = props;
   const [isLike, setIsLike] = useState(false);
 
   const isPopup = new Date(latest_end_date ?? '') > new Date();

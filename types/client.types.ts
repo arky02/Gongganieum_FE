@@ -16,15 +16,13 @@ export interface BuildingType {
 }
 
 export type CategoryType =
+  | '전체'
   | '패션'
   | '뷰티'
   | 'F&B'
   | '캐릭터'
   | '미디어'
-  | '금융'
   | '예술'
-  | '생활'
-  | 'IT'
   | '기타';
 
 export interface PopulationType {
@@ -45,3 +43,5 @@ export interface PopulationType {
 export type PopulationKeysType = keyof PopulationType;
 
 export type AsType = '지역명' | '빌딩명' | '팝업명';
+
+export type OrderType = 'new' | 'popular' | 'likes';

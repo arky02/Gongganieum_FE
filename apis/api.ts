@@ -1,4 +1,9 @@
-import { AsType, BuildingType } from 'types/client.types';
+import {
+  AsType,
+  BuildingType,
+  CategoryType,
+  OrderType,
+} from 'types/client.types';
 import { instance } from './config/default';
 
 // 건물 전체 조회
@@ -7,21 +12,13 @@ export const getBuildings = async () => {
   return res.data as BuildingType[];
 };
 
-// 건물 리스트 조회
+// 건물 리스트 조회 및 지도 검색창
 export const getFilteredBuildings = async (params: {
   q?: string;
-  order?: 'new' | 'popular' | 'likes';
-  cate?:
-    | '전체'
-    | '패션'
-    | '뷰티'
-    | 'F&B'
-    | '캐릭터'
-    | '미디어'
-    | '예술'
-    | '기타';
+  order?: OrderType;
+  cate?: CategoryType;
   isours?: boolean;
-  as?: '팝업명' | '빌딩명';
+  as?: AsType;
 }) => {
   const { q, order, cate, isours, as } = params;
   const parsedAs =
@@ -31,6 +28,7 @@ export const getFilteredBuildings = async (params: {
   const res = await instance.get(path, {
     params: { q, order, cate, isours, as: parsedAs },
   });
+  // const res = await instance.get(path);
 
   return res.data as BuildingType[];
 };
@@ -39,19 +37,6 @@ export const getFilteredBuildings = async (params: {
 export const getBuildingInfo = async (id: number) => {
   const res = await instance.get('/building/infos', { params: { id } });
   return res.data[0] as BuildingType;
-};
-
-// 지도 검색창
-export const getSearchResult = async (as: AsType, q: string) => {
-  const parsedAs =
-    as === '빌딩명' ? 'building' : as === '팝업명' ? 'popup' : 'address';
-  const res = await instance.get('/building/search', {
-    params: {
-      as: parsedAs,
-      q,
-    },
-  });
-  return res.data as BuildingType[];
 };
 
 // 찜하기
