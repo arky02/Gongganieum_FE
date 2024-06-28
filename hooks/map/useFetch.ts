@@ -4,8 +4,8 @@ import { getFilteredBuildings } from 'apis/api';
 import { AsType } from 'types/client.types';
 import useMarkers from './useMarkers';
 
-const useFetch = (props: { as: AsType; q: string }) => {
-  const { as, q } = props;
+const useFetch = (props: { as: AsType; q: string; mapFlag?: boolean }) => {
+  const { as, q, mapFlag } = props;
 
   const { data: searchResult, refetch } = useQuery({
     queryKey: ['search', as, q],
@@ -13,18 +13,17 @@ const useFetch = (props: { as: AsType; q: string }) => {
     enabled: !!q,
   });
 
-  // TODO: 지도 관련 코드 flag 분기 추가
   const { createMarkers, deleteMarkers } = useMarkers();
 
   const handleFetch = async () => {
-    deleteMarkers();
+    if (mapFlag) deleteMarkers();
     if (!q) {
       return;
     }
 
     const res = await refetch();
     const data = res.data;
-    createMarkers(data);
+    if (mapFlag) createMarkers(data);
   };
 
   useEffect(() => {

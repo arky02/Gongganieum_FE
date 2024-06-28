@@ -28,7 +28,6 @@ export const getFilteredBuildings = async (params: {
   const res = await instance.get(path, {
     params: { q, order, cate, isours, as: parsedAs },
   });
-  // const res = await instance.get(path);
 
   return res.data as BuildingType[];
 };

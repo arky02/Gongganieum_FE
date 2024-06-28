@@ -4,7 +4,12 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useSearch from 'hooks/map/useSearch';
 import { getFilteredBuildings } from 'apis/api';
-import { BuildingType } from 'types/client.types';
+import {
+  AsType,
+  BuildingType,
+  CategoryType,
+  OrderType,
+} from 'types/client.types';
 import SearchInput from 'components/commons/SearchInput';
 import ListBuildingCard from 'components/pages/list/ListBuildingCard';
 import ListCategoryTabs from 'components/pages/list/ListCategoryTabs';
@@ -22,19 +27,10 @@ const List = () => {
 
   const queryParams = {
     q: urlQ as string | undefined,
-    order: order as 'new' | 'popular' | 'likes' | undefined,
-    cate: cate as
-      | '전체'
-      | '패션'
-      | '뷰티'
-      | 'F&B'
-      | '캐릭터'
-      | '미디어'
-      | '예술'
-      | '기타'
-      | undefined,
+    order: order as OrderType | undefined,
+    cate: cate as CategoryType | undefined,
     isours: urlIsOurs === '1' ? true : undefined,
-    as: urlAs as '팝업명' | '빌딩명' | undefined,
+    as: urlAs as AsType | undefined,
   };
 
   const { data: buildingListData, refetch } = useQuery({
