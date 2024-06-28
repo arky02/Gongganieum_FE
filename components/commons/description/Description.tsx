@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { getBuildingData } from 'apis/getBuildingData';
 import { getPopulationData } from 'apis/getPopulationData';
 import { PopupType } from 'types/client.types';
 import AgeRatioCard from './AgeRatioCard';
@@ -18,15 +19,19 @@ const Description = (props: {
 }) => {
   const { popups, address, coord } = props;
 
-  const { data } = useQuery({
-    queryKey: ['region', coord],
+  const { data: regionData } = useQuery({
+    queryKey: ['region', address],
     queryFn: () => getPopulationData(coord),
   });
+  const { data: buildingData } = useQuery({
+    queryKey: ['building', address],
+    queryFn: () => getBuildingData(address),
+  });
+
+  console.log(buildingData);
 
   const router = useRouter();
   const showMap = router.pathname === '/map' ? false : true;
-
-  console.log(data);
 
   return (
     <div className='flex flex-col gap-36'>
@@ -39,33 +44,33 @@ const Description = (props: {
       </div>
       <div>
         <h3 className='mb-16 text-24 font-800'>건물 정보</h3>
-        <BuildingInfoCard address={address} />
+        <BuildingInfoCard data={buildingData} />
       </div>
-      {data && (
+      {regionData && (
         <div>
           <h3 className='mb-16 text-24 font-800'>
-            {data.areaName} 지역 데이터
+            {regionData.areaName} 지역 데이터
           </h3>
           <div className='flex flex-col gap-24'>
             <GenderRatioCard
-              male={Number(data.maleRate) ?? 50}
-              female={Number(data.femaleRate) ?? 50}
+              male={Number(regionData.maleRate) ?? 50}
+              female={Number(regionData.femaleRate) ?? 50}
             />
             <AgeRatioCard
-              ageTeenager={Number(data.ageTeenager) ?? 0}
-              ageTwenties={Number(data.ageTwenties) ?? 0}
-              ageThirties={Number(data.ageThirties) ?? 0}
-              ageForties={Number(data.ageForties) ?? 0}
-              ageFifties={Number(data.ageFifties) ?? 0}
-              ageSixties={Number(data.ageSixties) ?? 0}
+              ageTeenager={Number(regionData.ageTeenager) ?? 0}
+              ageTwenties={Number(regionData.ageTwenties) ?? 0}
+              ageThirties={Number(regionData.ageThirties) ?? 0}
+              ageForties={Number(regionData.ageForties) ?? 0}
+              ageFifties={Number(regionData.ageFifties) ?? 0}
+              ageSixties={Number(regionData.ageSixties) ?? 0}
             />
             <CongestionCard
-              time={data.congestion?.time ?? []}
-              value={data.congestion?.value ?? []}
+              time={regionData.congestion?.time ?? []}
+              value={regionData.congestion?.value ?? []}
             />
             <ResidentRatioCard
-              resident={Number(data.residentRate) ?? 50}
-              noneResident={Number(data.noneResidentRate) ?? 50}
+              resident={Number(regionData.residentRate) ?? 50}
+              noneResident={Number(regionData.noneResidentRate) ?? 50}
             />
           </div>
         </div>
