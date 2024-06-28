@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { SEARCH_AS } from 'constants/dropdown';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useSearch from 'hooks/map/useSearch';
 import { getFilteredBuildings } from 'apis/api';
+import { BuildingType } from 'types/client.types';
 import SearchInput from 'components/commons/SearchInput';
 import ListBuildingCard from 'components/pages/list/ListBuildingCard';
 import ListCategoryTabs from 'components/pages/list/ListCategoryTabs';
@@ -11,6 +12,10 @@ import ListCheckBoxs from 'components/pages/list/ListCheckBoxs';
 import ListSortingButton from 'components/pages/list/ListSortingButton';
 
 const List = () => {
+  const [filteredBuildings, setFilteredBuildings] = useState<
+    BuildingType[] | null | undefined
+  >(null);
+
   const router = useRouter();
   const { cate, q: urlQ, order, isours: urlIsOurs, as: urlAs } = router.query;
   const { as, setAs, q, setQ } = useSearch();
@@ -88,9 +93,12 @@ const List = () => {
     }
   };
 
-  // TODO: 진행중인 팝업 클릭 시 함수 추가
   const handleClickIsPopup = () => {
-    console.log();
+    const today = new Date();
+    const filtered = buildingListData?.filter(
+      (building) => today < new Date(building.latest_end_date),
+    );
+    setFilteredBuildings(filtered);
   };
 
   useEffect(() => {
@@ -124,7 +132,7 @@ const List = () => {
       </div>
       {/* card-list */}
       <div className='mx-auto my-20 grid grid-cols-3 gap-x-24 gap-y-48'>
-        {buildingListData?.map((building) => (
+        {(filteredBuildings || buildingListData)?.map((building) => (
           <ListBuildingCard
             key={building._id}
             name={building.name}
