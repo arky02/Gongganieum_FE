@@ -22,7 +22,10 @@ export type CategoryType =
   | 'F&B'
   | '캐릭터'
   | '미디어'
+  | '금융'
   | '예술'
+  | '생활'
+  | 'IT'
   | '기타';
 
 export interface PopulationType {

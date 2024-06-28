@@ -57,7 +57,7 @@ const Tag = (props: { type?: TagType; text?: string }) => {
       case '카테고리':
         return (
           <>
-            {CATEGORY_ICON[(text as CategoryType) ?? '기타']}
+            {CATEGORY_ICON[(text as Exclude<CategoryType, '전체'>) ?? '기타']}
             <span>{text}</span>
           </>
         );
@@ -69,7 +69,7 @@ const Tag = (props: { type?: TagType; text?: string }) => {
 
   return (
     <div
-      className={`rounded-4 flex h-24 w-fit flex-shrink-0 items-center justify-center gap-4 px-4 text-12 ${TAG_STYLE[type]}`}
+      className={`flex h-24 w-fit flex-shrink-0 items-center justify-center gap-4 rounded-4 px-4 text-12 ${TAG_STYLE[type]}`}
     >
       {renderText()}
     </div>
