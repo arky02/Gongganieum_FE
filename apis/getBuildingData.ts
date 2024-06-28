@@ -13,7 +13,8 @@ export const getBuildingData = async (address: string) => {
   const res = await axios.get(
     `http://apis.data.go.kr/1613000/BldRgstService_v2/getBrTitleInfo?sigunguCd=${addressCode.sigunguCd}&bjdongCd=${addressCode.bjdongCd}&bun=${addressCode.bun}&ji=${addressCode.ji}&ServiceKey=${SERVICE_KEY}`,
   );
-  const data = res.data?.response?.body?.items?.item;
+  const item = res.data?.response?.body?.items?.item;
+  const data = Array.isArray(item) ? item[0] : item;
 
   const date = String(data?.useAprDay);
   const parsedDate = `${date?.slice(0, 4)}년 ${date?.slice(4, 6)}월 ${date?.slice(6, 8)}일`;

@@ -26,9 +26,8 @@ const Description = (props: {
   const { data: buildingData } = useQuery({
     queryKey: ['building', address],
     queryFn: () => getBuildingData(address),
+    enabled: !!address,
   });
-
-  console.log(buildingData);
 
   const router = useRouter();
   const showMap = router.pathname === '/map' ? false : true;

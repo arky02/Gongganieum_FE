@@ -6,7 +6,7 @@ const BuildingInfoCard = (props: { data: BuildingDataType | undefined }) => {
 
   return (
     <DescriptionCard>
-      <div className='flex h-424 flex-col gap-16'>
+      <div className='flex h-376 flex-col gap-16'>
         {data && (
           <>
             <div className='flex flex-col gap-8'>
