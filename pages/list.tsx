@@ -30,7 +30,7 @@ const List = () => {
       | undefined,
     isours:
       urlIsOurs === 'true' ? true : urlIsOurs === 'false' ? false : undefined,
-    as: urlAs as 'address' | 'building' | 'popup' | undefined,
+    as: urlAs as '팝업명' | '빌딩명' | undefined,
   };
 
   const { data: buildingListData, refetch } = useQuery({

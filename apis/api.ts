@@ -21,21 +21,18 @@ export const getFilteredBuildings = async (params: {
     | '예술'
     | '기타';
   isours?: boolean;
-  as?: 'address' | 'building' | 'popup';
+  as?: '팝업명' | '빌딩명';
 }) => {
-  const query = new URLSearchParams();
+  const { q, order, cate, isours, as } = params;
 
-  if (params.q) query.append('q', params.q);
-  if (params.order) query.append('order', params.order);
-  if (params.cate && params.cate !== '전체') query.append('cate', params.cate);
-  if (params.isours !== undefined)
-    query.append('isours', String(params.isours));
-  if (params.as) query.append('as', params.as);
+  console.log(cate);
 
-  let path = `/building/search?q=&${query.toString()}`;
-  if (params.q) path = `/building/search?${query.toString()}`;
+  let path = `/building/search?`;
 
-  const res = await instance.get(path);
+  const res = await instance.get(path, {
+    params: { q, order, cate, isours, as },
+  });
+
   return res.data as BuildingType[];
 };
 
