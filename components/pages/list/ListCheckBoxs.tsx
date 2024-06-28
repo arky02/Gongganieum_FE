@@ -1,3 +1,4 @@
+// 새로고침해도 체크여부 유지 - query
 const ListCheckBoxs = (props: {
   onClickIsPopup: () => void;
   onClickOurs: () => void;

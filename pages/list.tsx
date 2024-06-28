@@ -28,8 +28,7 @@ const List = () => {
       | '예술'
       | '기타'
       | undefined,
-    isours:
-      urlIsOurs === 'true' ? true : urlIsOurs === 'false' ? false : undefined,
+    isours: urlIsOurs === '1' ? true : undefined,
     as: urlAs as '팝업명' | '빌딩명' | undefined,
   };
 

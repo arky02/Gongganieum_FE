@@ -24,13 +24,12 @@ export const getFilteredBuildings = async (params: {
   as?: '팝업명' | '빌딩명';
 }) => {
   const { q, order, cate, isours, as } = params;
-
-  console.log(cate);
+  const parsedAs =
+    as === '빌딩명' ? 'building' : as === '팝업명' ? 'popup' : 'address';
 
   let path = `/building/search?`;
-
   const res = await instance.get(path, {
-    params: { q, order, cate, isours, as },
+    params: { q, order, cate, isours, as: parsedAs },
   });
 
   return res.data as BuildingType[];
