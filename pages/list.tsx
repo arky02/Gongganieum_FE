@@ -29,12 +29,12 @@ const List = () => {
     setIsours,
   } = useSearch();
 
-  const { searchResult, refetch } = useFetch({
+  const { searchResult } = useFetch({
     q,
     as,
     order,
     cate,
-    isours: isours === '1' ? true : undefined,
+    isours,
   });
 
   const handleClickCategoryTab = (category: string) => {
@@ -47,7 +47,7 @@ const List = () => {
   };
 
   const handleClickOurs = () => {
-    isours === '1' ? setIsours('0') : setIsours('1');
+    setIsours(!isours);
   };
 
   // TODO: 백엔드에서 처리 예정 (나중에 반영하기, 사유: 페이지네이션)

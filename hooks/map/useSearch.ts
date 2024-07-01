@@ -26,16 +26,17 @@ const useSearch = () => {
       ? router.query['cate'][0]
       : router.query['cate'] ?? '';
 
-    const isours = Array.isArray(router.query['isours'])
+    const unparsedIsours = Array.isArray(router.query['isours'])
       ? router.query['isours'][0]
-      : router.query['isours'] ?? '';
+      : router.query['isours'];
+    const isours = unparsedIsours === 'true' ? true : false;
 
     return { q, as, order, cate, isours } as {
       q: string;
       as: AsType;
       order: OrderType;
       cate: CategoryType;
-      isours: string;
+      isours: boolean;
     };
   };
 
@@ -45,7 +46,7 @@ const useSearch = () => {
   const [as, setAs] = useState<AsType>(initialQuery.as);
   const [order, setOrder] = useState<OrderType>(initialQuery.order);
   const [cate, setCate] = useState<CategoryType>(initialQuery.cate);
-  const [isours, setIsours] = useState<string>(initialQuery.isours);
+  const [isours, setIsours] = useState<boolean>(initialQuery.isours);
 
   useEffect(() => {
     if (!router.isReady || router.query['building']) {
