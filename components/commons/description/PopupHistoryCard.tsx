@@ -41,7 +41,9 @@ const Popup = (props: { popup: PopupType }) => {
         <span className='text-14 font-400 text-gray-300'>{parsedDate}</span>
       </div>
       <div className='flex h-24 w-fit shrink-0 items-center gap-4 rounded-[6px] bg-[rgba(0,0,0,0.08)] px-4 text-12 font-600'>
-        {CATEGORY_ICON[popup.type as CategoryType] ?? <IconEtc />}
+        {CATEGORY_ICON[popup.type as Exclude<CategoryType, '전체'>] ?? (
+          <IconEtc />
+        )}
         {CATEGORY.includes(popup.type as CategoryType) ? popup.type : '기타'}
       </div>
     </li>
