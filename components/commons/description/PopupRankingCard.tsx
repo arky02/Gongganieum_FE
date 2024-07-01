@@ -8,10 +8,13 @@ const PopupRankingCard = (props: { popups: PopupType[] }) => {
 
   return (
     <DescriptionCard title='팝업 히스토리 순위'>
-      <div className='flex flex-col gap-16'>
+      <div className='relative flex flex-col gap-16'>
         {ranking.map((el, i) => (
           <Ranking key={i} data={el} rank={i} />
         ))}
+        <div className='absolute -bottom-44 w-328 text-center text-gray-400'>
+          해당 건물에서는 위 종류 팝업이 가장 많이 진행되었습니다.
+        </div>
       </div>
     </DescriptionCard>
   );
