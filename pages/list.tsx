@@ -1,15 +1,9 @@
-import { useQuery } from '@tanstack/react-query';
 import { SEARCH_AS } from 'constants/dropdown';
 import { useRouter } from 'next/router';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import useFetch from 'hooks/map/useFetch';
 import useSearch from 'hooks/map/useSearch';
-import { getFilteredBuildings } from 'apis/api';
-import {
-  AsType,
-  BuildingType,
-  CategoryType,
-  OrderType,
-} from 'types/client.types';
+import { BuildingType, CategoryType, OrderType } from 'types/client.types';
 import SearchInput from 'components/commons/SearchInput';
 import ListBuildingCard from 'components/pages/list/ListBuildingCard';
 import ListCategoryTabs from 'components/pages/list/ListCategoryTabs';
@@ -35,17 +29,12 @@ const List = () => {
     setIsours,
   } = useSearch();
 
-  const queryParams = {
-    q: q as string | undefined,
-    as: as as AsType | undefined,
-    order: order as OrderType | undefined,
-    cate: cate as CategoryType | undefined,
+  const { searchResult, refetch } = useFetch({
+    q,
+    as,
+    order,
+    cate,
     isours: isours === '1' ? true : undefined,
-  };
-
-  const { data: buildingListData, refetch } = useQuery({
-    queryKey: ['buildingListData'],
-    queryFn: () => getFilteredBuildings(queryParams),
   });
 
   const handleClickCategoryTab = (category: string) => {
@@ -61,17 +50,14 @@ const List = () => {
     isours === '1' ? setIsours('0') : setIsours('1');
   };
 
+  // TODO: 백엔드에서 처리 예정 (나중에 반영하기, 사유: 페이지네이션)
   const handleClickIsPopup = () => {
     const today = new Date();
-    const filtered = buildingListData?.filter(
+    const filtered = searchResult?.filter(
       (building) => today < new Date(building.latest_end_date),
     );
     setFilteredBuildings(filtered);
   };
-
-  useEffect(() => {
-    refetch();
-  }, [queryParams]);
 
   return (
     <div className='my-76 flex flex-col justify-center gap-24 px-344'>
@@ -100,7 +86,8 @@ const List = () => {
       </div>
       {/* card-list */}
       <div className='mx-auto my-20 grid grid-cols-3 gap-x-24 gap-y-48'>
-        {(filteredBuildings || buildingListData)?.map((building) => (
+        {/* TODO: 진행중인 팝업 로직 생기면 수정 예정 */}
+        {(filteredBuildings || searchResult)?.map((building) => (
           <ListBuildingCard
             key={building._id}
             name={building.name}

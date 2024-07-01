@@ -1,15 +1,22 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { getFilteredBuildings } from 'apis/api';
-import { AsType } from 'types/client.types';
+import { AsType, CategoryType, OrderType } from 'types/client.types';
 import useMarkers from './useMarkers';
 
-const useFetch = (props: { as: AsType; q: string; mapFlag?: boolean }) => {
-  const { as, q, mapFlag } = props;
+const useFetch = (props: {
+  as?: AsType;
+  q?: string;
+  order?: OrderType;
+  cate?: CategoryType;
+  isours?: boolean;
+  mapFlag?: boolean;
+}) => {
+  const { as, q, order, cate, isours, mapFlag } = props;
 
   const { data: searchResult, refetch } = useQuery({
-    queryKey: ['search', as, q],
-    queryFn: () => getFilteredBuildings({ as, q }),
+    queryKey: ['search', as, q, order, cate, isours],
+    queryFn: () => getFilteredBuildings({ as, q, order, cate, isours }),
     enabled: !!q,
   });
 
@@ -17,7 +24,7 @@ const useFetch = (props: { as: AsType; q: string; mapFlag?: boolean }) => {
 
   const handleFetch = async () => {
     if (mapFlag) deleteMarkers();
-    if (!q) {
+    if (!as) {
       return;
     }
 
@@ -28,7 +35,7 @@ const useFetch = (props: { as: AsType; q: string; mapFlag?: boolean }) => {
 
   useEffect(() => {
     handleFetch();
-  }, [as, q]);
+  }, [as, q, order, cate, isours]);
 
   return { searchResult, refetch: handleFetch };
 };
