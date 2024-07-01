@@ -11,8 +11,8 @@ const STYLE = {
 
 type PageType = 'map' | 'description';
 
-const ImageLayout = (props: { imageUrls: string[]; page?: PageType }) => {
-  const { imageUrls, page = 'map' } = props;
+const ImageLayout = (props: { imageUrls: string[]; page: PageType }) => {
+  const { imageUrls, page } = props;
 
   return (
     <>
