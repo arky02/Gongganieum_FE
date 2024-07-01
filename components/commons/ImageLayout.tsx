@@ -1,7 +1,6 @@
 import Image from 'next/image';
 
 // TODO:
-// - 이미지 하나일 경우 레이아웃 구현
 // - 클릭했을 때 프리뷰 창 표시
 
 const STYLE = {
@@ -21,6 +20,9 @@ const ImageLayout = (props: { imageUrls: string[]; page: PageType }) => {
       )}
       {imageUrls.length === 2 && (
         <TwoLayout imageUrls={imageUrls} page={page} />
+      )}
+      {imageUrls.length === 1 && (
+        <OneLayout imageUrl={imageUrls[0]} page={page} />
       )}
     </>
   );
@@ -106,6 +108,23 @@ const TwoLayout = (props: { imageUrls: string[]; page: PageType }) => {
           className='object-cover'
           alt='빌딩 사진'
         />
+      </div>
+    </div>
+  );
+};
+
+const OneLayout = (props: { imageUrl: string; page: PageType }) => {
+  const { imageUrl, page } = props;
+
+  return (
+    <div
+      style={{ backgroundImage: `url(${imageUrl})` }}
+      className={`relative w-full flex-shrink-0 gap-4 overflow-hidden rounded-16 bg-cover bg-center ${STYLE[page]}`}
+    >
+      <div className='h-full w-full backdrop-blur-md'>
+        <div className='relative mx-auto h-full w-852 overflow-hidden'>
+          <Image src={imageUrl} fill className='object-cover' alt='빌딩 사진' />
+        </div>
       </div>
     </div>
   );

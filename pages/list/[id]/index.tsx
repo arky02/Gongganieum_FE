@@ -6,15 +6,15 @@ import ImageLayout from 'components/commons/ImageLayout';
 
 const MOCK_BUILDING_IMAGE_URLS = [
   '/images/mock-building-image.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image.jpg',
+  // '/images/mock-building-image.jpg',
+  // '/images/mock-building-image.jpg',
+  // '/images/mock-building-image.jpg',
+  // '/images/mock-building-image.jpg',
+  // '/images/mock-building-image.jpg',
+  // '/images/mock-building-image.jpg',
+  // '/images/mock-building-image.jpg',
+  // '/images/mock-building-image.jpg',
+  // '/images/mock-building-image.jpg',
 ];
 
 const BuildingDescriptionPage = () => {
