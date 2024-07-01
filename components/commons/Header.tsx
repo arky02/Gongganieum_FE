@@ -6,8 +6,16 @@ import SearchInput from './SearchInput';
 
 const TABS = [
   { name: '홈', path: '/', href: '/' },
-  { name: '지도', path: '/map', href: '/map?as=지역명&q=' },
-  { name: '리스트', path: '/list', href: '/list?as=지역명&q=' },
+  {
+    name: '지도',
+    path: '/map',
+    href: '/map?as=지역명&q=&order=&cate=전체&isours=false',
+  },
+  {
+    name: '리스트',
+    path: '/list',
+    href: '/list?as=지역명&q=&order=&cate=전체&isours=false',
+  },
   { name: '매거진', path: '/magazine', href: '/magazine' },
 ];
 
