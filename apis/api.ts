@@ -24,8 +24,7 @@ export const getFilteredBuildings = async (params: {
   const parsedAs =
     as === '빌딩명' ? 'building' : as === '팝업명' ? 'popup' : 'address';
 
-  let path = `/building/search?`;
-  const res = await instance.get(path, {
+  const res = await instance.get(`/building/search?`, {
     params: { q, order, cate, isours, as: parsedAs },
   });
 

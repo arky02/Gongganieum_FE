@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { SEARCH_AS } from 'constants/dropdown';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import useSearch from 'hooks/map/useSearch';
 import { getFilteredBuildings } from 'apis/api';
 import {
@@ -22,71 +22,43 @@ const List = () => {
   >(null);
 
   const router = useRouter();
-  const { cate, q: urlQ, order, isours: urlIsOurs, as: urlAs } = router.query;
-  const { as, setAs, q, setQ } = useSearch();
+  const {
+    q,
+    setQ,
+    as,
+    setAs,
+    order,
+    setOrder,
+    cate,
+    setCate,
+    isours,
+    setIsours,
+  } = useSearch();
 
   const queryParams = {
-    q: urlQ as string | undefined,
+    q: q as string | undefined,
+    as: as as AsType | undefined,
     order: order as OrderType | undefined,
     cate: cate as CategoryType | undefined,
-    isours: urlIsOurs === '1' ? true : undefined,
-    as: urlAs as AsType | undefined,
+    isours: isours === '1' ? true : undefined,
   };
 
   const { data: buildingListData, refetch } = useQuery({
     queryKey: ['buildingListData'],
     queryFn: () => getFilteredBuildings(queryParams),
-    enabled: false,
   });
 
   const handleClickCategoryTab = (category: string) => {
-    if (category === '음식') {
-      router.push({
-        pathname: router.pathname,
-        query: {
-          ...router.query,
-          cate: 'F&B',
-        },
-      });
-    } else {
-      router.push({
-        pathname: router.pathname,
-        query: {
-          ...router.query,
-          cate: category,
-        },
-      });
-    }
+    setCate(category as CategoryType);
   };
 
-  const handleSelectSortButton = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const order = e.target.value;
-    router.push({
-      pathname: router.pathname,
-      query: {
-        ...router.query,
-        order: order,
-      },
-    });
+  const handleSelectSortButton = (e: ChangeEvent<HTMLSelectElement>) => {
+    const order = e.target.value as OrderType;
+    setOrder(order);
   };
 
   const handleClickOurs = () => {
-    const { isours, ...otherQueries } = router.query;
-
-    if (isours === '1') {
-      router.push({
-        pathname: router.pathname,
-        query: otherQueries,
-      });
-    } else {
-      router.push({
-        pathname: router.pathname,
-        query: {
-          ...otherQueries,
-          isours: '1',
-        },
-      });
-    }
+    isours === '1' ? setIsours('0') : setIsours('1');
   };
 
   const handleClickIsPopup = () => {
@@ -99,7 +71,7 @@ const List = () => {
 
   useEffect(() => {
     refetch();
-  }, [router.query]);
+  }, [queryParams]);
 
   return (
     <div className='my-76 flex flex-col justify-center gap-24 px-344'>

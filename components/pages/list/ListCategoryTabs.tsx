@@ -5,7 +5,7 @@ const ListCategoryTabs = (props: {
   const { cate, onClickCategoryTab } = props;
   const categoryTabs = [
     '전체',
-    '음식', // 'FNB'
+    'F&B',
     '패션',
     '뷰티',
     '예술',
@@ -19,7 +19,7 @@ const ListCategoryTabs = (props: {
         <button
           key={index}
           onClick={() => onClickCategoryTab(el)}
-          className={`${(cate === el || (cate === 'F&B' && el === '음식')) && 'border-b-2 border-black'} px-16 py-20 text-14 font-600`}
+          className={`${cate === el && 'border-b-2 border-black'} px-16 py-20 text-14 font-600`}
         >
           {el}
         </button>
