@@ -14,4 +14,6 @@ export const populationDataFilter = {
   ageForties: ['<PPLTN_RATE_40>', '</PPLTN_RATE_40>'],
   ageFifties: ['<PPLTN_RATE_50>', '</PPLTN_RATE_50>'],
   ageSixties: ['<PPLTN_RATE_60>', '</PPLTN_RATE_60>'],
+  residentRate: ['<RESNT_PPLTN_RATE>', '</RESNT_PPLTN_RATE>'],
+  noneResidentRate: ['<NON_RESNT_PPLTN_RATE>', '</NON_RESNT_PPLTN_RATE>'],
 };

@@ -4,11 +4,6 @@ import { getSearchResult } from 'apis/api';
 import { AsType } from 'types/client.types';
 import useMarkers from './useMarkers';
 
-interface Props {
-  as: AsType;
-  q: string;
-}
-
 const useFetch = (props: { as: AsType; q: string }) => {
   const { as, q } = props;
 
