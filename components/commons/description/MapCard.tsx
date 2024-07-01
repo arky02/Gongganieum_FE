@@ -9,13 +9,11 @@ const MapCard = (props: { coord: string[] }) => {
     window.kakao?.maps?.load(() => {
       const mapContainer = document.getElementById('map-building');
       const mapOption = {
-        center: new window.kakao.maps.LatLng(coord[0], coord[1]),
+        center: new window.kakao.maps.LatLng(37.545, 126.91),
         level: 4,
       };
-      const newMap = new window.kakao.maps.Map(mapContainer, mapOption);
-      if (!map) {
-        setMap(newMap);
-      }
+      const map = new window.kakao.maps.Map(mapContainer, mapOption);
+      setMap(map);
     });
   };
 
@@ -27,7 +25,7 @@ const MapCard = (props: { coord: string[] }) => {
     }
 
     const position = new window.kakao.maps.LatLng(coord[0], coord[1]);
-
+    map.setCenter(position);
     const imageSrc = '/icons/building-pin.svg';
     const imageSize = new window.kakao.maps.Size(32, 32);
     const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
