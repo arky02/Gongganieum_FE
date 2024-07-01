@@ -4,24 +4,37 @@ import Image from 'next/image';
 // - 이미지 하나일 경우 레이아웃 구현
 // - 클릭했을 때 프리뷰 창 표시
 
-const ImageLayout = (props: { imageUrls: string[] }) => {
-  const { imageUrls } = props;
+const STYLE = {
+  map: 'h-176 text-24',
+  description: 'h-480 text-32',
+};
+
+type PageType = 'map' | 'description';
+
+const ImageLayout = (props: { imageUrls: string[]; page?: PageType }) => {
+  const { imageUrls, page = 'map' } = props;
 
   return (
     <>
-      {imageUrls.length >= 5 && <FiveLayout imageUrls={imageUrls} />}
-      {imageUrls.length === 2 && <TwoLayout imageUrls={imageUrls} />}
+      {imageUrls.length >= 5 && (
+        <FiveLayout imageUrls={imageUrls} page={page} />
+      )}
+      {imageUrls.length === 2 && (
+        <TwoLayout imageUrls={imageUrls} page={page} />
+      )}
     </>
   );
 };
 
 export default ImageLayout;
 
-const FiveLayout = (props: { imageUrls: string[] }) => {
-  const { imageUrls } = props;
+const FiveLayout = (props: { imageUrls: string[]; page: PageType }) => {
+  const { imageUrls, page } = props;
 
   return (
-    <div className='grid h-176 w-full flex-shrink-0 grid-cols-4 grid-rows-2 gap-4'>
+    <div
+      className={`grid w-full flex-shrink-0 grid-cols-4 grid-rows-2 gap-4 ${STYLE[page]}`}
+    >
       <div className='relative col-span-2 col-start-1 row-span-2 row-start-1 overflow-hidden rounded-l-16'>
         <Image
           src={imageUrls[0]}
@@ -62,7 +75,7 @@ const FiveLayout = (props: { imageUrls: string[] }) => {
           alt='빌딩 사진'
         />
         {imageUrls.length > 5 && (
-          <div className='absolute flex h-full w-full items-center justify-center bg-[rgb(0,0,0)]/50 text-24 font-700 text-white'>
+          <div className='absolute flex h-full w-full items-center justify-center bg-[rgb(0,0,0)]/50 font-700 text-white'>
             +{imageUrls.length - 4}
           </div>
         )}
@@ -71,11 +84,13 @@ const FiveLayout = (props: { imageUrls: string[] }) => {
   );
 };
 
-const TwoLayout = (props: { imageUrls: string[] }) => {
-  const { imageUrls } = props;
+const TwoLayout = (props: { imageUrls: string[]; page: PageType }) => {
+  const { imageUrls, page } = props;
 
   return (
-    <div className='grid h-176 w-full flex-shrink-0 grid-cols-2 gap-4'>
+    <div
+      className={`grid w-full flex-shrink-0 grid-cols-2 gap-4 ${STYLE[page]}`}
+    >
       <div className='relative overflow-hidden rounded-l-16'>
         <Image
           src={imageUrls[0]}
