@@ -27,7 +27,7 @@ const Ranking = (props: { data: [CategoryType, number]; rank: number }) => {
         {rank + 1}위
       </div>
       <div className='flex items-center gap-4'>
-        {CATEGORY_ICON[data[0]]}
+        {CATEGORY_ICON[data[0] as Exclude<CategoryType, '전체'>]}
         <span className='text-16 font-500'>{data[0]}</span>
       </div>
       <div className='ml-auto text-16 font-500'>{data[1]}%</div>
