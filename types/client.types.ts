@@ -17,7 +17,6 @@ export interface BuildingType {
 }
 
 export type CategoryType =
-  | '전체'
   | '패션'
   | '뷰티'
   | 'F&B'
