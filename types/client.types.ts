@@ -13,7 +13,7 @@ export interface BuildingType {
   tag: string;
   cate: CategoryType;
   isours: boolean;
-  latest_end_date: string;
+  latest_end_date: Date;
 }
 
 export type CategoryType =
@@ -44,6 +44,8 @@ export interface PopulationType {
 export type PopulationKeysType = keyof PopulationType;
 
 export type AsType = '지역명' | '빌딩명' | '팝업명';
+
+export type OrderType = 'new' | 'popular' | 'likes';
 
 export interface BuildingDataType {
   연면적: number | null;

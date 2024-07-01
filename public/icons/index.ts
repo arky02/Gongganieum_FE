@@ -1,7 +1,8 @@
 import IconArrowBack from './arrow-back.svg';
 import IconArrowDown from './arrow-down.svg';
 import IconBeauty from './beauty.svg';
-import IconBuildingPin from './building-pin.svg';
+import IconBlackCheck from './black-check.svg';
+import IconBlankLike from './blank-like.svg';
 import IconBuilding from './building.svg';
 import IconCharacter from './character.svg';
 import IconCirculation from './circulation.svg';
@@ -14,6 +15,7 @@ import IconKakaoLogo from './kakao-logo.svg';
 import IconLogo from './logo.svg';
 import IconMarker from './marker.svg';
 import IconNaverLogo from './naver-logo.svg';
+import IconRedLike from './red-like.svg';
 import IconSearch from './search.svg';
 
 export {
@@ -31,7 +33,9 @@ export {
   IconEntertainment,
   IconEtc,
   IconLogo,
+  IconRedLike,
+  IconBlankLike,
   IconMarker,
-  IconBuildingPin,
   IconCirculation,
+  IconBlackCheck,
 };
