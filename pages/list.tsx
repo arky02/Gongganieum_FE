@@ -10,6 +10,8 @@ import ListCategoryTabs from 'components/pages/list/ListCategoryTabs';
 import ListCheckBoxs from 'components/pages/list/ListCheckBoxs';
 import ListSortingButton from 'components/pages/list/ListSortingButton';
 
+type ExtendedCategoryType = CategoryType & '전체';
+
 const List = () => {
   const [filteredBuildings, setFilteredBuildings] = useState<
     BuildingType[] | null | undefined
@@ -38,7 +40,7 @@ const List = () => {
   });
 
   const handleClickCategoryTab = (category: string) => {
-    setCate(category as CategoryType);
+    setCate(category as ExtendedCategoryType);
   };
 
   const handleSelectSortButton = (e: ChangeEvent<HTMLSelectElement>) => {

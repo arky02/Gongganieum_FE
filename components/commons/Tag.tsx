@@ -35,11 +35,7 @@ const Tag = (props: { type?: TagType; text?: string }) => {
           '기타') as CategoryType;
         return (
           <>
-            {
-              CATEGORY_ICON[
-                (parsedText as Exclude<CategoryType, '전체'>) ?? '기타'
-              ]
-            }
+            {CATEGORY_ICON[(parsedText as CategoryType) ?? '기타']}
             <span>{parsedText}</span>
           </>
         );
