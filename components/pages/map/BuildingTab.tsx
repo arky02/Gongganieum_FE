@@ -80,6 +80,7 @@ const BuildingTab = (props: { id: number }) => {
           popups={buildingInfo?.popups ?? []}
           address={buildingInfo?.address ?? ''}
           coord={buildingInfo?.coord?.split(',') ?? []}
+          page='map'
         />
       </div>
     </div>

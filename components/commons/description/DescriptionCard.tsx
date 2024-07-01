@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 const DescriptionCard = (props: { title?: string; children: ReactNode }) => {
   const { title, children } = props;
   return (
-    <div className='rounded-12 border border-[#E2E5E9] p-24'>
+    <div className='min-h-316 w-full shrink-0 rounded-12 border border-[#E2E5E9] p-24'>
       {title && (
         <h4 className='mb-16 text-20 font-800 text-gray-400'>{title}</h4>
       )}
