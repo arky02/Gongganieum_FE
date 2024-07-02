@@ -7,19 +7,6 @@ import ImageLayout from 'components/commons/ImageLayout';
 import Description from 'components/commons/description/Description';
 import { IconMarker } from 'public/icons';
 
-const MOCK_BUILDING_IMAGE_URLS = [
-  '/images/mock-building-image.jpg',
-  // '/images/mock-building-image.jpg',
-  // '/images/mock-building-image.jpg',
-  // '/images/mock-building-image.jpg',
-  // '/images/mock-building-image.jpg',
-  // '/images/mock-building-image.jpg',
-  // '/images/mock-building-image.jpg',
-  // '/images/mock-building-image.jpg',
-  // '/images/mock-building-image.jpg',
-  // '/images/mock-building-image.jpg',
-];
-
 const BuildingDescriptionPage = () => {
   const router = useRouter();
   const { id } = router.query as { id: string };

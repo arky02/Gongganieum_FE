@@ -1,9 +1,8 @@
+import { NO_IMAGE_URL } from 'constants/common';
 import Image from 'next/image';
 
 // TODO:
 // - 클릭했을 때 프리뷰 창 표시
-
-const DEFAULT_IMAGE_URL = '/images/no-image.jpg';
 
 const STYLE = {
   map: 'w-full h-176 text-24',
@@ -59,7 +58,7 @@ const FiveLayout = (props: { imageUrls: string[] }) => {
       </div>
       <div className='relative col-start-3 row-start-2 overflow-hidden'>
         <Image
-          src={imageUrls[3] ?? DEFAULT_IMAGE_URL}
+          src={imageUrls[3] ?? NO_IMAGE_URL}
           fill
           className='object-cover'
           alt='빌딩 사진'
@@ -67,7 +66,7 @@ const FiveLayout = (props: { imageUrls: string[] }) => {
       </div>
       <div className='relative col-start-4 row-start-2 overflow-hidden rounded-br-16'>
         <Image
-          src={imageUrls[4] ?? DEFAULT_IMAGE_URL}
+          src={imageUrls[4] ?? NO_IMAGE_URL}
           fill
           className='object-cover'
           alt='빌딩 사진'
