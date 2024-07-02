@@ -5,7 +5,7 @@ import { getBuildingInfo } from 'apis/api';
 import BuildingTitle from 'components/commons/BuildingTitle';
 import ImageLayout from 'components/commons/ImageLayout';
 import Description from 'components/commons/description/Description';
-import { IconMarker } from 'public/icons';
+import { IconArrowBack, IconMarker } from 'public/icons';
 
 const BuildingDescriptionPage = () => {
   const router = useRouter();
@@ -20,8 +20,20 @@ const BuildingDescriptionPage = () => {
 
   const imageUrls = useBuildingImageUrls(buildingInfo?.address);
 
+  const handleGoBack = () => {
+    router.back();
+  };
+
   return (
-    <div className='mx-auto my-76 max-w-1232'>
+    <div className='mx-auto mb-76 mt-56 max-w-1232'>
+      <button
+        type='button'
+        onClick={handleGoBack}
+        className='mb-24 flex items-center gap-8 text-14 font-700'
+      >
+        <IconArrowBack />
+        뒤로가기
+      </button>
       <ImageLayout imageUrls={imageUrls} page='description' />
       <div className='my-56 flex gap-56'>
         <div className='w-776 shrink-0'>

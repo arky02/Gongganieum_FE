@@ -1,8 +1,7 @@
 import { NO_IMAGE_URL } from 'constants/common';
 import Image from 'next/image';
-
-// TODO:
-// - 클릭했을 때 프리뷰 창 표시
+import { Dispatch, SetStateAction, useState } from 'react';
+import ImagePreview from './ImagePreview';
 
 const STYLE = {
   map: 'w-full h-176 text-24',
@@ -13,26 +12,55 @@ type PageType = 'map' | 'description';
 
 const ImageLayout = (props: { imageUrls: string[]; page: PageType }) => {
   const { imageUrls, page } = props;
+  const [imagePreviewIndex, setImagePreviewIndex] = useState<number | null>(
+    null,
+  );
 
   return (
-    <div className={STYLE[page]}>
-      {imageUrls.length > 2 && <FiveLayout imageUrls={imageUrls} />}
-      {imageUrls.length === 2 && <TwoLayout imageUrls={imageUrls} />}
-      {imageUrls.length === 1 && <OneLayout imageUrl={imageUrls[0]} />}
-    </div>
+    <>
+      <div className={STYLE[page]}>
+        {imageUrls.length > 2 && (
+          <FiveLayout imageUrls={imageUrls} setIndex={setImagePreviewIndex} />
+        )}
+        {imageUrls.length === 2 && (
+          <TwoLayout imageUrls={imageUrls} setIndex={setImagePreviewIndex} />
+        )}
+        {imageUrls.length === 1 && (
+          <OneLayout imageUrl={imageUrls[0]} setIndex={setImagePreviewIndex} />
+        )}
+      </div>
+      {imagePreviewIndex !== null && (
+        <ImagePreview
+          urls={imageUrls}
+          index={imagePreviewIndex}
+          setIndex={setImagePreviewIndex}
+        />
+      )}
+    </>
   );
 };
 
 export default ImageLayout;
 
-const FiveLayout = (props: { imageUrls: string[] }) => {
-  const { imageUrls } = props;
+const FiveLayout = (props: {
+  imageUrls: string[];
+  setIndex: Dispatch<SetStateAction<number | null>>;
+}) => {
+  const { imageUrls, setIndex } = props;
+
+  const handleClick = (index: number) => {
+    if (index > imageUrls.length - 1) {
+      return;
+    }
+    setIndex(index);
+  };
 
   return (
-    <div
-      className={`grid h-full w-full shrink-0 grid-cols-4 grid-rows-2 gap-4`}
-    >
-      <div className='relative col-span-2 col-start-1 row-span-2 row-start-1 overflow-hidden rounded-l-16'>
+    <div className='grid h-full w-full shrink-0 grid-cols-4 grid-rows-2 gap-4'>
+      <div
+        onClick={() => handleClick(0)}
+        className='relative col-span-2 col-start-1 row-span-2 row-start-1 cursor-pointer overflow-hidden rounded-l-16'
+      >
         <Image
           src={imageUrls[0]}
           fill
@@ -40,7 +68,10 @@ const FiveLayout = (props: { imageUrls: string[] }) => {
           alt='빌딩 사진'
         />
       </div>
-      <div className='relative col-start-3 row-start-1 overflow-hidden'>
+      <div
+        onClick={() => handleClick(1)}
+        className='relative col-start-3 row-start-1 cursor-pointer overflow-hidden'
+      >
         <Image
           src={imageUrls[1]}
           fill
@@ -48,7 +79,10 @@ const FiveLayout = (props: { imageUrls: string[] }) => {
           alt='빌딩 사진'
         />
       </div>
-      <div className='relative col-start-4 row-start-1 overflow-hidden rounded-tr-16'>
+      <div
+        onClick={() => handleClick(2)}
+        className='relative col-start-4 row-start-1 cursor-pointer overflow-hidden rounded-tr-16'
+      >
         <Image
           src={imageUrls[2]}
           fill
@@ -56,7 +90,10 @@ const FiveLayout = (props: { imageUrls: string[] }) => {
           alt='빌딩 사진'
         />
       </div>
-      <div className='relative col-start-3 row-start-2 overflow-hidden'>
+      <div
+        onClick={() => handleClick(3)}
+        className='relative col-start-3 row-start-2 cursor-pointer overflow-hidden'
+      >
         <Image
           src={imageUrls[3] ?? NO_IMAGE_URL}
           fill
@@ -64,7 +101,10 @@ const FiveLayout = (props: { imageUrls: string[] }) => {
           alt='빌딩 사진'
         />
       </div>
-      <div className='relative col-start-4 row-start-2 overflow-hidden rounded-br-16'>
+      <div
+        onClick={() => handleClick(4)}
+        className='relative col-start-4 row-start-2 cursor-pointer overflow-hidden rounded-br-16'
+      >
         <Image
           src={imageUrls[4] ?? NO_IMAGE_URL}
           fill
@@ -81,12 +121,18 @@ const FiveLayout = (props: { imageUrls: string[] }) => {
   );
 };
 
-const TwoLayout = (props: { imageUrls: string[] }) => {
-  const { imageUrls } = props;
+const TwoLayout = (props: {
+  imageUrls: string[];
+  setIndex: Dispatch<SetStateAction<number | null>>;
+}) => {
+  const { imageUrls, setIndex } = props;
 
   return (
     <div className='grid h-full w-full shrink-0 grid-cols-2 gap-4'>
-      <div className='relative overflow-hidden rounded-l-16'>
+      <div
+        onClick={() => setIndex(0)}
+        className='relative cursor-pointer overflow-hidden rounded-l-16'
+      >
         <Image
           src={imageUrls[0]}
           fill
@@ -94,7 +140,10 @@ const TwoLayout = (props: { imageUrls: string[] }) => {
           alt='빌딩 사진'
         />
       </div>
-      <div className='relative overflow-hidden rounded-r-16'>
+      <div
+        onClick={() => setIndex(1)}
+        className='relative cursor-pointer overflow-hidden rounded-r-16'
+      >
         <Image
           src={imageUrls[1]}
           fill
@@ -106,14 +155,20 @@ const TwoLayout = (props: { imageUrls: string[] }) => {
   );
 };
 
-const OneLayout = (props: { imageUrl: string }) => {
-  const { imageUrl } = props;
+const OneLayout = (props: {
+  imageUrl: string;
+  setIndex: Dispatch<SetStateAction<number | null>>;
+}) => {
+  const { imageUrl, setIndex } = props;
 
   return (
     <div className='relative h-full w-full shrink-0 gap-4 overflow-hidden rounded-16'>
       <Image src={imageUrl} fill className='object-cover' alt='빌딩 사진' />
       <div className='h-full w-full backdrop-blur-md'>
-        <div className='relative mx-auto h-full w-852 overflow-hidden'>
+        <div
+          onClick={() => setIndex(0)}
+          className='relative mx-auto h-full w-852 cursor-pointer overflow-hidden'
+        >
           <Image src={imageUrl} fill className='object-cover' alt='빌딩 사진' />
         </div>
       </div>
