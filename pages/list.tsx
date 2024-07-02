@@ -92,6 +92,7 @@ const List = () => {
         {(filteredBuildings || searchResult)?.map((building) => (
           <ListBuildingCard
             key={building._id}
+            id={building._id}
             name={building.name}
             address={building.address}
             isours={building.isours}
