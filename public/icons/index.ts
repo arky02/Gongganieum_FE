@@ -1,11 +1,14 @@
 import IconArrowBack from './arrow-back.svg';
 import IconArrowDown from './arrow-down.svg';
+import IconArrowLeft from './arrow-left.svg';
+import IconArrowRight from './arrow-right.svg';
 import IconBeauty from './beauty.svg';
 import IconBlackCheck from './black-check.svg';
 import IconBlankLike from './blank-like.svg';
 import IconBuilding from './building.svg';
 import IconCharacter from './character.svg';
 import IconCirculation from './circulation.svg';
+import IconClose from './close.svg';
 import IconEntertainment from './entertainment.svg';
 import IconEtc from './etc.svg';
 import IconFashion from './fashion.svg';
@@ -38,4 +41,7 @@ export {
   IconMarker,
   IconCirculation,
   IconBlackCheck,
+  IconClose,
+  IconArrowRight,
+  IconArrowLeft,
 };
