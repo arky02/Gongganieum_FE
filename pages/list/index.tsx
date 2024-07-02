@@ -89,17 +89,20 @@ const List = () => {
       {/* card-list */}
       <div className='mx-auto my-20 grid grid-cols-3 gap-x-24 gap-y-48'>
         {/* TODO: 진행중인 팝업 로직 생기면 수정 예정 */}
-        {(filteredBuildings || searchResult)?.map((building) => (
-          <ListBuildingCard
-            key={building._id}
-            name={building.name}
-            address={building.address}
-            isours={building.isours}
-            cate={building.cate}
-            tag={building.tag}
-            latest_end_date={building.latest_end_date}
-          />
-        ))}
+        {(filteredBuildings || searchResult)
+          ?.slice(0, 30)
+          ?.map((building) => (
+            <ListBuildingCard
+              key={building._id}
+              id={building._id}
+              name={building.name}
+              address={building.address}
+              isours={building.isours}
+              cate={building.cate}
+              tag={building.tag}
+              latest_end_date={building.latest_end_date}
+            />
+          ))}
       </div>
     </div>
   );

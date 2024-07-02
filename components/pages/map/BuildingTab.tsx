@@ -3,11 +3,10 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useStore } from 'store';
 import { getBuildingInfo } from 'apis/api';
-import { BuildingType } from 'types/client.types';
+import BuildingTitle from 'components/commons/BuildingTitle';
 import ImageLayout from 'components/commons/ImageLayout';
-import Tag from 'components/commons/Tag';
 import Description from 'components/commons/description/Description';
-import { IconArrowBack, IconMarker } from 'public/icons';
+import { IconArrowBack } from 'public/icons';
 
 const MOCK_BUILDING_IMAGE_URLS = [
   '/images/mock-building-image.jpg',
@@ -74,13 +73,14 @@ const BuildingTab = (props: { id: number }) => {
         <IconArrowBack />
         뒤로가기
       </button>
-      <ImageLayout imageUrls={MOCK_BUILDING_IMAGE_URLS} />
-      <Title buildingInfo={buildingInfo} />
+      <ImageLayout imageUrls={MOCK_BUILDING_IMAGE_URLS} page='map' />
+      <BuildingTitle buildingInfo={buildingInfo} page='map' />
       <div className='flex flex-col gap-24'>
         <Description
           popups={buildingInfo?.popups ?? []}
           address={buildingInfo?.address ?? ''}
           coord={buildingInfo?.coord?.split(',') ?? []}
+          page='map'
         />
       </div>
     </div>
@@ -88,26 +88,3 @@ const BuildingTab = (props: { id: number }) => {
 };
 
 export default BuildingTab;
-
-const Title = (props: { buildingInfo: BuildingType | undefined }) => {
-  const { buildingInfo } = props;
-  const parsedTags =
-    buildingInfo?.tag === 'NULL' ? [] : buildingInfo?.tag?.split(',');
-  const isPopup = new Date(buildingInfo?.latest_end_date ?? '') > new Date();
-
-  return (
-    <div className='mb-36 mt-24 flex w-full flex-col'>
-      <h2 className='text-28 font-800'>{buildingInfo?.name}</h2>
-      <div className='mb-16 mt-8 flex items-center gap-4 text-16 font-500 text-gray-400 opacity-80'>
-        <IconMarker />
-        {buildingInfo?.address}
-      </div>
-      <div className='flex flex-wrap gap-8'>
-        {!!buildingInfo?.isours && <Tag type='직영' />}
-        {isPopup && <Tag type='팝업진행중' />}
-        <Tag type='카테고리' text={buildingInfo?.cate} />
-        {parsedTags?.map((tag) => <Tag key={tag} type='일반' text={tag} />)}
-      </div>
-    </div>
-  );
-};
