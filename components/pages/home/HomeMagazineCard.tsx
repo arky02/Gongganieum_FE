@@ -19,7 +19,7 @@ const HomeMagazineCard = (props: {
           quality={100}
         />
       </div>
-      <div className='absolute inset-0 rounded-12 bg-gradient-to-r from-black via-transparent to-transparent opacity-30'></div>
+      <div className='absolute inset-0 rounded-12 bg-gradient-to-tr from-black via-transparent to-transparent opacity-80'></div>
       <Description title={title} subtitle={subtitle} />
     </>
   );

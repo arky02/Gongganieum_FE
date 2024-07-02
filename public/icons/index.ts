@@ -18,6 +18,7 @@ import IconMarker from './marker.svg';
 import IconNaverLogo from './naver-logo.svg';
 import IconRedLike from './red-like.svg';
 import IconSearch from './search.svg';
+import IconWhiteMarker from './white-marker.svg';
 
 export {
   IconKakaoLogo,
@@ -40,4 +41,5 @@ export {
   IconCirculation,
   IconBlackCheck,
   IconArrowNextButton,
+  IconWhiteMarker,
 };

@@ -21,6 +21,7 @@ const HomeBuildingCard = (props: {
           alt='빌딩 이미지'
           quality={100}
         />
+        <div className='absolute inset-0 rounded-12 bg-gradient-to-tr from-black via-transparent to-transparent opacity-50'></div>
       </div>
       <Description name={name} address={address} />
       <div className='flex flex-wrap gap-8'>
