@@ -37,8 +37,6 @@ const Description = (props: {
     enabled: !!address,
   });
 
-  console.log(buildingData);
-
   const router = useRouter();
   const showMap = router.pathname === '/map' ? false : true;
 

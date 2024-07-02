@@ -23,7 +23,6 @@ export default useBuildingImageUrls;
 
 const getBuildingImageUrls = async (address: string) => {
   const parsedAddress = address.split(' ').slice(2).join(' ');
-  console.log(parsedAddress);
 
   const imageUrls: string[] = [];
   while (true) {
@@ -31,9 +30,11 @@ const getBuildingImageUrls = async (address: string) => {
       const imageCnt =
         imageUrls.length === 0 ? '' : ` (${imageUrls.length + 1})`;
       const url = `https://raw.githubusercontent.com/Neul-pum/PopPop_imgs/main/imgs/${parsedAddress}${imageCnt}.jpeg`;
+      console.log(url);
       await axios.get(url);
       imageUrls.push(url);
     } catch {
+      console.log(imageUrls);
       return imageUrls;
     }
   }

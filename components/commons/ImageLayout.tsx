@@ -3,6 +3,8 @@ import Image from 'next/image';
 // TODO:
 // - 클릭했을 때 프리뷰 창 표시
 
+const DEFAULT_IMAGE_URL = '/images/no-image.jpg';
+
 const STYLE = {
   map: 'w-full h-176 text-24',
   description: 'w-full h-480 text-32',
@@ -15,7 +17,7 @@ const ImageLayout = (props: { imageUrls: string[]; page: PageType }) => {
 
   return (
     <div className={STYLE[page]}>
-      {imageUrls.length >= 5 && <FiveLayout imageUrls={imageUrls} />}
+      {imageUrls.length > 2 && <FiveLayout imageUrls={imageUrls} />}
       {imageUrls.length === 2 && <TwoLayout imageUrls={imageUrls} />}
       {imageUrls.length === 1 && <OneLayout imageUrl={imageUrls[0]} />}
     </div>
@@ -57,7 +59,7 @@ const FiveLayout = (props: { imageUrls: string[] }) => {
       </div>
       <div className='relative col-start-3 row-start-2 overflow-hidden'>
         <Image
-          src={imageUrls[3]}
+          src={imageUrls[3] ?? DEFAULT_IMAGE_URL}
           fill
           className='object-cover'
           alt='빌딩 사진'
@@ -65,7 +67,7 @@ const FiveLayout = (props: { imageUrls: string[] }) => {
       </div>
       <div className='relative col-start-4 row-start-2 overflow-hidden rounded-br-16'>
         <Image
-          src={imageUrls[4]}
+          src={imageUrls[4] ?? DEFAULT_IMAGE_URL}
           fill
           className='object-cover'
           alt='빌딩 사진'
