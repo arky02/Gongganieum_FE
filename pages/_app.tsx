@@ -14,7 +14,6 @@ export default function App({ Component, pageProps }: AppProps) {
           containerStyle={{ fontSize: '16px', fontWeight: '600' }}
           toastOptions={{
             style: {
-              border: '1px solid #242424',
               padding: '10px 13px',
               color: '#242424',
               borderRadius: '999px',
