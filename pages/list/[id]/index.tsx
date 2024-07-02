@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import useBuildingImageUrls from 'hooks/useBuildingImageUrls';
 import { getBuildingInfo } from 'apis/api';
 import BuildingTitle from 'components/commons/BuildingTitle';
 import ImageLayout from 'components/commons/ImageLayout';
@@ -30,11 +31,11 @@ const BuildingDescriptionPage = () => {
     enabled: !!buildingId,
   });
 
-  console.log(buildingInfo);
+  const imageUrls = useBuildingImageUrls(buildingInfo?.address);
 
   return (
     <div className='mx-auto my-76 max-w-1232'>
-      <ImageLayout imageUrls={MOCK_BUILDING_IMAGE_URLS} page='description' />
+      <ImageLayout imageUrls={imageUrls} page='description' />
       <div className='my-56 flex gap-56'>
         <div className='w-776 shrink-0'>
           <BuildingTitle buildingInfo={buildingInfo} page='description' />

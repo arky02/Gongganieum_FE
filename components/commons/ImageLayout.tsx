@@ -4,8 +4,8 @@ import Image from 'next/image';
 // - 클릭했을 때 프리뷰 창 표시
 
 const STYLE = {
-  map: 'h-176 text-24',
-  description: 'h-480 text-32',
+  map: 'w-full h-176 text-24',
+  description: 'w-full h-480 text-32',
 };
 
 type PageType = 'map' | 'description';
@@ -14,28 +14,22 @@ const ImageLayout = (props: { imageUrls: string[]; page: PageType }) => {
   const { imageUrls, page } = props;
 
   return (
-    <>
-      {imageUrls.length >= 5 && (
-        <FiveLayout imageUrls={imageUrls} page={page} />
-      )}
-      {imageUrls.length === 2 && (
-        <TwoLayout imageUrls={imageUrls} page={page} />
-      )}
-      {imageUrls.length === 1 && (
-        <OneLayout imageUrl={imageUrls[0]} page={page} />
-      )}
-    </>
+    <div className={STYLE[page]}>
+      {imageUrls.length >= 5 && <FiveLayout imageUrls={imageUrls} />}
+      {imageUrls.length === 2 && <TwoLayout imageUrls={imageUrls} />}
+      {imageUrls.length === 1 && <OneLayout imageUrl={imageUrls[0]} />}
+    </div>
   );
 };
 
 export default ImageLayout;
 
-const FiveLayout = (props: { imageUrls: string[]; page: PageType }) => {
-  const { imageUrls, page } = props;
+const FiveLayout = (props: { imageUrls: string[] }) => {
+  const { imageUrls } = props;
 
   return (
     <div
-      className={`grid w-full flex-shrink-0 grid-cols-4 grid-rows-2 gap-4 ${STYLE[page]}`}
+      className={`grid h-full w-full shrink-0 grid-cols-4 grid-rows-2 gap-4`}
     >
       <div className='relative col-span-2 col-start-1 row-span-2 row-start-1 overflow-hidden rounded-l-16'>
         <Image
@@ -86,13 +80,11 @@ const FiveLayout = (props: { imageUrls: string[]; page: PageType }) => {
   );
 };
 
-const TwoLayout = (props: { imageUrls: string[]; page: PageType }) => {
-  const { imageUrls, page } = props;
+const TwoLayout = (props: { imageUrls: string[] }) => {
+  const { imageUrls } = props;
 
   return (
-    <div
-      className={`grid w-full flex-shrink-0 grid-cols-2 gap-4 ${STYLE[page]}`}
-    >
+    <div className='grid h-full w-full shrink-0 grid-cols-2 gap-4'>
       <div className='relative overflow-hidden rounded-l-16'>
         <Image
           src={imageUrls[0]}
@@ -113,14 +105,12 @@ const TwoLayout = (props: { imageUrls: string[]; page: PageType }) => {
   );
 };
 
-const OneLayout = (props: { imageUrl: string; page: PageType }) => {
-  const { imageUrl, page } = props;
+const OneLayout = (props: { imageUrl: string }) => {
+  const { imageUrl } = props;
 
   return (
-    <div
-      style={{ backgroundImage: `url(${imageUrl})` }}
-      className={`relative w-full flex-shrink-0 gap-4 overflow-hidden rounded-16 bg-cover bg-center ${STYLE[page]}`}
-    >
+    <div className='relative h-full w-full shrink-0 gap-4 overflow-hidden rounded-16'>
+      <Image src={imageUrl} fill className='object-cover' alt='빌딩 사진' />
       <div className='h-full w-full backdrop-blur-md'>
         <div className='relative mx-auto h-full w-852 overflow-hidden'>
           <Image src={imageUrl} fill className='object-cover' alt='빌딩 사진' />
