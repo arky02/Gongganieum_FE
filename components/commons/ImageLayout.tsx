@@ -29,9 +29,7 @@ const FiveLayout = (props: { imageUrls: string[] }) => {
   const { imageUrls } = props;
 
   return (
-    <div
-      className={`grid h-full w-full shrink-0 grid-cols-4 grid-rows-2 gap-4`}
-    >
+    <div className='grid h-full w-full shrink-0 grid-cols-4 grid-rows-2 gap-4'>
       <div className='relative col-span-2 col-start-1 row-span-2 row-start-1 overflow-hidden rounded-l-16'>
         <Image
           src={imageUrls[0]}
