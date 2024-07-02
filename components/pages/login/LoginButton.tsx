@@ -14,17 +14,16 @@ const MODE_OBJECT = {
   },
 };
 
-const LoginButton = (props: { mode: 'naver' | 'kakao'; href: string}) => {
+const LoginButton = (props: { mode: 'naver' | 'kakao'; href: string }) => {
   const { mode, href } = props;
-
 
   return (
     <Link
-      className={`rounded-12 flex h-56 w-600 items-center justify-center gap-16 ${mode === 'kakao' ? MODE_OBJECT.kakao.backgroundColor : MODE_OBJECT.naver.backgroundColor} px-216 py-16`}
+      className={`flex h-56 w-600 items-center justify-center gap-16 rounded-12 ${mode === 'kakao' ? MODE_OBJECT.kakao.backgroundColor : MODE_OBJECT.naver.backgroundColor} px-216 py-16`}
       href={href}
     >
       {mode === 'kakao' ? MODE_OBJECT.kakao.icon : MODE_OBJECT.naver.icon}
-      <div className='text-18 font-800 font-black'>
+      <div className='font-black text-18 font-800'>
         {mode === 'kakao'
           ? MODE_OBJECT.kakao.content
           : MODE_OBJECT.naver.content}
