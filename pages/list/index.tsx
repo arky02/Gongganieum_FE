@@ -1,8 +1,8 @@
 import { SEARCH_AS } from 'constants/common';
 import { useRouter } from 'next/router';
 import { ChangeEvent, useState } from 'react';
-import useFetch from 'hooks/map/useFetch';
-import useSearch from 'hooks/map/useSearch';
+import useFetch from 'hooks/useFetch';
+import useSearch from 'hooks/useSearch';
 import { BuildingType, CategoryType, OrderType } from 'types/client.types';
 import SearchInput from 'components/commons/SearchInput';
 import ListBuildingCard from 'components/pages/list/ListBuildingCard';

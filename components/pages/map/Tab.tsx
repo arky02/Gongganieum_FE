@@ -1,7 +1,7 @@
 import { SEARCH_AS } from 'constants/common';
 import { useRouter } from 'next/router';
-import useFetch from 'hooks/map/useFetch';
-import useSearch from 'hooks/map/useSearch';
+import useFetch from 'hooks/useFetch';
+import useSearch from 'hooks/useSearch';
 import SearchInput from 'components/commons/SearchInput';
 import BuildingTab from './BuildingTab';
 import RecommendTab from './RecommendTab';
