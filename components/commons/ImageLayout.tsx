@@ -1,5 +1,7 @@
 import { NO_IMAGE_URL } from 'constants/common';
 import Image from 'next/image';
+import { Dispatch, SetStateAction, useState } from 'react';
+import ImagePreview from './ImagePreview';
 
 // TODO:
 // - 클릭했을 때 프리뷰 창 표시
@@ -13,13 +15,25 @@ type PageType = 'map' | 'description';
 
 const ImageLayout = (props: { imageUrls: string[]; page: PageType }) => {
   const { imageUrls, page } = props;
+  const [imagePreviewIndex, setImagePreviewIndex] = useState<number | null>(1);
 
   return (
-    <div className={STYLE[page]}>
-      {imageUrls.length > 2 && <FiveLayout imageUrls={imageUrls} />}
-      {imageUrls.length === 2 && <TwoLayout imageUrls={imageUrls} />}
-      {imageUrls.length === 1 && <OneLayout imageUrl={imageUrls[0]} />}
-    </div>
+    <>
+      <div className={STYLE[page]}>
+        {imageUrls.length > 2 && <FiveLayout imageUrls={imageUrls} />}
+        {imageUrls.length === 2 && <TwoLayout imageUrls={imageUrls} />}
+        {imageUrls.length === 1 && (
+          <OneLayout imageUrl={imageUrls[0]} setIndex={setImagePreviewIndex} />
+        )}
+      </div>
+      {imagePreviewIndex && (
+        <ImagePreview
+          urls={imageUrls}
+          index={imagePreviewIndex}
+          setIndex={setImagePreviewIndex}
+        />
+      )}
+    </>
   );
 };
 
@@ -104,14 +118,20 @@ const TwoLayout = (props: { imageUrls: string[] }) => {
   );
 };
 
-const OneLayout = (props: { imageUrl: string }) => {
-  const { imageUrl } = props;
+const OneLayout = (props: {
+  imageUrl: string;
+  setIndex: Dispatch<SetStateAction<number | null>>;
+}) => {
+  const { imageUrl, setIndex } = props;
 
   return (
     <div className='relative h-full w-full shrink-0 gap-4 overflow-hidden rounded-16'>
       <Image src={imageUrl} fill className='object-cover' alt='빌딩 사진' />
       <div className='h-full w-full backdrop-blur-md'>
-        <div className='relative mx-auto h-full w-852 overflow-hidden'>
+        <div
+          onClick={() => setIndex(1)}
+          className='relative mx-auto h-full w-852 cursor-pointer overflow-hidden'
+        >
           <Image src={imageUrl} fill className='object-cover' alt='빌딩 사진' />
         </div>
       </div>
