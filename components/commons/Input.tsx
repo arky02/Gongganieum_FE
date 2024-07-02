@@ -30,13 +30,15 @@ const Input = <T extends FieldValues>({
 
   return (
     <div className='relative'>
-      <label htmlFor={field.name}>{children}</label>
+      <label htmlFor={field.name} className='text-16 font-700'>
+        {children}
+      </label>
       <input
         id={field.name}
         placeholder={placeholder}
         type={type}
         {...field}
-        className={`w-full rounded-lg border border-gray-300 p-8 ${fieldState?.error && 'border-red-600'}`}
+        className={`mt-8 w-full rounded-8 border border-gray-200 bg-gray-100 p-12 text-14 font-500 outline-none placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400 ${fieldState?.error && 'border-red-600'}`}
       />
       {initialType === 'password' && (
         <button
@@ -47,7 +49,7 @@ const Input = <T extends FieldValues>({
           {type === 'password' ? <div>off</div> : <div>on</div>}
         </button>
       )}
-      <div className='mt-4 h-8 text-red-600'>{fieldState?.error?.message}</div>
+      <div className='text-red-600 mt-4 h-8'>{fieldState?.error?.message}</div>
     </div>
   );
 };

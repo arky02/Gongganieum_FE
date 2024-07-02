@@ -1,7 +1,7 @@
-import { SEARCH_AS } from 'constants/dropdown';
+import { SEARCH_AS } from 'constants/common';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { AsType } from 'types/client.types';
+import { AsType, CategoryType, OrderType } from 'types/client.types';
 
 const useSearch = () => {
   const router = useRouter();
@@ -18,20 +18,42 @@ const useSearch = () => {
       ? unparsedAs
       : SEARCH_AS[0];
 
-    return { q, as } as { q: string; as: AsType };
+    const order = Array.isArray(router.query['order'])
+      ? router.query['order'][0]
+      : router.query['order'] ?? '';
+
+    const cate = Array.isArray(router.query['cate'])
+      ? router.query['cate'][0]
+      : router.query['cate'] ?? '';
+
+    const unparsedIsours = Array.isArray(router.query['isours'])
+      ? router.query['isours'][0]
+      : router.query['isours'];
+    const isours = unparsedIsours === 'true' ? true : false;
+
+    return { q, as, order, cate, isours } as {
+      q: string;
+      as: AsType;
+      order: OrderType;
+      cate: CategoryType;
+      isours: boolean;
+    };
   };
 
   const initialQuery = getQuery();
 
   const [q, setQ] = useState(initialQuery.q);
   const [as, setAs] = useState<AsType>(initialQuery.as);
+  const [order, setOrder] = useState<OrderType>(initialQuery.order);
+  const [cate, setCate] = useState<CategoryType>(initialQuery.cate);
+  const [isours, setIsours] = useState<boolean>(initialQuery.isours);
 
   useEffect(() => {
     if (!router.isReady || router.query['building']) {
       return;
     }
-    router.push({ query: { as, q } });
-  }, [as, q]);
+    router.push({ query: { as, q, order, cate, isours } });
+  }, [as, q, order, cate, isours]);
 
   useEffect(() => {
     if (!router.isReady) {
@@ -40,9 +62,23 @@ const useSearch = () => {
     const query = getQuery();
     setQ(query.q);
     setAs(query.as);
-  }, [router.query['q'], router.query['as']]);
+    setOrder(query.order);
+    setCate(query.cate);
+    setIsours(query.isours);
+  }, [router.query]);
 
-  return { q, setQ, as, setAs };
+  return {
+    q,
+    setQ,
+    as,
+    setAs,
+    order,
+    setOrder,
+    cate,
+    setCate,
+    isours,
+    setIsours,
+  };
 };
 
 export default useSearch;
