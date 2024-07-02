@@ -1,5 +1,6 @@
 import IconArrowBack from './arrow-back.svg';
 import IconArrowDown from './arrow-down.svg';
+import IconArrowNextButton from './arrow-next-button.svg';
 import IconBeauty from './beauty.svg';
 import IconBlackCheck from './black-check.svg';
 import IconBlankLike from './blank-like.svg';
@@ -38,4 +39,5 @@ export {
   IconMarker,
   IconCirculation,
   IconBlackCheck,
+  IconArrowNextButton,
 };

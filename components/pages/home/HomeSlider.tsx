@@ -4,18 +4,19 @@ import 'swiper/css/autoplay';
 import 'swiper/css/navigation';
 import { Autoplay, Navigation } from 'swiper/modules';
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
+import { IconArrowNextButton } from 'public/icons';
 import HomeBuildingCard from './HomeBuildingCard';
 
 const MOCK_BUILDING_IMAGE_URLS = [
+  '/images/mock-building-image.jpg',
   '/images/mock-building-image2.jpg',
+  '/images/mock-building-image.jpg',
   '/images/mock-building-image2.jpg',
+  '/images/mock-building-image.jpg',
   '/images/mock-building-image2.jpg',
+  '/images/mock-building-image.jpg',
   '/images/mock-building-image2.jpg',
-  '/images/mock-building-image2.jpg',
-  '/images/mock-building-image2.jpg',
-  '/images/mock-building-image2.jpg',
-  '/images/mock-building-image2.jpg',
-  '/images/mock-building-image2.jpg',
+  '/images/mock-building-image.jpg',
   '/images/mock-building-image2.jpg',
 ];
 
@@ -59,6 +60,12 @@ const HomeSlider = () => {
           </SwiperSlide>
         ))}
       </Swiper>
+      <button
+        onClick={handleNext}
+        className='absolute -right-24 top-180	 z-base'
+      >
+        <IconArrowNextButton />
+      </button>
     </div>
   );
 };

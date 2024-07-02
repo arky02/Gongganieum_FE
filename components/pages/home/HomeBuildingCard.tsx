@@ -12,20 +12,21 @@ const HomeBuildingCard = (props: {
   const parsedTags = tag === 'NULL' ? [] : tag?.split(',');
 
   return (
-    <div className='relative flex h-500 w-396 flex-col'>
-      <Image
-        src={img}
-        height={396}
-        width={396}
-        className='mb-20 cursor-pointer rounded-12 object-cover'
-        alt='빌딩 이미지'
-        quality={100}
-      />
+    <>
+      <div className='relative mb-20 h-396 w-396 flex-col '>
+        <Image
+          src={img}
+          fill
+          className='cursor-pointer rounded-12 object-cover'
+          alt='빌딩 이미지'
+          quality={100}
+        />
+      </div>
       <Description name={name} address={address} />
       <div className='flex flex-wrap gap-8'>
         {parsedTags?.map((tag) => <Tag key={tag} type='일반' text={tag} />)}
       </div>
-    </div>
+    </>
   );
 };
 
