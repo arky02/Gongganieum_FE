@@ -2,11 +2,12 @@ import Image from 'next/image';
 import { useRef } from 'react';
 import 'swiper/css';
 import 'swiper/css/autoplay';
+import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
-import { IconWhiteMarker } from 'public/icons';
+import { IconArrowLeft, IconArrowRight, IconWhiteMarker } from 'public/icons';
 
 const MOCK_BUILDING_IMAGE_URLS = [
   '/images/mock-building-image.jpg',
@@ -36,9 +37,10 @@ const HomeSlider = (props: { mode: 'hero' | 'recommend' }) => {
     <div className='relative w-full max-w-1232'>
       <Swiper
         ref={swiperRef}
-        modules={[Navigation, Autoplay, Pagination]}
+        modules={[Navigation, Autoplay, Pagination, EffectFade]}
         navigation={{ nextEl: null, prevEl: null }}
         autoplay={{ delay: 3000, disableOnInteraction: false }}
+        effect={'fade'}
         pagination={{
           clickable: true,
           renderBullet: (index, className) => {
@@ -63,6 +65,14 @@ const HomeSlider = (props: { mode: 'hero' | 'recommend' }) => {
           </SwiperSlide>
         ))}
       </Swiper>
+      <div className='absolute bottom-[62px] left-256 z-[1] flex gap-4'>
+        <button className='h-16 w-16 text-white' onClick={handlePrev}>
+          <IconArrowLeft />
+        </button>
+        <button className='h-16 w-16 text-white' onClick={handleNext}>
+          <IconArrowRight />
+        </button>
+      </div>
     </div>
   );
 };
