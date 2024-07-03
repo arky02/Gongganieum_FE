@@ -1,7 +1,7 @@
 import { CATEGORY, MARKER_ICON_SRC } from 'constants/common';
 import { GUNGU, GUNGU_COORD, GunguType } from 'constants/regions';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useStore } from 'store';
 import useKakaoMap from 'hooks/useKakaoMap';
 import { BuildingType, CategoryType } from 'types/client.types';
@@ -16,9 +16,20 @@ const HOT_PLACE_COLOR = [
 
 const useInitMap = (buildings: BuildingType[] | undefined) => {
   const router = useRouter();
-  const { map, setMap } = useStore((state) => ({
+  const {
+    map,
+    setMap,
+    showMarkers,
+    hideMarkers,
+    setShowMarkers,
+    setHideMarkers,
+  } = useStore((state) => ({
     map: state.map,
     setMap: state.setMap,
+    showMarkers: state.showMarkers,
+    hideMarkers: state.hideMarkers,
+    setShowMarkers: state.setShowMarkers,
+    setHideMarkers: state.setHideMarkers,
   }));
 
   const initMap = async () => {
@@ -35,12 +46,42 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
 
   useKakaoMap({ callbackFn: initMap });
 
-  const setMarkers = () => {
+  const [markers, setMarkers] = useState<{ building: any[]; gungu: any[] }>({
+    building: [],
+    gungu: [],
+  });
+
+  const showMapMarkers = () => {
+    markers.gungu.forEach((marker) => {
+      marker.setMap(map);
+      const zoomLevel = map.getLevel();
+      if (zoomLevel <= 6) {
+        marker.setVisible(false);
+      } else {
+        marker.setVisible(true);
+      }
+    });
+    markers.building.forEach((marker) => {
+      marker.setMap(map);
+      const zoomLevel = map.getLevel();
+      if (zoomLevel <= 6) {
+        marker.setVisible(true);
+      } else {
+        marker.setVisible(false);
+      }
+    });
+  };
+
+  const hideMapMarkers = () => {
+    markers.gungu.forEach((marker) => marker.setMap(null));
+    markers.building.forEach((marker) => marker.setMap(null));
+  };
+
+  const initMarkers = () => {
     if (!buildings || !map) {
       return;
     }
 
-    const buildingMarkers: any[] = [];
     buildings.forEach((building) => {
       const coord = building.coord.split(',');
       const position = new window.kakao.maps.LatLng(coord[0], coord[1]);
@@ -68,32 +109,28 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
         clickable: true,
       });
 
+      setMarkers((prev) => ({ ...prev, building: [...prev.building, marker] }));
+
+      marker.setMap(map);
+      marker.setVisible(false);
+      window.kakao.maps.event.addListener(map, 'zoom_changed', () => {
+        const zoomLevel = map.getLevel();
+        const isSet = !!marker.getMap();
+        if (isSet) {
+          if (zoomLevel <= 6) {
+            marker.setVisible(true);
+          } else {
+            marker.setVisible(false);
+          }
+        }
+      });
       window.kakao.maps.event.addListener(marker, 'click', () => {
         router.push({ query: { building: building._id } });
       });
-
-      buildingMarkers.push(marker);
-      marker.setMap(map);
-      marker.setVisible(false);
-    });
-
-    window.kakao.maps.event.addListener(map, 'zoom_changed', () => {
-      const zoomLevel = map.getLevel();
-
-      if (zoomLevel <= 6) {
-        buildingMarkers.forEach((marker) => {
-          marker.setVisible(true);
-        });
-      } else {
-        buildingMarkers.forEach((marker) => {
-          marker.setVisible(false);
-        });
-      }
     });
 
     const hotRate = getHotRate(buildings!);
 
-    const gunguOverlays: any[] = [];
     GUNGU.forEach((gungu) => {
       const popupCnt = hotRate[gungu];
       if (popupCnt === 0) {
@@ -133,33 +170,47 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
         yAnchor: 1,
       });
 
-      gunguOverlays.push(customOverlay);
-      customOverlay.setMap(map);
+      setMarkers((prev) => ({
+        ...prev,
+        gungu: [...prev.gungu, customOverlay],
+      }));
 
+      customOverlay.setMap(map);
+      customOverlay.setVisible(true);
+      window.kakao.maps.event.addListener(map, 'zoom_changed', () => {
+        const zoomLevel = map.getLevel();
+        const isSet = !!customOverlay.getMap();
+        if (isSet) {
+          if (zoomLevel <= 6) {
+            customOverlay.setVisible(false);
+          } else {
+            customOverlay.setVisible(true);
+          }
+        }
+      });
       content.addEventListener('click', () => {
         map.setLevel(6);
         map.setCenter(coord);
       });
     });
-
-    window.kakao.maps.event.addListener(map, 'zoom_changed', () => {
-      const zoomLevel = map.getLevel();
-
-      if (zoomLevel <= 6) {
-        gunguOverlays.forEach((overlay) => {
-          overlay.setVisible(false);
-        });
-      } else {
-        gunguOverlays.forEach((overlay) => {
-          overlay.setVisible(true);
-        });
-      }
-    });
   };
 
   useEffect(() => {
-    setMarkers();
+    initMarkers();
   }, [map, buildings]);
+
+  useEffect(() => {
+    if (
+      markers.gungu.length === 0 ||
+      markers.building.length === 0 ||
+      !!showMarkers ||
+      !!hideMarkers
+    ) {
+      return;
+    }
+    setShowMarkers(showMapMarkers);
+    setHideMarkers(hideMapMarkers);
+  }, [showMapMarkers, hideMapMarkers]);
 };
 
 export default useInitMap;

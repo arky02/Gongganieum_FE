@@ -6,8 +6,10 @@ import { BuildingType, CategoryType } from 'types/client.types';
 
 const useMarkers = () => {
   const router = useRouter();
-  const { map } = useStore((state) => ({
+  const { map, showMarkers, hideMarkers } = useStore((state) => ({
     map: state.map,
+    showMarkers: state.showMarkers,
+    hideMarkers: state.hideMarkers,
   }));
   const [markers, setMarkers] = useState<any[]>([]);
   const [initialBuildings, setInitialBuildings] = useState<BuildingType[]>();
@@ -16,7 +18,6 @@ const useMarkers = () => {
     if (!initialBuildings) {
       setInitialBuildings(buildings);
     }
-
     if (!map || !buildings) {
       return;
     }
@@ -69,6 +70,15 @@ const useMarkers = () => {
   useEffect(() => {
     createMarkers(initialBuildings);
   }, [map, initialBuildings]);
+
+  const q = router.query['q'];
+  useEffect(() => {
+    if (q) {
+      hideMarkers?.();
+    } else {
+      showMarkers?.();
+    }
+  }, [q, showMarkers, hideMarkers]);
 
   return { createMarkers, deleteMarkers };
 };
