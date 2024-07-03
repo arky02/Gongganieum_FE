@@ -1,0 +1,22 @@
+/* 슬라이더 페이지네이션 */
+.swiper-pagination {
+  text-align: start !important;
+  margin-left: 52px;
+  margin-bottom: 52px;
+}
+
+.swiper-pagination .swiper-pagination-bullet-custom {
+  bottom: 56px;
+  width: 28px;
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: inline-block;
+  margin: 0 4px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.swiper-pagination-bullet-custom.swiper-pagination-bullet-active {
+  width: 40px;
+  background-color: rgba(255, 255, 255, 1);
+}

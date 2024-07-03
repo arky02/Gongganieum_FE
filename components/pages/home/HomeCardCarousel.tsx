@@ -20,7 +20,7 @@ const MOCK_BUILDING_IMAGE_URLS = [
   '/images/mock-building-image2.jpg',
 ];
 
-const HomeCardSlider = () => {
+const HomeCardCarousel = () => {
   const swiperRef = useRef<SwiperRef>(null);
 
   const handlePrev = () => {
@@ -70,4 +70,4 @@ const HomeCardSlider = () => {
   );
 };
 
-export default HomeCardSlider;
+export default HomeCardCarousel;
