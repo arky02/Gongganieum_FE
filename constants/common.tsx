@@ -27,3 +27,5 @@ export const CATEGORY_ICON = {
   미디어: <IconEntertainment />,
   기타: <IconEtc />,
 };
+
+export const NO_IMAGE_URL = '/images/no-image.jpg';

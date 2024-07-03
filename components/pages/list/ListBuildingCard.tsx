@@ -1,14 +1,16 @@
 import { useMutation } from '@tanstack/react-query';
+import { NO_IMAGE_URL } from 'constants/common';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
+import useBuildingImageUrls from 'hooks/useBuildingImageUrls';
 import { postLikeToggle } from 'apis/api';
 import Tag from 'components/commons/Tag';
 import { IconBlankLike, IconRedLike } from 'public/icons';
 
-const MOCK_BUILDING_IMAGE_URL = '/images/mock-building-image2.jpg';
-
 const ListBuildingCard = (props: {
+  id: number;
   name: string;
   address: string;
   isours: boolean;
@@ -17,12 +19,14 @@ const ListBuildingCard = (props: {
   img?: string | StaticImport;
   latest_end_date: Date | string;
 }) => {
-  const { name, address, isours, tag, cate, latest_end_date } = props;
-  const [isLike, setIsLike] = useState(false);
+  const { id, name, address, isours, tag, cate, latest_end_date } = props;
+
+  const imageUrls = useBuildingImageUrls(address);
 
   const isPopup = new Date(latest_end_date ?? '') > new Date();
   const parsedTags = tag === 'NULL' ? [] : tag?.split(',');
 
+  const [isLike, setIsLike] = useState(false);
   const likeMutation = useMutation({
     // TODO: 각각의 빌딩의 유저id와 빌딩id 넣기
     // TODO: 하트 상태 관리
@@ -34,13 +38,17 @@ const ListBuildingCard = (props: {
     setIsLike(!isLike);
     likeMutation.mutate();
   };
+
   return (
-    <div className='relative flex w-396 flex-col text-start'>
+    <Link
+      href={`/list/${id}`}
+      className='relative flex w-396 cursor-pointer flex-col text-start'
+    >
       <div className='relative mb-20 h-352 w-full overflow-hidden rounded-12'>
         <Image
-          src={MOCK_BUILDING_IMAGE_URL}
+          src={imageUrls[0] ?? NO_IMAGE_URL}
           fill
-          className='cursor-pointer object-cover '
+          className='object-cover '
           alt='빌딩 이미지'
           quality={100}
         />
@@ -59,7 +67,7 @@ const ListBuildingCard = (props: {
         {parsedTags?.map((tag) => <Tag key={tag} type='일반' text={tag} />)}
       </div>
       <div className='flex flex-wrap gap-8'></div>
-    </div>
+    </Link>
   );
 };
 

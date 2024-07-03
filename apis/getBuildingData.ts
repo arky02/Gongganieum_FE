@@ -17,7 +17,10 @@ export const getBuildingData = async (address: string) => {
   const data = Array.isArray(item) ? item[0] : item;
 
   const date = String(data?.useAprDay);
-  const parsedDate = `${date?.slice(0, 4)}년 ${date?.slice(4, 6)}월 ${date?.slice(6, 8)}일`;
+  const parsedDate =
+    date !== 'undefined'
+      ? `${date?.slice(0, 4)}년 ${date?.slice(4, 6)}월 ${date?.slice(6, 8)}일`
+      : null;
   const parsedData: BuildingDataType = {
     연면적: data?.totArea,
     용적률: data?.vlRat,
