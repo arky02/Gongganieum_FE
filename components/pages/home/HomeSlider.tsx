@@ -65,7 +65,9 @@ const HomeSlider = (props: { mode: 'hero' | 'recommend' }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className='absolute bottom-[62px] left-256 z-[1] flex gap-4'>
+      <div
+        className={`absolute ${mode === 'hero' ? 'bottom-[62px]' : 'bottom-[78px]'} left-256 z-base flex gap-4`}
+      >
         <button className='h-16 w-16 text-white' onClick={handlePrev}>
           <IconArrowLeft />
         </button>
@@ -114,7 +116,6 @@ const HeroCard = (props: {
           <IconWhiteMarker />
           {`${name} | ${address}`}
         </div>
-        {/* Progress Bar & Buttons */}
       </div>
     </div>
   );
