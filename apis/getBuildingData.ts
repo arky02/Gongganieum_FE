@@ -1,8 +1,5 @@
-import axios from 'axios';
 import { BuildingDataType } from 'types/client.types';
 import { instance } from './config/default';
-
-const SERVICE_KEY = process.env.NEXT_PUBLIC_DATA_PORTAL_SERVICE_KEY;
 
 export const getBuildingData = async (address: string) => {
   const addressCode = await getAddressCode(address);
@@ -10,9 +7,9 @@ export const getBuildingData = async (address: string) => {
     return;
   }
 
-  const res = await axios.get(
-    `http://apis.data.go.kr/1613000/BldRgstService_v2/getBrTitleInfo?sigunguCd=${addressCode.sigunguCd}&bjdongCd=${addressCode.bjdongCd}&bun=${addressCode.bun}&ji=${addressCode.ji}&ServiceKey=${SERVICE_KEY}`,
-  );
+  const res = await instance.get('/data/building_info', {
+    params: addressCode,
+  });
   const item = res.data?.response?.body?.items?.item;
   const data = Array.isArray(item) ? item[0] : item;
 
