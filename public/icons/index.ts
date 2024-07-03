@@ -2,6 +2,7 @@ import IconArrowBack from './arrow-back.svg';
 import IconArrowDown from './arrow-down.svg';
 import IconArrowLeft from './arrow-left.svg';
 import IconArrowNextButton from './arrow-next-button.svg';
+import IconArrowPrevButton from './arrow-prev-button.svg';
 import IconArrowRight from './arrow-right.svg';
 import IconBeauty from './beauty.svg';
 import IconBlackCheck from './black-check.svg';
@@ -48,4 +49,5 @@ export {
   IconClose,
   IconArrowRight,
   IconArrowLeft,
+  IconArrowPrevButton,
 };

@@ -4,7 +4,7 @@ import 'swiper/css/autoplay';
 import 'swiper/css/navigation';
 import { Autoplay, Navigation } from 'swiper/modules';
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
-import { IconArrowNextButton } from 'public/icons';
+import { IconArrowNextButton, IconArrowPrevButton } from 'public/icons';
 import HomeBuildingCard from './HomeBuildingCard';
 
 const MOCK_BUILDING_IMAGE_URLS = [
@@ -60,6 +60,9 @@ const HomeCardCarousel = () => {
           </SwiperSlide>
         ))}
       </Swiper>
+      <button onClick={handlePrev} className='absolute -left-24 top-180	 z-base'>
+        <IconArrowPrevButton />
+      </button>
       <button
         onClick={handleNext}
         className='absolute -right-24 top-180	 z-base'
