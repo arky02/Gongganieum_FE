@@ -5,14 +5,6 @@ import { useEffect } from 'react';
 import { useStore } from 'store';
 import useKakaoMap from 'hooks/useKakaoMap';
 import { BuildingType, CategoryType } from 'types/client.types';
-import {
-  IconBeautyPin,
-  IconCharacterPin,
-  IconEtcPin,
-  IconFashionPin,
-  IconFoodPin,
-  IconMediaPin,
-} from 'public/icons';
 
 const HOT_PLACE_COLOR = [
   { bg: 'bg-[rgb(141,151,165)]', border: 'border-t-[rgb(141,151,165)]' },
@@ -23,12 +15,30 @@ const HOT_PLACE_COLOR = [
 ];
 
 const MARKER_ICON_SRC = {
-  패션: '/icons/fashion-pin.svg',
-  뷰티: '/icons/beauty-pin.svg',
-  'F&B': '/icons/food-pin.svg',
-  캐릭터: '/icons/character-pin.svg',
-  미디어: '/icons/media-pin.svg',
-  기타: '/icons/etc-pin.svg',
+  패션: {
+    default: '/icons/fashion-pin.svg',
+    popup: '/icons/fashion-popup-pin.svg',
+  },
+  뷰티: {
+    default: '/icons/beauty-pin.svg',
+    popup: '/icons/beauty-popup-pin.svg',
+  },
+  'F&B': {
+    default: '/icons/food-pin.svg',
+    popup: '/icons/food-popup-pin.svg',
+  },
+  캐릭터: {
+    default: '/icons/character-pin.svg',
+    popup: '/icons/character-popup-pin.svg',
+  },
+  미디어: {
+    default: '/icons/media-pin.svg',
+    popup: '/icons/media-popup-pin.svg',
+  },
+  기타: {
+    default: '/icons/etc-pin.svg',
+    popup: '/icons/etc-popup-pin.svg',
+  },
 };
 
 const useInitMap = (buildings: BuildingType[] | undefined) => {
@@ -65,7 +75,11 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
       const category = CATEGORY.includes(building.cate as CategoryType)
         ? building.cate
         : '기타';
-      const imageSrc = MARKER_ICON_SRC[category];
+      const isPopup = new Date(building?.latest_end_date ?? '') > new Date();
+
+      const imageSrc = isPopup
+        ? MARKER_ICON_SRC[category].popup
+        : MARKER_ICON_SRC[category].default;
       const imageSize = new window.kakao.maps.Size(45, 45);
       const markerImage = new window.kakao.maps.MarkerImage(
         imageSrc,
