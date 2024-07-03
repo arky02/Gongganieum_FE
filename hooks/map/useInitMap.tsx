@@ -18,26 +18,32 @@ const MARKER_ICON_SRC = {
   패션: {
     default: '/icons/fashion-pin.svg',
     popup: '/icons/fashion-popup-pin.svg',
+    isours: '/icons/fashion-isours-pin.svg',
   },
   뷰티: {
     default: '/icons/beauty-pin.svg',
     popup: '/icons/beauty-popup-pin.svg',
+    isours: '/icons/beauty-isours-pin.svg',
   },
   'F&B': {
     default: '/icons/food-pin.svg',
     popup: '/icons/food-popup-pin.svg',
+    isours: '/icons/food-isours-pin.svg',
   },
   캐릭터: {
     default: '/icons/character-pin.svg',
     popup: '/icons/character-popup-pin.svg',
+    isours: '/icons/character-isours-pin.svg',
   },
   미디어: {
     default: '/icons/media-pin.svg',
     popup: '/icons/media-popup-pin.svg',
+    isours: '/icons/media-isours-pin.svg',
   },
   기타: {
     default: '/icons/etc-pin.svg',
     popup: '/icons/etc-popup-pin.svg',
+    isours: '/icons/etc-isours-pin.svg',
   },
 };
 
@@ -75,11 +81,14 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
       const category = CATEGORY.includes(building.cate as CategoryType)
         ? building.cate
         : '기타';
-      const isPopup = new Date(building?.latest_end_date ?? '') > new Date();
+      const isPopup = new Date(building.latest_end_date ?? '') > new Date();
+      const isours = building.isours;
 
-      const imageSrc = isPopup
-        ? MARKER_ICON_SRC[category].popup
-        : MARKER_ICON_SRC[category].default;
+      const imageSrc = isours
+        ? MARKER_ICON_SRC[category].isours
+        : isPopup
+          ? MARKER_ICON_SRC[category].popup
+          : MARKER_ICON_SRC[category].default;
       const imageSize = new window.kakao.maps.Size(45, 45);
       const markerImage = new window.kakao.maps.MarkerImage(
         imageSrc,
