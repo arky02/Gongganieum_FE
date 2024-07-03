@@ -1,7 +1,8 @@
+import { CATEGORY, MARKER_ICON_SRC } from 'constants/common';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useStore } from 'store';
-import { BuildingType } from 'types/client.types';
+import { BuildingType, CategoryType } from 'types/client.types';
 
 const useMarkers = () => {
   const router = useRouter();
@@ -27,8 +28,15 @@ const useMarkers = () => {
       const position = new window.kakao.maps.LatLng(coord[0], coord[1]);
       bound.extend(position);
 
-      const imageSrc = '/icons/dot.png';
-      const imageSize = new window.kakao.maps.Size(20, 20);
+      const category = CATEGORY.includes(building.cate as CategoryType)
+        ? building.cate
+        : '기타';
+      const isours = building.isours;
+
+      const imageSrc = isours
+        ? MARKER_ICON_SRC[category].isours
+        : MARKER_ICON_SRC[category].search;
+      const imageSize = new window.kakao.maps.Size(45, 45);
       const markerImage = new window.kakao.maps.MarkerImage(
         imageSrc,
         imageSize,

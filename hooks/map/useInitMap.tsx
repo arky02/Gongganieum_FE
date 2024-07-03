@@ -1,4 +1,4 @@
-import { CATEGORY } from 'constants/common';
+import { CATEGORY, MARKER_ICON_SRC } from 'constants/common';
 import { GUNGU, GUNGU_COORD, GunguType } from 'constants/regions';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -13,39 +13,6 @@ const HOT_PLACE_COLOR = [
   { bg: 'bg-[rgb(52,62,75)]', border: 'border-t-[rgb(52,62,75)]' },
   { bg: 'bg-[rgb(25,31,40)]', border: 'border-t-[rgb(25,31,40)]' },
 ];
-
-const MARKER_ICON_SRC = {
-  패션: {
-    default: '/icons/fashion-pin.svg',
-    popup: '/icons/fashion-popup-pin.svg',
-    isours: '/icons/fashion-isours-pin.svg',
-  },
-  뷰티: {
-    default: '/icons/beauty-pin.svg',
-    popup: '/icons/beauty-popup-pin.svg',
-    isours: '/icons/beauty-isours-pin.svg',
-  },
-  'F&B': {
-    default: '/icons/food-pin.svg',
-    popup: '/icons/food-popup-pin.svg',
-    isours: '/icons/food-isours-pin.svg',
-  },
-  캐릭터: {
-    default: '/icons/character-pin.svg',
-    popup: '/icons/character-popup-pin.svg',
-    isours: '/icons/character-isours-pin.svg',
-  },
-  미디어: {
-    default: '/icons/media-pin.svg',
-    popup: '/icons/media-popup-pin.svg',
-    isours: '/icons/media-isours-pin.svg',
-  },
-  기타: {
-    default: '/icons/etc-pin.svg',
-    popup: '/icons/etc-popup-pin.svg',
-    isours: '/icons/etc-isours-pin.svg',
-  },
-};
 
 const useInitMap = (buildings: BuildingType[] | undefined) => {
   const router = useRouter();
