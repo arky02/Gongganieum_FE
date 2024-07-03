@@ -1,9 +1,18 @@
+import { CATEGORY } from 'constants/common';
 import { GUNGU, GUNGU_COORD, GunguType } from 'constants/regions';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useStore } from 'store';
 import useKakaoMap from 'hooks/useKakaoMap';
-import { BuildingType } from 'types/client.types';
+import { BuildingType, CategoryType } from 'types/client.types';
+import {
+  IconBeautyPin,
+  IconCharacterPin,
+  IconEtcPin,
+  IconFashionPin,
+  IconFoodPin,
+  IconMediaPin,
+} from 'public/icons';
 
 const HOT_PLACE_COLOR = [
   { bg: 'bg-[rgb(141,151,165)]', border: 'border-t-[rgb(141,151,165)]' },
@@ -12,6 +21,15 @@ const HOT_PLACE_COLOR = [
   { bg: 'bg-[rgb(52,62,75)]', border: 'border-t-[rgb(52,62,75)]' },
   { bg: 'bg-[rgb(25,31,40)]', border: 'border-t-[rgb(25,31,40)]' },
 ];
+
+const MARKER_ICON_SRC = {
+  패션: '/icons/fashion-pin.svg',
+  뷰티: '/icons/beauty-pin.svg',
+  'F&B': '/icons/food-pin.svg',
+  캐릭터: '/icons/character-pin.svg',
+  미디어: '/icons/media-pin.svg',
+  기타: '/icons/etc-pin.svg',
+};
 
 const useInitMap = (buildings: BuildingType[] | undefined) => {
   const router = useRouter();
@@ -43,9 +61,20 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
     buildings.forEach((building) => {
       const coord = building.coord.split(',');
       const position = new window.kakao.maps.LatLng(coord[0], coord[1]);
+
+      const category = CATEGORY.includes(building.cate as CategoryType)
+        ? building.cate
+        : '기타';
+      const imageSrc = MARKER_ICON_SRC[category];
+      const imageSize = new window.kakao.maps.Size(45, 45);
+      const markerImage = new window.kakao.maps.MarkerImage(
+        imageSrc,
+        imageSize,
+      );
       const marker = new window.kakao.maps.Marker({
         map,
         position,
+        image: markerImage,
         clickable: true,
       });
 
@@ -75,7 +104,6 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
     const hotRate = getHotRate(buildings!);
 
     const gunguOverlays: any[] = [];
-
     GUNGU.forEach((gungu) => {
       const popupCnt = hotRate[gungu];
       if (popupCnt === 0) {

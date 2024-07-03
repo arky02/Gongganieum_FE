@@ -2,6 +2,12 @@ import IconArrowBack from './arrow-back.svg';
 import IconArrowDown from './arrow-down.svg';
 import IconArrowLeft from './arrow-left.svg';
 import IconArrowRight from './arrow-right.svg';
+import IconBeautyPin from './beauty-pin.svg';
+import IconCharacterPin from './beauty-pin.svg';
+import IconEtcPin from './beauty-pin.svg';
+import IconFashionPin from './beauty-pin.svg';
+import IconFoodPin from './beauty-pin.svg';
+import IconMediaPin from './beauty-pin.svg';
 import IconBeauty from './beauty.svg';
 import IconBlackCheck from './black-check.svg';
 import IconBlankLike from './blank-like.svg';
@@ -44,4 +50,10 @@ export {
   IconClose,
   IconArrowRight,
   IconArrowLeft,
+  IconBeautyPin,
+  IconCharacterPin,
+  IconEtcPin,
+  IconFashionPin,
+  IconFoodPin,
+  IconMediaPin,
 };
