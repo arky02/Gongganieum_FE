@@ -3,9 +3,9 @@ import { createPortal } from 'react-dom';
 
 const PortalModal = (props: {
   children: ReactElement;
-  openStatus: boolean;
+  openStatus?: boolean;
 }) => {
-  const { children, openStatus } = props;
+  const { children, openStatus = true } = props;
   const [mounted, setMounted] = useState<boolean>(false);
 
   useEffect(() => {
