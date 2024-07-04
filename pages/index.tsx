@@ -41,7 +41,7 @@ export default function Home({
   const onNextClick = () => {
     setSignUpStatus(() => 'signUp');
   };
-  // return
+
   return (
     <PortalModal openStatus={isSignUpModalOpen}>
       {signUpStatus === 'welcome' ? (
