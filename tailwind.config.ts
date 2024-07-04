@@ -88,7 +88,7 @@ const config: Config = {
       },
       animation: {
         slideUp: 'slideUp 0.1s ease-in-out',
-        slideDown: 'slideDown 0.3s ease-in-out',
+        slideDown: 'slideDown 0.15s ease-in-out',
       },
     },
   },

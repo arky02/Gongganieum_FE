@@ -66,7 +66,7 @@ const Header = () => {
             ))}
           </div>
           <div className='flex items-center gap-12'>
-            <div className='md: hidden'>
+            <div className='md:hidden'>
               <SearchBar />
             </div>
             <button
@@ -75,7 +75,10 @@ const Header = () => {
             >
               <IconHambugerMenu />
             </button>
-            <Link href='/list' className='hidden md:inline'>
+            <Link
+              href='/list?as=지역명&q=&order=&cate=전체&isours=false'
+              className='hidden md:inline'
+            >
               <IconSearch />
             </Link>
             <Link
