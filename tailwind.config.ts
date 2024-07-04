@@ -75,6 +75,22 @@ const config: Config = {
         light: 'rgb(var(--green-light) / <alpha-value>)',
       },
     },
+    extend: {
+      keyframes: {
+        slideUp: {
+          '0%': { opacity: '0', transform: 'translateY(50%)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        slideDown: {
+          '0%': { opacity: '0', transform: 'translateY(-50%)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        slideUp: 'slideUp 0.1s ease-in-out',
+        slideDown: 'slideDown 0.3s ease-in-out',
+      },
+    },
   },
   plugins: [],
 };

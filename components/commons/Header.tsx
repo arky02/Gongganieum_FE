@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ReactNode, useState } from 'react';
@@ -20,38 +21,73 @@ const TABS = [
 ];
 
 const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <header className='sticky top-0 z-nav h-72 w-full border-b border-[#000]/5 bg-white'>
-      <div className='m-auto flex h-full max-w-1224 items-center justify-between px-16'>
-        <Link href='/' className='h-32 w-120 md:h-24 md:w-100'>
-          <IconLogo />
-        </Link>
-        {/* <div className='flex h-full gap-60'>
-          {TABS.map((tab) => (
-            <TabButton key={tab.name} path={tab.path} href={tab.href}>
-              {tab.name}
-            </TabButton>
-          ))}
-        </div> */}
-        <div className='flex items-center gap-12'>
-          <div className='md: hidden'>
-            <SearchBar />
+    <>
+      {/* Hambuger Menu Content */}
+      {isOpen && (
+        <>
+          <div className='animate-slideDown fixed top-64 z-floating hidden w-full flex-col items-start gap-32 bg-white p-20 md:flex'>
+            {[
+              { name: '홈', pathName: '/' },
+              { name: '지도', pathName: '/map' },
+              { name: '리스트', pathName: '/list' },
+              { name: '매거진', pathName: '/magazine' },
+              { name: '마이페이지', pathName: '/mypage' },
+            ].map((el) => (
+              <Link
+                key={el.name}
+                href={el.pathName}
+                onClick={() => setIsOpen(false)}
+                className='text-gray-700 flex h-24 w-full items-center justify-center gap-12 text-16 font-500'
+              >
+                {el.name}
+              </Link>
+            ))}
           </div>
-          <Link href='/' className='hidden h-28 w-28 md:inline'>
-            <IconHambugerMenu />
+          <div
+            onClick={() => setIsOpen(false)}
+            className='fixed bottom-0 left-0 z-popup flex h-screen w-full items-end justify-center bg-[#32363e] bg-opacity-70'
+          />
+        </>
+      )}
+      {/* Content */}
+      <header className='sticky top-0 z-nav h-72 w-full border-b border-[#000]/5 bg-white md:z-floating'>
+        <div className='m-auto flex h-full max-w-1224 items-center justify-between px-16'>
+          <Link href='/' className='h-32 w-120 md:h-24 md:w-100'>
+            <IconLogo />
           </Link>
-          <Link href='/list' className='hidden md:inline'>
-            <IconSearch />
-          </Link>
-          <Link
-            href='/login'
-            className='flex h-40 w-68 shrink-0 items-center justify-center rounded-8 bg-black text-14 font-600 text-white'
-          >
-            로그인
-          </Link>
+          <div className='flex h-full gap-60 md:hidden'>
+            {TABS.map((tab) => (
+              <TabButton key={tab.name} path={tab.path} href={tab.href}>
+                {tab.name}
+              </TabButton>
+            ))}
+          </div>
+          <div className='flex items-center gap-12'>
+            <div className='md: hidden'>
+              <SearchBar />
+            </div>
+            <button
+              onClick={() => setIsOpen((prev) => !prev)}
+              className='hidden h-28 w-28 md:inline'
+            >
+              <IconHambugerMenu />
+            </button>
+            <Link href='/list' className='hidden md:inline'>
+              <IconSearch />
+            </Link>
+            <Link
+              href='/login'
+              className='flex h-40 w-68 shrink-0 items-center justify-center rounded-8 bg-black text-14 font-600 text-white'
+            >
+              로그인
+            </Link>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+    </>
   );
 };
 
