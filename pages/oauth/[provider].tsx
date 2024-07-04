@@ -11,9 +11,7 @@ const OAuthProvider = () => {
   const { provider } = router.query;
   const params = useSearchParams();
   const code = params.get('code');
-  console.log(provider);
-  console.log(code);
-  const [accessToken, setAccessToken] = useState('');
+
   const { saveUserAccessToken } = useManageUserAccessToken();
 
   const getAccessTokenFromOAuth = async () => {
@@ -23,12 +21,11 @@ const OAuthProvider = () => {
         `https://gongganieum.shop/api/oauth/callback?code=${code}&provider=${provider}`,
       );
 
-      console.log(oauthLoginRes);
-      if (!oauthLoginRes) console.log('OAuth AccessToken Response Error');
+      if (!oauthLoginRes) throw Error('OAuth AccessToken Response Error');
       // => OAuth 서버로부터 받은 Response 존재!
 
       // cookie에 accessToken 정보 저장
-      await saveUserAccessToken({ data: oauthLoginRes?.accessToken });
+      saveUserAccessToken({ data: oauthLoginRes?.accessToken });
 
       redirectByUserRole({
         role: oauthLoginRes.role,
@@ -49,16 +46,15 @@ const OAuthProvider = () => {
   }) => {
     // 1. ROLE: USER -> 이미 가입된 회원인 경우, /로 리다이렉트
     if (role === 'USER') {
-      console.log('Oauth Login Type: role = User');
       router.push('/');
       toast.success(
         `${name}님, ${provider === 'kakao' ? '카카오' : '네이버'}로 로그인 되었습니다!`,
       );
+    } else {
+      // 2. ROLE: GUEST -> 회원가입 필요
+      toast.success(`${name}님, 추가정보 입력을 위해 이동합니다!`);
+      router.push('/');
     }
-
-    // 2. ROLE: GUEST -> 회원가입 필요
-    console.log('Oauth Login Type: role = Guest');
-    router.push('/?redirect=signup');
   };
 
   useEffect(() => {
