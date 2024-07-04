@@ -35,7 +35,7 @@ const useSearch = () => {
       q: string;
       as: AsType;
       order: OrderType;
-      cate: CategoryType;
+      cate: CategoryType | '전체';
       isours: boolean;
     };
   };
@@ -45,7 +45,7 @@ const useSearch = () => {
   const [q, setQ] = useState(initialQuery.q);
   const [as, setAs] = useState<AsType>(initialQuery.as);
   const [order, setOrder] = useState<OrderType>(initialQuery.order);
-  const [cate, setCate] = useState<CategoryType>(initialQuery.cate);
+  const [cate, setCate] = useState<CategoryType | '전체'>(initialQuery.cate);
   const [isours, setIsours] = useState<boolean>(initialQuery.isours);
 
   useEffect(() => {

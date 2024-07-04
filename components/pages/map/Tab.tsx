@@ -18,10 +18,12 @@ const Tab = () => {
     mapFlag: true,
   });
 
+  const isSearched = q || cate !== '전체';
+
   const renderTab = () => {
     if (router.query['building']) {
       return <BuildingTab id={Number(router.query['building'])} />;
-    } else if (q && as) {
+    } else if (isSearched) {
       return (
         <>
           <div className='p-24 pb-0'>
