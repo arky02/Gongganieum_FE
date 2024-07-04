@@ -17,7 +17,10 @@ const Input = <T extends FieldValues>({
   type: initialType = 'text',
   ...controls
 }: Props<T>) => {
-  const { field, fieldState } = useController(controls);
+  const { field, fieldState } = useController({
+    ...controls,
+    rules: { required: true },
+  });
   const [type, setType] = useState<HTMLInputTypeAttribute>(initialType);
 
   const togglePasswordShow = () => {
