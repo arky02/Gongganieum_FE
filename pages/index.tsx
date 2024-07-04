@@ -4,7 +4,7 @@ import HomeEditorRecommend from 'components/pages/home/HomeEditorRecommend';
 import HomeMagazineSlider from 'components/pages/home/HomeMagazineSlider';
 import HomeSliderWithPagination from 'components/pages/home/HomeSliderWithPagination';
 
-export default function Home() {
+const Home = () => {
   return (
     <div className='mb-76 mt-76 flex flex-col items-center justify-center gap-76'>
       <HomeSliderWithPagination mode='hero' />
@@ -27,4 +27,6 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+
+export default Home;

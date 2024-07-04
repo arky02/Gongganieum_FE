@@ -17,7 +17,9 @@ const MOCK_BUILDING_IMAGE_URLS = [
   '/images/mock-building-image.jpg',
 ];
 
-const HomeSliderWithPagination = (props: { mode: 'hero' | 'recommend' }) => {
+type ModeType = 'hero' | 'recommend';
+
+const HomeSliderWithPagination = (props: { mode: ModeType }) => {
   const { mode } = props;
   const swiperRef = useRef<SwiperRef>(null);
 
@@ -82,7 +84,7 @@ const HomeSliderWithPagination = (props: { mode: 'hero' | 'recommend' }) => {
 export default HomeSliderWithPagination;
 
 const HeroCard = (props: {
-  mode: 'hero' | 'recommend';
+  mode: ModeType;
   name: string;
   address: string;
   img: string;
