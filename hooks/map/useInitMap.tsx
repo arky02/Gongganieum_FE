@@ -36,7 +36,7 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
     window.kakao?.maps?.load(() => {
       const mapContainer = document.getElementById('map');
       const mapOption = {
-        center: new window.kakao.maps.LatLng(37.545, 126.91),
+        center: new window.kakao.maps.LatLng(37.545, 127),
         level: 8,
       };
       const map = new window.kakao.maps.Map(mapContainer, mapOption);

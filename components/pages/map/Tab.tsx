@@ -57,7 +57,7 @@ const Tab = () => {
   };
 
   return (
-    <div className='fixed bottom-0 left-0 top-72 z-popup flex w-400 flex-col gap-24 bg-white'>
+    <div className='flex w-400 shrink-0 flex-col gap-24 bg-white'>
       {renderTab()}
     </div>
   );

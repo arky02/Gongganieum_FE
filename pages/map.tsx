@@ -14,13 +14,13 @@ const Map = () => {
   useInitMap(buildings);
 
   return (
-    <div className='relative flex h-[calc(100dvh-72px)] w-screen justify-end overflow-hidden'>
-      <Tab />
+    <div className='relative flex h-[calc(100dvh-72px)] w-full justify-end overflow-hidden'>
       <div className='fixed left-432 top-92 z-popup flex h-40 gap-12'>
         {CATEGORY.map((category) => (
           <FilterButton key={category} category={category} />
         ))}
       </div>
+      <Tab />
       <div id='map' className='h-full w-full' />
     </div>
   );
