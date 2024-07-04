@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ReactNode, useState } from 'react';
-import { IconLogo } from 'public/icons';
+import { IconHambugerMenu, IconLogo, IconSearch } from 'public/icons';
 import SearchInput from './SearchInput';
 
 const TABS = [
@@ -22,22 +22,30 @@ const TABS = [
 const Header = () => {
   return (
     <header className='sticky top-0 z-nav h-72 w-full border-b border-[#000]/5 bg-white'>
-      <div className='m-auto flex h-full max-w-1224 items-center justify-between px-24'>
-        <Link href='/'>
+      <div className='m-auto flex h-full max-w-1224 items-center justify-between px-16'>
+        <Link href='/' className='h-32 w-120 md:h-24 md:w-100'>
           <IconLogo />
         </Link>
-        <div className='flex h-full gap-60'>
+        {/* <div className='flex h-full gap-60'>
           {TABS.map((tab) => (
             <TabButton key={tab.name} path={tab.path} href={tab.href}>
               {tab.name}
             </TabButton>
           ))}
-        </div>
+        </div> */}
         <div className='flex items-center gap-12'>
-          <SearchBar />
+          <div className='md: hidden'>
+            <SearchBar />
+          </div>
+          <Link href='/' className='hidden h-28 w-28 md:inline'>
+            <IconHambugerMenu />
+          </Link>
+          <Link href='/list' className='hidden md:inline'>
+            <IconSearch />
+          </Link>
           <Link
             href='/login'
-            className='flex h-40 w-68 items-center justify-center rounded-8 bg-black text-14 font-600 text-white'
+            className='flex h-40 w-68 shrink-0 items-center justify-center rounded-8 bg-black text-14 font-600 text-white'
           >
             로그인
           </Link>
@@ -77,7 +85,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className='w-240'>
+    <div className='w-240 md:w-full'>
       <SearchInput
         value={value}
         setValue={setValue}

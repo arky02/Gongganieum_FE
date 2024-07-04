@@ -78,8 +78,10 @@ const Description = (props: { name: string; address: string }) => {
 
   return (
     <div className='mb-12 flex flex-col gap-4'>
-      <h3 className='text-20 font-700 md:text-18'>{name}</h3>
-      <span className='text-16 text-gray-400 md:text-14'>{address}</span>
+      <h3 className='line-clamp-1 text-20 font-700 md:text-18'>{name}</h3>
+      <span className='line-clamp-1 text-16 text-gray-400 md:text-14'>
+        {address}
+      </span>
     </div>
   );
 };
