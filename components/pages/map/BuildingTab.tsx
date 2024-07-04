@@ -43,10 +43,6 @@ const BuildingTab = (props: { id: number }) => {
       coord[1],
     );
 
-    const bound = new window.kakao.maps.LatLngBounds();
-    bound.extend(position);
-    map.panTo(bound);
-
     const infoWindow = new window.kakao.maps.InfoWindow({
       map,
       position,
