@@ -8,7 +8,7 @@ const useFetch = (props: {
   as?: AsType;
   q?: string;
   order?: OrderType;
-  cate?: CategoryType;
+  cate?: CategoryType | '전체';
   isours?: boolean;
   mapFlag?: boolean;
 }) => {
@@ -17,23 +17,24 @@ const useFetch = (props: {
   const { data: searchResult, refetch } = useQuery({
     queryKey: ['search', as, q, order, cate, isours],
     queryFn: () => getFilteredBuildings({ as, q, order, cate, isours }),
-    enabled: !!q,
   });
 
   const { createMarkers, deleteMarkers } = useMarkers();
+
+  const isMapSearch = q || cate !== '전체';
 
   const handleFetch = async () => {
     if (mapFlag) {
       deleteMarkers();
     }
-    if (mapFlag && !q) {
+    if (mapFlag && !isMapSearch) {
       return;
     }
 
     const res = await refetch();
     const data = res.data;
 
-    if (mapFlag && q) {
+    if (mapFlag && isMapSearch) {
       createMarkers(data);
     }
   };

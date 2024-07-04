@@ -71,14 +71,15 @@ const useMarkers = () => {
     createMarkers(initialBuildings);
   }, [map, initialBuildings]);
 
-  const q = router.query['q'];
+  const showDefaultMarkers =
+    router.query['q'] || router.query['cate'] === '전체';
   useEffect(() => {
-    if (q) {
+    if (!showDefaultMarkers) {
       hideMarkers?.();
     } else {
       showMarkers?.();
     }
-  }, [q, showMarkers, hideMarkers]);
+  }, [showDefaultMarkers, showMarkers, hideMarkers]);
 
   return { createMarkers, deleteMarkers };
 };

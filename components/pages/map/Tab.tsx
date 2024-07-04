@@ -9,8 +9,14 @@ import SearchTab from './SearchTab';
 
 const Tab = () => {
   const router = useRouter();
-  const { as, setAs, q, setQ } = useSearch();
-  const { searchResult, refetch } = useFetch({ as, q, mapFlag: true });
+  const { as, setAs, q, setQ, cate, isours } = useSearch();
+  const { searchResult, refetch } = useFetch({
+    as,
+    q,
+    cate,
+    isours,
+    mapFlag: true,
+  });
 
   const renderTab = () => {
     if (router.query['building']) {
