@@ -3,6 +3,11 @@
   text-align: start !important;
   margin-left: 52px;
   margin-bottom: 52px;
+
+  @media screen and (max-width: 787px) {
+    margin-left: 16px;
+    margin-bottom: 16px;
+  }
 }
 
 .swiper-pagination .swiper-pagination-bullet-custom {
