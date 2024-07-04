@@ -20,12 +20,21 @@ export const CATEGORY: CategoryType[] = [
 ];
 
 export const CATEGORY_ICON = {
-  패션: <IconFashion />,
-  뷰티: <IconBeauty />,
-  'F&B': <IconFood />,
-  캐릭터: <IconCharacter />,
-  미디어: <IconEntertainment />,
-  기타: <IconEtc />,
+  패션: <IconFashion fill='#343E4B' />,
+  뷰티: <IconBeauty fill='#343E4B' />,
+  'F&B': <IconFood fill='#343E4B' />,
+  캐릭터: <IconCharacter fill='#343E4B' />,
+  미디어: <IconEntertainment fill='#343E4B' />,
+  기타: <IconEtc fill='#343E4B' />,
+};
+
+export const CATEGORY_ICON_WHITE = {
+  패션: <IconFashion fill='#fff' />,
+  뷰티: <IconBeauty fill='#fff' />,
+  'F&B': <IconFood fill='#fff' />,
+  캐릭터: <IconCharacter fill='#fff' />,
+  미디어: <IconEntertainment fill='#fff' />,
+  기타: <IconEtc fill='#fff' />,
 };
 
 export const NO_IMAGE_URL = '/images/no-image.jpg';
