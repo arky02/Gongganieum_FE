@@ -2,10 +2,10 @@ import { AsType, CategoryType } from 'types/client.types';
 import {
   IconBeauty,
   IconCharacter,
-  IconEntertainment,
   IconEtc,
   IconFashion,
   IconFood,
+  IconMedia,
 } from 'public/icons';
 
 export const SEARCH_AS = ['지역명', '빌딩명', '팝업명'] as AsType[];
@@ -24,7 +24,7 @@ export const CATEGORY_ICON = {
   뷰티: <IconBeauty fill='#343E4B' />,
   'F&B': <IconFood fill='#343E4B' />,
   캐릭터: <IconCharacter fill='#343E4B' />,
-  미디어: <IconEntertainment fill='#343E4B' />,
+  미디어: <IconMedia fill='#343E4B' />,
   기타: <IconEtc fill='#343E4B' />,
 };
 
@@ -33,7 +33,7 @@ export const CATEGORY_ICON_WHITE = {
   뷰티: <IconBeauty fill='#fff' />,
   'F&B': <IconFood fill='#fff' />,
   캐릭터: <IconCharacter fill='#fff' />,
-  미디어: <IconEntertainment fill='#fff' />,
+  미디어: <IconMedia fill='#fff' />,
   기타: <IconEtc fill='#fff' />,
 };
 
