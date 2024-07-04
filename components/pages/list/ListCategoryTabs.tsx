@@ -8,18 +8,17 @@ const ListCategoryTabs = (props: {
     'F&B',
     '패션',
     '뷰티',
-    '예술',
     '캐릭터',
     '미디어',
     '기타',
   ];
   return (
-    <div className='flex gap-8 border-b border-gray-200'>
+    <div className='flex w-full gap-8 border-b border-gray-200 md:flex-wrap'>
       {categoryTabs.map((el, index) => (
         <button
           key={index}
           onClick={() => onClickCategoryTab(el)}
-          className={`${cate === el && 'border-b-2 border-black'} px-16 py-20 text-14 font-600`}
+          className={`${cate === el && 'border-b-2 border-black'} text-nowrap px-16 py-20 text-14 font-600 md:px-8 md:py-8 md:text-[13px]`}
         >
           {el}
         </button>

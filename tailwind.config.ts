@@ -20,6 +20,9 @@ const config: Config = {
   ],
   theme: {
     spacing: PX_ENTRIES,
+    screens: {
+      md: { max: '767px' },
+    },
     zIndex: {
       base: '1',
       nav: '2',
