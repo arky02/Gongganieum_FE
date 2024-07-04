@@ -70,6 +70,7 @@ const ProfileModal = ({
   const patchUserInfo: SubmitHandler<FormValues> = async (formData) => {
     const formDataResult = { ...formData, interests: tags.join(',') };
 
+    console.log(formDataResult);
     // send user info to server
     const { resStatus, resData } = await postUserSignUpInfo({
       formData: formDataResult,
@@ -125,11 +126,10 @@ const ProfileModal = ({
         />
         <IntroductionInput register={register} />
       </div>
-      {/* TODO: onClick 로직 추가 */}
       <Button
         type='button'
         onClick={handleSubmit(patchUserInfo)}
-        isDisabled={tags.length === 0 || !formState.isValid}
+        isDisabled={!formState.isValid}
         errorMsg='필수 입력 필드 값을 모두 입력해주세요!'
       >
         기본 프로필 설정
@@ -194,7 +194,6 @@ const InterestInput = (props: {
     <div className='relative w-full'>
       <label htmlFor='interests' className='text-16 font-700'>
         관심 분야
-        <RequiredStar className='ml-[4px]' />
       </label>
       <div
         className={`mt-8 flex w-full flex-col ${tags.length && 'gap-4'} rounded-8 border border-gray-200 bg-gray-100 p-8 placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400`}
