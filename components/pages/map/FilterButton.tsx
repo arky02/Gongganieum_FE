@@ -1,16 +1,21 @@
 import { CATEGORY_ICON, CATEGORY_ICON_WHITE } from 'constants/common';
 import { useRouter } from 'next/router';
 import { CategoryType } from 'types/client.types';
-import { IconEtc } from 'public/icons';
 
 const FilterButton = (props: { category: CategoryType }) => {
   const { category } = props;
 
   const router = useRouter();
   const handleClick = () => {
-    router.push(
-      `/map?as=지역명&q=&order=&cate=${category == 'F&B' ? 'F%26B' : category}&isours=false`,
-    );
+    if (selected) {
+      router.push(
+        `/map?as=지역명&q=${router.query.q}&order=&cate=전체&isours=false`,
+      );
+    } else {
+      router.push(
+        `/map?as=지역명&q=${router.query.q}&order=&cate=${category == 'F&B' ? 'F%26B' : category}&isours=false`,
+      );
+    }
   };
 
   const selected = category === router.query['cate'];

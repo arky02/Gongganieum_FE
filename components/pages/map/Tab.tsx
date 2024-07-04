@@ -10,7 +10,7 @@ import SearchTab from './SearchTab';
 const Tab = () => {
   const router = useRouter();
   const { as, setAs, q, setQ, cate, isours } = useSearch();
-  const { searchResult, refetch } = useFetch({
+  const { searchResult } = useFetch({
     as,
     q,
     cate,
@@ -30,7 +30,6 @@ const Tab = () => {
             <SearchInput
               value={q}
               setValue={setQ}
-              onSubmit={refetch}
               dropdownMenu={SEARCH_AS}
               selectedMenu={as}
               setSelectedMenu={setAs}
@@ -46,7 +45,6 @@ const Tab = () => {
             <SearchInput
               value={q}
               setValue={setQ}
-              onSubmit={refetch}
               dropdownMenu={SEARCH_AS}
               selectedMenu={as}
               setSelectedMenu={setAs}

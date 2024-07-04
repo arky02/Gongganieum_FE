@@ -6,6 +6,10 @@ import { BuildingType, CategoryType } from 'types/client.types';
 
 const useMarkers = () => {
   const router = useRouter();
+  const showDefaultMarkers =
+    !router.query['q'] &&
+    (router.query['cate'] === '전체' || !router.query['cate']);
+
   const { map, showMarkers, hideMarkers } = useStore((state) => ({
     map: state.map,
     showMarkers: state.showMarkers,
@@ -71,15 +75,14 @@ const useMarkers = () => {
     createMarkers(initialBuildings);
   }, [map, initialBuildings]);
 
-  const hideDefaultMarkers =
-    router.query['q'] || router.query['cate'] !== '전체';
   useEffect(() => {
-    if (hideDefaultMarkers) {
+    if (!showDefaultMarkers) {
       hideMarkers?.();
     } else {
       showMarkers?.();
+      deleteMarkers();
     }
-  }, [hideDefaultMarkers, showMarkers, hideMarkers]);
+  }, [router.query, showMarkers, hideMarkers]);
 
   return { createMarkers, deleteMarkers };
 };
