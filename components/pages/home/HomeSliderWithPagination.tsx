@@ -36,7 +36,7 @@ const HomeSliderWithPagination = (props: { mode: ModeType }) => {
   };
 
   return (
-    <div className='relative w-full max-w-1232'>
+    <div className='relative h-full w-full max-w-1232'>
       <Swiper
         ref={swiperRef}
         modules={[Navigation, Autoplay, Pagination, EffectFade]}
@@ -114,16 +114,20 @@ const HeroCard = (props: {
         className={`absolute inset-0  ${mode === 'hero' ? 'rounded-12' : ''} bg-gradient-to-tr from-black via-transparent to-transparent opacity-80 md:rounded-none`}
       ></div>
       {/* Description */}
-      <div className='absolute bottom-80 left-56 md:bottom-64 md:left-16'>
-        <h4 className='text-18 font-500 text-white opacity-70'>
+      <div
+        className={`absolute bottom-80 left-56 ${mode === 'hero' ? 'md:bottom-64' : 'md:bottom-60'} md:left-16`}
+      >
+        <h4
+          className={`text-18 font-500 text-white opacity-70  ${mode === 'recommend' && 'hidden'}`}
+        >
           에디터 큐레이션
         </h4>
-        <h2 className='mb-8 text-32 font-800 text-white'>
-          공간이음 이달의 인기 건물
+        <h2 className={`mb-8 text-32 font-800 text-white md:text-24`}>
+          {mode === 'hero' ? '공간이음 이달의 인기 건물' : name}
         </h2>
-        <div className='flex items-center gap-8 text-16 font-500 text-white opacity-70'>
-          <IconWhiteMarker />
-          {`${name} | ${address}`}
+        <div className='flex items-center gap-8 text-16 font-500 text-white opacity-70 md:text-[15px]'>
+          {mode === 'hero' && <IconWhiteMarker />}
+          {mode === 'hero' ? `${name} | ${address}` : address}
         </div>
       </div>
     </div>
