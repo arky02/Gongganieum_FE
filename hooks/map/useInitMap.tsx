@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useStore } from 'store';
 import useKakaoMap from 'hooks/useKakaoMap';
+import { getBuildingInfo } from 'apis/api';
 import { BuildingType, CategoryType } from 'types/client.types';
 
 const HOT_PLACE_COLOR = [
@@ -77,7 +78,7 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
     markers.building.forEach((marker) => marker.setMap(null));
   };
 
-  const initMarkers = () => {
+  const initMarkers = async () => {
     if (!buildings || !map) {
       return;
     }
@@ -193,6 +194,16 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
         map.setCenter(coord);
       });
     });
+
+    const buildingId = Number(router.query['building']);
+    if (buildingId) {
+      const buildingInfo = await getBuildingInfo(buildingId);
+      const coord = buildingInfo.coord.split(',');
+      const position = new window.kakao.maps.LatLng(coord[0], coord[1]);
+      const bound = new window.kakao.maps.LatLngBounds();
+      bound.extend(position);
+      map.panTo(bound);
+    }
   };
 
   useEffect(() => {
