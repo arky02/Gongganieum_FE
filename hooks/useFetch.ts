@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 import { getFilteredBuildings } from 'apis/api';
 import { AsType, CategoryType, OrderType } from 'types/client.types';
 import useMarkers from './map/useMarkers';
@@ -12,12 +13,14 @@ const useFetch = (props: {
   mapFlag?: boolean;
 }) => {
   const { as, q, order, cate, isours, mapFlag } = props;
+
+  const router = useRouter();
   const { createMarkers, deleteMarkers } = useMarkers();
 
   const handleFetch = async () => {
     const showDefaultMarkers = !q && (cate === '전체' || !cate);
 
-    if (mapFlag) {
+    if (mapFlag && !router.query['building']) {
       deleteMarkers();
     }
     if (mapFlag && showDefaultMarkers) {

@@ -38,15 +38,13 @@ const BuildingTab = (props: { id: number }) => {
     }
 
     const coord = buildingInfo.coord.split(',');
-    const position = new window.kakao.maps.LatLng(
-      Number(coord[0]) + 0.0002,
-      coord[1],
-    );
+    const position = new window.kakao.maps.LatLng(Number(coord[0]), coord[1]);
 
     const infoWindow = new window.kakao.maps.InfoWindow({
       map,
       position,
       content: buildingInfo.name,
+      zIndex: 99,
     });
 
     return () => {
