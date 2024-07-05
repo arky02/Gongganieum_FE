@@ -1,6 +1,7 @@
 import { ArcElement, Chart } from 'chart.js';
 import ChartDataLables from 'chartjs-plugin-datalabels';
 import { Doughnut } from 'react-chartjs-2';
+import { PageType } from 'types/client.types';
 import DescriptionCard from './DescriptionCard';
 
 Chart.register(ArcElement);
@@ -13,6 +14,7 @@ const AgeRatioCard = (props: {
   ageForties: number;
   ageFifties: number;
   ageSixties: number;
+  page: PageType;
 }) => {
   const {
     ageTeenager,
@@ -21,6 +23,7 @@ const AgeRatioCard = (props: {
     ageForties,
     ageFifties,
     ageSixties,
+    page,
   } = props;
 
   const data = {
@@ -49,7 +52,7 @@ const AgeRatioCard = (props: {
   };
 
   return (
-    <DescriptionCard title='연령대별 비율'>
+    <DescriptionCard title='연령대별 비율' page={page}>
       <div className='h-172 w-full'>
         <Doughnut
           data={data}

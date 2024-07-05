@@ -1,13 +1,13 @@
 import { CATEGORY, CATEGORY_ICON } from 'constants/common';
-import { CategoryType, PopupType } from 'types/client.types';
+import { CategoryType, PageType, PopupType } from 'types/client.types';
 import DescriptionCard from './DescriptionCard';
 
-const PopupHistoryCard = (props: { popups: PopupType[] }) => {
-  const { popups } = props;
+const PopupHistoryCard = (props: { popups: PopupType[]; page: PageType }) => {
+  const { popups, page } = props;
 
   return (
-    <DescriptionCard title={`팝업 이력 (${popups.length}건)`}>
-      <ul className='flex h-232 w-full flex-col gap-16 overflow-auto'>
+    <DescriptionCard title={`팝업 이력 (${popups.length}건)`} page={page}>
+      <ul className='flex max-h-232 w-full flex-col gap-16 overflow-y-scroll'>
         {popups.map((popup) => (
           <Popup key={popup.name} popup={popup} />
         ))}

@@ -1,6 +1,7 @@
 import { ArcElement, Chart } from 'chart.js';
 import ChartDataLables from 'chartjs-plugin-datalabels';
 import { Doughnut } from 'react-chartjs-2';
+import { PageType } from 'types/client.types';
 import DescriptionCard from './DescriptionCard';
 
 Chart.register(ArcElement);
@@ -9,8 +10,9 @@ Chart.register(ChartDataLables);
 const ResidentRatioCard = (props: {
   resident: number;
   noneResident: number;
+  page: PageType;
 }) => {
-  const { resident, noneResident } = props;
+  const { resident, noneResident, page } = props;
 
   const data = {
     labels: ['남성', '여성'],
@@ -24,7 +26,7 @@ const ResidentRatioCard = (props: {
   };
 
   return (
-    <DescriptionCard title='상주•비상주 비율'>
+    <DescriptionCard title='상주•비상주 비율' page={page}>
       <div className='h-172 w-full'>
         <Doughnut
           data={data}

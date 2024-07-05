@@ -54,3 +54,5 @@ export interface BuildingDataType {
   사용승인일: string | null;
   승강기: number | null;
 }
+
+export type PageType = 'map' | 'description';

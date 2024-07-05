@@ -1,8 +1,6 @@
-import { BuildingType } from 'types/client.types';
+import { BuildingType, PageType } from 'types/client.types';
 import { IconMarker } from 'public/icons';
 import Tag from './Tag';
-
-type PageType = 'map' | 'description';
 
 const BuildingTitle = (props: {
   buildingInfo: BuildingType | undefined;

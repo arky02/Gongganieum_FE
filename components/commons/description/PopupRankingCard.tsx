@@ -1,13 +1,13 @@
 import { CATEGORY, CATEGORY_ICON } from 'constants/common';
-import { CategoryType, PopupType } from 'types/client.types';
+import { CategoryType, PageType, PopupType } from 'types/client.types';
 import DescriptionCard from './DescriptionCard';
 
-const PopupRankingCard = (props: { popups: PopupType[] }) => {
-  const { popups } = props;
+const PopupRankingCard = (props: { popups: PopupType[]; page: PageType }) => {
+  const { popups, page } = props;
   const ranking = getPopupRanking(popups);
 
   return (
-    <DescriptionCard title='팝업 히스토리 순위'>
+    <DescriptionCard title='팝업 히스토리 순위' page={page}>
       <div className='relative flex flex-col gap-16'>
         {ranking.map((el, i) => (
           <Ranking key={i} data={el} rank={i} />
