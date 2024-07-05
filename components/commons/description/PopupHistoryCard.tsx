@@ -1,4 +1,5 @@
 import { CATEGORY, CATEGORY_ICON } from 'constants/common';
+import { parseNumberWithComma } from 'utils/parseNumberWithComma';
 import { CategoryType, PageType, PopupType } from 'types/client.types';
 import DescriptionCard from './DescriptionCard';
 
@@ -6,7 +7,10 @@ const PopupHistoryCard = (props: { popups: PopupType[]; page: PageType }) => {
   const { popups, page } = props;
 
   return (
-    <DescriptionCard title={`팝업 이력 (${popups.length}건)`} page={page}>
+    <DescriptionCard
+      title={`팝업 이력 (${parseNumberWithComma(popups.length)}건)`}
+      page={page}
+    >
       <ul className='flex max-h-232 w-full flex-col gap-16 overflow-y-scroll'>
         {popups.map((popup) => (
           <Popup key={popup.name} popup={popup} />

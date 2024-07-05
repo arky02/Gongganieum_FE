@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useStore } from 'store';
 import useKakaoMap from 'hooks/useKakaoMap';
+import { parseNumberWithComma } from 'utils/parseNumberWithComma';
 import { getBuildingInfo } from 'apis/api';
 import { BuildingType, CategoryType } from 'types/client.types';
 
@@ -169,7 +170,7 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
       name.innerHTML = gungu;
       const count = document.createElement('span');
       count.className = `text-white font-700 text-10 h-20`;
-      count.innerHTML = `${popupCnt} 개`;
+      count.innerHTML = `${parseNumberWithComma(popupCnt)} 개`;
       box.appendChild(name);
       box.appendChild(count);
 
