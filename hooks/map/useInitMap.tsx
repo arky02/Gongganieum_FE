@@ -8,11 +8,17 @@ import { getBuildingInfo } from 'apis/api';
 import { BuildingType, CategoryType } from 'types/client.types';
 
 const HOT_PLACE_COLOR = [
-  { bg: 'bg-[rgb(141,151,165)]', border: 'border-t-[rgb(141,151,165)]' },
-  { bg: 'bg-[rgb(110,121,135)]', border: 'border-t-[rgb(110,121,135)]' },
-  { bg: 'bg-[rgb(75,85,98)]', border: 'border-t-[rgb(75,85,98)]' },
-  { bg: 'bg-[rgb(52,62,75)]', border: 'border-t-[rgb(52,62,75)]' },
-  { bg: 'bg-[rgb(25,31,40)]', border: 'border-t-[rgb(25,31,40)]' },
+  {
+    bg: 'bg-[rgba(141,151,165,0.8)]',
+    border: 'border-t-[rgba(141,151,165,0.8)]',
+  },
+  {
+    bg: 'bg-[rgba(110,121,135,0.83)]',
+    border: 'border-t-[rgba(110,121,135,0.83)]',
+  },
+  { bg: 'bg-[rgba(75,85,98,0.87)]', border: 'border-t-[rgba(75,85,98,0.87)]' },
+  { bg: 'bg-[rgba(51,53,55,0.9)]', border: 'border-t-[rgba(51,53,55,0.9)]' },
+  { bg: 'bg-[rgb(33,35,37)]', border: 'border-t-[rgb(33,35,37)]' },
 ];
 
 const useInitMap = (buildings: BuildingType[] | undefined) => {
@@ -155,13 +161,22 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
                 : HOT_PLACE_COLOR[4];
 
       const content = document.createElement('div');
-      content.className = 'flex flex-col items-center';
-      const name = document.createElement('div');
-      name.className = `w-108 h-44 rounded-full flex items-center justify-center text-white font-700 text-14 ${hotColor.bg}`;
+      content.className = 'flex flex-col items-center justify-center';
+      const box = document.createElement('div');
+      box.className = `w-104 h-60 rounded-16 flex flex-col items-center justify-center text-white font-700 text-14 ${hotColor.bg}`;
+      const name = document.createElement('span');
+      name.className = `text-white font-700 text-16 h-[22px]`;
       name.innerHTML = gungu;
+      const count = document.createElement('span');
+      count.className = `text-white font-700 text-10 h-20`;
+      count.innerHTML = `${popupCnt} 개`;
+      box.appendChild(name);
+      box.appendChild(count);
+
       const bottomArrow = document.createElement('div');
       bottomArrow.className = `w-0 h-0 border-t-[12px] border-r-[12px] border-l-[12px] border-l-transparent border-r-transparent border-b-transparent ${hotColor.border}`;
-      content.appendChild(name);
+      content.appendChild(box);
+      // content.appendChild(count);
       content.appendChild(bottomArrow);
 
       const customOverlay = new window.kakao.maps.CustomOverlay({
