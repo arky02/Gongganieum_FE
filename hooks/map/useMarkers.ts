@@ -8,7 +8,8 @@ const useMarkers = () => {
   const router = useRouter();
   const showDefaultMarkers =
     !router.query['q'] &&
-    (router.query['cate'] === '전체' || !router.query['cate']);
+    (router.query['cate'] === '전체' || !router.query['cate']) &&
+    router.query['isours'] === 'false';
 
   const { map, showMarkers, hideMarkers } = useStore((state) => ({
     map: state.map,
@@ -41,7 +42,7 @@ const useMarkers = () => {
       const imageSrc = isours
         ? MARKER_ICON_SRC[category].isours
         : MARKER_ICON_SRC[category].search;
-      const imageSize = new window.kakao.maps.Size(45, 45);
+      const imageSize = new window.kakao.maps.Size(48, 48);
       const markerImage = new window.kakao.maps.MarkerImage(
         imageSrc,
         imageSize,

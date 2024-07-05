@@ -18,7 +18,8 @@ const useFetch = (props: {
   const { createMarkers, deleteMarkers } = useMarkers();
 
   const handleFetch = async () => {
-    const showDefaultMarkers = !q && (cate === '전체' || !cate);
+    const showDefaultMarkers =
+      !q && (cate === '전체' || !cate) && isours === false;
 
     if (mapFlag && !router.query['building']) {
       deleteMarkers();

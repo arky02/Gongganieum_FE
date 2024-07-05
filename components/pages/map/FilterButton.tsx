@@ -6,19 +6,18 @@ const FilterButton = (props: { category: CategoryType }) => {
   const { category } = props;
 
   const router = useRouter();
+  const selected = category === router.query['cate'];
+
   const handleClick = () => {
+    const { q, as, isours } = router.query;
     if (selected) {
-      router.push(
-        `/map?as=지역명&q=${router.query.q}&order=&cate=전체&isours=false`,
-      );
+      router.push(`/map?as=${as}&q=${q}&order=&cate=전체&isours=${isours}`);
     } else {
       router.push(
-        `/map?as=지역명&q=${router.query.q}&order=&cate=${category == 'F&B' ? 'F%26B' : category}&isours=false`,
+        `/map?as=${as}&q=${q}&order=&cate=${category == 'F&B' ? 'F%26B' : category}&isours=${isours}`,
       );
     }
   };
-
-  const selected = category === router.query['cate'];
 
   return (
     <button

@@ -3,6 +3,7 @@ import { CATEGORY } from 'constants/common';
 import useInitMap from 'hooks/map/useInitMap';
 import { getBuildings } from 'apis/api';
 import FilterButton from 'components/pages/map/FilterButton';
+import IsOursButton from 'components/pages/map/IsOursButton';
 import Tab from 'components/pages/map/Tab';
 
 const Map = () => {
@@ -19,6 +20,7 @@ const Map = () => {
         {CATEGORY.map((category) => (
           <FilterButton key={category} category={category} />
         ))}
+        <IsOursButton />
       </div>
       <Tab />
       <div id='map' className='h-full w-full' />
