@@ -22,13 +22,10 @@ export interface FormValues {
   introduction: string;
 }
 
-const ProfileModal = ({
-  accessToken,
-  setIsModalOpen,
-}: {
-  accessToken: string;
+const ProfileModal = (props: {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const { setIsModalOpen } = props;
   const { control, handleSubmit, register, setValue, reset, formState } =
     useForm<FormValues>({
       defaultValues: {
@@ -69,12 +66,9 @@ const ProfileModal = ({
 
   const patchUserInfo: SubmitHandler<FormValues> = async (formData) => {
     const formDataResult = { ...formData, interests: tags.join(',') };
-
-    console.log(formDataResult);
     // send user info to server
     const { resStatus, resData } = await postUserSignUpInfo({
       formData: formDataResult,
-      accessToken,
     });
 
     // sign up succeed
