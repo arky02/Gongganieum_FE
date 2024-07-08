@@ -1,6 +1,8 @@
 import IconArrowBack from './arrow-back.svg';
 import IconArrowDown from './arrow-down.svg';
 import IconArrowLeft from './arrow-left.svg';
+import IconArrowNextButton from './arrow-next-button.svg';
+import IconArrowPrevButton from './arrow-prev-button.svg';
 import IconArrowRight from './arrow-right.svg';
 import IconBeautyPin from './beauty-pin.svg';
 import IconCharacterPin from './beauty-pin.svg';
@@ -27,6 +29,7 @@ import IconMedia from './media.svg';
 import IconNaverLogo from './naver-logo.svg';
 import IconRedLike from './red-like.svg';
 import IconSearch from './search.svg';
+import IconWhiteMarker from './white-marker.svg';
 
 export {
   IconKakaoLogo,
@@ -48,6 +51,8 @@ export {
   IconMarker,
   IconCirculation,
   IconBlackCheck,
+  IconArrowNextButton,
+  IconWhiteMarker,
   IconClose,
   IconArrowRight,
   IconArrowLeft,
@@ -58,4 +63,5 @@ export {
   IconFoodPin,
   IconMediaPin,
   IconChange,
+  IconArrowPrevButton,
 };

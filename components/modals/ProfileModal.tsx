@@ -1,39 +1,51 @@
-import { ChangeEvent, KeyboardEvent, useState } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  KeyboardEvent,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import useManageUserAccessToken from 'hooks/useManageAccessToken';
 import { generateRandomNickname } from 'utils/generateRandomNickname';
+import { postUserSignUpInfo } from 'apis/auth';
 import Button from 'components/commons/Button';
 import Input from 'components/commons/Input';
 import { IconCirculation } from 'public/icons';
 
-interface FormValues {
+export interface FormValues {
   nickname: string;
   companyName: string;
   brandName: string;
-  productOrServiceName: string;
-  interests: string;
   introduction: string;
 }
 
-const ProfileModal = () => {
-  const { control, handleSubmit, register, setValue, reset } =
+const ProfileModal = (props: {
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
+  const { setIsModalOpen } = props;
+  const { control, handleSubmit, register, setValue, reset, formState } =
     useForm<FormValues>({
       defaultValues: {
         nickname: '',
         companyName: '',
         brandName: '',
-        productOrServiceName: '',
-        interests: '',
         introduction: '',
       },
     });
 
+  const { saveUserAccessToken } = useManageUserAccessToken();
+
   const [tags, setTags] = useState<string[]>([]);
+  const [tagText, setTagText] = useState('');
 
   const addTags = (e: KeyboardEvent<HTMLInputElement>) => {
     const inputVal = (e.target as HTMLInputElement).value;
     if (e.key === 'Enter' && inputVal !== '' && !tags.includes(inputVal)) {
       setTags([...tags, inputVal]);
-      setValue('interests', '');
+      setTagText('');
     }
   };
 
@@ -52,17 +64,27 @@ const ProfileModal = () => {
     setValue('nickname', randomNickname);
   };
 
-  //TODO: 바꿀 로직
-  const submitProfileSettings: SubmitHandler<FormValues> = (formData) => {
-    console.log(formData);
-    reset();
+  const patchUserInfo: SubmitHandler<FormValues> = async (formData) => {
+    const formDataResult = { ...formData, interests: tags.join(',') };
+    // send user info to server
+    const { resStatus, resData } = await postUserSignUpInfo({
+      formData: formDataResult,
+    });
+
+    // sign up succeed
+    if (resStatus === 200) {
+      toast.success('회원가입이 완료되었습니다!');
+      setIsModalOpen(false);
+    } else {
+      toast.error('에러가 발생하였습니다! 관리자에게 문의하세요.');
+    }
+
+    // accessToken 쿠키에 저장
+    saveUserAccessToken({ data: resData?.accessToken });
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(submitProfileSettings)}
-      className='flex h-full w-600 flex-col gap-8 rounded-24 p-24'
-    >
+    <form className='flex h-full w-600 flex-col gap-8 rounded-24 p-24'>
       <div className='text-24 font-800'>기본 프로필 설정</div>
       <div className='mb-16 text-16 font-400 text-gray-400'>
         공간이음 서비스를 이용하기 전 기본 프로필을 설정해 주세요.
@@ -78,37 +100,32 @@ const ProfileModal = () => {
           placeholder='회사명을 입력해 주세요.'
           control={control}
         >
-          회사명
+          회사명 <RequiredStar />
         </Input>
+
         <Input
           name='brandName'
           placeholder='브랜드명을 입력해 주세요.'
           control={control}
         >
-          브랜드명
+          브랜드명 혹은 서비스명 <RequiredStar />
         </Input>
-        <div className='relative'>
-          <Input
-            name='productOrServiceName'
-            placeholder='주요 제품 및 서비스명을 입력해 주세요.'
-            control={control}
-          >
-            주요 제품 및 서비스명
-          </Input>
-          <span className='absolute bottom-24 right-12 text-14 font-500 text-[#8A909F]'>
-            20
-          </span>
-        </div>
+
         <InterestInput
-          register={register}
           tags={tags}
+          tagText={tagText}
+          setTagText={setTagText}
           addTag={addTags}
           removeTags={removeTags}
         />
         <IntroductionInput register={register} />
       </div>
-      {/* TODO: onClick 로직 추가 */}
-      <Button type='button' onClick={handleSubmit(submitProfileSettings)}>
+      <Button
+        type='button'
+        onClick={handleSubmit(patchUserInfo)}
+        isDisabled={!formState.isValid}
+        errorMsg='필수 입력 필드 값을 모두 입력해주세요!'
+      >
         기본 프로필 설정
       </Button>
     </form>
@@ -116,6 +133,11 @@ const ProfileModal = () => {
 };
 
 export default ProfileModal;
+
+const RequiredStar = (props: { className?: string }) => {
+  const { className } = props;
+  return <span className={`text-[15px] text-[#EF5350] ${className}`}>*</span>;
+};
 
 const NicknameInput = (props: {
   register: any;
@@ -128,11 +150,13 @@ const NicknameInput = (props: {
       <div className='relative w-full'>
         <label htmlFor='nickname' className='text-16 font-700'>
           닉네임
+          <RequiredStar className='ml-[3px]' />
         </label>
         <input
           id='nickname'
           placeholder={'닉네임을 입력해 주세요.'}
           {...register('nickname', {
+            required: true,
             onChange: onChangeNickname,
           })}
           className={`mt-8 w-full rounded-8 border border-gray-200 bg-gray-100 p-12 text-14 font-500 outline-none placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400`}
@@ -141,7 +165,7 @@ const NicknameInput = (props: {
       <button
         type='button'
         onClick={onRandomNickname}
-        className='flex h-48 w-fit items-center justify-center whitespace-nowrap rounded-8 bg-gray-100 px-12 py-20 text-16 font-500'
+        className='flex h-48 w-fit items-center justify-center whitespace-nowrap rounded-8 bg-[#efefef] px-12 py-20 text-16 font-500'
       >
         <div className='flex items-center gap-8'>
           <IconCirculation />
@@ -153,12 +177,13 @@ const NicknameInput = (props: {
 };
 
 const InterestInput = (props: {
-  register: any;
   tags: string[];
+  tagText: string;
+  setTagText: Dispatch<SetStateAction<string>>;
   addTag: (e: KeyboardEvent<HTMLInputElement>) => void;
   removeTags: (indexToRemove: number) => void;
 }) => {
-  const { register, tags, addTag, removeTags } = props;
+  const { tags, tagText, setTagText, addTag, removeTags } = props;
   return (
     <div className='relative w-full'>
       <label htmlFor='interests' className='text-16 font-700'>
@@ -168,12 +193,15 @@ const InterestInput = (props: {
         className={`mt-8 flex w-full flex-col ${tags.length && 'gap-4'} rounded-8 border border-gray-200 bg-gray-100 p-8 placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400`}
       >
         <input
-          id='introduction'
           className='bg-gray-100 p-4 text-14 font-500 outline-none placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400'
-          placeholder={'관심 분야를 입력해 주세요.'}
+          placeholder={'Enter키로 관심 분야 태그를 입력해 주세요.'}
           onKeyUp={(e) => addTag(e)}
-          {...register('interests')}
+          onChange={(e) => {
+            setTagText(e.currentTarget.value);
+          }}
+          value={tagText}
         />
+
         <ul id='tags' className='flex flex-wrap gap-4'>
           {tags.map((tag, index) => (
             <li

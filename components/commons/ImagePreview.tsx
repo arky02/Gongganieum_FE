@@ -50,13 +50,13 @@ const ImagePreview = (props: {
         </button>
         <button
           onClick={handleNext}
-          className={`fixed right-32 top-1/2 -translate-y-1/2 ${hasNext ? '' : 'opacity-25'}`}
+          className={`fixed right-32 top-1/2 h-32 w-32 -translate-y-1/2 ${hasNext ? '' : 'opacity-25'}`}
         >
           <IconArrowRight />
         </button>
         <button
           onClick={handlePrevious}
-          className={`fixed left-32 top-1/2 -translate-y-1/2 ${hasPrevious ? '' : 'opacity-25'}`}
+          className={`fixed left-32 top-1/2 h-32 w-32 -translate-y-1/2 ${hasPrevious ? '' : 'opacity-25'}`}
         >
           <IconArrowLeft />
         </button>
