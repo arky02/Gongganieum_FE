@@ -6,11 +6,7 @@ const IsOursButton = () => {
 
   const handleClick = () => {
     const { q, as, cate } = router.query;
-    if (selected) {
-      router.push(`/map?as=${as}&q=${q}&order=&cate=${cate}&isours=false`);
-    } else {
-      router.push(`/map?as=${as}&q=${q}&order=&cate=${cate}&isours=true`);
-    }
+    router.push(`/map?as=${as}&q=${q}&order=&cate=${cate}&isours=${!selected}`);
   };
 
   return (
