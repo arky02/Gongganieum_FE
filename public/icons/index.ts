@@ -12,6 +12,7 @@ import IconBeauty from './beauty.svg';
 import IconBlackCheck from './black-check.svg';
 import IconBlankLike from './blank-like.svg';
 import IconBuilding from './building.svg';
+import IconChange from './change.svg';
 import IconCharacter from './character.svg';
 import IconCirculation from './circulation.svg';
 import IconClose from './close.svg';
@@ -56,4 +57,5 @@ export {
   IconFashionPin,
   IconFoodPin,
   IconMediaPin,
+  IconChange,
 };

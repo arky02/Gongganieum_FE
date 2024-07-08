@@ -1,6 +1,10 @@
+import { useState } from 'react';
 import { parseNumberWithComma } from 'utils/parseNumberWithComma';
 import { BuildingDataType, PageType } from 'types/client.types';
+import { IconChange } from 'public/icons';
 import DescriptionCard from './DescriptionCard';
+
+type UnitType = 'pyeong' | 'meter';
 
 const BuildingInfoCard = (props: {
   data: BuildingDataType | undefined;
@@ -8,20 +12,41 @@ const BuildingInfoCard = (props: {
 }) => {
   const { data, page } = props;
 
+  const [unit, setUnit] = useState<UnitType>('pyeong');
+
+  const parseArea = (area: number | undefined | null) => {
+    if (!area) {
+      return '-';
+    }
+
+    const parsedPyeong = parseNumberWithComma(area);
+    const parsedMeter = parseNumberWithComma(
+      Math.round(area * 0.3025 * 100) / 100,
+    );
+
+    const parsedArea =
+      unit === 'meter' ? `${parsedPyeong}㎡` : `${parsedMeter}평`;
+
+    return parsedArea;
+  };
+
+  const handleChangeUnit = () => {
+    setUnit((prev) => (prev === 'pyeong' ? 'meter' : 'pyeong'));
+  };
+
   return (
     <DescriptionCard page={page}>
+      <button
+        onClick={handleChangeUnit}
+        className='absolute -top-36 right-4 flex h-28 w-48 shrink-0 items-center gap-4 rounded-8 border border-gray-200 pl-[6px] pr-4 font-600'
+      >
+        <IconChange />
+        {unit === 'pyeong' ? '㎡' : '평'}
+      </button>
       <div className='flex flex-col gap-16'>
         <div className='flex items-center justify-between'>
           <span className='text-18 font-600'>연면적</span>
-          <span className='text-16 font-600'>
-            {data?.연면적 ? (
-              <>
-                {parseNumberWithComma(data.연면적)}m<sup>2</sup>
-              </>
-            ) : (
-              '-'
-            )}
-          </span>
+          <span className='text-16 font-600'>{parseArea(data?.연면적)}</span>
         </div>
         <div className='flex items-center justify-between'>
           <span className='text-18 font-600'>용적률</span>
