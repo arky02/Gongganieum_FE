@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { parseNumberWithComma } from 'utils/parseNumberWithComma';
 import { BuildingDataType, PageType } from 'types/client.types';
 import { IconChange } from 'public/icons';
@@ -53,60 +53,34 @@ const BuildingInfoCard = (props: {
       <>
         {data && (
           <div className='flex flex-col gap-16'>
-            <div className='flex items-center justify-between'>
-              <span className='text-18 font-600'>연면적</span>
-              <span className='text-16 font-600'>
-                {parseArea(data?.연면적)}
-              </span>
-            </div>
-            <div className='flex items-center justify-between'>
-              <span className='text-18 font-600'>용적률</span>
-              <span className='text-16 font-600'>
-                {parsePercent(data?.용적률)}
-              </span>
-            </div>
-            <div className='flex items-center justify-between'>
-              <span className='text-18 font-600'>건폐율</span>
-              <span className='text-16 font-600'>
-                {parsePercent(data?.건폐율)}
-              </span>
-            </div>
-            <div className='flex items-center justify-between'>
-              <span className='text-18 font-600'>주용도</span>
-              <span className='text-16 font-600'>
-                {data?.주용도 ? data.주용도 : '-'}
-              </span>
-            </div>
-            <div className='flex items-center justify-between'>
-              <span className='text-18 font-600'>사용승인일</span>
-              <span className='text-16 font-600'>
-                {data?.사용승인일 ? data.사용승인일 : '-'}
-              </span>
-            </div>
-            <div className='flex items-center justify-between'>
-              <span className='text-18 font-600'>지상층수</span>
-              <span className='text-16 font-600'>
-                {data?.주차대수 !== null ? data.지상층수 + '층' : '-'}
-              </span>
-            </div>
-            <div className='flex items-center justify-between'>
-              <span className='text-18 font-600'>지하층수</span>
-              <span className='text-16 font-600'>
-                {data?.주차대수 !== null ? data.지하층수 + '층' : '-'}
-              </span>
-            </div>
-            <div className='flex items-center justify-between'>
-              <span className='text-18 font-600'>주차대수</span>
-              <span className='text-16 font-600'>
-                {data?.주차대수 !== null ? data.주차대수 + '대' : '-'}
-              </span>
-            </div>
-            <div className='flex items-center justify-between'>
-              <span className='text-18 font-600'>승강기</span>
-              <span className='text-16 font-600'>
-                {data?.주차대수 !== null ? data.승강기 + '대' : '-'}
-              </span>
-            </div>
+            <BuildingInfo name='연면적'>{parseArea(data?.연면적)}</BuildingInfo>
+            <BuildingInfo name='용적률'>
+              {parsePercent(data?.용적률)}
+            </BuildingInfo>
+            <BuildingInfo name='건폐율'>
+              {' '}
+              {parsePercent(data?.건폐율)}
+            </BuildingInfo>
+            <BuildingInfo name='주용도'>
+              {' '}
+              {data?.주용도 ? data.주용도 : '-'}
+            </BuildingInfo>
+            <BuildingInfo name='사용승인일'>
+              {' '}
+              {data?.사용승인일 ? data.사용승인일 : '-'}
+            </BuildingInfo>
+            <BuildingInfo name='지상층수'>
+              {data?.지상층수 !== null ? data.지상층수 + '층' : '-'}
+            </BuildingInfo>
+            <BuildingInfo name='지하층수'>
+              {data?.지하층수 !== null ? data.지하층수 + '층' : '-'}
+            </BuildingInfo>
+            <BuildingInfo name='주차대수'>
+              {data?.주차대수 !== null ? data.주차대수 + '대' : '-'}
+            </BuildingInfo>
+            <BuildingInfo name='승강기'>
+              {data?.승강기 !== null ? data.승강기 + '대' : '-'}
+            </BuildingInfo>
           </div>
         )}
       </>
@@ -115,3 +89,13 @@ const BuildingInfoCard = (props: {
 };
 
 export default BuildingInfoCard;
+
+const BuildingInfo = (props: { name: string; children: ReactNode }) => {
+  const { name, children } = props;
+  return (
+    <div className='flex items-center justify-between'>
+      <span className='text-18 font-600'>{name}</span>
+      <span className='text-16 font-600'>{children}</span>
+    </div>
+  );
+};
