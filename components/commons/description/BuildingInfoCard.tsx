@@ -14,24 +14,30 @@ const BuildingInfoCard = (props: {
 
   const [unit, setUnit] = useState<UnitType>('pyeong');
 
+  const handleChangeUnit = () => {
+    setUnit((prev) => (prev === 'pyeong' ? 'meter' : 'pyeong'));
+  };
+
   const parseArea = (area: number | undefined | null) => {
     if (!area) {
       return '-';
     }
-
     const parsedPyeong = parseNumberWithComma(area);
     const parsedMeter = parseNumberWithComma(
       Math.round(area * 0.3025 * 100) / 100,
     );
-
     const parsedArea =
       unit === 'meter' ? `${parsedPyeong}㎡` : `${parsedMeter}평`;
-
     return parsedArea;
   };
 
-  const handleChangeUnit = () => {
-    setUnit((prev) => (prev === 'pyeong' ? 'meter' : 'pyeong'));
+  const parsePercent = (percent: number | undefined | null) => {
+    if (!percent) {
+      return '-';
+    }
+    const parsedPercent =
+      parseNumberWithComma(Math.round(percent * 100) / 100) + '%';
+    return parsedPercent;
   };
 
   return (
@@ -50,15 +56,11 @@ const BuildingInfoCard = (props: {
         </div>
         <div className='flex items-center justify-between'>
           <span className='text-18 font-600'>용적률</span>
-          <span className='text-16 font-600'>
-            {data?.용적률 ? `${parseNumberWithComma(data.용적률)}%` : '-'}
-          </span>
+          <span className='text-16 font-600'>{parsePercent(data?.용적률)}</span>
         </div>
         <div className='flex items-center justify-between'>
           <span className='text-18 font-600'>건폐율</span>
-          <span className='text-16 font-600'>
-            {data?.건폐율 ? `${parseNumberWithComma(data.건폐율)}%` : '-'}
-          </span>
+          <span className='text-16 font-600'>{parsePercent(data?.건폐율)}</span>
         </div>
         <div className='flex items-center justify-between'>
           <span className='text-18 font-600'>사용승인일</span>
