@@ -16,7 +16,7 @@ const HomeMagazineSlider = () => {
   const swiperRef = useRef<SwiperRef>(null);
 
   return (
-    <div className='relative max-w-1232'>
+    <div className='relative w-[calc(100dvw-32px)] max-w-1232 md:hidden'>
       <Swiper
         ref={swiperRef}
         modules={[Navigation, Autoplay]}

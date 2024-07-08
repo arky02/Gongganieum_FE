@@ -62,47 +62,49 @@ const List = () => {
   };
 
   return (
-    <div className='my-76 flex flex-col justify-center gap-24 px-344'>
-      <span className='text-32 font-800'>{cate || '전체'}</span>
-      <ListCategoryTabs
-        cate={cate}
-        onClickCategoryTab={handleClickCategoryTab}
-      />
-      <div className='flex justify-between'>
-        <div className='w-394 flex'>
-          <SearchInput
-            value={q}
-            setValue={setQ}
-            dropdownMenu={SEARCH_AS}
-            selectedMenu={as}
-            setSelectedMenu={setAs}
-          />
-        </div>
-        <div className='flex items-center gap-8'>
-          <ListCheckBoxs
-            onClickOurs={handleClickOurs}
-            onClickIsPopup={handleClickIsPopup}
-          />
-          <ListSortingButton onSelected={handleSelectSortButton} />
-        </div>
-      </div>
-      {/* card-list */}
-      <div className='mx-auto my-20 grid grid-cols-3 gap-x-24 gap-y-48'>
-        {/* TODO: 진행중인 팝업 로직 생기면 수정 예정 */}
-        {(filteredBuildings || searchResult)
-          ?.slice(0, 30)
-          ?.map((building) => (
-            <ListBuildingCard
-              key={building._id}
-              id={building._id}
-              name={building.name}
-              address={building.address}
-              isours={building.isours}
-              cate={building.cate}
-              tag={building.tag}
-              latest_end_date={building.latest_end_date}
+    <div className='flex justify-center'>
+      <div className='my-76 flex flex-col justify-center gap-24 md:my-28 md:px-16'>
+        <span className='text-32 font-800'>{cate || '전체'}</span>
+        <ListCategoryTabs
+          cate={cate}
+          onClickCategoryTab={handleClickCategoryTab}
+        />
+        <div className='flex justify-between md:flex-col md:gap-16'>
+          <div className='w-394 flex'>
+            <SearchInput
+              value={q}
+              setValue={setQ}
+              dropdownMenu={SEARCH_AS}
+              selectedMenu={as}
+              setSelectedMenu={setAs}
             />
-          ))}
+          </div>
+          <div className='flex items-center gap-8'>
+            <ListCheckBoxs
+              onClickOurs={handleClickOurs}
+              onClickIsPopup={handleClickIsPopup}
+            />
+            <ListSortingButton onSelected={handleSelectSortButton} />
+          </div>
+        </div>
+        {/* card-list */}
+        <div className='mx-auto my-20 grid grid-cols-3 gap-x-24 gap-y-36 gap-y-48 md:grid-cols-2'>
+          {/* TODO: 진행중인 팝업 로직 생기면 수정 예정 */}
+          {(filteredBuildings || searchResult)
+            ?.slice(0, 30)
+            ?.map((building) => (
+              <ListBuildingCard
+                key={building._id}
+                id={building._id}
+                name={building.name}
+                address={building.address}
+                isours={building.isours}
+                cate={building.cate}
+                tag={building.tag}
+                latest_end_date={building.latest_end_date}
+              />
+            ))}
+        </div>
       </div>
     </div>
   );
