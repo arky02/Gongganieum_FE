@@ -77,9 +77,6 @@ const useMarkers = () => {
   }, [map, initialBuildings]);
 
   useEffect(() => {
-    if (router.query['building']) {
-      return;
-    }
     if (!showDefaultMarkers) {
       hideMarkers?.();
     } else {
