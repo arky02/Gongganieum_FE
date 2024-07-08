@@ -1,3 +1,5 @@
+import { ScrollContainer } from 'react-indiana-drag-scroll';
+import 'react-indiana-drag-scroll/dist/style.css';
 import HomeBuildingCard from './HomeBuildingCard';
 
 const MOCK_BUILDING_IMAGE_URLS = [
@@ -13,19 +15,21 @@ const MOCK_BUILDING_IMAGE_URLS = [
 const HomeMobileBuildingCardSlider = () => {
   return (
     // scrollbar-hide 사용
-    <div className='scrollbar-hide hidden w-[calc(100dvw-24px)] whitespace-nowrap md:flex md:gap-16 md:overflow-x-scroll'>
-      {MOCK_BUILDING_IMAGE_URLS.map((slideImage) => {
-        return (
-          <div key={slideImage} className='inline-block'>
-            <HomeBuildingCard
-              name='노송 오재'
-              address='전라도 전주시'
-              tag='안녕, 디지몬'
-              img={slideImage}
-            />
-          </div>
-        );
-      })}
+    <div className='scrollbar-hide hidden w-[calc(100dvw-24px)] whitespace-nowrap md:flex md:overflow-x-scroll'>
+      <ScrollContainer className='md:flex md:gap-16'>
+        {MOCK_BUILDING_IMAGE_URLS.map((slideImage) => {
+          return (
+            <div key={slideImage} className='inline-block'>
+              <HomeBuildingCard
+                name='노송 오재'
+                address='전라도 전주시'
+                tag='안녕, 디지몬'
+                img={slideImage}
+              />
+            </div>
+          );
+        })}
+      </ScrollContainer>
     </div>
   );
 };
