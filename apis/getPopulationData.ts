@@ -5,8 +5,8 @@ import {
   populationDataSplitter,
 } from 'utils/populationDataSplitter';
 import { PopulationKeysType, PopulationType } from 'types/client.types';
+import { instance } from './config/default';
 
-const SECRET_KEY = process.env.NEXT_PUBLIC_SEOUL_PUBLIC_API_KEY;
 const MAX_LENGTH = 1500;
 
 export const getPopulationData = async (
@@ -34,8 +34,7 @@ export const getPopulationData = async (
     return false;
   }
 
-  const URL = `http://openapi.seoul.go.kr:8088/${SECRET_KEY}/xml/citydata_ppltn/${startIndex}/${endIndex}/${area}`;
-  const response = await axios.get(URL);
+  const response = await instance.get(`/data/area_info?area=${area}`);
   const data = response.data;
 
   const parsedPopulationData: PopulationType = {
