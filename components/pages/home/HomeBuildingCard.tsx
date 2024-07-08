@@ -12,7 +12,7 @@ const HomeBuildingCard = (props: {
 
   return (
     <>
-      <div className='relative mb-20 aspect-square w-396 flex-col   md:w-240'>
+      <div className='min-h-354 relative mb-20 aspect-square max-w-396 flex-col md:w-240'>
         <Image
           src={img}
           fill
