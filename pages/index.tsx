@@ -1,10 +1,5 @@
-import { QueryClient, dehydrate } from '@tanstack/react-query';
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
-import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
-import toast from 'react-hot-toast';
-import { getAccessTokenFromCookie } from 'utils/getAccessTokenFromCookie';
-import { getUserRole } from 'apis/auth';
+import { useEffect, useState } from 'react';
+import { requestUserRole } from 'apis/auth';
 import PortalModal from 'components/commons/PortalModal';
 import ProfileModal from 'components/modals/ProfileModal';
 import WelcomeModal from 'components/modals/WelcomeModal';
@@ -14,38 +9,25 @@ import HomeEditorRecommend from 'components/pages/home/HomeEditorRecommend';
 import HomeMagazineSlider from 'components/pages/home/HomeMagazineSlider';
 import HomeSliderWithPagination from 'components/pages/home/HomeSliderWithPagination';
 
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext,
-) => {
-  try {
-    const accessToken = getAccessTokenFromCookie(context) ?? '';
-    const queryClient = new QueryClient();
-
-    let userRole: { user_role: string } = { user_role: '' };
-    if (accessToken) {
-      userRole = await queryClient.fetchQuery(getUserRole(accessToken));
-    }
-
-    return {
-      props: { userRole, accessToken, dehydratedState: dehydrate(queryClient) },
-    };
-  } catch {
-    return { notFound: true };
-  }
-};
-
-const Home = ({
-  userRole,
-  accessToken,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const isSignUpNeeded = userRole?.user_role === 'GUEST';
-
-  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(isSignUpNeeded);
+const Home = () => {
+  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
   const [signUpStatus, setSignUpStatus] = useState('welcome');
 
   const onNextClick = () => {
     setSignUpStatus(() => 'signUp');
   };
+
+  useEffect(() => {
+    const reqUserRole = async () => {
+      const roleRes = await requestUserRole();
+
+      // roleRes = "GUEST" | "USER" | "SIGNED_OUT"
+      const isSignUpNeeded = roleRes === 'GUEST';
+      setIsSignUpModalOpen(isSignUpNeeded);
+    };
+
+    reqUserRole();
+  }, []);
 
   return (
     <div className='mb-76 mt-76 flex flex-col items-center justify-center gap-76'>
@@ -71,10 +53,7 @@ const Home = ({
         {signUpStatus === 'welcome' ? (
           <WelcomeModal handleNextClick={onNextClick}></WelcomeModal>
         ) : (
-          <ProfileModal
-            accessToken={accessToken}
-            setIsModalOpen={setIsSignUpModalOpen}
-          ></ProfileModal>
+          <ProfileModal setIsModalOpen={setIsSignUpModalOpen} />
         )}
       </PortalModal>
     </div>
