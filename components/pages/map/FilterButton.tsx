@@ -11,10 +11,12 @@ const FilterButton = (props: { category: CategoryType }) => {
   const handleClick = () => {
     const { q, as, isours } = router.query;
     if (selected) {
-      router.push(`/map?as=${as}&q=${q}&order=&cate=전체&isours=${isours}`);
+      router.push(
+        `/map?as=${as ?? '지역명'}&q=${q ?? ''}&order=&cate=전체&isours=${isours}`,
+      );
     } else {
       router.push(
-        `/map?as=${as}&q=${q}&order=&cate=${category == 'F&B' ? 'F%26B' : category}&isours=${isours}`,
+        `/map?as=${as ?? '지역명'}&q=${q ?? ''}&order=&cate=${category == 'F&B' ? 'F%26B' : category}&isours=${isours}`,
       );
     }
   };
