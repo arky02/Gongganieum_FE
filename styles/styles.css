@@ -18,7 +18,7 @@
   display: inline-block;
   margin: 0 4px;
   border-radius: 4px;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease-out;
 }
 
 .swiper-pagination-bullet-custom.swiper-pagination-bullet-active {

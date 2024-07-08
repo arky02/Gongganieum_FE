@@ -25,6 +25,7 @@ const Home = () => {
 
       // roleRes = "GUEST" | "USER" | "SIGNED_OUT"
       const isSignUpNeeded = roleRes === 'GUEST';
+
       setIsSignUpModalOpen(isSignUpNeeded);
     };
 

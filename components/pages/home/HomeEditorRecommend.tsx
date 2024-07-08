@@ -3,7 +3,6 @@ import { IconLogo } from 'public/icons';
 
 const HomeEditorRecommend = () => {
   return (
-    // TODO: 링크 뚫어넣기
     <div className='flex h-full w-full items-center justify-center bg-gray-100 md:px-16 md:py-56'>
       <div className='flex max-w-412 flex-col gap-36'>
         <div className='w-120'>
