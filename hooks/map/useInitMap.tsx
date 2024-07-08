@@ -23,7 +23,6 @@ const HOT_PLACE_COLOR = [
 ];
 
 const useInitMap = (buildings: BuildingType[] | undefined) => {
-  const router = useRouter();
   const {
     map,
     setMap,
@@ -39,6 +38,12 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
     setShowMarkers: state.setShowMarkers,
     setHideMarkers: state.setHideMarkers,
   }));
+
+  const router = useRouter();
+  const showDefaultMarkers =
+    !router.query['q'] &&
+    (router.query['cate'] === '전체' || !router.query['cate']) &&
+    router.query['isours'] === 'false';
 
   const initMap = async () => {
     window.kakao?.maps?.load(() => {
@@ -177,7 +182,6 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
       const bottomArrow = document.createElement('div');
       bottomArrow.className = `w-0 h-0 border-t-[12px] border-r-[12px] border-l-[12px] border-l-transparent border-r-transparent border-b-transparent ${hotColor.border}`;
       content.appendChild(box);
-      // content.appendChild(count);
       content.appendChild(bottomArrow);
 
       const customOverlay = new window.kakao.maps.CustomOverlay({
@@ -193,7 +197,7 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
       }));
 
       customOverlay.setMap(map);
-      customOverlay.setVisible(true);
+      customOverlay.setVisible(showDefaultMarkers);
       window.kakao.maps.event.addListener(map, 'zoom_changed', () => {
         const zoomLevel = map.getLevel();
         const isSet = !!customOverlay.getMap();
