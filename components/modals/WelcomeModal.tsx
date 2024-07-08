@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import Button from 'components/commons/Button';
 
-const WelcomeModal = ({ handleNextClick }: { handleNextClick: () => void }) => {
+const WelcomeModal = (props: { handleNextClick: () => void }) => {
+  const { handleNextClick } = props;
   return (
     <div className='flex h-full w-600 flex-col items-center gap-24 rounded-24 bg-white p-36'>
       <Image

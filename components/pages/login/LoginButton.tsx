@@ -23,7 +23,7 @@ const LoginButton = (props: { mode: 'naver' | 'kakao'; href: string }) => {
       href={href}
     >
       {mode === 'kakao' ? MODE_OBJECT.kakao.icon : MODE_OBJECT.naver.icon}
-      <div className='font-black text-18 font-800'>
+      <div className='text-18 font-800 text-black'>
         {mode === 'kakao'
           ? MODE_OBJECT.kakao.content
           : MODE_OBJECT.naver.content}
