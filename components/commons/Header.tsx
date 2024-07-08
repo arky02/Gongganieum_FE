@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ReactNode, useState } from 'react';
-import { IconHambugerMenu, IconLogo, IconSearch } from 'public/icons';
+import { IconHamburgerMenu, IconLogo, IconSearch } from 'public/icons';
 import SearchInput from './SearchInput';
 
 const TABS = [
@@ -18,6 +18,7 @@ const TABS = [
     href: '/list?as=지역명&q=&order=&cate=전체&isours=false',
   },
   { name: '매거진', path: '/magazine', href: '/magazine' },
+  { name: '마이페이지', path: '/mypage', href: '/mypage' },
 ];
 
 const Header = () => {
@@ -29,16 +30,10 @@ const Header = () => {
       {isOpen && (
         <>
           <div className='animate-slideDown fixed top-64 z-floating hidden w-full flex-col items-start gap-32 bg-white p-20 md:flex'>
-            {[
-              { name: '홈', pathName: '/' },
-              { name: '지도', pathName: '/map' },
-              { name: '리스트', pathName: '/list' },
-              { name: '매거진', pathName: '/magazine' },
-              { name: '마이페이지', pathName: '/mypage' },
-            ].map((el) => (
+            {TABS.map((el) => (
               <Link
                 key={el.name}
-                href={el.pathName}
+                href={el.href}
                 onClick={() => setIsOpen(false)}
                 className='text-gray-700 flex h-24 w-full items-center justify-center gap-12 text-16 font-500'
               >
@@ -73,7 +68,7 @@ const Header = () => {
               onClick={() => setIsOpen((prev) => !prev)}
               className='hidden h-28 w-28 md:inline'
             >
-              <IconHambugerMenu />
+              <IconHamburgerMenu />
             </button>
             <Link
               href='/list?as=지역명&q=&order=&cate=전체&isours=false'
