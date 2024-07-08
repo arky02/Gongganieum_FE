@@ -23,7 +23,6 @@ const OAuthProvider = () => {
 
       if (!oauthLoginRes) throw Error('OAuth AccessToken Response Error');
       // => OAuth 서버로부터 받은 Response 존재!
-
       // cookie에 accessToken 정보 저장
       saveUserAccessToken({ data: oauthLoginRes?.accessToken });
 
@@ -44,17 +43,14 @@ const OAuthProvider = () => {
     role: string;
     name: string;
   }) => {
-    // 1. ROLE: USER -> 이미 가입된 회원인 경우, /로 리다이렉트
-    if (role === 'USER') {
-      router.push('/');
-      toast.success(
-        `${name}님, ${provider === 'kakao' ? '카카오' : '네이버'}로 로그인 되었습니다!`,
-      );
-    } else {
-      // 2. ROLE: GUEST -> 회원가입 필요
-      toast.success(`${name}님, 추가정보 입력을 위해 이동합니다!`);
-      router.push('/');
-    }
+    const toastMsg =
+      role === 'USER'
+        ? `${name}님, ${provider === 'kakao' ? '카카오' : '네이버'}로 로그인 되었습니다!`
+        : `${name}님, 추가정보 입력을 위해 이동합니다!`;
+
+    toast.success(toastMsg);
+    // ROLE = GUEST 인 경우 /로 리다이렉트 한 이후 추가정보 입력 진행
+    router.push('/');
   };
 
   useEffect(() => {
