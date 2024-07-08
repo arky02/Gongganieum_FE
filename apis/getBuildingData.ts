@@ -13,6 +13,10 @@ export const getBuildingData = async (address: string) => {
   const item = res.data?.response?.body?.items?.item;
   const data = Array.isArray(item) ? item[0] : item;
 
+  if (!data) {
+    return;
+  }
+
   const date = String(data?.useAprDay);
   const parsedDate =
     date.length > 3

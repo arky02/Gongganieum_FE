@@ -18,17 +18,20 @@ const BuildingInfoCard = (props: {
     setUnit((prev) => (prev === 'pyeong' ? 'meter' : 'pyeong'));
   };
 
-  const parseArea = (area: number | undefined | null) => {
+  const parseArea = (area: number | undefined | null, unit: UnitType) => {
     if (!area) {
       return '-';
     }
-    const parsedPyeong = parseNumberWithComma(area);
-    const parsedMeter = parseNumberWithComma(
-      Math.round(area * 0.3025 * 100) / 100,
-    );
-    const parsedArea =
-      unit === 'meter' ? `${parsedPyeong}㎡` : `${parsedMeter}평`;
-    return parsedArea;
+
+    if (unit === 'pyeong') {
+      const parsedArea = parseNumberWithComma(
+        Math.round(area * 0.3025 * 100) / 100,
+      );
+      return parsedArea + '평';
+    } else {
+      const parsedArea = parseNumberWithComma(area);
+      return parsedArea + '㎡';
+    }
   };
 
   const parsePercent = (percent: number | undefined | null) => {
@@ -40,6 +43,14 @@ const BuildingInfoCard = (props: {
     return parsedPercent;
   };
 
+  const parseData = (data: any, unit: string) => {
+    if (data === null || data === undefined) {
+      return '-';
+    }
+
+    return data + unit;
+  };
+
   return (
     <DescriptionCard page={page}>
       <button
@@ -49,41 +60,31 @@ const BuildingInfoCard = (props: {
         <IconChange />
         {unit === 'pyeong' ? '㎡' : '평'}
       </button>
-
-      <>
-        {data && (
-          <div className='flex flex-col gap-16'>
-            <BuildingInfo name='연면적'>{parseArea(data?.연면적)}</BuildingInfo>
-            <BuildingInfo name='용적률'>
-              {parsePercent(data?.용적률)}
-            </BuildingInfo>
-            <BuildingInfo name='건폐율'>
-              {' '}
-              {parsePercent(data?.건폐율)}
-            </BuildingInfo>
-            <BuildingInfo name='주용도'>
-              {' '}
-              {data?.주용도 ? data.주용도 : '-'}
-            </BuildingInfo>
-            <BuildingInfo name='사용승인일'>
-              {' '}
-              {data?.사용승인일 ? data.사용승인일 : '-'}
-            </BuildingInfo>
-            <BuildingInfo name='지상층수'>
-              {data?.지상층수 !== null ? data.지상층수 + '층' : '-'}
-            </BuildingInfo>
-            <BuildingInfo name='지하층수'>
-              {data?.지하층수 !== null ? data.지하층수 + '층' : '-'}
-            </BuildingInfo>
-            <BuildingInfo name='주차대수'>
-              {data?.주차대수 !== null ? data.주차대수 + '대' : '-'}
-            </BuildingInfo>
-            <BuildingInfo name='승강기'>
-              {data?.승강기 !== null ? data.승강기 + '대' : '-'}
-            </BuildingInfo>
-          </div>
-        )}
-      </>
+      <div className='flex flex-col gap-16'>
+        <BuildingInfo name='연면적'>
+          {parseArea(data?.연면적, unit)}
+        </BuildingInfo>
+        <BuildingInfo name='용적률'>{parsePercent(data?.용적률)}</BuildingInfo>
+        <BuildingInfo name='건폐율'>{parsePercent(data?.건폐율)}</BuildingInfo>
+        <BuildingInfo name='주용도'>
+          {data?.주용도 ? data.주용도 : '-'}
+        </BuildingInfo>
+        <BuildingInfo name='사용승인일'>
+          {data?.사용승인일 ? data.사용승인일 : '-'}
+        </BuildingInfo>
+        <BuildingInfo name='지상층수'>
+          {parseData(data?.지상층수, '층')}
+        </BuildingInfo>
+        <BuildingInfo name='지하층수'>
+          {parseData(data?.지하층수, '층')}
+        </BuildingInfo>
+        <BuildingInfo name='주차대수'>
+          {parseData(data?.주차대수, '대')}
+        </BuildingInfo>
+        <BuildingInfo name='승강기'>
+          {parseData(data?.승강기, '대')}
+        </BuildingInfo>
+      </div>
     </DescriptionCard>
   );
 };
