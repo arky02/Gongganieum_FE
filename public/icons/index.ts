@@ -16,7 +16,7 @@ import IconEtc from './etc.svg';
 import IconFashion from './fashion.svg';
 import IconFlag from './flag.svg';
 import IconFood from './food.svg';
-import IconHamburgerMenu from './hambuger-menu.svg';
+import IconHamburgerMenu from './hamburger-menu.svg';
 import IconKakaoLogo from './kakao-logo.svg';
 import IconLogo from './logo.svg';
 import IconMarker from './marker.svg';

@@ -26,7 +26,7 @@ const Header = () => {
 
   return (
     <>
-      {/* Hambuger Menu Content */}
+      {/* Hamburger Menu Content */}
       {isOpen && (
         <>
           <div className='animate-slideDown fixed top-64 z-floating hidden w-full flex-col items-start gap-32 bg-white p-20 md:flex'>
