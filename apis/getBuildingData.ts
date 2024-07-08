@@ -15,15 +15,24 @@ export const getBuildingData = async (address: string) => {
 
   const date = String(data?.useAprDay);
   const parsedDate =
-    date !== 'undefined'
+    date.length > 3
       ? `${date?.slice(0, 4)}년 ${date?.slice(4, 6)}월 ${date?.slice(6, 8)}일`
       : null;
+
   const parsedData: BuildingDataType = {
     연면적: data?.totArea,
     용적률: data?.vlRat,
     건폐율: data?.bcRat,
     사용승인일: parsedDate,
     승강기: data?.rideUseElvtCnt,
+    지상층수: data?.grndFlrCnt,
+    지하층수: data?.ugrndFlrCnt,
+    주용도: data?.mainPurpsCdNm,
+    주차대수:
+      data?.indrMechUtcnt +
+      data?.oudrMechUtcnt +
+      data?.indrAutoUtcnt +
+      data?.oudrAutoUtcnt,
   };
 
   return parsedData;

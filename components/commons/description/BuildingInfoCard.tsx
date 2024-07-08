@@ -49,32 +49,67 @@ const BuildingInfoCard = (props: {
         <IconChange />
         {unit === 'pyeong' ? '㎡' : '평'}
       </button>
-      <div className='flex flex-col gap-16'>
-        <div className='flex items-center justify-between'>
-          <span className='text-18 font-600'>연면적</span>
-          <span className='text-16 font-600'>{parseArea(data?.연면적)}</span>
-        </div>
-        <div className='flex items-center justify-between'>
-          <span className='text-18 font-600'>용적률</span>
-          <span className='text-16 font-600'>{parsePercent(data?.용적률)}</span>
-        </div>
-        <div className='flex items-center justify-between'>
-          <span className='text-18 font-600'>건폐율</span>
-          <span className='text-16 font-600'>{parsePercent(data?.건폐율)}</span>
-        </div>
-        <div className='flex items-center justify-between'>
-          <span className='text-18 font-600'>사용승인일</span>
-          <span className='text-16 font-600'>
-            {data?.사용승인일 ? data.사용승인일 : '-'}
-          </span>
-        </div>
-        <div className='flex items-center justify-between'>
-          <span className='text-18 font-600'>승강기</span>
-          <span className='text-16 font-600'>
-            {data?.승강기 ? `${data.승강기}대` : '-'}
-          </span>
-        </div>
-      </div>
+
+      <>
+        {data && (
+          <div className='flex flex-col gap-16'>
+            <div className='flex items-center justify-between'>
+              <span className='text-18 font-600'>연면적</span>
+              <span className='text-16 font-600'>
+                {parseArea(data?.연면적)}
+              </span>
+            </div>
+            <div className='flex items-center justify-between'>
+              <span className='text-18 font-600'>용적률</span>
+              <span className='text-16 font-600'>
+                {parsePercent(data?.용적률)}
+              </span>
+            </div>
+            <div className='flex items-center justify-between'>
+              <span className='text-18 font-600'>건폐율</span>
+              <span className='text-16 font-600'>
+                {parsePercent(data?.건폐율)}
+              </span>
+            </div>
+            <div className='flex items-center justify-between'>
+              <span className='text-18 font-600'>주용도</span>
+              <span className='text-16 font-600'>
+                {data?.주용도 ? data.주용도 : '-'}
+              </span>
+            </div>
+            <div className='flex items-center justify-between'>
+              <span className='text-18 font-600'>사용승인일</span>
+              <span className='text-16 font-600'>
+                {data?.사용승인일 ? data.사용승인일 : '-'}
+              </span>
+            </div>
+            <div className='flex items-center justify-between'>
+              <span className='text-18 font-600'>지상층수</span>
+              <span className='text-16 font-600'>
+                {data?.주차대수 !== null ? data.지상층수 + '층' : '-'}
+              </span>
+            </div>
+            <div className='flex items-center justify-between'>
+              <span className='text-18 font-600'>지하층수</span>
+              <span className='text-16 font-600'>
+                {data?.주차대수 !== null ? data.지하층수 + '층' : '-'}
+              </span>
+            </div>
+            <div className='flex items-center justify-between'>
+              <span className='text-18 font-600'>주차대수</span>
+              <span className='text-16 font-600'>
+                {data?.주차대수 !== null ? data.주차대수 + '대' : '-'}
+              </span>
+            </div>
+            <div className='flex items-center justify-between'>
+              <span className='text-18 font-600'>승강기</span>
+              <span className='text-16 font-600'>
+                {data?.주차대수 !== null ? data.승강기 + '대' : '-'}
+              </span>
+            </div>
+          </div>
+        )}
+      </>
     </DescriptionCard>
   );
 };
