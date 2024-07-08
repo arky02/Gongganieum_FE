@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import Button from 'components/commons/Button';
 
-const WelcomeModal = () => {
+const WelcomeModal = (props: { handleNextClick: () => void }) => {
+  const { handleNextClick } = props;
   return (
     <div className='flex h-full w-600 flex-col items-center gap-24 rounded-24 bg-white p-36'>
       <Image
@@ -17,8 +18,7 @@ const WelcomeModal = () => {
         공간이음 서비스를 원활하게 이용하기 위한
         <br /> 필수 단계인 기본 프로필 설정 단계로 넘어가겠습니다!
       </span>
-      {/* TODO: 기본 프로필 설정 모달 켜기 */}
-      <Button onClick={() => console.log('hi')}>
+      <Button onClick={handleNextClick}>
         기본 프로필 설정 <span>&gt;</span>
       </Button>
     </div>
