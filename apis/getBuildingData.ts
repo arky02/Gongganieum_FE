@@ -1,8 +1,5 @@
-import axios from 'axios';
 import { BuildingDataType } from 'types/client.types';
 import { instance } from './config/default';
-
-const SERVICE_KEY = process.env.NEXT_PUBLIC_DATA_PORTAL_SERVICE_KEY;
 
 export const getBuildingData = async (address: string) => {
   const addressCode = await getAddressCode(address);
@@ -10,23 +7,36 @@ export const getBuildingData = async (address: string) => {
     return;
   }
 
-  const res = await axios.get(
-    `http://apis.data.go.kr/1613000/BldRgstService_v2/getBrTitleInfo?sigunguCd=${addressCode.sigunguCd}&bjdongCd=${addressCode.bjdongCd}&bun=${addressCode.bun}&ji=${addressCode.ji}&ServiceKey=${SERVICE_KEY}`,
-  );
+  const res = await instance.get('/data/building_info', {
+    params: addressCode,
+  });
   const item = res.data?.response?.body?.items?.item;
   const data = Array.isArray(item) ? item[0] : item;
 
+  if (!data) {
+    return;
+  }
+
   const date = String(data?.useAprDay);
   const parsedDate =
-    date !== 'undefined'
+    date.length > 3
       ? `${date?.slice(0, 4)}년 ${date?.slice(4, 6)}월 ${date?.slice(6, 8)}일`
       : null;
+
   const parsedData: BuildingDataType = {
     연면적: data?.totArea,
     용적률: data?.vlRat,
     건폐율: data?.bcRat,
     사용승인일: parsedDate,
     승강기: data?.rideUseElvtCnt,
+    지상층수: data?.grndFlrCnt,
+    지하층수: data?.ugrndFlrCnt,
+    주용도: data?.mainPurpsCdNm,
+    주차대수:
+      data?.indrMechUtcnt +
+      data?.oudrMechUtcnt +
+      data?.indrAutoUtcnt +
+      data?.oudrAutoUtcnt,
   };
 
   return parsedData;

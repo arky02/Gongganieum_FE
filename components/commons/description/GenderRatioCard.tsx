@@ -1,13 +1,18 @@
 import { ArcElement, Chart } from 'chart.js';
 import ChartDataLables from 'chartjs-plugin-datalabels';
 import { Doughnut } from 'react-chartjs-2';
+import { PageType } from 'types/client.types';
 import DescriptionCard from './DescriptionCard';
 
 Chart.register(ArcElement);
 Chart.register(ChartDataLables);
 
-const GenderRatioCard = (props: { male: number; female: number }) => {
-  const { male, female } = props;
+const GenderRatioCard = (props: {
+  male: number;
+  female: number;
+  page: PageType;
+}) => {
+  const { male, female, page } = props;
 
   const data = {
     labels: ['남성', '여성'],
@@ -21,7 +26,7 @@ const GenderRatioCard = (props: { male: number; female: number }) => {
   };
 
   return (
-    <DescriptionCard title='성별 비율'>
+    <DescriptionCard title='성별 비율' page={page}>
       <div className='h-172 w-full'>
         <Doughnut
           data={data}

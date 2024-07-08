@@ -1,20 +1,17 @@
 import { CATEGORY, CATEGORY_ICON } from 'constants/common';
-import { CategoryType, PopupType } from 'types/client.types';
+import { CategoryType, PageType, PopupType } from 'types/client.types';
 import DescriptionCard from './DescriptionCard';
 
-const PopupRankingCard = (props: { popups: PopupType[] }) => {
-  const { popups } = props;
+const PopupRankingCard = (props: { popups: PopupType[]; page: PageType }) => {
+  const { popups, page } = props;
   const ranking = getPopupRanking(popups);
 
   return (
-    <DescriptionCard title='팝업 히스토리 순위'>
+    <DescriptionCard title='팝업 히스토리 순위' page={page}>
       <div className='relative flex flex-col gap-16'>
         {ranking.map((el, i) => (
           <Ranking key={i} data={el} rank={i} />
         ))}
-      </div>
-      <div className='absolute bottom-24 w-328 text-center text-gray-400'>
-        해당 건물에서는 위 종류 팝업이 가장 많이 진행되었습니다.
       </div>
     </DescriptionCard>
   );

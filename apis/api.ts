@@ -16,7 +16,7 @@ export const getBuildings = async () => {
 export const getFilteredBuildings = async (params: {
   q?: string;
   order?: OrderType;
-  cate?: CategoryType;
+  cate?: CategoryType | '전체';
   isours?: boolean;
   as?: AsType;
 }) => {
