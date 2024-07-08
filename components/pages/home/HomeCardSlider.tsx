@@ -20,6 +20,7 @@ const MOCK_BUILDING_IMAGE_URLS = [
   '/images/mock-building-image2.jpg',
 ];
 
+// TODO: 사진 API 붙이기
 const HomeCardSlider = () => {
   const swiperRef = useRef<SwiperRef>(null);
 
@@ -36,7 +37,8 @@ const HomeCardSlider = () => {
   };
 
   return (
-    <div className='relative max-w-1232'>
+    // Swiper 안 쓰고 새로운 슬라이드되는 컴포넌트 만들기
+    <div className='relative h-504 max-w-1232 md:hidden'>
       <Swiper
         ref={swiperRef}
         modules={[Navigation, Autoplay]}
@@ -60,12 +62,15 @@ const HomeCardSlider = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <button onClick={handlePrev} className='absolute -left-24 top-180	 z-base'>
+      <button
+        onClick={handlePrev}
+        className='absolute -left-24 top-180 z-base	md:hidden'
+      >
         <IconArrowPrevButton />
       </button>
       <button
         onClick={handleNext}
-        className='absolute -right-24 top-180	 z-base'
+        className='absolute -right-24 top-180	 z-base md:hidden'
       >
         <IconArrowNextButton />
       </button>

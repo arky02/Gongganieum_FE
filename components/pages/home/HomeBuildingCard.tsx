@@ -1,4 +1,3 @@
-import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
 import Tag from 'components/commons/Tag';
 
@@ -6,14 +5,14 @@ const HomeBuildingCard = (props: {
   name: string;
   address: string;
   tag?: string;
-  img: string | StaticImport;
+  img: string;
 }) => {
   const { name, address, tag, img } = props;
   const parsedTags = tag === 'NULL' ? [] : tag?.split(',');
 
   return (
     <>
-      <div className='relative mb-20 h-396 w-396 flex-col '>
+      <div className='relative mb-20 aspect-square w-396 flex-col   md:w-240'>
         <Image
           src={img}
           fill

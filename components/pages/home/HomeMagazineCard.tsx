@@ -1,10 +1,9 @@
-import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
 
 const HomeMagazineCard = (props: {
   title: string;
   subtitle: string;
-  img: string | StaticImport;
+  img: string;
 }) => {
   const { title, subtitle, img } = props;
 

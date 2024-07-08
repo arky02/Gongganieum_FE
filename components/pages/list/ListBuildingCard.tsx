@@ -1,6 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
 import { NO_IMAGE_URL } from 'constants/common';
-import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -16,7 +15,7 @@ const ListBuildingCard = (props: {
   isours: boolean;
   tag?: string;
   cate: string;
-  img?: string | StaticImport;
+  img?: string;
   latest_end_date: Date | string;
 }) => {
   const { id, name, address, isours, tag, cate, latest_end_date } = props;
