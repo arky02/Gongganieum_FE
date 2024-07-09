@@ -53,7 +53,7 @@ const HomeCardSlider = () => {
         {MOCK_BUILDING_IMAGE_URLS.map((slideImage, index) => (
           <SwiperSlide key={slideImage} virtualIndex={index}>
             <BuildingCard
-              mode='none'
+              mode='home'
               _id={0}
               name='노송 오재'
               address='전라도 전주시'

@@ -87,7 +87,7 @@ const List = () => {
           </div>
         </div>
         {/* card-list */}
-        <div className='mx-auto my-20 grid grid-cols-3 gap-x-24 gap-y-36 gap-y-48 md:grid-cols-2'>
+        <div className='mx-auto my-20 grid grid-cols-3 gap-x-24 gap-y-48 md:grid-cols-2 md:gap-y-36'>
           {/* TODO: 진행중인 팝업 로직 생기면 수정 예정 */}
           {(filteredBuildings || searchResult)
             ?.slice(0, 30)

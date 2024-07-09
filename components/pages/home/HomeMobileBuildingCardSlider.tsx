@@ -21,7 +21,7 @@ const HomeMobileBuildingCardSlider = () => {
           return (
             <div key={slideImage} className='inline-block'>
               <BuildingCard
-                mode='none'
+                mode='home'
                 _id={0}
                 name='노송 오재'
                 address='전라도 전주시'

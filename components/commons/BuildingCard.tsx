@@ -10,7 +10,7 @@ import Tag from 'components/commons/Tag';
 import { IconBlankLike, IconRedLike } from 'public/icons';
 
 const BuildingCard = (props: {
-  mode: 'like' | 'none'; // like 모드는 좋아요 버튼이 있음
+  mode: 'like' | 'home' | 'none'; // like 모드는 좋아요 버튼이 있음
   _id: number;
   name: string;
   address: string;
@@ -46,7 +46,9 @@ const BuildingCard = (props: {
       href={`/list/${_id}`}
       className='relative flex aspect-square w-full cursor-pointer flex-col text-start'
     >
-      <div className='relative mb-20 h-full w-full overflow-hidden rounded-12 md:w-240'>
+      <div
+        className={`relative mb-20 h-full w-full overflow-hidden rounded-12 ${mode === 'home' && 'md:w-240'}`}
+      >
         <Image
           src={imageUrls[0] ?? NO_IMAGE_URL}
           fill
