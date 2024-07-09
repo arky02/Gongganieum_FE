@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { Dispatch, SetStateAction, SyntheticEvent, useEffect } from 'react';
 import { IconArrowLeft, IconArrowRight, IconClose } from 'public/icons';
-import PortalModal from './PortalModal';
+import PortalImagePreview from './PortalImagePreview';
 
 const ImagePreview = (props: {
   urls: string[];
@@ -40,7 +40,7 @@ const ImagePreview = (props: {
   }, []);
 
   return (
-    <PortalModal>
+    <PortalImagePreview>
       <div
         onClick={closeImagePreview}
         className='fixed bottom-0 left-0 right-0 top-0 z-popup overflow-hidden bg-[rgba(0,0,0,0.7)]'
@@ -77,7 +77,7 @@ const ImagePreview = (props: {
           />
         </div>
       </div>
-    </PortalModal>
+    </PortalImagePreview>
   );
 };
 
