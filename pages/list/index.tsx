@@ -95,7 +95,7 @@ const List = () => {
               <BuildingCard
                 mode='like'
                 key={building._id}
-                id={building._id}
+                _id={building._id}
                 name={building.name}
                 address={building.address}
                 isours={building.isours}

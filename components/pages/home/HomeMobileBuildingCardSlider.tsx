@@ -22,7 +22,7 @@ const HomeMobileBuildingCardSlider = () => {
             <div key={slideImage} className='inline-block'>
               <BuildingCard
                 mode='none'
-                id={0}
+                _id={0}
                 name='노송 오재'
                 address='전라도 전주시'
                 tag='안녕, 디지몬'

@@ -5,21 +5,23 @@ import Link from 'next/link';
 import { useState } from 'react';
 import useBuildingImageUrls from 'hooks/useBuildingImageUrls';
 import { postLikeToggle } from 'apis/api';
+import { CategoryType } from 'types/client.types';
 import Tag from 'components/commons/Tag';
 import { IconBlankLike, IconRedLike } from 'public/icons';
 
 const BuildingCard = (props: {
   mode: 'like' | 'none'; // like 모드는 좋아요 버튼이 있음
-  id: number;
+  _id: number;
   name: string;
   address: string;
   isours?: boolean;
   tag?: string;
-  cate?: string;
+  cate?: CategoryType;
   img?: string;
   latest_end_date?: Date | string;
 }) => {
-  const { mode, id, name, address, isours, tag, cate, latest_end_date } = props;
+  const { mode, _id, name, address, isours, tag, cate, latest_end_date } =
+    props;
 
   const imageUrls = useBuildingImageUrls(address);
 
@@ -41,7 +43,7 @@ const BuildingCard = (props: {
 
   return (
     <Link
-      href={`/list/${id}`}
+      href={`/list/${_id}`}
       className='relative flex aspect-square w-full cursor-pointer flex-col text-start'
     >
       <div className='relative mb-20 h-full w-full overflow-hidden rounded-12 md:w-240'>

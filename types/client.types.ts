@@ -5,15 +5,17 @@ export interface PopupType {
 }
 
 export interface BuildingType {
+  mode?: 'like' | 'none';
   _id: number;
   name: string;
   address: string;
   coord: string;
   popups: PopupType[];
-  tag: string;
-  cate: CategoryType;
-  isours: boolean;
+  tag?: string;
+  cate?: CategoryType;
+  isours?: boolean;
   latest_end_date: Date;
+  img?: string;
 }
 
 export type CategoryType =
