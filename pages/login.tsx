@@ -1,6 +1,6 @@
 import LoginBox from 'components/pages/login/LoginBox';
 
-const login = () => {
+const Login = () => {
   return (
     <div className="relative h-screen w-screen bg-[url('/images/login-background-image.png')] bg-cover">
       <div className='h-full w-full bg-black opacity-70'></div>
@@ -11,4 +11,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;

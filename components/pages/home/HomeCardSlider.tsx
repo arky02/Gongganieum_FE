@@ -37,7 +37,7 @@ const HomeCardSlider = () => {
   };
 
   return (
-    <div className='relative h-504 w-[calc(100dvw-32px)] max-w-1232 md:hidden'>
+    <div className='relative h-508 w-[calc(100dvw-32px)] max-w-1232 md:hidden'>
       <Swiper
         ref={swiperRef}
         modules={[Navigation, Autoplay]}
