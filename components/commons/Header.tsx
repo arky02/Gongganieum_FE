@@ -29,7 +29,7 @@ const Header = () => {
       {/* Hamburger Menu Content */}
       {isOpen && (
         <>
-          <div className='animate-slideDown fixed top-64 z-floating hidden w-full flex-col items-start gap-32 bg-white p-20 md:flex'>
+          <div className='fixed top-64 z-[4] hidden w-full animate-slideDown flex-col items-start gap-32 bg-white p-20 md:flex'>
             {TABS.map((el) => (
               <Link
                 key={el.name}
@@ -43,12 +43,12 @@ const Header = () => {
           </div>
           <div
             onClick={() => setIsOpen(false)}
-            className='fixed bottom-0 left-0 z-popup flex h-screen w-full items-end justify-center bg-[#32363e] bg-opacity-70'
+            className='fixed bottom-0 left-0 z-[3] flex h-screen w-full items-end justify-center bg-[#32363e] bg-opacity-70'
           />
         </>
       )}
       {/* Content */}
-      <header className='sticky top-0 z-nav h-72 w-full border-b border-[#000]/5 bg-white md:z-floating md:h-64'>
+      <header className='sticky top-0 z-nav h-72 w-full border-b border-[#000]/5 bg-white md:z-popup md:h-64'>
         <div className='m-auto flex h-full max-w-1224 items-center justify-between px-16'>
           <Link href='/' className='h-32 w-120 md:h-24 md:w-100'>
             <IconLogo />

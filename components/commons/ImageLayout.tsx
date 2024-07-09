@@ -6,7 +6,7 @@ import ImagePreview from './ImagePreview';
 
 const STYLE = {
   map: 'w-full h-176 text-24 shrink-0',
-  description: 'w-full h-480 text-32 shrink-0',
+  description: 'w-full h-480 text-32 shrink-0 md:h-176',
 };
 
 const ImageLayout = (props: { imageUrls: string[]; page: PageType }) => {

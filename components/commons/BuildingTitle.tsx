@@ -13,12 +13,14 @@ const BuildingTitle = (props: {
 
   return (
     <div
-      className={`${page === 'map' ? 'mb-36 mt-24' : 'mb-56'} flex w-full flex-col`}
+      className={`${page === 'map' ? 'mb-36 mt-24' : 'mb-56 md:mb-36'} flex w-full flex-col`}
     >
-      <h2 className={`${page == 'map' ? 'text-28' : 'text-[3.6rem]'} font-800`}>
+      <h2
+        className={`${page == 'map' ? 'text-28' : 'text-[3.6rem]'} font-800 md:text-[2.2rem]`}
+      >
         {buildingInfo?.name}
       </h2>
-      <div className='mb-16 mt-8 flex items-center gap-4 text-16 font-500 text-gray-400 opacity-80'>
+      <div className='mb-16 mt-8 flex items-center gap-4 text-16 font-500 text-gray-400 opacity-80 md:text-14'>
         <IconMarker />
         {buildingInfo?.address}
       </div>
