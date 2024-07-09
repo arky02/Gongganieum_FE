@@ -9,10 +9,12 @@ const DescriptionCard = (props: {
   const { title, children, page } = props;
   return (
     <div
-      className={`relative w-full shrink-0 rounded-12 border border-[#E2E5E9] p-24 ${page === 'map' ? '' : 'min-h-316'}`}
+      className={`relative w-full shrink-0 rounded-12 border border-[#E2E5E9] p-24 ${page === 'map' ? '' : 'min-h-316 md:min-h-0'}`}
     >
       {title && (
-        <h4 className='mb-16 text-20 font-800 text-gray-400'>{title}</h4>
+        <h4 className='mb-16 text-20 font-800 text-gray-400 md:text-18'>
+          {title}
+        </h4>
       )}
       {children}
     </div>

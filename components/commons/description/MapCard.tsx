@@ -33,7 +33,7 @@ const MapCard = (props: { coord: string[] }) => {
     const marker = new window.kakao.maps.Marker({
       map,
       position,
-      image: markerImage,
+      // image: markerImage,
     });
 
     marker.setMap(map);
