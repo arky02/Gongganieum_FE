@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import useBuildingImageUrls from 'hooks/useBuildingImageUrls';
 import { getBuildingInfo } from 'apis/api';
@@ -48,6 +49,7 @@ const BuildingDescriptionPage = () => {
         <ContactBox
           name={buildingInfo?.name ?? ''}
           address={buildingInfo?.address ?? ''}
+          id={buildingId}
         />
       </div>
     </div>
@@ -56,8 +58,8 @@ const BuildingDescriptionPage = () => {
 
 export default BuildingDescriptionPage;
 
-const ContactBox = (props: { name: string; address: string }) => {
-  const { name, address } = props;
+const ContactBox = (props: { name: string; address: string; id: number }) => {
+  const { name, address, id } = props;
 
   return (
     <div className='sticky top-92 z-nav h-172 w-400 shrink-0 rounded-16 border border-[rgba(0,0,0,0.06)] bg-white p-24 shadow-lg md:fixed md:bottom-0 md:left-0 md:right-0 md:top-auto md:h-92 md:w-screen md:rounded-none'>
@@ -68,9 +70,12 @@ const ContactBox = (props: { name: string; address: string }) => {
       </div>
       <div className='flex h-44 gap-12'>
         <button className='h-44 w-44 shrink-0 rounded-full border border-[rgba(0,0,0,0.2)]'></button>
-        <button className='h-full w-full rounded-8 bg-black text-16 font-700 text-white'>
+        <Link
+          href={`/contact/${id}`}
+          className='flex h-full w-full items-center justify-center rounded-8 bg-black text-16 font-700 text-white'
+        >
           문의하기
-        </button>
+        </Link>
       </div>
     </div>
   );
