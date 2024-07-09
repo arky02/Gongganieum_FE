@@ -41,3 +41,8 @@ export const getBuildingInfo = async (id: number) => {
 export const postLikeToggle = async (userId: number, buildingId: number) => {
   await instance.post(`/user/building/likes?user=${userId}&id=${buildingId}`);
 };
+
+// 찜한 건물 조회
+export const getLikeBuildings = async (userId: number) => {
+  await instance.get(`/user/building/likes?user=${userId}`);
+};
