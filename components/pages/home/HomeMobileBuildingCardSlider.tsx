@@ -1,6 +1,6 @@
 import { ScrollContainer } from 'react-indiana-drag-scroll';
 import 'react-indiana-drag-scroll/dist/style.css';
-import HomeBuildingCard from './HomeBuildingCard';
+import BuildingCard from 'components/commons/BuildingCard';
 
 const MOCK_BUILDING_IMAGE_URLS = [
   '/images/mock-building-image.jpg',
@@ -20,7 +20,9 @@ const HomeMobileBuildingCardSlider = () => {
         {MOCK_BUILDING_IMAGE_URLS.map((slideImage) => {
           return (
             <div key={slideImage} className='inline-block'>
-              <HomeBuildingCard
+              <BuildingCard
+                mode='none'
+                id={0}
                 name='노송 오재'
                 address='전라도 전주시'
                 tag='안녕, 디지몬'

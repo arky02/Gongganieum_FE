@@ -4,8 +4,8 @@ import 'swiper/css/autoplay';
 import 'swiper/css/navigation';
 import { Autoplay, Navigation } from 'swiper/modules';
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
+import BuildingCard from 'components/commons/BuildingCard';
 import { IconArrowNextButton, IconArrowPrevButton } from 'public/icons';
-import HomeBuildingCard from './HomeBuildingCard';
 
 const MOCK_BUILDING_IMAGE_URLS = [
   '/images/mock-building-image.jpg',
@@ -52,7 +52,9 @@ const HomeCardSlider = () => {
       >
         {MOCK_BUILDING_IMAGE_URLS.map((slideImage, index) => (
           <SwiperSlide key={slideImage} virtualIndex={index}>
-            <HomeBuildingCard
+            <BuildingCard
+              mode='none'
+              id={0}
               name='노송 오재'
               address='전라도 전주시'
               tag='안녕, 디지몬'

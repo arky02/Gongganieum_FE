@@ -1,4 +1,4 @@
-import ListBuildingCard from 'components/pages/list/ListBuildingCard';
+import BuildingCard from 'components/commons/BuildingCard';
 import MypageProfile from 'components/pages/mypage/MypageProfile';
 
 const Mypage = () => {
@@ -14,47 +14,8 @@ const Mypage = () => {
         {/* 찜하기 카드 리스트 */}
         <div className='grid grid-cols-3 gap-x-24 gap-y-48'>
           {/* TODO: 카드컴포넌트 공용으로 빼기 */}
-          <ListBuildingCard
-            id={0}
-            name={'노송 오재'}
-            address={'전라도 전주시'}
-            isours={true}
-            cate={'뷰티'}
-            latest_end_date={''}
-          />
-          <ListBuildingCard
-            id={0}
-            name={'노송 오재'}
-            address={'전라도 전주시'}
-            isours={true}
-            cate={'뷰티'}
-            latest_end_date={''}
-          />
-          <ListBuildingCard
-            id={0}
-            name={'노송 오재'}
-            address={'전라도 전주시'}
-            isours={true}
-            cate={'뷰티'}
-            latest_end_date={''}
-          />
-          <ListBuildingCard
-            id={0}
-            name={'노송 오재'}
-            address={'전라도 전주시'}
-            isours={true}
-            cate={'뷰티'}
-            latest_end_date={''}
-          />
-          <ListBuildingCard
-            id={0}
-            name={'노송 오재'}
-            address={'전라도 전주시'}
-            isours={true}
-            cate={'뷰티'}
-            latest_end_date={''}
-          />
-          <ListBuildingCard
+          <BuildingCard
+            mode='like'
             id={0}
             name={'노송 오재'}
             address={'전라도 전주시'}

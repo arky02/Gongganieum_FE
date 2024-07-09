@@ -4,8 +4,8 @@ import { ChangeEvent, useState } from 'react';
 import useFetch from 'hooks/useFetch';
 import useSearch from 'hooks/useSearch';
 import { BuildingType, CategoryType, OrderType } from 'types/client.types';
+import BuildingCard from 'components/commons/BuildingCard';
 import SearchInput from 'components/commons/SearchInput';
-import ListBuildingCard from 'components/pages/list/ListBuildingCard';
 import ListCategoryTabs from 'components/pages/list/ListCategoryTabs';
 import ListCheckBoxs from 'components/pages/list/ListCheckBoxs';
 import ListSortingButton from 'components/pages/list/ListSortingButton';
@@ -17,7 +17,6 @@ const List = () => {
     BuildingType[] | null | undefined
   >(null);
 
-  const router = useRouter();
   const {
     q,
     setQ,
@@ -93,7 +92,8 @@ const List = () => {
           {(filteredBuildings || searchResult)
             ?.slice(0, 30)
             ?.map((building) => (
-              <ListBuildingCard
+              <BuildingCard
+                mode='like'
                 key={building._id}
                 id={building._id}
                 name={building.name}

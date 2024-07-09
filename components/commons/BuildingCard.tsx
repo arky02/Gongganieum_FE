@@ -8,17 +8,18 @@ import { postLikeToggle } from 'apis/api';
 import Tag from 'components/commons/Tag';
 import { IconBlankLike, IconRedLike } from 'public/icons';
 
-const ListBuildingCard = (props: {
+const BuildingCard = (props: {
+  mode: 'like' | 'none'; // like 모드는 좋아요 버튼이 있음
   id: number;
   name: string;
   address: string;
-  isours: boolean;
+  isours?: boolean;
   tag?: string;
-  cate: string;
+  cate?: string;
   img?: string;
-  latest_end_date: Date | string;
+  latest_end_date?: Date | string;
 }) => {
-  const { id, name, address, isours, tag, cate, latest_end_date } = props;
+  const { mode, id, name, address, isours, tag, cate, latest_end_date } = props;
 
   const imageUrls = useBuildingImageUrls(address);
 
@@ -43,20 +44,23 @@ const ListBuildingCard = (props: {
       href={`/list/${id}`}
       className='relative flex aspect-square w-full cursor-pointer flex-col text-start'
     >
-      <div className='relative mb-20 h-full w-full overflow-hidden rounded-12'>
+      <div className='relative mb-20 h-full w-full overflow-hidden rounded-12 md:w-240'>
         <Image
           src={imageUrls[0] ?? NO_IMAGE_URL}
           fill
-          className='object-cover '
+          className='object-cover'
           alt='빌딩 이미지'
           quality={100}
         />
-        <button
-          className='absolute right-20 top-20 md:right-12 md:top-12'
-          onClick={handleClickLikeButton}
-        >
-          {isLike ? <IconRedLike /> : <IconBlankLike />}
-        </button>
+        {/* 찜하기 버튼 */}
+        {mode === 'like' && (
+          <button
+            className='absolute right-20 top-20 md:right-12 md:top-12'
+            onClick={handleClickLikeButton}
+          >
+            {isLike ? <IconRedLike /> : <IconBlankLike />}
+          </button>
+        )}
       </div>
       <Description name={name} address={address} />
       <div className='flex flex-wrap gap-8'>
@@ -70,7 +74,7 @@ const ListBuildingCard = (props: {
   );
 };
 
-export default ListBuildingCard;
+export default BuildingCard;
 
 const Description = (props: { name: string; address: string }) => {
   const { name, address } = props;
