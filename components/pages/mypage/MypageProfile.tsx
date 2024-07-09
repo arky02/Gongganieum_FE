@@ -4,8 +4,8 @@ const DEFAULT_PROFILE_IMAGE = '/images/default-profile-image.png';
 
 const MypageProfile = (props: {
   profileImage?: string;
-  nickname: string;
-  email: string;
+  nickname?: string;
+  email?: string;
   introduction?: string;
 }) => {
   const { profileImage, nickname, email, introduction } = props;

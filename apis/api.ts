@@ -3,6 +3,7 @@ import {
   BuildingType,
   CategoryType,
   OrderType,
+  UserDataType,
 } from 'types/client.types';
 import { instance } from './config/default';
 
@@ -44,5 +45,12 @@ export const postLikeToggle = async (userId: number, buildingId: number) => {
 
 // 찜한 건물 조회
 export const getLikeBuildings = async (userId: number) => {
-  await instance.get(`/user/building/likes?user=${userId}`);
+  const res = await instance.get(`/user/building/likes?user=${userId}`);
+  return res.data;
+};
+
+// 유저 본인 정보 조회
+export const getMyInfo = async (userId: number) => {
+  const res = await instance.get(`/user/info?id=${userId}`);
+  return res.data as UserDataType;
 };

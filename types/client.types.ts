@@ -62,3 +62,16 @@ export interface BuildingDataType {
 }
 
 export type PageType = 'map' | 'description';
+
+export interface UserDataType {
+  _id: number;
+  name: string;
+  email: string;
+  nickname: string;
+  img: string;
+  description: string;
+  brand: string;
+  company: string;
+  tag: string;
+  role: 'GUEST' | 'USER';
+}
