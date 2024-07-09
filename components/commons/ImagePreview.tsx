@@ -45,30 +45,25 @@ const ImagePreview = (props: {
         onClick={closeImagePreview}
         className='fixed bottom-0 left-0 right-0 top-0 z-popup overflow-hidden bg-[rgba(0,0,0,0.7)]'
       >
-        <button className='fixed right-16 top-16'>
+        <button className='fixed right-16 top-16 z-nav'>
           <IconClose />
         </button>
         <button
           onClick={handleNext}
-          className={`fixed right-32 top-1/2 h-32 w-32 -translate-y-1/2 ${hasNext ? '' : 'opacity-25'}`}
+          className={`fixed right-32 top-1/2 z-nav h-32 w-32 -translate-y-1/2 ${hasNext ? '' : 'opacity-25'} md:right-16`}
         >
           <IconArrowRight />
         </button>
         <button
           onClick={handlePrevious}
-          className={`fixed left-32 top-1/2 h-32 w-32 -translate-y-1/2 ${hasPrevious ? '' : 'opacity-25'}`}
+          className={`fixed left-32 top-1/2 z-nav h-32 w-32 -translate-y-1/2 ${hasPrevious ? '' : 'opacity-25'} md:left-16`}
         >
           <IconArrowLeft />
         </button>
         <div className='fixed bottom-32 left-1/2 -translate-x-1/2 text-16 text-white'>
           ( {index + 1} / {urls.length} )
         </div>
-        <div
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-          className='fixed left-1/2 top-1/2 h-700 w-1000 -translate-x-1/2 -translate-y-1/2'
-        >
+        <div className='fixed left-1/2 top-1/2 h-full max-h-700 w-[calc(100%-24px)] max-w-1000 -translate-x-1/2 -translate-y-1/2'>
           <Image
             src={urls[index]}
             alt='건물 사진'
