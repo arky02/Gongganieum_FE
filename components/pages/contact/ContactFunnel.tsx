@@ -1,25 +1,54 @@
+import { SubmitHandler, useFormContext } from 'react-hook-form';
 import useFunnel from 'hooks/useFunnel';
+import { ContactFormValues } from 'pages/contact/[id]';
 import EtcStep from './EtcStep';
 import PersonalInfoStep from './PersonalInfoStep';
 import UsageInfoStep from './UsageInfoStep';
 
-const CONTACT_STEPS = ['문의자 정보', '사용 정보', '기타 정보'] as const;
+const CONTACT_STEPS = ['문의자 정보', '사용 정보', '기타 정보'];
 
 const ContactFunnel = () => {
-  const { Funnel, Step, setStep, currentStepName } = useFunnel(CONTACT_STEPS);
+  const { Funnel, Step, setStep, currStepName } = useFunnel(CONTACT_STEPS);
+
+  const handleNextStep = () => {
+    const currIndex = CONTACT_STEPS.indexOf(currStepName);
+    if (currIndex >= CONTACT_STEPS.length - 1) {
+      return;
+    }
+    setStep(CONTACT_STEPS[currIndex + 1]);
+  };
+
+  const handlePrevStep = () => {
+    const currIndex = CONTACT_STEPS.indexOf(currStepName);
+    if (currIndex <= 0) {
+      return;
+    }
+    setStep(CONTACT_STEPS[currIndex - 1]);
+  };
+
+  const { handleSubmit } = useFormContext<ContactFormValues>();
+
+  const submitContactUs: SubmitHandler<ContactFormValues> = (formData) => {
+    console.log(formData);
+  };
 
   return (
-    <Funnel>
-      <Step name={CONTACT_STEPS[0]}>
-        <PersonalInfoStep />
-      </Step>
-      <Step name={CONTACT_STEPS[1]}>
-        <UsageInfoStep />
-      </Step>
-      <Step name={CONTACT_STEPS[2]}>
-        <EtcStep />
-      </Step>
-    </Funnel>
+    <form onSubmit={handleSubmit(submitContactUs)}>
+      <Funnel>
+        <Step name={CONTACT_STEPS[0]}>
+          <PersonalInfoStep handleNextStep={handleNextStep} />
+        </Step>
+        <Step name={CONTACT_STEPS[1]}>
+          <UsageInfoStep
+            handlePrevStep={handlePrevStep}
+            handleNextStep={handleNextStep}
+          />
+        </Step>
+        <Step name={CONTACT_STEPS[2]}>
+          <EtcStep handlePrevStep={handlePrevStep} />
+        </Step>
+      </Funnel>
+    </form>
   );
 };
 

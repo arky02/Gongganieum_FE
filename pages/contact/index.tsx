@@ -47,7 +47,7 @@ const Contact = () => {
           문의 내용
         </Input>
         <ConsentCheckBox name='agreed' control={control} />
-        <button className='w-full border border-gray-500 text-center'>
+        <button className='border-gray-500 w-full border text-center'>
           제출하기
         </button>
       </form>

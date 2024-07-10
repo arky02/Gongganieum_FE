@@ -1,12 +1,60 @@
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { FormProvider, useForm } from 'react-hook-form';
+import { getBuildingInfo } from 'apis/api';
 import ContactFunnel from 'components/pages/contact/ContactFunnel';
+import FunnelTitle from 'components/pages/contact/FunnelTitle';
+
+export interface ContactFormValues {
+  name: string;
+  phone: number;
+  email: string;
+  company: string;
+  primaryDate: string;
+  secondaryDate: string;
+  budget: number;
+  purpose: string;
+  path: string;
+  etc: string;
+  agreed: boolean;
+}
 
 const BuildingContact = () => {
+  const router = useRouter();
+  const { id } = router.query as { id: string };
+  const buildingId = Number(id);
+
+  const { data: buildingInfo } = useQuery({
+    queryKey: ['buildingInfo', buildingId],
+    queryFn: () => getBuildingInfo(buildingId),
+  });
+
+  const methods = useForm<ContactFormValues>({
+    defaultValues: {
+      name: '',
+      phone: undefined,
+      email: '',
+      company: '',
+      primaryDate: '',
+      secondaryDate: '',
+      budget: undefined,
+      purpose: '',
+      path: '',
+      etc: '',
+      agreed: false,
+    },
+    mode: 'onBlur',
+  });
+
   return (
     <div className='flex h-[calc(100dvh-72px)] w-screen'>
       <Banner />
-      <div className='mx-240 mt-128 h-full w-full'>
-        <ContactFunnel />
+      <div className='mx-240 mt-128 flex h-full w-full flex-col gap-24'>
+        <FunnelTitle name={buildingInfo?.name ?? ''} />
+        <FormProvider {...methods}>
+          <ContactFunnel />
+        </FormProvider>
       </div>
     </div>
   );

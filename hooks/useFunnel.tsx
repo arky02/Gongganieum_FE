@@ -27,7 +27,7 @@ const useFunnel = <T extends {}>(stepNames: readonly T[]) => {
     return <>{renderedStep}</>;
   };
 
-  return { Funnel, Step, setStep, currentStepName: step };
+  return { Funnel, Step, setStep, currStepName: step };
 };
 
 export default useFunnel;
