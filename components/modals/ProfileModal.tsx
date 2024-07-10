@@ -3,7 +3,6 @@ import {
   Dispatch,
   KeyboardEvent,
   SetStateAction,
-  useEffect,
   useState,
 } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';

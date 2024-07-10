@@ -1,11 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import { getBuildings, getLikeBuildingIds, getMyInfo } from 'apis/api';
 import { BuildingType } from 'types/client.types';
 import BuildingCard from 'components/commons/BuildingCard';
+import PortalModal from 'components/commons/PortalModal';
 import MypageProfile from 'components/pages/mypage/MypageProfile';
 
 const Mypage = () => {
   const userId = 118; // test ID
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data: userInfo } = useQuery({
     queryKey: ['userInfo', userId],
@@ -26,12 +29,16 @@ const Mypage = () => {
     return likeBuildingIds?.includes(el._id);
   });
 
+  const handleClick = () => setIsModalOpen(!isModalOpen);
+
   return (
     <div className='mx-auto my-76 flex max-w-1232 flex-col items-center md:my-56'>
       <MypageProfile
+        profileImage={userInfo?.img}
         nickname={userInfo?.nickname}
         email={userInfo?.email}
         introduction={userInfo?.description}
+        onClick={handleClick}
       />
       {/* 찜하기 카드 리스트 */}
       <div className='flex w-full flex-col gap-24 px-16 md:my-28'>
@@ -48,10 +55,14 @@ const Mypage = () => {
                 isours={true}
                 cate={building.cate}
                 latest_end_date={building.latest_end_date}
+                likeBuildingIds={likeBuildingIds}
               />
             ))}
         </div>
       </div>
+      <PortalModal openStatus={isModalOpen}>
+        <div>프로필 편집 모달</div>
+      </PortalModal>
     </div>
   );
 };
