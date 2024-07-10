@@ -1,8 +1,9 @@
+import { useQuery } from '@tanstack/react-query';
 import { SEARCH_AS } from 'constants/common';
-import { useRouter } from 'next/router';
 import { ChangeEvent, useState } from 'react';
 import useFetch from 'hooks/useFetch';
 import useSearch from 'hooks/useSearch';
+import { getLikeBuildingIds } from 'apis/api';
 import { BuildingType, CategoryType, OrderType } from 'types/client.types';
 import BuildingCard from 'components/commons/BuildingCard';
 import SearchInput from 'components/commons/SearchInput';
@@ -36,6 +37,13 @@ const List = () => {
     order,
     cate,
     isours,
+  });
+
+  // TODO: userID zustand로 관리해서 가져오기
+  const userId = 118;
+  const { data: likeBuildingIds }: { data?: number[] } = useQuery({
+    queryKey: ['likeBuildingIds'],
+    queryFn: () => getLikeBuildingIds(userId),
   });
 
   const handleClickCategoryTab = (category: string) => {
@@ -102,6 +110,7 @@ const List = () => {
                 cate={building.cate}
                 tag={building.tag}
                 latest_end_date={building.latest_end_date}
+                likeBuildingIds={likeBuildingIds}
               />
             ))}
         </div>

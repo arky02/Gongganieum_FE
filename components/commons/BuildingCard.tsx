@@ -19,20 +19,31 @@ const BuildingCard = (props: {
   cate?: CategoryType;
   img?: string;
   latest_end_date?: Date | string;
+  likeBuildingIds?: number[];
 }) => {
-  const { mode, _id, name, address, isours, tag, cate, latest_end_date } =
-    props;
+  const {
+    mode,
+    _id,
+    name,
+    address,
+    isours,
+    tag,
+    cate,
+    latest_end_date,
+    likeBuildingIds,
+  } = props;
 
   const imageUrls = useBuildingImageUrls(address);
 
   const isPopup = new Date(latest_end_date ?? '') > new Date();
   const parsedTags = tag === 'NULL' ? [] : tag?.split(',');
 
-  const [isLike, setIsLike] = useState(false);
+  const [isLike, setIsLike] = useState(likeBuildingIds?.includes(_id));
+
+  // TODO: userId 수정
+  const userId = 118;
   const likeMutation = useMutation({
-    // TODO: 각각의 빌딩의 유저id와 빌딩id 넣기
-    // TODO: 하트 상태 관리
-    mutationFn: () => postLikeToggle(1, 57),
+    mutationFn: () => postLikeToggle(userId, _id),
   });
 
   // TODO: 옵티미스틱 업데이트 추가
@@ -59,7 +70,7 @@ const BuildingCard = (props: {
         {/* 찜하기 버튼 */}
         {mode === 'like' && (
           <button
-            className='absolute right-20 top-20 md:right-12 md:top-12'
+            className='absolute right-20 top-20 z-[2] md:right-12 md:top-12'
             onClick={handleClickLikeButton}
           >
             {isLike ? <IconRedLike /> : <IconBlankLike />}

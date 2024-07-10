@@ -44,9 +44,9 @@ export const postLikeToggle = async (userId: number, buildingId: number) => {
 };
 
 // 찜한 건물 조회
-export const getLikeBuildings = async (userId: number) => {
+export const getLikeBuildingIds = async (userId: number) => {
   const res = await instance.get(`/user/building/likes?user=${userId}`);
-  return res.data;
+  return res.data?.buildingIdList as number[] | null;
 };
 
 // 유저 본인 정보 조회
