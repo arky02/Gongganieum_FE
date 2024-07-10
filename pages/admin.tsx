@@ -17,7 +17,7 @@ import { IconArrowDown } from 'public/icons';
 
 interface BdlgIDNameDictType {
   id: number;
-  name: string;
+  address: string;
 }
 
 const Admin = () => {
@@ -25,15 +25,15 @@ const Admin = () => {
   const [bdlgIDNameDict, setBdlgIDNameDict] = useState<BdlgIDNameDictType[]>();
   const [selectedBdlg, setSelectedBdlg] = useState<BdlgIDNameDictType>({
     id: 0,
-    name: '',
+    address: '',
   });
   const [query, setQuery] = useState('');
 
   const filteredBuildingList =
     query === ''
       ? bdlgIDNameDict
-      : bdlgIDNameDict?.filter((person) => {
-          return person.name.toLowerCase().includes(query.toLowerCase());
+      : bdlgIDNameDict?.filter((bdlg) => {
+          return bdlg.address.toLowerCase().includes(query.toLowerCase());
         });
 
   const { data: buildingInfos } = useQuery({
@@ -64,7 +64,7 @@ const Admin = () => {
     if (res?.status === 200) {
       console.log('이미지 저장 성공!');
       toast.success(
-        `${selectedBdlg.name} 건물 에 ${imgCount}개의 이미지를 성공적으로 저장하였습니다!`,
+        `${selectedBdlg.address} 건물 에 ${imgCount}개의 이미지를 성공적으로 저장하였습니다!`,
       );
     }
 
@@ -75,7 +75,7 @@ const Admin = () => {
   useEffect(() => {
     const bdlgIDNameDictTemp = buildingInfos?.map((buildingInfo) => ({
       id: buildingInfo._id,
-      name: buildingInfo.name,
+      address: buildingInfo.address,
     }));
 
     setBdlgIDNameDict(bdlgIDNameDictTemp);
@@ -89,7 +89,9 @@ const Admin = () => {
           <h3 className='text-[16px] font-600'>수정할 건물 선택</h3>
           <Combobox
             value={selectedBdlg}
-            onChange={(value) => setSelectedBdlg(value ?? { id: 0, name: '' })}
+            onChange={(value) =>
+              setSelectedBdlg(value ?? { id: 0, address: '' })
+            }
             onClose={() => setQuery('')}
           >
             <div className='relative'>
@@ -99,7 +101,7 @@ const Admin = () => {
                 }
                 style={{ borderRadius: 20 }}
                 aria-label='Assignee'
-                displayValue={(bdlg: BdlgIDNameDictType) => bdlg?.name}
+                displayValue={(bdlg: BdlgIDNameDictType) => bdlg?.address}
                 onChange={(event) => setQuery(event.target.value)}
               />
               <ComboboxButton className='px-2.5 group absolute inset-y-0 right-0'>
@@ -119,7 +121,7 @@ const Admin = () => {
                   value={bdlg}
                   className='gap-2 rounded-lg group flex cursor-default select-none items-center border-b-[1px] border-black bg-white px-8 py-4'
                 >
-                  <div className='text-sm/6'>{bdlg.name}</div>
+                  <div className='text-sm/6'>{bdlg.address}</div>
                 </ComboboxOption>
               ))}
             </ComboboxOptions>
