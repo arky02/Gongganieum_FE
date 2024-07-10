@@ -89,7 +89,7 @@ const Admin = () => {
           <h3 className='text-[16px] font-600'>수정할 건물 선택</h3>
           <Combobox
             value={selectedBdlg}
-            onChange={setSelectedBdlg}
+            onChange={(value) => setSelectedBdlg(value ?? { id: 0, name: '' })}
             onClose={() => setQuery('')}
           >
             <div className='relative'>
@@ -99,7 +99,7 @@ const Admin = () => {
                 }
                 style={{ borderRadius: 20 }}
                 aria-label='Assignee'
-                displayValue={(bdlg) => bdlg?.name}
+                displayValue={(bdlg: BdlgIDNameDictType) => bdlg?.name}
                 onChange={(event) => setQuery(event.target.value)}
               />
               <ComboboxButton className='px-2.5 group absolute inset-y-0 right-0'>
