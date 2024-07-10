@@ -4,6 +4,7 @@ import { ContactFormValues } from 'pages/contact/[id]';
 import Button from 'components/commons/Button';
 import Input from 'components/commons/Input';
 import DateInput from './DateInput';
+import TextInput from './TextInput';
 
 const UsageInfoStep = (props: {
   handlePrevStep: () => void;
@@ -55,13 +56,13 @@ const UsageInfoStep = (props: {
         예산
         <div className='absolute bottom-24 right-12 text-16 font-500'>원</div>
       </Input>
-      <Input
+      <TextInput
         name='purpose'
         placeholder='사용 목적을 입력해주세요.'
         control={control}
       >
         사용 목적
-      </Input>
+      </TextInput>
       <div className='grid w-full grid-cols-[30%_70%] gap-4'>
         <Button onClick={handlePrevStep}>이전</Button>
         <Button onClick={handleNextStep}>다음</Button>

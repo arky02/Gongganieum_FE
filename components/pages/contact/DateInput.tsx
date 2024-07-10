@@ -42,7 +42,6 @@ const DateInput = (props: {
     if (!startDate) {
       return;
     }
-    console.log(startDate, parseDateToString(startDate));
     setStartDateValue(parseDateToString(startDate));
   }, [startDate]);
 
