@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { NO_IMAGE_URL } from 'constants/common';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import { useStore } from 'store';
 import useBuildingImageUrls from 'hooks/useBuildingImageUrls';
 import { postLikeToggle } from 'apis/api';
@@ -50,7 +50,9 @@ const BuildingCard = (props: {
   });
 
   // TODO: 옵티미스틱 업데이트 추가
-  const handleClickLikeButton = () => {
+  const handleClickLikeButton = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
     setIsLike(!isLike);
     likeMutation.mutate();
   };
