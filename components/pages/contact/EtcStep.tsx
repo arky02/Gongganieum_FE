@@ -3,6 +3,7 @@ import { ContactFormValues } from 'pages/contact/[id]';
 import Button from 'components/commons/Button';
 import ConsentCheckBox from 'components/commons/ConsentCheckbox';
 import Input from 'components/commons/Input';
+import { IconSend } from 'public/icons';
 
 const EtcStep = (props: { handlePrevStep: () => void }) => {
   const { handlePrevStep } = props;
@@ -18,8 +19,12 @@ const EtcStep = (props: { handlePrevStep: () => void }) => {
         요청사항
       </Input>
       <ConsentCheckBox name='agreed' control={control} />
-      <Button onClick={handlePrevStep}>이전</Button>
-      <Button type='submit'>제출</Button>
+      <div className='col grid w-full grid-cols-[30%_70%] gap-4'>
+        <Button onClick={handlePrevStep}>이전</Button>
+        <Button type='submit'>
+          문의 보내기 <IconSend />
+        </Button>
+      </div>
     </div>
   );
 };

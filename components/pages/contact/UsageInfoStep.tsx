@@ -29,8 +29,10 @@ const UsageInfoStep = (props: {
       >
         사용 목적
       </Input>
-      <Button onClick={handlePrevStep}>이전</Button>
-      <Button onClick={handleNextStep}>다음</Button>
+      <div className='grid w-full grid-cols-[30%_70%] gap-4'>
+        <Button onClick={handlePrevStep}>이전</Button>
+        <Button onClick={handleNextStep}>다음</Button>
+      </div>
     </div>
   );
 };
