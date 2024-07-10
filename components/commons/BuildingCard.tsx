@@ -3,6 +3,7 @@ import { NO_IMAGE_URL } from 'constants/common';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { useStore } from 'store';
 import useBuildingImageUrls from 'hooks/useBuildingImageUrls';
 import { postLikeToggle } from 'apis/api';
 import { CategoryType } from 'types/client.types';
@@ -33,6 +34,10 @@ const BuildingCard = (props: {
     likeBuildingIds,
   } = props;
 
+  const { userId } = useStore((state) => ({
+    userId: state.userId,
+  }));
+
   const imageUrls = useBuildingImageUrls(address);
 
   const isPopup = new Date(latest_end_date ?? '') > new Date();
@@ -40,8 +45,6 @@ const BuildingCard = (props: {
 
   const [isLike, setIsLike] = useState(likeBuildingIds?.includes(_id));
 
-  // TODO: userId 수정
-  const userId = 118;
   const likeMutation = useMutation({
     mutationFn: () => postLikeToggle(userId, _id),
   });

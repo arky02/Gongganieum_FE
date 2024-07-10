@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { SEARCH_AS } from 'constants/common';
 import { ChangeEvent, useState } from 'react';
+import { useStore } from 'store';
 import useFetch from 'hooks/useFetch';
 import useSearch from 'hooks/useSearch';
 import { getLikeBuildingIds } from 'apis/api';
@@ -17,6 +18,10 @@ const List = () => {
   const [filteredBuildings, setFilteredBuildings] = useState<
     BuildingType[] | null | undefined
   >(null);
+
+  const { userId } = useStore((state) => ({
+    userId: state.userId,
+  }));
 
   const {
     q,
@@ -39,8 +44,6 @@ const List = () => {
     isours,
   });
 
-  // TODO: userID zustand로 관리해서 가져오기
-  const userId = 118;
   const { data: likeBuildingIds }: { data?: number[] } = useQuery({
     queryKey: ['likeBuildingIds'],
     queryFn: () => getLikeBuildingIds(userId),
