@@ -11,8 +11,10 @@ export interface ContactFormValues {
   phone: number;
   email: string;
   company: string;
-  primaryDate: string;
-  secondaryDate: string;
+  primaryStartDate: string;
+  primaryEndDate: string;
+  secondaryStartDate: string;
+  secondaryEndDate: string;
   budget: number;
   purpose: string;
   path: string;
@@ -36,8 +38,10 @@ const BuildingContact = () => {
       phone: undefined,
       email: '',
       company: '',
-      primaryDate: '',
-      secondaryDate: '',
+      primaryStartDate: '',
+      primaryEndDate: '',
+      secondaryStartDate: '',
+      secondaryEndDate: '',
       budget: undefined,
       purpose: '',
       path: '',
@@ -50,7 +54,7 @@ const BuildingContact = () => {
   return (
     <div className='flex h-[calc(100dvh-72px)] w-screen'>
       <Banner />
-      <div className='mx-240 mt-128 flex h-full w-full flex-col gap-24'>
+      <div className='mx-auto mt-128 flex h-full w-672 flex-col gap-24'>
         <FunnelTitle name={buildingInfo?.name ?? ''} />
         <FormProvider {...methods}>
           <ContactFunnel />

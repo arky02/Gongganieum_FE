@@ -10,10 +10,14 @@ const PersonalInfoStep = (props: { handleNextStep: () => void }) => {
 
   return (
     <div className='flex flex-col gap-16'>
-      <Input name='name' placeholder='이름을 입력해 주세요.' control={control}>
+      <Input name='name' placeholder='이름을 입력해주세요.' control={control}>
         이름
       </Input>
-      <Input name='phone' placeholder='01012345678' control={control}>
+      <Input
+        name='phone'
+        placeholder="'-' 을 제외하고 입력해주세요."
+        control={control}
+      >
         휴대폰 번호
       </Input>
       <Input name='email' placeholder='gongganieum@email.com' control={control}>
@@ -21,7 +25,7 @@ const PersonalInfoStep = (props: { handleNextStep: () => void }) => {
       </Input>
       <Input
         name='company'
-        placeholder='회사명 혹은 단체명을 입력해 주세요.'
+        placeholder='회사명 혹은 단체명을 입력해주세요.'
         control={control}
       >
         회사명/단체명

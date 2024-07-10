@@ -37,7 +37,7 @@ const ContactFunnel = () => {
   return (
     <form
       onSubmit={handleSubmit(submitContactUs)}
-      className='flex flex-col gap-24'
+      className='flex w-full flex-col gap-24'
     >
       <ProgressBar index={currIndex} />
       <Funnel>

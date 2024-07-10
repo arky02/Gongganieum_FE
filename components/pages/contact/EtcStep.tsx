@@ -12,7 +12,7 @@ const EtcStep = (props: { handlePrevStep: () => void }) => {
 
   return (
     <div className='flex flex-col gap-16'>
-      <Input name='path' placeholder='이름을 입력해 주세요.' control={control}>
+      <Input name='path' placeholder='이름을 입력해주세요.' control={control}>
         유입 경로
       </Input>
       <Input name='etc' placeholder='01012345678' control={control}>
