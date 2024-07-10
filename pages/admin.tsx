@@ -15,15 +15,16 @@ import Button from 'components/commons/Button';
 import ImagesInput from 'components/pages/admin/ImgInput';
 import { IconArrowDown } from 'public/icons';
 
-interface BdlgIDNameDictType {
+interface BdlgIDAddressDictType {
   id: number;
   address: string;
 }
 
 const Admin = () => {
   const [imgFormData, setImgFormData] = useState<FormData | null>(null);
-  const [bdlgIDNameDict, setBdlgIDNameDict] = useState<BdlgIDNameDictType[]>();
-  const [selectedBdlg, setSelectedBdlg] = useState<BdlgIDNameDictType>({
+  const [bdlgIDAddressDict, setBdlgIDAddressDict] =
+    useState<BdlgIDAddressDictType[]>();
+  const [selectedBdlg, setSelectedBdlg] = useState<BdlgIDAddressDictType>({
     id: 0,
     address: '',
   });
@@ -31,8 +32,8 @@ const Admin = () => {
 
   const filteredBuildingList =
     query === ''
-      ? bdlgIDNameDict
-      : bdlgIDNameDict?.filter((bdlg) => {
+      ? bdlgIDAddressDict
+      : bdlgIDAddressDict?.filter((bdlg) => {
           return bdlg.address.toLowerCase().includes(query.toLowerCase());
         });
 
@@ -73,12 +74,12 @@ const Admin = () => {
   };
 
   useEffect(() => {
-    const bdlgIDNameDictTemp = buildingInfos?.map((buildingInfo) => ({
+    const bdlgIDAddressDictTemp = buildingInfos?.map((buildingInfo) => ({
       id: buildingInfo._id,
       address: buildingInfo.address,
     }));
 
-    setBdlgIDNameDict(bdlgIDNameDictTemp);
+    setBdlgIDAddressDict(bdlgIDAddressDictTemp);
   }, [buildingInfos]);
 
   return (
@@ -101,7 +102,7 @@ const Admin = () => {
                 }
                 style={{ borderRadius: 20 }}
                 aria-label='Assignee'
-                displayValue={(bdlg: BdlgIDNameDictType) => bdlg?.address}
+                displayValue={(bdlg: BdlgIDAddressDictType) => bdlg?.address}
                 onChange={(event) => setQuery(event.target.value)}
               />
               <ComboboxButton className='px-2.5 group absolute inset-y-0 right-0'>
