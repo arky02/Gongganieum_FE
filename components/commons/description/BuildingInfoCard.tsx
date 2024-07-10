@@ -96,7 +96,7 @@ const BuildingInfo = (props: { name: string; children: ReactNode }) => {
   return (
     <div className='flex items-center justify-between'>
       <span className='text-18 font-600'>{name}</span>
-      <span className='text-16 font-600'>{children}</span>
+      <span className='text-16 font-500'>{children}</span>
     </div>
   );
 };

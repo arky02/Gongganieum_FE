@@ -14,7 +14,7 @@ import ResidentRatioCard from './ResidentRatioCard';
 
 const TITLE_STYLE = {
   map: 'text-24 font-800 mb-8 pl-[2px]',
-  description: 'text-28 font-800 mb-8 pl-[2px]',
+  description: 'text-28 font-800 mb-8 pl-[2px] md:text-20',
 };
 
 const Description = (props: {
@@ -43,7 +43,7 @@ const Description = (props: {
       <div>
         <h3 className={TITLE_STYLE[page]}>팝업 정보</h3>
         <div
-          className={`gap-24 ${page === 'map' ? 'flex flex-col' : 'grid grid-cols-2'}`}
+          className={`gap-24 ${page === 'map' ? 'flex flex-col' : 'grid grid-cols-2 md:flex md:flex-col'}`}
         >
           <PopupRankingCard page={page} popups={popups} />
           <PopupHistoryCard page={page} popups={popups} />
@@ -59,7 +59,7 @@ const Description = (props: {
             {regionData.areaName} 지역 데이터
           </h3>
           <div
-            className={`gap-24 ${page === 'map' ? 'flex flex-col' : 'grid grid-cols-2 grid-rows-2'} `}
+            className={`gap-24 ${page === 'map' ? 'flex flex-col' : 'grid grid-cols-2 grid-rows-2 md:flex md:flex-col'} `}
           >
             <GenderRatioCard
               page={page}
