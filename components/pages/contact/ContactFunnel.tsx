@@ -3,6 +3,7 @@ import useFunnel from 'hooks/useFunnel';
 import { ContactFormValues } from 'pages/contact/[id]';
 import EtcStep from './EtcStep';
 import PersonalInfoStep from './PersonalInfoStep';
+import ProgressBar from './ProgressBar';
 import UsageInfoStep from './UsageInfoStep';
 
 const CONTACT_STEPS = ['문의자 정보', '사용 정보', '기타 정보'];
@@ -10,8 +11,9 @@ const CONTACT_STEPS = ['문의자 정보', '사용 정보', '기타 정보'];
 const ContactFunnel = () => {
   const { Funnel, Step, setStep, currStepName } = useFunnel(CONTACT_STEPS);
 
+  const currIndex = CONTACT_STEPS.indexOf(currStepName);
+
   const handleNextStep = () => {
-    const currIndex = CONTACT_STEPS.indexOf(currStepName);
     if (currIndex >= CONTACT_STEPS.length - 1) {
       return;
     }
@@ -33,7 +35,11 @@ const ContactFunnel = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(submitContactUs)}>
+    <form
+      onSubmit={handleSubmit(submitContactUs)}
+      className='flex flex-col gap-24'
+    >
+      <ProgressBar index={currIndex} />
       <Funnel>
         <Step name={CONTACT_STEPS[0]}>
           <PersonalInfoStep handleNextStep={handleNextStep} />

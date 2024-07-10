@@ -16,6 +16,7 @@ import IconBlankLike from './blank-like.svg';
 import IconBuilding from './building.svg';
 import IconChange from './change.svg';
 import IconCharacter from './character.svg';
+import IconCheck from './check.svg';
 import IconCirculation from './circulation.svg';
 import IconClose from './close.svg';
 import IconEtc from './etc.svg';
@@ -66,4 +67,5 @@ export {
   IconChange,
   IconArrowPrevButton,
   IconHamburgerMenu,
+  IconCheck,
 };
