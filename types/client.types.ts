@@ -53,4 +53,10 @@ export interface BuildingDataType {
   건폐율: number | null;
   사용승인일: string | null;
   승강기: number | null;
+  지상층수: number | null;
+  지하층수: number | null;
+  주용도: string | null;
+  주차대수: number | null;
 }
+
+export type PageType = 'map' | 'description';

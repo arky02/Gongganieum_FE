@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 const PortalModal = (props: {
@@ -6,27 +6,21 @@ const PortalModal = (props: {
   openStatus?: boolean;
 }) => {
   const { children, openStatus = true } = props;
-  const [mounted, setMounted] = useState<boolean>(false);
 
   useEffect(() => {
-    setMounted(true);
-    return () => setMounted(false);
-  }, []);
+    if (openStatus) document.body.style.overflow = 'hidden';
 
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, []);
+  }, [openStatus]);
 
   // CSR을 마친 후, window객체가 있을 때만 동작 (SSR 단계에서는 에러)
   if (typeof window === 'undefined') return;
 
   return (
     <>
-      {mounted &&
-        openStatus &&
+      {openStatus &&
         createPortal(
           <div>
             <div className='fixed left-0 top-0 z-floating size-full bg-[rgba(0,0,0,0.6)]' />

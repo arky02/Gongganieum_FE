@@ -25,18 +25,18 @@ const BuildingDescriptionPage = () => {
   };
 
   return (
-    <div className='mx-auto mb-76 mt-56 max-w-1232'>
+    <div className='mx-auto max-w-1280 px-24 pb-76 pt-56 md:p-24'>
       <button
         type='button'
         onClick={handleGoBack}
-        className='mb-24 flex items-center gap-8 text-14 font-700'
+        className='mb-24 flex items-center gap-8 text-14 font-700 md:mb-16'
       >
         <IconArrowBack />
         뒤로가기
       </button>
       <ImageLayout imageUrls={imageUrls} page='description' />
-      <div className='my-56 flex gap-56'>
-        <div className='w-776 shrink-0'>
+      <div className='my-56 flex gap-56 md:my-24'>
+        <div className='w-776 shrink-0 md:w-full'>
           <BuildingTitle buildingInfo={buildingInfo} page='description' />
           <Description
             popups={buildingInfo?.popups ?? []}
@@ -60,9 +60,9 @@ const ContactBox = (props: { name: string; address: string }) => {
   const { name, address } = props;
 
   return (
-    <div className='shadow-[rgba(0,0,0,0.06) sticky top-92 h-172 w-400 shrink-0 rounded-16 border border-[rgba(0,0,0,0.06)] p-24 shadow-lg'>
-      <div className='pb-8 text-24 font-800'>{name}</div>
-      <div className='flex items-center gap-8 pb-16 text-16 font-500 text-gray-400'>
+    <div className='sticky top-92 z-nav h-172 w-400 shrink-0 rounded-16 border border-[rgba(0,0,0,0.06)] bg-white p-24 shadow-lg md:fixed md:bottom-0 md:left-0 md:right-0 md:top-auto md:h-92 md:w-screen md:rounded-none'>
+      <div className='pb-8 text-24 font-800 md:hidden'>{name}</div>
+      <div className='flex items-center gap-8 pb-16 text-16 font-500 text-gray-400 md:hidden'>
         <IconMarker />
         {address}
       </div>

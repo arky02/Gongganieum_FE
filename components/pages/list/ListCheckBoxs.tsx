@@ -1,4 +1,4 @@
-import useSearch from 'hooks/map/useSearch';
+import useSearch from 'hooks/useSearch';
 
 const ListCheckBoxs = (props: {
   onClickIsPopup: () => void;

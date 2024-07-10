@@ -1,6 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
 import { NO_IMAGE_URL } from 'constants/common';
-import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -16,7 +15,7 @@ const ListBuildingCard = (props: {
   isours: boolean;
   tag?: string;
   cate: string;
-  img?: string | StaticImport;
+  img?: string;
   latest_end_date: Date | string;
 }) => {
   const { id, name, address, isours, tag, cate, latest_end_date } = props;
@@ -42,9 +41,9 @@ const ListBuildingCard = (props: {
   return (
     <Link
       href={`/list/${id}`}
-      className='relative flex w-396 cursor-pointer flex-col text-start'
+      className='relative flex aspect-square w-full cursor-pointer flex-col text-start'
     >
-      <div className='relative mb-20 h-352 w-full overflow-hidden rounded-12'>
+      <div className='relative mb-20 h-full w-full overflow-hidden rounded-12'>
         <Image
           src={imageUrls[0] ?? NO_IMAGE_URL}
           fill
@@ -52,13 +51,13 @@ const ListBuildingCard = (props: {
           alt='빌딩 이미지'
           quality={100}
         />
+        <button
+          className='absolute right-20 top-20 md:right-12 md:top-12'
+          onClick={handleClickLikeButton}
+        >
+          {isLike ? <IconRedLike /> : <IconBlankLike />}
+        </button>
       </div>
-      <button
-        className='absolute right-20 top-20'
-        onClick={handleClickLikeButton}
-      >
-        {isLike ? <IconRedLike /> : <IconBlankLike />}
-      </button>
       <Description name={name} address={address} />
       <div className='flex flex-wrap gap-8'>
         {Boolean(isours) && <Tag type='직영' />}
@@ -78,8 +77,10 @@ const Description = (props: { name: string; address: string }) => {
 
   return (
     <div className='mb-12 flex flex-col gap-4'>
-      <h3 className='text-20 font-700'>{name}</h3>
-      <span className='text-16 text-gray-400'>{address}</span>
+      <h3 className='line-clamp-1 text-20 font-700 md:text-18'>{name}</h3>
+      <span className='line-clamp-1 text-16 text-gray-400 md:text-14'>
+        {address}
+      </span>
     </div>
   );
 };

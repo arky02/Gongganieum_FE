@@ -1,12 +1,20 @@
+import { CATEGORY, MARKER_ICON_SRC } from 'constants/common';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useStore } from 'store';
-import { BuildingType } from 'types/client.types';
+import { BuildingType, CategoryType } from 'types/client.types';
 
 const useMarkers = () => {
   const router = useRouter();
-  const { map } = useStore((state) => ({
+  const showDefaultMarkers =
+    !router.query['q'] &&
+    (router.query['cate'] === '전체' || !router.query['cate']) &&
+    router.query['isours'] === 'false';
+
+  const { map, showMarkers, hideMarkers } = useStore((state) => ({
     map: state.map,
+    showMarkers: state.showMarkers,
+    hideMarkers: state.hideMarkers,
   }));
   const [markers, setMarkers] = useState<any[]>([]);
   const [initialBuildings, setInitialBuildings] = useState<BuildingType[]>();
@@ -15,7 +23,6 @@ const useMarkers = () => {
     if (!initialBuildings) {
       setInitialBuildings(buildings);
     }
-
     if (!map || !buildings) {
       return;
     }
@@ -27,8 +34,15 @@ const useMarkers = () => {
       const position = new window.kakao.maps.LatLng(coord[0], coord[1]);
       bound.extend(position);
 
-      const imageSrc = '/icons/dot.png';
-      const imageSize = new window.kakao.maps.Size(20, 20);
+      const category = CATEGORY.includes(building.cate as CategoryType)
+        ? building.cate
+        : '기타';
+      const isours = building.isours;
+
+      const imageSrc = isours
+        ? MARKER_ICON_SRC[category].isours
+        : MARKER_ICON_SRC[category].search;
+      const imageSize = new window.kakao.maps.Size(48, 48);
       const markerImage = new window.kakao.maps.MarkerImage(
         imageSrc,
         imageSize,
@@ -61,6 +75,18 @@ const useMarkers = () => {
   useEffect(() => {
     createMarkers(initialBuildings);
   }, [map, initialBuildings]);
+
+  useEffect(() => {
+    if (router.query['building']) {
+      return;
+    }
+    if (!showDefaultMarkers) {
+      hideMarkers?.();
+    } else {
+      showMarkers?.();
+      deleteMarkers();
+    }
+  }, [router.query, showMarkers, hideMarkers]);
 
   return { createMarkers, deleteMarkers };
 };

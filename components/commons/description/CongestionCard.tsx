@@ -10,6 +10,7 @@ import {
   Tooltip,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { PageType } from 'types/client.types';
 import DescriptionCard from './DescriptionCard';
 
 Chart.register(
@@ -23,8 +24,12 @@ Chart.register(
   LineElement,
 );
 
-const CongestionCard = (props: { time: string[]; value: number[] }) => {
-  const { time, value } = props;
+const CongestionCard = (props: {
+  time: string[];
+  value: number[];
+  page: PageType;
+}) => {
+  const { time, value, page } = props;
 
   const data = {
     labels: time,
@@ -38,7 +43,7 @@ const CongestionCard = (props: { time: string[]; value: number[] }) => {
   };
 
   return (
-    <DescriptionCard title='실시간 인구 및 혼잡도 추이 현황'>
+    <DescriptionCard title='실시간 인구 및 혼잡도 추이 현황' page={page}>
       <div className='h-172 w-full'>
         <Line
           data={data}

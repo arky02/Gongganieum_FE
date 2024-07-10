@@ -1,14 +1,14 @@
 import { NO_IMAGE_URL } from 'constants/common';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useState } from 'react';
+import { PageType } from 'types/client.types';
 import ImagePreview from './ImagePreview';
 
 const STYLE = {
-  map: 'w-full h-176 text-24',
-  description: 'w-full h-480 text-32',
+  map: 'shrink-0 w-full h-176 text-24 font-700',
+  description:
+    'shrink-0 w-full h-480 text-32 font-700 md:h-176 md:text-24 md:font-600',
 };
-
-type PageType = 'map' | 'description';
 
 const ImageLayout = (props: { imageUrls: string[]; page: PageType }) => {
   const { imageUrls, page } = props;
@@ -112,7 +112,7 @@ const FiveLayout = (props: {
           alt='빌딩 사진'
         />
         {imageUrls.length > 5 && (
-          <div className='absolute flex h-full w-full items-center justify-center bg-[rgb(0,0,0)]/50 font-700 text-white'>
+          <div className='absolute flex h-full w-full items-center justify-center bg-[rgb(0,0,0)]/50 text-white'>
             +{imageUrls.length - 4}
           </div>
         )}

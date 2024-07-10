@@ -1,7 +1,18 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
+const MOCK_IMAGE_URL = [
+  '/images/mock-building-image.jpg',
+  '/images/mock-building-image2.jpg',
+  '/images/mock-building-image2.jpg',
+  '/images/mock-building-image2.jpg',
+  '/images/mock-building-image2.jpg',
+  '/images/mock-building-image2.jpg',
+  '/images/mock-building-image2.jpg',
+];
+
 const useBuildingImageUrls = (address: string | undefined) => {
+  return MOCK_IMAGE_URL;
   const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   const getImageUrl = async () => {
