@@ -4,6 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { getBuildingInfo } from 'apis/api';
 import Banner from 'components/pages/contact/Banner';
 import ContactFunnel from 'components/pages/contact/ContactFunnel';
+import { PathType } from 'components/pages/contact/EtcStep';
 import FunnelTitle from 'components/pages/contact/FunnelTitle';
 
 export interface ContactFormValues {
@@ -17,7 +18,7 @@ export interface ContactFormValues {
   secondaryEndDate: string;
   budget: number;
   purpose: string;
-  path: string;
+  path: PathType;
   etc: string;
   agreed: boolean;
 }
@@ -44,7 +45,7 @@ const BuildingContact = () => {
       secondaryEndDate: '',
       budget: undefined,
       purpose: '',
-      path: '',
+      path: '검색',
       etc: '',
       agreed: false,
     },
