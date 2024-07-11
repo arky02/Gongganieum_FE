@@ -8,19 +8,6 @@ import ImageLayout from 'components/commons/ImageLayout';
 import Description from 'components/commons/description/Description';
 import { IconArrowBack } from 'public/icons';
 
-const MOCK_BUILDING_IMAGE_URLS = [
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image.jpg',
-];
-
 const BuildingTab = (props: { id: number }) => {
   const { id } = props;
   const { map } = useStore((state) => ({
@@ -57,6 +44,8 @@ const BuildingTab = (props: { id: number }) => {
     router.back();
   };
 
+  const imageUrls = buildingInfo?.img?.split(',');
+
   return (
     <div className='flex h-full w-full flex-col overflow-y-auto overflow-x-hidden p-24'>
       <button
@@ -67,7 +56,7 @@ const BuildingTab = (props: { id: number }) => {
         <IconArrowBack />
         뒤로가기
       </button>
-      <ImageLayout imageUrls={MOCK_BUILDING_IMAGE_URLS} page='map' />
+      <ImageLayout imageUrls={imageUrls} page='map' />
       <BuildingTitle buildingInfo={buildingInfo} page='map' />
       <div className='flex flex-col gap-24'>
         <Description

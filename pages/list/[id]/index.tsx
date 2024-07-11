@@ -18,7 +18,7 @@ const BuildingDescriptionPage = () => {
     enabled: !!buildingId,
   });
 
-  const imageUrls = buildingInfo?.img?.split(',') ?? [];
+  const imageUrls = buildingInfo?.img?.split(',');
 
   const handleGoBack = () => {
     router.back();

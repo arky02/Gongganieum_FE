@@ -29,7 +29,7 @@ const BuildingCard = (props: { building: BuildingType }) => {
 
   const parsedTags = building?.tag === 'NULL' ? [] : building?.tag?.split(',');
   const isPopup = new Date(building?.latest_end_date ?? '') > new Date();
-  const imageUrl = building?.img?.split(',') ?? [];
+  const imageUrl = building?.img?.split(',');
 
   return (
     <button
@@ -46,7 +46,7 @@ const BuildingCard = (props: { building: BuildingType }) => {
       </div>
       <div className='relative h-148 w-full overflow-hidden rounded-12'>
         <Image
-          src={imageUrl[0] ?? NO_IMAGE_URL}
+          src={imageUrl?.[0] ?? NO_IMAGE_URL}
           fill
           className='object-cover'
           alt='빌딩 이미지'
