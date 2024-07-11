@@ -2,6 +2,7 @@ import { ko } from 'date-fns/locale';
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { parseDateToString, parseStringToDate } from 'utils/parseDate';
+import RequiredStar from 'components/commons/RequiredStar';
 
 const DateInput = (props: {
   label: string;
@@ -9,6 +10,8 @@ const DateInput = (props: {
   endDate: string | undefined;
   setStartDate: (date: string) => void;
   setEndDate: (date: string) => void;
+  required?: boolean;
+  error?: boolean;
 }) => {
   const {
     label,
@@ -16,6 +19,8 @@ const DateInput = (props: {
     endDate: endDateValue,
     setStartDate: setStartDateValue,
     setEndDate: setEndDateValue,
+    required = false,
+    error = false,
   } = props;
 
   const parsedStartDateValue = parseStringToDate(startDateValue);
@@ -54,8 +59,13 @@ const DateInput = (props: {
 
   return (
     <div className='w-full'>
-      <div className='text-16 font-700'>{label}</div>
-      <div className='relative mt-8 flex rounded-8 border border-gray-200 bg-gray-100'>
+      <div className='text-16 font-700'>
+        {label}
+        {required && <RequiredStar />}
+      </div>
+      <div
+        className={`relative mt-8 flex rounded-8 border bg-gray-100 ${error ? 'border-red' : 'border-gray-200'}`}
+      >
         <DatePicker
           selected={startDate}
           onChange={(date) => setStartDate(date as Date | undefined)}

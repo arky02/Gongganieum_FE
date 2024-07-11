@@ -28,8 +28,6 @@ export const getFilteredBuildings = async (params: {
     params: { q, order, cate, isours, as: parsedAs },
   });
 
-  console.log(res.data);
-
   return res.data as BuildingType[];
 };
 

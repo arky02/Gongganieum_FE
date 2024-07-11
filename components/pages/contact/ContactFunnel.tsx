@@ -38,6 +38,7 @@ const ContactFunnel = () => {
     <form
       onSubmit={handleSubmit(submitContactUs)}
       className='flex w-full flex-col gap-24'
+      noValidate
     >
       <ProgressBar index={currIndex} />
       <Funnel>

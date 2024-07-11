@@ -39,15 +39,15 @@ const SearchInput = <T extends string>(props: {
       onSubmit={handleSubmit}
       className={`relative flex w-full gap-12 ${size === 'lg' ? 'h-48' : 'h-40'}`}
     >
-      <div className='h-full w-120 shrink-0'>
-        {dropdownMenu && selectedMenu && setSelectedMenu && (
+      {dropdownMenu && selectedMenu && setSelectedMenu && (
+        <div className='h-full w-120 shrink-0'>
           <Dropdown
             elements={dropdownMenu}
             selected={selectedMenu}
             setSelected={setSelectedMenu}
           />
-        )}
-      </div>
+        </div>
+      )}
       <input
         ref={inputRef}
         defaultValue={value}

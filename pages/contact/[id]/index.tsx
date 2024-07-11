@@ -31,6 +31,7 @@ const BuildingContact = () => {
   const { data: buildingInfo } = useQuery({
     queryKey: ['buildingInfo', buildingId],
     queryFn: () => getBuildingInfo(buildingId),
+    enabled: !!id,
   });
 
   const methods = useForm<ContactFormValues>({

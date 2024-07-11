@@ -1,3 +1,4 @@
+import { ERROR_MESSAGES } from 'constants/form';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ContactFormValues } from 'pages/contact/[id]';
@@ -41,7 +42,13 @@ const EtcStep = (props: { handlePrevStep: () => void }) => {
       >
         요청사항
       </TextInput>
-      <ConsentCheckBox name='agreed' control={control} />
+      <ConsentCheckBox
+        name='agreed'
+        rules={{
+          required: ERROR_MESSAGES.required.agreed,
+        }}
+        control={control}
+      />
       <div className='col grid w-full grid-cols-[30%_70%] gap-4'>
         <Button onClick={handlePrevStep}>이전</Button>
         <Button type='submit'>
