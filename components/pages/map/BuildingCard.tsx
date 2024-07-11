@@ -2,7 +2,6 @@ import { NO_IMAGE_URL } from 'constants/common';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useStore } from 'store';
-import useBuildingImageUrls from 'hooks/useBuildingImageUrls';
 import { BuildingType } from 'types/client.types';
 import Tag from 'components/commons/Tag';
 
@@ -30,7 +29,7 @@ const BuildingCard = (props: { building: BuildingType }) => {
 
   const parsedTags = building?.tag === 'NULL' ? [] : building?.tag?.split(',');
   const isPopup = new Date(building?.latest_end_date ?? '') > new Date();
-  const imageUrl = useBuildingImageUrls(building.address);
+  const imageUrl = building?.img?.split(',') ?? [];
 
   return (
     <button

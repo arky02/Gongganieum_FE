@@ -14,6 +14,7 @@ export interface BuildingType {
   cate: CategoryType;
   isours: boolean;
   latest_end_date: Date;
+  img: string | null;
 }
 
 export type CategoryType =

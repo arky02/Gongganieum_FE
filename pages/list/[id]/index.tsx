@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import useBuildingImageUrls from 'hooks/useBuildingImageUrls';
 import { getBuildingInfo } from 'apis/api';
 import BuildingTitle from 'components/commons/BuildingTitle';
 import ImageLayout from 'components/commons/ImageLayout';
@@ -19,7 +18,7 @@ const BuildingDescriptionPage = () => {
     enabled: !!buildingId,
   });
 
-  const imageUrls = useBuildingImageUrls(buildingInfo?.address);
+  const imageUrls = buildingInfo?.img?.split(',') ?? [];
 
   const handleGoBack = () => {
     router.back();
