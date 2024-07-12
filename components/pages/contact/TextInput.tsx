@@ -8,11 +8,13 @@ import {
 interface Props<T extends FieldValues> extends UseControllerProps<T> {
   children: ReactNode;
   placeholder?: string;
+  maxLength?: number;
 }
 
 const TextInput = <T extends FieldValues>({
   children,
   placeholder,
+  maxLength,
   ...controls
 }: Props<T>) => {
   const { field, fieldState } = useController({
@@ -33,6 +35,11 @@ const TextInput = <T extends FieldValues>({
       <div className='h-[10px] pt-[2px] text-12 text-red'>
         {fieldState?.error?.message}
       </div>
+      {maxLength && (
+        <div className='absolute bottom-12 right-4 text-[1rem] text-gray-300'>
+          최대 {maxLength}자
+        </div>
+      )}
     </div>
   );
 };

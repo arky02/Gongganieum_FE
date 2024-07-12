@@ -103,8 +103,10 @@ const UsageInfoStep = (props: {
       <TextInput
         name='purpose'
         placeholder='사용 목적을 입력해주세요.'
+        maxLength={1000}
         rules={{
           required: ERROR_MESSAGES.required.purpose,
+          maxLength: { value: 4000, message: ERROR_MESSAGES.maxLength.purpose },
         }}
         control={control}
       >

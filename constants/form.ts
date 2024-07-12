@@ -12,6 +12,10 @@ export const ERROR_MESSAGES = {
     phone: "'-' 을 제외한 번호를 입력해주세요.",
     email: '유효한 이메일을 입력해주세요.',
   },
+  maxLength: {
+    purpose: '1000자 이하로 작성해주세요.',
+    etc: '4000자 이하로 작성해주세요.',
+  },
 };
 
 export const REG_EXP = {

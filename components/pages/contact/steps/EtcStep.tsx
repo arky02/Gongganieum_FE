@@ -38,6 +38,10 @@ const EtcStep = (props: { handlePrevStep: () => void }) => {
       <TextInput
         name='etc'
         placeholder='요청사항을 입력해주세요.'
+        maxLength={4000}
+        rules={{
+          maxLength: { value: 4000, message: ERROR_MESSAGES.maxLength.etc },
+        }}
         control={control}
       >
         요청사항
