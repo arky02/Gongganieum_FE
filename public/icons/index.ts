@@ -4,6 +4,7 @@ import IconArrowLeft from './arrow-left.svg';
 import IconArrowNextButton from './arrow-next-button.svg';
 import IconArrowPrevButton from './arrow-prev-button.svg';
 import IconArrowRight from './arrow-right.svg';
+import IconArrowTopRight from './arrow-top-right.svg';
 import IconBeautyPin from './beauty-pin.svg';
 import IconCharacterPin from './beauty-pin.svg';
 import IconEtcPin from './beauty-pin.svg';
@@ -70,4 +71,5 @@ export {
   IconHamburgerMenu,
   IconCheck,
   IconSend,
+  IconArrowTopRight,
 };
