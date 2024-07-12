@@ -14,6 +14,7 @@ export interface BuildingType {
   cate: CategoryType;
   isours: boolean;
   latest_end_date: Date;
+  img: string | null;
 }
 
 export type CategoryType =
@@ -60,3 +61,17 @@ export interface BuildingDataType {
 }
 
 export type PageType = 'map' | 'description';
+
+export interface ContactType {
+  buildingId: number;
+  name?: string;
+  phone?: string;
+  email?: string;
+  company?: string;
+  date1?: string;
+  date2?: string;
+  budget?: string;
+  reason?: string;
+  enterpath?: string;
+  requests?: string;
+}

@@ -29,7 +29,7 @@ const Button = (props: {
     <button
       type={type}
       onClick={handleClick}
-      className={`flex gap-8 rounded-10 px-200 py-12 text-16 text-white ${isDisabled ? 'bg-[#bcbcbc]' : 'bg-black '}`}
+      className={`flex w-full items-center justify-center gap-8 rounded-10 py-12 text-16 text-white ${isDisabled ? 'bg-[#bcbcbc]' : 'bg-black '}`}
     >
       {children}
     </button>

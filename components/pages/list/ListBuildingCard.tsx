@@ -1,9 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
-import { NO_IMAGE_URL } from 'constants/common';
+import { NO_IMAGE_URL, ROOT_IMAGE_URL } from 'constants/common';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import useBuildingImageUrls from 'hooks/useBuildingImageUrls';
 import { postLikeToggle } from 'apis/api';
 import Tag from 'components/commons/Tag';
 import { IconBlankLike, IconRedLike } from 'public/icons';
@@ -15,15 +14,14 @@ const ListBuildingCard = (props: {
   isours: boolean;
   tag?: string;
   cate: string;
-  img?: string;
+  img?: string | null;
   latest_end_date: Date | string;
 }) => {
-  const { id, name, address, isours, tag, cate, latest_end_date } = props;
-
-  const imageUrls = useBuildingImageUrls(address);
+  const { id, name, address, isours, tag, cate, latest_end_date, img } = props;
 
   const isPopup = new Date(latest_end_date ?? '') > new Date();
   const parsedTags = tag === 'NULL' ? [] : tag?.split(',');
+  const imageSrc = img?.split(', ')?.map((url) => ROOT_IMAGE_URL + url);
 
   const [isLike, setIsLike] = useState(false);
   const likeMutation = useMutation({
@@ -45,7 +43,7 @@ const ListBuildingCard = (props: {
     >
       <div className='relative mb-20 h-full w-full overflow-hidden rounded-12'>
         <Image
-          src={imageUrls[0] ?? NO_IMAGE_URL}
+          src={imageSrc?.[0] ?? NO_IMAGE_URL}
           fill
           className='object-cover '
           alt='빌딩 이미지'

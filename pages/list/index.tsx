@@ -102,6 +102,7 @@ const List = () => {
                 cate={building.cate}
                 tag={building.tag}
                 latest_end_date={building.latest_end_date}
+                img={building.img}
               />
             ))}
         </div>

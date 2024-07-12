@@ -10,11 +10,26 @@ const STYLE = {
     'shrink-0 w-full h-480 text-32 font-700 md:h-176 md:text-24 md:font-600',
 };
 
-const ImageLayout = (props: { imageUrls: string[]; page: PageType }) => {
+const ImageLayout = (props: {
+  imageUrls: string[] | null | undefined;
+  page: PageType;
+}) => {
   const { imageUrls, page } = props;
   const [imagePreviewIndex, setImagePreviewIndex] = useState<number | null>(
     null,
   );
+
+  if (!imageUrls) {
+    return (
+      <div className={STYLE[page]}>
+        <OneLayout
+          imageUrl={NO_IMAGE_URL}
+          setIndex={setImagePreviewIndex}
+          page={page}
+        />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -26,7 +41,11 @@ const ImageLayout = (props: { imageUrls: string[]; page: PageType }) => {
           <TwoLayout imageUrls={imageUrls} setIndex={setImagePreviewIndex} />
         )}
         {imageUrls.length === 1 && (
-          <OneLayout imageUrl={imageUrls[0]} setIndex={setImagePreviewIndex} />
+          <OneLayout
+            imageUrl={imageUrls[0]}
+            setIndex={setImagePreviewIndex}
+            page={page}
+          />
         )}
       </div>
       {imagePreviewIndex !== null && (
@@ -158,8 +177,9 @@ const TwoLayout = (props: {
 const OneLayout = (props: {
   imageUrl: string;
   setIndex: Dispatch<SetStateAction<number | null>>;
+  page: PageType;
 }) => {
-  const { imageUrl, setIndex } = props;
+  const { imageUrl, setIndex, page } = props;
 
   return (
     <div className='relative h-full w-full shrink-0 gap-4 overflow-hidden rounded-16'>
@@ -167,7 +187,7 @@ const OneLayout = (props: {
       <div className='h-full w-full backdrop-blur-md'>
         <div
           onClick={() => setIndex(0)}
-          className='relative mx-auto h-full w-852 cursor-pointer overflow-hidden'
+          className={`relative mx-auto h-full cursor-pointer overflow-hidden ${page === 'map' ? '' : 'w-852'}`}
         >
           <Image src={imageUrl} fill className='object-cover' alt='빌딩 사진' />
         </div>

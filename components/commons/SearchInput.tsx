@@ -40,11 +40,13 @@ const SearchInput = <T extends string>(props: {
       className={`relative flex w-full gap-12 ${size === 'lg' ? 'h-48' : 'h-40'}`}
     >
       {dropdownMenu && selectedMenu && setSelectedMenu && (
-        <Dropdown
-          elements={dropdownMenu}
-          selected={selectedMenu}
-          setSelected={setSelectedMenu}
-        />
+        <div className='h-full w-120 shrink-0'>
+          <Dropdown
+            elements={dropdownMenu}
+            selected={selectedMenu}
+            setSelected={setSelectedMenu}
+          />
+        </div>
       )}
       <input
         ref={inputRef}

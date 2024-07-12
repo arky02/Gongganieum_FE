@@ -1,8 +1,7 @@
-import { NO_IMAGE_URL } from 'constants/common';
+import { NO_IMAGE_URL, ROOT_IMAGE_URL } from 'constants/common';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useStore } from 'store';
-import useBuildingImageUrls from 'hooks/useBuildingImageUrls';
 import { BuildingType } from 'types/client.types';
 import Tag from 'components/commons/Tag';
 
@@ -30,7 +29,9 @@ const BuildingCard = (props: { building: BuildingType }) => {
 
   const parsedTags = building?.tag === 'NULL' ? [] : building?.tag?.split(',');
   const isPopup = new Date(building?.latest_end_date ?? '') > new Date();
-  const imageUrl = useBuildingImageUrls(building.address);
+  const imageUrl = building?.img
+    ?.split(', ')
+    ?.map((url) => ROOT_IMAGE_URL + url);
 
   return (
     <button
@@ -47,7 +48,7 @@ const BuildingCard = (props: { building: BuildingType }) => {
       </div>
       <div className='relative h-148 w-full overflow-hidden rounded-12'>
         <Image
-          src={imageUrl[0] ?? NO_IMAGE_URL}
+          src={imageUrl?.[0] ?? NO_IMAGE_URL}
           fill
           className='object-cover'
           alt='빌딩 이미지'

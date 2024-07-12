@@ -13,6 +13,7 @@ import { generateRandomNickname } from 'utils/generateRandomNickname';
 import { postUserSignUpInfo } from 'apis/auth';
 import Button from 'components/commons/Button';
 import Input from 'components/commons/Input';
+import RequiredStar from 'components/commons/RequiredStar';
 import { IconCirculation } from 'public/icons';
 
 export interface FormValues {
@@ -98,6 +99,9 @@ const ProfileModal = (props: {
         <Input
           name='companyName'
           placeholder='회사명을 입력해 주세요.'
+          rules={{
+            required: true,
+          }}
           control={control}
         >
           회사명 <RequiredStar />
@@ -106,6 +110,9 @@ const ProfileModal = (props: {
         <Input
           name='brandName'
           placeholder='브랜드명을 입력해 주세요.'
+          rules={{
+            required: true,
+          }}
           control={control}
         >
           브랜드명 혹은 서비스명 <RequiredStar />
@@ -133,11 +140,6 @@ const ProfileModal = (props: {
 };
 
 export default ProfileModal;
-
-const RequiredStar = (props: { className?: string }) => {
-  const { className } = props;
-  return <span className={`text-[15px] text-[#EF5350] ${className}`}>*</span>;
-};
 
 const NicknameInput = (props: {
   register: any;

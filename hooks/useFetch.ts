@@ -40,6 +40,7 @@ const useFetch = (props: {
   const { data: searchResult } = useQuery({
     queryKey: ['search', as, q, order, cate, isours],
     queryFn: handleFetch,
+    enabled: !!cate,
   });
 
   return { searchResult };
