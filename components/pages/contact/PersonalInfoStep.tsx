@@ -68,7 +68,9 @@ const PersonalInfoStep = (props: { handleNextStep: () => void }) => {
       >
         회사명/단체명
       </Input>
-      <Button onClick={checkForm}>다음</Button>
+      <div className='w-full md:absolute md:bottom-0'>
+        <Button onClick={checkForm}>다음</Button>
+      </div>
     </div>
   );
 };

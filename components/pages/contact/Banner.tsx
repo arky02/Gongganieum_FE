@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 const Banner = () => {
   return (
-    <div className='relative h-full w-768 shrink-0'>
+    <div className='relative h-full w-768 shrink-0 md:hidden'>
       <Image
         alt='문의하기 배경 사진'
         src={'/images/contact-background.png'}

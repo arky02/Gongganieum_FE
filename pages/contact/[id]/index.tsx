@@ -56,7 +56,7 @@ const BuildingContact = () => {
   return (
     <div className='flex h-[calc(100dvh-72px)] w-screen'>
       <Banner />
-      <div className='mx-auto mt-128 flex h-full w-704 flex-col gap-24 px-16'>
+      <div className='mx-auto mt-128 flex h-full w-704 shrink-0 flex-col gap-24 px-16 md:mt-56 md:w-full'>
         <FunnelTitle name={buildingInfo?.name ?? ''} />
         <FormProvider {...methods}>
           <ContactFunnel />

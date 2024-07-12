@@ -65,8 +65,8 @@ const UsageInfoStep = (props: {
 
   return (
     <div className='flex w-full flex-col gap-16'>
-      <div>
-        <div className='flex w-full gap-12'>
+      <div className='w-full'>
+        <div className='grid w-full grid-cols-2 gap-12 md:grid-cols-1 md:grid-rows-2'>
           <DateInput
             label='일정'
             startDate={primaryStartDate}
@@ -74,7 +74,7 @@ const UsageInfoStep = (props: {
             setStartDate={setPrimaryStartDate}
             setEndDate={setPrimaryEndDate}
             required
-            error={!!formState.errors.primaryStartDate}
+            errorMessage={formState.errors.primaryStartDate?.message}
           />
           <DateInput
             label='차순위 일정'
@@ -83,9 +83,6 @@ const UsageInfoStep = (props: {
             setStartDate={setSecondaryStartDate}
             setEndDate={setSecondaryEndDate}
           />
-        </div>
-        <div className='h-[10px] pt-[2px] text-12 text-red'>
-          {formState.errors.primaryStartDate?.message}
         </div>
       </div>
       <Input
@@ -114,7 +111,7 @@ const UsageInfoStep = (props: {
         사용 목적
         <RequiredStar />
       </TextInput>
-      <div className='grid w-full grid-cols-[30%_70%] gap-4'>
+      <div className='grid w-full grid-cols-[30%_70%] gap-4 md:absolute md:bottom-0'>
         <Button onClick={handlePrevStep}>이전</Button>
         <Button onClick={checkForm}>다음</Button>
       </div>

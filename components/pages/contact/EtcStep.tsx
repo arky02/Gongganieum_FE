@@ -49,7 +49,7 @@ const EtcStep = (props: { handlePrevStep: () => void }) => {
         }}
         control={control}
       />
-      <div className='col grid w-full grid-cols-[30%_70%] gap-4'>
+      <div className='col grid w-full grid-cols-[30%_70%] gap-4 md:absolute md:bottom-0'>
         <Button onClick={handlePrevStep}>이전</Button>
         <Button type='submit'>
           문의 보내기 <IconSend />

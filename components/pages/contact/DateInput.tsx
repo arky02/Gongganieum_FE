@@ -11,7 +11,7 @@ const DateInput = (props: {
   setStartDate: (date: string) => void;
   setEndDate: (date: string) => void;
   required?: boolean;
-  error?: boolean;
+  errorMessage?: string;
 }) => {
   const {
     label,
@@ -20,7 +20,7 @@ const DateInput = (props: {
     setStartDate: setStartDateValue,
     setEndDate: setEndDateValue,
     required = false,
-    error = false,
+    errorMessage,
   } = props;
 
   const parsedStartDateValue = parseStringToDate(startDateValue);
@@ -58,13 +58,13 @@ const DateInput = (props: {
   }, [endDate]);
 
   return (
-    <div className='w-full'>
+    <div className='w-full shrink-0'>
       <div className='text-16 font-700'>
         {label}
         {required && <RequiredStar />}
       </div>
       <div
-        className={`relative mt-8 flex rounded-8 border bg-gray-100 ${error ? 'border-red' : 'border-gray-200'}`}
+        className={`relative mt-8 flex w-full rounded-8 border bg-gray-100 ${errorMessage ? 'border-red' : 'border-gray-200'}`}
       >
         <DatePicker
           selected={startDate}
@@ -89,6 +89,7 @@ const DateInput = (props: {
         />
         <div className='absolute left-1/2 top-0 h-full w-[1px] bg-gray-200' />
       </div>
+      <div className='h-[10px] pt-[2px] text-12 text-red'>{errorMessage}</div>
     </div>
   );
 };

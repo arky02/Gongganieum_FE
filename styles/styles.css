@@ -49,6 +49,10 @@
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
 }
 
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
 .react-datepicker__triangle {
   display: none;
 }
@@ -105,4 +109,14 @@
 
 .react-datepicker__day--outside-month {
   color: rgb(200, 200, 200) !important;
+}
+
+@media screen and (max-width: 767px) {
+  .react-datepicker-popper {
+    position: fixed !important;
+    left: 50% !important;
+    top: 50% !important;
+    bottom: 0;
+    transform: translateY(-40%) translateX(-50%) !important;
+  }
 }
