@@ -3,7 +3,7 @@ import { instance } from './config/default';
 
 // 회원가입
 export const postUserSignUpInfo = async (props: {
-  formData: FormValues & { interests: string };
+  formData: FormValues & { interests?: string };
 }) => {
   const { formData } = props;
   const {

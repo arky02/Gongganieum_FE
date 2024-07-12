@@ -1,16 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { getBuildings, getLikeBuildingIds, getMyInfo } from 'apis/api';
-import { BuildingType } from 'types/client.types';
+import { BuildingType, UserDataType } from 'types/client.types';
 import BuildingCard from 'components/commons/BuildingCard';
 import PortalModal from 'components/commons/PortalModal';
+import ProfileEditModal from 'components/modals/ProfileEditModal';
 import MypageProfile from 'components/pages/mypage/MypageProfile';
 
 const Mypage = () => {
   const userId = 118; // test ID
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { data: userInfo } = useQuery({
+  const { data: userInfo }: { data?: UserDataType } = useQuery({
     queryKey: ['userInfo', userId],
     queryFn: () => getMyInfo(userId),
   });
@@ -61,7 +62,7 @@ const Mypage = () => {
         </div>
       </div>
       <PortalModal openStatus={isModalOpen}>
-        <div>프로필 편집 모달</div>
+        <ProfileEditModal setIsModalOpen={setIsModalOpen} userInfo={userInfo} />
       </PortalModal>
     </div>
   );
