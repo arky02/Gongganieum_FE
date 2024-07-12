@@ -1,11 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { getBuildingInfo } from 'apis/api';
 import Banner from 'components/pages/contact/Banner';
 import ContactFunnel from 'components/pages/contact/ContactFunnel';
-import { PathType } from 'components/pages/contact/EtcStep';
 import FunnelTitle from 'components/pages/contact/FunnelTitle';
+import { PathType } from 'components/pages/contact/steps/EtcStep';
+import FinishStep from 'components/pages/contact/steps/FinishStep';
 
 export interface ContactFormValues {
   name: string;
@@ -53,14 +55,22 @@ const BuildingContact = () => {
     mode: 'onBlur',
   });
 
+  const [submitted, setSubmitted] = useState(false);
+
   return (
     <div className='flex h-[calc(100dvh-72px)] w-screen'>
       <Banner />
       <div className='mx-auto mt-128 flex h-full w-704 shrink-0 flex-col gap-24 px-16 md:mt-56 md:w-full'>
-        <FunnelTitle name={buildingInfo?.name ?? ''} />
-        <FormProvider {...methods}>
-          <ContactFunnel />
-        </FormProvider>
+        {submitted ? (
+          <FinishStep />
+        ) : (
+          <>
+            <FunnelTitle name={buildingInfo?.name ?? ''} />
+            <FormProvider {...methods}>
+              <ContactFunnel setSubmitted={setSubmitted} />
+            </FormProvider>
+          </>
+        )}
       </div>
     </div>
   );

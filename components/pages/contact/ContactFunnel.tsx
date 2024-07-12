@@ -1,14 +1,19 @@
+import { Dispatch, SetStateAction, useState } from 'react';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
 import useFunnel from 'hooks/useFunnel';
 import { ContactFormValues } from 'pages/contact/[id]';
-import EtcStep from './EtcStep';
-import PersonalInfoStep from './PersonalInfoStep';
 import ProgressBar from './ProgressBar';
-import UsageInfoStep from './UsageInfoStep';
+import EtcStep from './steps/EtcStep';
+import FinishStep from './steps/FinishStep';
+import PersonalInfoStep from './steps/PersonalInfoStep';
+import UsageInfoStep from './steps/UsageInfoStep';
 
 const CONTACT_STEPS = ['문의자 정보', '사용 정보', '기타 정보'];
 
-const ContactFunnel = () => {
+const ContactFunnel = (props: {
+  setSubmitted: Dispatch<SetStateAction<boolean>>;
+}) => {
+  const { setSubmitted } = props;
   const { Funnel, Step, setStep, currStepName } = useFunnel(CONTACT_STEPS);
 
   const currIndex = CONTACT_STEPS.indexOf(currStepName);
@@ -32,6 +37,7 @@ const ContactFunnel = () => {
 
   const submitContactUs: SubmitHandler<ContactFormValues> = (formData) => {
     console.log(formData);
+    setSubmitted(true);
   };
 
   return (

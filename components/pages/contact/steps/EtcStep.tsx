@@ -6,7 +6,7 @@ import Button from 'components/commons/Button';
 import ConsentCheckBox from 'components/commons/ConsentCheckbox';
 import Dropdown from 'components/commons/Dropdown';
 import { IconSend } from 'public/icons';
-import TextInput from './TextInput';
+import TextInput from '../TextInput';
 
 const PATH_MENU = ['검색', 'SNS 광고', '지인', '기타'] as const;
 export type PathType = (typeof PATH_MENU)[number];
@@ -49,7 +49,7 @@ const EtcStep = (props: { handlePrevStep: () => void }) => {
         }}
         control={control}
       />
-      <div className='col grid w-full grid-cols-[30%_70%] gap-4 md:absolute md:bottom-0'>
+      <div className='grid w-full grid-cols-[30%_70%] gap-4 md:absolute md:bottom-4'>
         <Button onClick={handlePrevStep}>이전</Button>
         <Button type='submit'>
           문의 보내기 <IconSend />

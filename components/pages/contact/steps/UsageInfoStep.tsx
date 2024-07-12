@@ -5,8 +5,8 @@ import { ContactFormValues } from 'pages/contact/[id]';
 import Button from 'components/commons/Button';
 import Input from 'components/commons/Input';
 import RequiredStar from 'components/commons/RequiredStar';
-import DateInput from './DateInput';
-import TextInput from './TextInput';
+import DateInput from '../DateInput';
+import TextInput from '../TextInput';
 
 const UsageInfoStep = (props: {
   handlePrevStep: () => void;
@@ -111,7 +111,7 @@ const UsageInfoStep = (props: {
         사용 목적
         <RequiredStar />
       </TextInput>
-      <div className='grid w-full grid-cols-[30%_70%] gap-4 md:absolute md:bottom-0'>
+      <div className='grid w-full grid-cols-[30%_70%] gap-4 md:absolute md:bottom-4'>
         <Button onClick={handlePrevStep}>이전</Button>
         <Button onClick={checkForm}>다음</Button>
       </div>
