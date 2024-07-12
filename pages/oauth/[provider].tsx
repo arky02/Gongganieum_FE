@@ -48,7 +48,6 @@ const OAuthProvider = () => {
         : `${name}님, 추가정보 입력을 위해 이동합니다!`;
 
     toast.success(toastMsg);
-    // TODO: userId 저장할 곳 (유저 정보 조회 이후 setUserId 사용해서 저장)
     // ROLE = GUEST 인 경우 /로 리다이렉트 한 이후 추가정보 입력 진행
     router.push('/');
   };

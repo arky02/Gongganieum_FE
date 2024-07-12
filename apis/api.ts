@@ -44,13 +44,24 @@ export const postLikeToggle = async (userId: number, buildingId: number) => {
 };
 
 // 찜한 건물 조회
-export const getLikeBuildingIds = async (userId: number) => {
+export const getLikeBuildingIds = async (userId: number | null) => {
   const res = await instance.get(`/user/building/likes?user=${userId}`);
   return res.data?.buildingIdList as number[] | null;
 };
 
 // 유저 본인 정보 조회
-export const getMyInfo = async (userId: number) => {
+export const getMyInfo = async () => {
+  try {
+    const res = await instance.get(`/user/info`);
+    return res.data;
+  } catch (error) {
+    console.error('Error fetching user info:', error);
+    throw error;
+  }
+};
+
+// 특정 유저 정보 조회
+export const getUserInfo = async (userId: number) => {
   const res = await instance.get(`/user/info?id=${userId}`);
   return res.data as UserDataType;
 };

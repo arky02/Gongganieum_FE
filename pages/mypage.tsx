@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
+import { useStore } from 'store';
 import { getBuildings, getLikeBuildingIds, getMyInfo } from 'apis/api';
 import { BuildingType, UserDataType } from 'types/client.types';
 import BuildingCard from 'components/commons/BuildingCard';
@@ -8,12 +9,17 @@ import ProfileEditModal from 'components/modals/ProfileEditModal';
 import MypageProfile from 'components/pages/mypage/MypageProfile';
 
 const Mypage = () => {
-  const userId = 118; // test ID
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const { userId } = useStore((state) => ({
+    userId: state.userId,
+  }));
+
+  console.log(userId);
+
   const { data: userInfo }: { data?: UserDataType } = useQuery({
-    queryKey: ['userInfo', userId],
-    queryFn: () => getMyInfo(userId),
+    queryKey: ['userInfo'],
+    queryFn: () => getMyInfo(),
   });
 
   const { data: likeBuildingIds }: { data?: number[] } = useQuery({
