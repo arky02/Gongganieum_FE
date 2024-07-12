@@ -46,6 +46,5 @@ export const postLikeToggle = async (userId: number, buildingId: number) => {
 // 문의하기
 export const postBuildingContact = async (data: ContactType) => {
   const res = await instance.post('/contact', data);
-  console.log(res);
   return res.data;
 };

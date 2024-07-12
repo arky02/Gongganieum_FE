@@ -1,10 +1,9 @@
+import { BASE_URL } from 'constants/common';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import useOutsideClick from 'hooks/useOutsideClick';
 import { IconKakaoLogo, IconLink, IconMarker, IconShare } from 'public/icons';
-
-const BASE_URL = 'https://neul-pum.vercel.app/';
 
 const ContactBox = (props: { name: string; address: string; id: number }) => {
   const { name, address, id } = props;
