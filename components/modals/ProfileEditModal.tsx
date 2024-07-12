@@ -12,7 +12,7 @@ import { generateRandomNickname } from 'utils/generateRandomNickname';
 import { postUserSignUpInfo } from 'apis/auth';
 import { UserDataType } from 'types/client.types';
 import Input from 'components/commons/Input';
-import { IconCirculation } from 'public/icons';
+import { IconCirculation, IconEditPencil } from 'public/icons';
 
 export interface FormValues {
   nickname: string;
@@ -81,6 +81,9 @@ const ProfileEditModal = (props: {
     }
   };
 
+  // TODO: 프로필 이미지 input 로직
+  const handleClickEditButton = () => {};
+
   return (
     <form className='flex h-full w-600 flex-col gap-8 rounded-24 p-24'>
       <div className='text-24 font-800'>프로필 편집</div>
@@ -91,6 +94,12 @@ const ProfileEditModal = (props: {
           fill
           className='rounded-full object-cover'
         />
+        <button
+          className='absolute bottom-0 right-0'
+          onClick={handleClickEditButton}
+        >
+          <IconEditPencil />
+        </button>
       </div>
       <div className='mb-24 flex flex-col gap-16'>
         <NicknameInput
