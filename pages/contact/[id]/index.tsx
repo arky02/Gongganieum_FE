@@ -67,7 +67,10 @@ const BuildingContact = () => {
           <>
             <FunnelTitle name={buildingInfo?.name ?? ''} />
             <FormProvider {...methods}>
-              <ContactFunnel setSubmitted={setSubmitted} />
+              <ContactFunnel
+                buildingId={buildingId}
+                setSubmitted={setSubmitted}
+              />
             </FormProvider>
           </>
         )}

@@ -2,6 +2,7 @@ import {
   AsType,
   BuildingType,
   CategoryType,
+  ContactType,
   OrderType,
 } from 'types/client.types';
 import { instance } from './config/default';
@@ -40,4 +41,11 @@ export const getBuildingInfo = async (id: number) => {
 // 찜하기
 export const postLikeToggle = async (userId: number, buildingId: number) => {
   await instance.post(`/user/building/likes?user=${userId}&id=${buildingId}`);
+};
+
+// 문의하기
+export const postBuildingContact = async (data: ContactType) => {
+  const res = await instance.post('/contact', data);
+  console.log(res);
+  return res.data;
 };
