@@ -10,7 +10,7 @@ import EtcStep from './steps/EtcStep';
 import PersonalInfoStep from './steps/PersonalInfoStep';
 import UsageInfoStep from './steps/UsageInfoStep';
 
-const CONTACT_STEPS = ['문의자 정보', '사용 정보', '기타 정보'];
+const CONTACT_STEPS = ['문의자 정보', '사용 정보', '기타 정보'] as const;
 
 const ContactFunnel = (props: {
   buildingId: number;
