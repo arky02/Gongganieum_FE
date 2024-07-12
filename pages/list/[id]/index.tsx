@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import Link from 'next/link';
+import { ROOT_IMAGE_URL } from 'constants/common';
 import { useRouter } from 'next/router';
 import { getBuildingInfo } from 'apis/api';
 import BuildingTitle from 'components/commons/BuildingTitle';
 import ImageLayout from 'components/commons/ImageLayout';
 import Description from 'components/commons/description/Description';
-import { IconArrowBack, IconMarker } from 'public/icons';
+import ContactBox from 'components/pages/list/[id]/ContactBox';
+import { IconArrowBack } from 'public/icons';
 
 const BuildingDescriptionPage = () => {
   const router = useRouter();
@@ -18,7 +19,9 @@ const BuildingDescriptionPage = () => {
     enabled: !!buildingId,
   });
 
-  const imageUrls = buildingInfo?.img?.split(',');
+  const imageUrls = buildingInfo?.img
+    ?.split(', ')
+    ?.map((url) => ROOT_IMAGE_URL + url);
 
   const handleGoBack = () => {
     router.back();
@@ -56,26 +59,3 @@ const BuildingDescriptionPage = () => {
 };
 
 export default BuildingDescriptionPage;
-
-const ContactBox = (props: { name: string; address: string; id: number }) => {
-  const { name, address, id } = props;
-
-  return (
-    <div className='sticky top-92 z-nav h-172 w-400 shrink-0 rounded-16 border border-[rgba(0,0,0,0.06)] bg-white p-24 shadow-lg md:fixed md:bottom-0 md:left-0 md:right-0 md:top-auto md:h-92 md:w-screen md:rounded-none'>
-      <div className='pb-8 text-24 font-800 md:hidden'>{name}</div>
-      <div className='flex items-center gap-8 pb-16 text-16 font-500 text-gray-400 md:hidden'>
-        <IconMarker />
-        {address}
-      </div>
-      <div className='flex h-44 gap-12'>
-        <button className='h-44 w-44 shrink-0 rounded-full border border-[rgba(0,0,0,0.2)]'></button>
-        <Link
-          href={`/contact/${id}`}
-          className='flex h-full w-full items-center justify-center rounded-8 bg-black text-16 font-700 text-white'
-        >
-          문의하기
-        </Link>
-      </div>
-    </div>
-  );
-};

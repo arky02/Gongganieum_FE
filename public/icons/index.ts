@@ -26,6 +26,7 @@ import IconFlag from './flag.svg';
 import IconFood from './food.svg';
 import IconHamburgerMenu from './hamburger-menu.svg';
 import IconKakaoLogo from './kakao-logo.svg';
+import IconLink from './link.svg';
 import IconLogo from './logo.svg';
 import IconMarker from './marker.svg';
 import IconMedia from './media.svg';
@@ -33,6 +34,7 @@ import IconNaverLogo from './naver-logo.svg';
 import IconRedLike from './red-like.svg';
 import IconSearch from './search.svg';
 import IconSend from './send.svg';
+import IconShare from './share.svg';
 import IconWhiteMarker from './white-marker.svg';
 
 export {
@@ -72,4 +74,6 @@ export {
   IconCheck,
   IconSend,
   IconArrowTopRight,
+  IconShare,
+  IconLink,
 };

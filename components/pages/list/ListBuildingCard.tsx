@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { NO_IMAGE_URL } from 'constants/common';
+import { NO_IMAGE_URL, ROOT_IMAGE_URL } from 'constants/common';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -21,7 +21,7 @@ const ListBuildingCard = (props: {
 
   const isPopup = new Date(latest_end_date ?? '') > new Date();
   const parsedTags = tag === 'NULL' ? [] : tag?.split(',');
-  const imageSrc = img?.split(',');
+  const imageSrc = img?.split(', ')?.map((url) => ROOT_IMAGE_URL + url);
 
   const [isLike, setIsLike] = useState(false);
   const likeMutation = useMutation({

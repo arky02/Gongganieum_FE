@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { ROOT_IMAGE_URL } from 'constants/common';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useStore } from 'store';
@@ -44,7 +45,9 @@ const BuildingTab = (props: { id: number }) => {
     router.back();
   };
 
-  const imageUrls = buildingInfo?.img?.split(',');
+  const imageUrls = buildingInfo?.img
+    ?.split(', ')
+    ?.map((url) => ROOT_IMAGE_URL + url);
 
   return (
     <div className='flex h-full w-full flex-col overflow-y-auto overflow-x-hidden p-24'>
