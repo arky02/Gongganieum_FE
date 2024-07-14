@@ -39,7 +39,10 @@ export const getBuildingInfo = async (id: number) => {
 };
 
 // 찜하기
-export const postLikeToggle = async (userId: number, buildingId: number) => {
+export const postLikeToggle = async (
+  userId: number | null,
+  buildingId: number,
+) => {
   await instance.post(`/user/building/likes?user=${userId}&id=${buildingId}`);
 };
 

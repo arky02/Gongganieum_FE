@@ -15,8 +15,6 @@ const Mypage = () => {
     userId: state.userId,
   }));
 
-  console.log(userId);
-
   const { data: userInfo }: { data?: UserDataType } = useQuery({
     queryKey: ['userInfo'],
     queryFn: () => getMyInfo(),

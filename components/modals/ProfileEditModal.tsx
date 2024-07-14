@@ -38,6 +38,23 @@ const ProfileEditModal = (props: {
       },
     });
 
+  // 프로필 이미지
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files ? e.target.files[0] : null;
+    if (file) {
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // 태그
   const [tags, setTags] = useState<string[] | undefined>(
     userInfo?.tag.split(','),
   );
@@ -56,6 +73,7 @@ const ProfileEditModal = (props: {
     setTags(filteredTags);
   };
 
+  // 닉네임
   const handleChangeNickname = (e: ChangeEvent<HTMLInputElement>) => {
     const newNickname = e.target.value;
     setValue('nickname', newNickname);
@@ -66,6 +84,7 @@ const ProfileEditModal = (props: {
     setValue('nickname', randomNickname);
   };
 
+  // 폼 제출
   const patchUserInfo: SubmitHandler<FormValues> = async (formData) => {
     const formDataResult = { ...formData, interests: tags?.join(',') };
     // TODO: 바꿀 부분 (postUserSignUpInfo 수정)
@@ -81,25 +100,28 @@ const ProfileEditModal = (props: {
     }
   };
 
-  // TODO: 프로필 이미지 input 로직
-  const handleClickEditButton = () => {};
-
   return (
     <form className='flex h-full w-600 flex-col gap-8 rounded-24 p-24'>
       <div className='text-24 font-800'>프로필 편집</div>
       <div className='relative mb-8 h-64 w-64 rounded-full'>
-        <Image
-          src={userInfo?.img || DEFAULT_PROFILE_IMAGE}
-          alt='프로필 이미지'
-          fill
-          className='rounded-full object-cover'
+        <input
+          type='file'
+          accept='image/*'
+          onChange={handleImageChange}
+          className='hidden'
+          id='profile-image-input'
         />
-        <button
-          className='absolute bottom-0 right-0'
-          onClick={handleClickEditButton}
-        >
-          <IconEditPencil />
-        </button>
+        <label htmlFor='profile-image-input'>
+          <Image
+            src={imagePreview || userInfo?.img || DEFAULT_PROFILE_IMAGE}
+            alt='profile'
+            className='cursor-pointer rounded-full object-cover'
+            fill
+          />
+          <div className='absolute bottom-0 right-0 cursor-pointer'>
+            <IconEditPencil />
+          </div>
+        </label>
       </div>
       <div className='mb-24 flex flex-col gap-16'>
         <NicknameInput
@@ -252,7 +274,7 @@ const IntroductionInput = (props: { register: any }) => {
         </label>
         <textarea
           id='introduction'
-          placeholder={'한 줄 소개를 입력해 주세요.'}
+          placeholder='한 줄 소개를 입력해 주세요.'
           {...register('introduction')}
           className={`text mt-8 h-76 w-full resize-none rounded-8 border border-gray-200 bg-gray-100 px-12 py-8 text-14 font-500 outline-none placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400`}
         />

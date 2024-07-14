@@ -34,8 +34,6 @@ const Header = () => {
     queryFn: () => getMyInfo(),
   });
 
-  console.log(userInfo);
-
   const access_token = Cookies.get('access_token');
   const [doesAccessTokenExist, setDoesAccessTokenExist] = useState(false);
 
@@ -46,14 +44,10 @@ const Header = () => {
 
   const { removeUserAccessToken } = useManageUserAccessToken();
 
-  console.log(userId);
-
   useEffect(() => {
     setDoesAccessTokenExist(access_token !== undefined);
     if (doesAccessTokenExist && userId === null) {
-      console.log(doesAccessTokenExist);
-      console.log('동작');
-      setUserId(userInfo?._id); // 동작 안하냐 너?
+      setUserId(userInfo?._id);
     }
   }, [access_token, userInfo]);
 
