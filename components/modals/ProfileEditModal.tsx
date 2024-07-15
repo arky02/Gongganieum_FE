@@ -9,7 +9,7 @@ import {
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { generateRandomNickname } from 'utils/generateRandomNickname';
-import { postUserSignUpInfo } from 'apis/auth';
+import { patchProfileEdit } from 'apis/auth';
 import { UserDataType } from 'types/client.types';
 import Input from 'components/commons/Input';
 import { IconCirculation, IconEditPencil } from 'public/icons';
@@ -38,6 +38,7 @@ const ProfileEditModal = (props: {
       },
     });
 
+  // TODO: 컴포넌트 분리
   // 프로필 이미지
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -54,6 +55,7 @@ const ProfileEditModal = (props: {
     }
   };
 
+  // TODO: 컴포넌트 분리
   // 태그
   const [tags, setTags] = useState<string[] | undefined>(
     userInfo?.tag.split(','),
@@ -87,16 +89,15 @@ const ProfileEditModal = (props: {
   // 폼 제출
   const patchUserInfo: SubmitHandler<FormValues> = async (formData) => {
     const formDataResult = { ...formData, interests: tags?.join(',') };
-    // TODO: 바꿀 부분 (postUserSignUpInfo 수정)
-    const { resStatus, resData } = await postUserSignUpInfo({
+    const resStatus: number = await patchProfileEdit({
       formData: formDataResult,
     });
 
     if (resStatus === 200) {
-      toast.success('회원가입이 완료되었습니다!');
+      toast.success('프로필 편집이 완료되었습니다!');
       setIsModalOpen(false);
     } else {
-      toast.error('에러가 발생하였습니다! 관리자에게 문의하세요.');
+      toast.error('에러가 발생하였습니다!');
     }
   };
 
