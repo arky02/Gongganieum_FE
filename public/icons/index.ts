@@ -4,6 +4,7 @@ import IconArrowLeft from './arrow-left.svg';
 import IconArrowNextButton from './arrow-next-button.svg';
 import IconArrowPrevButton from './arrow-prev-button.svg';
 import IconArrowRight from './arrow-right.svg';
+import IconArrowTopRight from './arrow-top-right.svg';
 import IconBeautyPin from './beauty-pin.svg';
 import IconCharacterPin from './beauty-pin.svg';
 import IconEtcPin from './beauty-pin.svg';
@@ -16,6 +17,7 @@ import IconBlankLike from './blank-like.svg';
 import IconBuilding from './building.svg';
 import IconChange from './change.svg';
 import IconCharacter from './character.svg';
+import IconCheck from './check.svg';
 import IconCirculation from './circulation.svg';
 import IconClose from './close.svg';
 import IconEditPencil from './edit-pencil.svg';
@@ -25,12 +27,15 @@ import IconFlag from './flag.svg';
 import IconFood from './food.svg';
 import IconHamburgerMenu from './hamburger-menu.svg';
 import IconKakaoLogo from './kakao-logo.svg';
+import IconLink from './link.svg';
 import IconLogo from './logo.svg';
 import IconMarker from './marker.svg';
 import IconMedia from './media.svg';
 import IconNaverLogo from './naver-logo.svg';
 import IconRedLike from './red-like.svg';
 import IconSearch from './search.svg';
+import IconSend from './send.svg';
+import IconShare from './share.svg';
 import IconWhiteMarker from './white-marker.svg';
 
 export {
@@ -68,4 +73,9 @@ export {
   IconArrowPrevButton,
   IconHamburgerMenu,
   IconEditPencil,
+  IconCheck,
+  IconSend,
+  IconArrowTopRight,
+  IconShare,
+  IconLink,
 };

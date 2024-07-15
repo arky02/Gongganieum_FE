@@ -13,11 +13,6 @@ const MOCK_BUILDING_IMAGE_URLS = [
   '/images/mock-building-image.jpg',
   '/images/mock-building-image2.jpg',
   '/images/mock-building-image.jpg',
-  '/images/mock-building-image2.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image2.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image2.jpg',
 ];
 
 // TODO: 사진 API 붙이기

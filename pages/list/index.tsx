@@ -114,6 +114,7 @@ const List = () => {
                 tag={building.tag}
                 latest_end_date={building.latest_end_date}
                 likeBuildingIds={likeBuildingIds}
+                img={building.img}
               />
             ))}
         </div>

@@ -37,8 +37,6 @@ export const CATEGORY_ICON_WHITE = {
   기타: <IconEtc fill='#fff' />,
 };
 
-export const NO_IMAGE_URL = '/images/no-image.jpg';
-
 export const MARKER_ICON_SRC = {
   패션: {
     default: '/icons/fashion-pin.svg',
@@ -77,3 +75,10 @@ export const MARKER_ICON_SRC = {
     search: '/icons/etc-search-pin.svg',
   },
 };
+
+export const NO_IMAGE_URL = '/images/no-image.jpg';
+
+export const ROOT_IMAGE_URL =
+  'https://poppop-bucket.s3.ap-northeast-2.amazonaws.com/';
+
+export const BASE_URL = 'https://neul-pum.vercel.app/';

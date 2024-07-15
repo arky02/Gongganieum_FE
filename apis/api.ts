@@ -2,6 +2,7 @@ import {
   AsType,
   BuildingType,
   CategoryType,
+  ContactType,
   OrderType,
   UserDataType,
 } from 'types/client.types';
@@ -67,4 +68,10 @@ export const getMyInfo = async () => {
 export const getUserInfo = async (userId: number) => {
   const res = await instance.get(`/user/info?id=${userId}`);
   return res.data as UserDataType;
+};
+
+// 문의하기
+export const postBuildingContact = async (data: ContactType) => {
+  const res = await instance.post('/contact', data);
+  return res.data;
 };

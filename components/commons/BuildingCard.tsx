@@ -1,10 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
-import { NO_IMAGE_URL } from 'constants/common';
+import { NO_IMAGE_URL, ROOT_IMAGE_URL } from 'constants/common';
 import Image from 'next/image';
 import Link from 'next/link';
 import { MouseEvent, useState } from 'react';
 import { useStore } from 'store';
-import useBuildingImageUrls from 'hooks/useBuildingImageUrls';
 import { postLikeToggle } from 'apis/api';
 import { CategoryType } from 'types/client.types';
 import Tag from 'components/commons/Tag';
@@ -18,7 +17,7 @@ const BuildingCard = (props: {
   isours?: boolean;
   tag?: string;
   cate?: CategoryType;
-  img?: string;
+  img: string | null;
   latest_end_date?: Date | string;
   likeBuildingIds?: number[];
 }) => {
@@ -30,6 +29,7 @@ const BuildingCard = (props: {
     isours,
     tag,
     cate,
+    img,
     latest_end_date,
     likeBuildingIds,
   } = props;
@@ -38,13 +38,12 @@ const BuildingCard = (props: {
     userId: state.userId,
   }));
 
-  const imageUrls = useBuildingImageUrls(address);
-
   const isPopup = new Date(latest_end_date ?? '') > new Date();
   const parsedTags = tag === 'NULL' ? [] : tag?.split(',');
+  // TODO: home에서 뿌려주는 데이터가 없어서 홈에서 에러 뜹니다.
+  const imageSrc = img?.split(', ')?.map((url: string) => ROOT_IMAGE_URL + url);
 
   const [isLike, setIsLike] = useState(likeBuildingIds?.includes(_id));
-
   const likeMutation = useMutation({
     mutationFn: () => postLikeToggle(userId, _id),
   });
@@ -66,7 +65,7 @@ const BuildingCard = (props: {
         className={`relative mb-20 h-full w-full overflow-hidden rounded-12 ${mode === 'home' && 'md:w-240'}`}
       >
         <Image
-          src={imageUrls[0] ?? NO_IMAGE_URL}
+          src={imageSrc?.[0] ?? NO_IMAGE_URL}
           fill
           className='object-cover'
           alt='빌딩 이미지'

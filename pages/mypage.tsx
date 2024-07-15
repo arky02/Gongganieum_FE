@@ -61,6 +61,7 @@ const Mypage = () => {
                 cate={building.cate}
                 latest_end_date={building.latest_end_date}
                 likeBuildingIds={likeBuildingIds}
+                img={building.img}
               />
             ))}
         </div>
