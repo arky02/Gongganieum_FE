@@ -40,16 +40,15 @@ export const getBuildingInfo = async (id: number) => {
 };
 
 // 찜하기
-export const postLikeToggle = async (
-  userId: number | null,
-  buildingId: number,
-) => {
-  await instance.post(`/user/building/likes?buildingId=${buildingId}`);
+export const postLikeToggle = async (buildingId: number) => {
+  await instance.post(`/user/building/likes`, {
+    buildingId,
+  });
 };
 
 // 찜한 건물 조회
-export const getLikeBuildingIds = async (userId: number | null) => {
-  const res = await instance.get(`/user/building/likes?user=${userId}`);
+export const getLikeBuildingIds = async () => {
+  const res = await instance.get(`/user/building/likes`);
   return res.data?.buildingIdList as number[] | null;
 };
 
@@ -57,7 +56,7 @@ export const getLikeBuildingIds = async (userId: number | null) => {
 export const getMyInfo = async () => {
   try {
     const res = await instance.get(`/user/info`);
-    return res.data;
+    return res.data as UserDataType;
   } catch (error) {
     console.error('Error fetching user info:', error);
     throw error;

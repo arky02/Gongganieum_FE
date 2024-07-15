@@ -2,7 +2,7 @@ import { StateCreator } from 'zustand';
 
 export interface UserSlice {
   userId: number | null;
-  setUserId: (userId?: number) => void;
+  setUserId: (userId?: number | null) => void;
   isLogin: boolean;
   setIsLogin: (isLogin: boolean) => void;
 }

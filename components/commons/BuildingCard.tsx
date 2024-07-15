@@ -45,7 +45,7 @@ const BuildingCard = (props: {
 
   const [isLike, setIsLike] = useState(likeBuildingIds?.includes(_id));
   const likeMutation = useMutation({
-    mutationFn: () => postLikeToggle(userId, _id),
+    mutationFn: () => postLikeToggle(_id),
   });
 
   // TODO: 옵티미스틱 업데이트 추가

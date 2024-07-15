@@ -73,7 +73,7 @@ export interface UserDataType {
   brand: string;
   company: string;
   tag: string;
-  role: 'GUEST' | 'USER';
+  role: 'GUEST' | 'USER' | 'SIGNED_OUT';
 }
 export interface ContactType {
   buildingId: number;
