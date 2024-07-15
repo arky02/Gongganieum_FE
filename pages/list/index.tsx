@@ -73,7 +73,7 @@ const List = () => {
 
   return (
     <div className='flex justify-center'>
-      <div className='my-76 flex flex-col justify-center gap-24 md:my-28 md:px-16'>
+      <div className='my-76 flex w-full max-w-1232 flex-col justify-center gap-24 md:my-28 md:px-16'>
         <span className='text-32 font-800'>{cate || '전체'}</span>
         <ListCategoryTabs
           cate={cate}
@@ -101,7 +101,7 @@ const List = () => {
         <div className='mx-auto my-20 grid grid-cols-3 gap-x-24 gap-y-48 md:grid-cols-2 md:gap-y-36'>
           {/* TODO: 진행중인 팝업 로직 생기면 수정 예정 */}
           {(filteredBuildings || searchResult)
-            ?.slice(0, 30)
+            // ?.slice(0, 30)
             ?.map((building) => (
               <BuildingCard
                 mode='like'
