@@ -10,32 +10,35 @@ import { UserDataType } from 'types/client.types';
 import { IconHamburgerMenu, IconLogo, IconSearch } from 'public/icons';
 import SearchInput from './SearchInput';
 
-const TABS = [
-  { name: '홈', path: '/', href: '/' },
-  {
-    name: '지도',
-    path: '/map',
-    href: '/map?as=지역명&q=&order=&cate=전체&isours=false',
-  },
-  {
-    name: '리스트',
-    path: '/list',
-    href: '/list?as=지역명&q=&order=&cate=전체&isours=false',
-  },
-  { name: '매거진', path: '/magazine', href: '/magazine' },
-  { name: '마이페이지', path: '/mypage', href: '/mypage' },
-];
-
 const Header = () => {
+  const access_token = Cookies.get('access_token');
+  const [doesAccessTokenExist, setDoesAccessTokenExist] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+
+  const TABS = [
+    { name: '홈', path: '/', href: '/' },
+    {
+      name: '지도',
+      path: '/map',
+      href: '/map?as=지역명&q=&order=&cate=전체&isours=false',
+    },
+    {
+      name: '리스트',
+      path: '/list',
+      href: '/list?as=지역명&q=&order=&cate=전체&isours=false',
+    },
+    { name: '매거진', path: '/magazine', href: '/magazine' },
+    {
+      name: '마이페이지',
+      path: '/mypage',
+      href: doesAccessTokenExist ? '/mypage' : '/login',
+    },
+  ];
 
   const { data: userInfo }: { data?: UserDataType } = useQuery({
     queryKey: ['userInfo'],
     queryFn: () => getMyInfo(),
   });
-
-  const access_token = Cookies.get('access_token');
-  const [doesAccessTokenExist, setDoesAccessTokenExist] = useState(false);
 
   const { userId, setUserId } = useStore((state) => ({
     userId: state.userId,
