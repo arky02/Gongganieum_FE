@@ -50,11 +50,11 @@ const BuildingTab = (props: { id: number }) => {
     ?.map((url) => ROOT_IMAGE_URL + url);
 
   return (
-    <div className='flex h-full w-full flex-col overflow-y-auto overflow-x-hidden p-24'>
+    <div className='flex h-full w-full flex-col overflow-y-auto overflow-x-hidden p-24 md:p-0'>
       <button
         type='button'
         onClick={handleGoBack}
-        className='mb-24 flex items-center gap-8 text-14 font-700'
+        className='mb-24 flex items-center gap-8 text-14 font-700 md:mb-16 md:text-12'
       >
         <IconArrowBack />
         뒤로가기

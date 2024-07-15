@@ -14,7 +14,7 @@ const BuildingTitle = (props: {
 
   return (
     <div
-      className={`${page === 'map' ? 'mb-36 mt-24' : 'mb-56 md:mb-36'} flex w-full flex-col`}
+      className={`${page === 'map' ? 'mb-36 mt-24 md:mb-24 md:mt-16' : 'mb-56 md:mb-36'} flex w-full flex-col`}
     >
       <div
         className={`${page == 'map' ? 'text-28' : 'text-[3.6rem]'} flex items-end gap-8 font-800 md:text-[2.2rem]`}
