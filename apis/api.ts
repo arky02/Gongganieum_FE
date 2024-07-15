@@ -44,7 +44,7 @@ export const postLikeToggle = async (
   userId: number | null,
   buildingId: number,
 ) => {
-  await instance.post(`/user/building/likes?user=${userId}&id=${buildingId}`);
+  await instance.post(`/user/building/likes?buildingId=${buildingId}`);
 };
 
 // 찜한 건물 조회
