@@ -48,3 +48,9 @@ export const postBuildingContact = async (data: ContactType) => {
   const res = await instance.post('/contact', data);
   return res.data;
 };
+
+// 지도 페이지 추천 건물
+export const getRecommendedBuildings = async () => {
+  const res = await instance.get('/carousel/building/map_page');
+  return res.data as BuildingType[];
+};
