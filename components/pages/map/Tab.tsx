@@ -1,5 +1,6 @@
 import { SEARCH_AS } from 'constants/common';
 import { useRouter } from 'next/router';
+import useBottomSheet from 'hooks/useBottomSheet';
 import useFetch from 'hooks/useFetch';
 import useSearch from 'hooks/useSearch';
 import BottomSheet from 'components/commons/BottomSheet';
@@ -57,13 +58,15 @@ const Tab = () => {
     }
   };
 
+  const { bottomSheetRef, contentRef } = useBottomSheet();
+
   return (
     <>
       <div className='flex w-400 shrink-0 flex-col gap-24 bg-white md:hidden'>
         {renderTab()}
       </div>
-      <BottomSheet>
-        <div className='flex flex-col gap-16 overflow-scroll'>
+      <BottomSheet ref={bottomSheetRef}>
+        <div ref={contentRef} className='flex flex-col gap-16 overflow-scroll'>
           {renderTab()}
         </div>
       </BottomSheet>
