@@ -107,7 +107,7 @@ const List = () => {
               cate={building.cate}
               tag={building.tag}
               latest_end_date={building.latest_end_date}
-              likeBuildingIds={likeBuildingIds}
+              isLiked={likeBuildingIds?.includes(building._id)}
               img={building.img}
             />
           ))}

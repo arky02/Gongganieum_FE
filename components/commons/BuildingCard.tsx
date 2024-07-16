@@ -3,14 +3,15 @@ import { NO_IMAGE_URL, ROOT_IMAGE_URL } from 'constants/common';
 import Image from 'next/image';
 import Link from 'next/link';
 import { MouseEvent, useState } from 'react';
-import { useStore } from 'store';
 import { postLikeToggle } from 'apis/api';
 import { CategoryType } from 'types/client.types';
 import Tag from 'components/commons/Tag';
 import { IconBlankLike, IconRedLike } from 'public/icons';
 
+type LikeType = 'like' | 'home' | 'none';
+
 const BuildingCard = (props: {
-  mode: 'like' | 'home' | 'none'; // like 모드는 좋아요 버튼이 있음
+  mode: LikeType;
   _id: number;
   name: string;
   address: string;
@@ -19,7 +20,7 @@ const BuildingCard = (props: {
   cate?: CategoryType;
   img: string | null;
   latest_end_date?: Date | string;
-  likeBuildingIds?: number[];
+  isLiked?: boolean;
 }) => {
   const {
     mode,
@@ -31,19 +32,15 @@ const BuildingCard = (props: {
     cate,
     img,
     latest_end_date,
-    likeBuildingIds,
+    isLiked,
   } = props;
-
-  const { userId } = useStore((state) => ({
-    userId: state.userId,
-  }));
 
   const isPopup = new Date(latest_end_date ?? '') > new Date();
   const parsedTags = tag === 'NULL' ? [] : tag?.split(',');
   // TODO: home에서 뿌려주는 데이터가 없어서 홈에서 에러 뜹니다.
   const imageSrc = img?.split(', ')?.map((url: string) => ROOT_IMAGE_URL + url);
 
-  const [isLike, setIsLike] = useState(likeBuildingIds?.includes(_id));
+  const [isLike, setIsLike] = useState(isLiked);
   const likeMutation = useMutation({
     mutationFn: () => postLikeToggle(_id),
   });
