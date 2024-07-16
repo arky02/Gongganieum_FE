@@ -1,31 +1,66 @@
-import Image from 'next/image';
+import { useQuery } from '@tanstack/react-query';
+import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
+import { useStore } from 'store';
+import useManageUserAccessToken from 'hooks/useManageAccessToken';
+import { getMyInfo } from 'apis/api';
+import { UserDataType } from 'types/client.types';
 import { IconHamburgerMenu, IconLogo, IconSearch } from 'public/icons';
 import SearchInput from './SearchInput';
 
-const TABS = [
-  { name: '홈', path: '/', href: '/' },
-  {
-    name: '지도',
-    path: '/map',
-    href: '/map?as=지역명&q=&order=&cate=전체&isours=false',
-  },
-  {
-    name: '리스트',
-    path: '/list',
-    href: '/list?as=지역명&q=&order=&cate=전체&isours=false',
-  },
-  { name: '매거진', path: '/magazine', href: '/magazine' },
-  { name: '마이페이지', path: '/mypage', href: '/mypage' },
-];
-
 const Header = () => {
+  const access_token = Cookies.get('access_token');
+
+  const [doesAccessTokenExist, setDoesAccessTokenExist] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
+  const TABS = [
+    { name: '홈', path: '/', href: '/' },
+    {
+      name: '지도',
+      path: '/map',
+      href: '/map?as=지역명&q=&order=&cate=전체&isours=false',
+    },
+    {
+      name: '리스트',
+      path: '/list',
+      href: '/list?as=지역명&q=&order=&cate=전체&isours=false',
+    },
+    { name: '매거진', path: '/magazine', href: '/magazine' },
+    {
+      name: '마이페이지',
+      path: '/mypage',
+      href: doesAccessTokenExist ? '/mypage' : '/login',
+    },
+  ];
+
+  const { data: userInfo }: { data?: UserDataType } = useQuery({
+    queryKey: ['userInfo'],
+    queryFn: () => getMyInfo(),
+  });
+
+  const { userId, setUserId } = useStore((state) => ({
+    userId: state.userId,
+    setUserId: state.setUserId,
+  }));
+
+  const { removeUserAccessToken } = useManageUserAccessToken();
+
+  useEffect(() => {
+    setDoesAccessTokenExist(access_token !== undefined);
+    if (doesAccessTokenExist && userId === null) {
+      setUserId(userInfo?._id);
+    }
+
+    if (!doesAccessTokenExist) {
+      setUserId(null);
+    }
+  }, [access_token, userInfo, doesAccessTokenExist]);
+
   return (
-    <>
+    <div>
       {/* Hamburger Menu Content */}
       {isOpen && (
         <>
@@ -76,16 +111,27 @@ const Header = () => {
             >
               <IconSearch />
             </Link>
-            <Link
-              href='/login'
-              className='flex h-40 w-68 shrink-0 items-center justify-center rounded-8 bg-black text-14 font-600 text-white'
-            >
-              로그인
-            </Link>
+            {doesAccessTokenExist ? (
+              <div
+                className='flex h-40 w-68 shrink-0 items-center justify-center rounded-8 border border-black bg-white text-14 font-600 text-black hover:bg-black hover:text-white'
+                onClick={() => removeUserAccessToken({ redirectUri: '/' })}
+              >
+                로그아웃
+              </div>
+            ) : (
+              <div>
+                <Link
+                  href='/login'
+                  className='flex h-40 w-68 shrink-0 items-center justify-center rounded-8 bg-black text-14 font-600 text-white'
+                >
+                  로그인
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </header>
-    </>
+    </div>
   );
 };
 

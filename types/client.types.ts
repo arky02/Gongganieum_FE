@@ -10,9 +10,9 @@ export interface BuildingType {
   address: string;
   coord: string;
   popups: PopupType[];
-  tag: string;
+  tag?: string;
   cate: CategoryType;
-  isours: boolean;
+  isours?: boolean;
   latest_end_date: Date;
   img: string | null;
 }
@@ -62,6 +62,18 @@ export interface BuildingDataType {
 
 export type PageType = 'map' | 'description';
 
+export interface UserDataType {
+  _id: number;
+  name: string;
+  email: string;
+  nickname: string;
+  img: string;
+  description: string;
+  brand: string;
+  company: string;
+  tag: string;
+  role: 'GUEST' | 'USER' | 'SIGNED_OUT';
+}
 export interface ContactType {
   buildingId: number;
   name?: string;

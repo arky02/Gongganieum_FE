@@ -2,59 +2,71 @@ import { useMutation } from '@tanstack/react-query';
 import { NO_IMAGE_URL, ROOT_IMAGE_URL } from 'constants/common';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import router from 'next/router';
+import { MouseEvent, useState } from 'react';
 import { postLikeToggle } from 'apis/api';
+import { BuildingType } from 'types/client.types';
 import Tag from 'components/commons/Tag';
 import { IconBlankLike, IconRedLike } from 'public/icons';
 
-const ListBuildingCard = (props: {
-  id: number;
-  name: string;
-  address: string;
-  isours: boolean;
-  tag?: string;
-  cate: string;
-  img?: string | null;
-  latest_end_date: Date | string;
+type LikeType = 'like' | 'home' | 'none';
+
+const BuildingCard = (props: {
+  mode: LikeType;
+  building: BuildingType;
+  isLiked?: boolean;
 }) => {
-  const { id, name, address, isours, tag, cate, latest_end_date, img } = props;
+  const {
+    mode,
+    isLiked,
+    building: { _id, name, address, isours, tag, cate, img, latest_end_date },
+  } = props;
 
   const isPopup = new Date(latest_end_date ?? '') > new Date();
   const parsedTags = tag === 'NULL' ? [] : tag?.split(',');
-  const imageSrc = img?.split(', ')?.map((url) => ROOT_IMAGE_URL + url);
+  // TODO: home에서 뿌려주는 데이터가 없어서 홈에서 에러 뜹니다.
+  const imageSrc = img?.split(', ')?.map((url: string) => ROOT_IMAGE_URL + url);
 
-  const [isLike, setIsLike] = useState(false);
+  const [isLike, setIsLike] = useState(isLiked);
   const likeMutation = useMutation({
-    // TODO: 각각의 빌딩의 유저id와 빌딩id 넣기
-    // TODO: 하트 상태 관리
-    mutationFn: () => postLikeToggle(1, 57),
+    mutationFn: () => postLikeToggle(_id),
+    onError: () => {
+      router.push('/login');
+    },
   });
 
   // TODO: 옵티미스틱 업데이트 추가
-  const handleClickLikeButton = () => {
+  const handleClickLikeButton = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
     setIsLike(!isLike);
     likeMutation.mutate();
   };
 
   return (
     <Link
-      href={`/list/${id}`}
+      href={`/list/${_id}`}
       className='relative flex aspect-square w-full cursor-pointer flex-col text-start'
     >
-      <div className='relative mb-20 h-full w-full overflow-hidden rounded-12'>
+      <div
+        className={`relative mb-20 h-full w-full overflow-hidden rounded-12 ${mode === 'home' && 'md:w-240'}`}
+      >
         <Image
           src={imageSrc?.[0] ?? NO_IMAGE_URL}
           fill
-          className='object-cover '
+          className='object-cover'
           alt='빌딩 이미지'
           quality={100}
         />
-        <button
-          className='absolute right-20 top-20 md:right-12 md:top-12'
-          onClick={handleClickLikeButton}
-        >
-          {isLike ? <IconRedLike /> : <IconBlankLike />}
-        </button>
+        {/* 찜하기 버튼 */}
+        {mode === 'like' && (
+          <button
+            className='absolute right-20 top-20 z-[2] md:right-12 md:top-12'
+            onClick={handleClickLikeButton}
+          >
+            {isLike ? <IconRedLike /> : <IconBlankLike />}
+          </button>
+        )}
       </div>
       <Description name={name} address={address} />
       <div className='flex flex-wrap gap-8'>
@@ -68,7 +80,7 @@ const ListBuildingCard = (props: {
   );
 };
 
-export default ListBuildingCard;
+export default BuildingCard;
 
 const Description = (props: { name: string; address: string }) => {
   const { name, address } = props;
