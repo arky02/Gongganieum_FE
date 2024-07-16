@@ -39,11 +39,15 @@ const List = () => {
     isours,
   });
 
-  // TODO: 데이터 꼬임 현상 (7/16): 로그아웃이 되면 likeBuildingIds가 null이 될 수 있게 다시 실행, invalidateQueries 실행
-  const { data: likeBuildingIds }: { data?: number[] } = useQuery({
+  // TODO: 데이터 꼬임 현상 (7/16): 로그아웃이 되면 likeBuildingIds가 null이 될 수 있게
+  const { data: likeBuildingIds } = useQuery({
     queryKey: ['likeBuildingIds'],
     queryFn: () => getLikeBuildingIds(),
   });
+
+  // const { userAccessToken } = useManageUserAccessToken();
+  // const queryClient = useQueryClient();
+  // queryClient.invalidateQueries({ queryKey: ['likeBuildingIds'] });
 
   const handleClickCategoryTab = (category: string) => {
     setCate(category as ExtendedCategoryType);
@@ -100,15 +104,8 @@ const List = () => {
             <BuildingCard
               mode='like'
               key={building._id}
-              _id={building._id}
-              name={building.name}
-              address={building.address}
-              isours={building.isours}
-              cate={building.cate}
-              tag={building.tag}
-              latest_end_date={building.latest_end_date}
+              building={building}
               isLiked={likeBuildingIds?.includes(building._id)}
-              img={building.img}
             />
           ))}
         </div>

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import router from 'next/router';
 import { MouseEvent, useState } from 'react';
 import { postLikeToggle } from 'apis/api';
-import { CategoryType } from 'types/client.types';
+import { BuildingType } from 'types/client.types';
 import Tag from 'components/commons/Tag';
 import { IconBlankLike, IconRedLike } from 'public/icons';
 
@@ -13,27 +13,13 @@ type LikeType = 'like' | 'home' | 'none';
 
 const BuildingCard = (props: {
   mode: LikeType;
-  _id: number;
-  name: string;
-  address: string;
-  isours?: boolean;
-  tag?: string;
-  cate?: CategoryType;
-  img: string | null;
-  latest_end_date?: Date | string;
+  building: BuildingType;
   isLiked?: boolean;
 }) => {
   const {
     mode,
-    _id,
-    name,
-    address,
-    isours,
-    tag,
-    cate,
-    img,
-    latest_end_date,
     isLiked,
+    building: { _id, name, address, isours, tag, cate, img, latest_end_date },
   } = props;
 
   const isPopup = new Date(latest_end_date ?? '') > new Date();

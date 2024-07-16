@@ -49,14 +49,8 @@ const Mypage = () => {
               <BuildingCard
                 mode='like'
                 key={building._id}
-                _id={building._id}
-                name={building.name}
-                address={building.address}
-                isours={true}
-                cate={building.cate}
-                latest_end_date={building.latest_end_date}
+                building={building}
                 isLiked={likeBuildingIds?.includes(building._id)}
-                img={building.img}
               />
             ))}
         </div>
