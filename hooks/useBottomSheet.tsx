@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { SyntheticEvent, useEffect, useRef } from 'react';
 
 interface Metrics {
   initTouchPosition: number | null;
@@ -18,7 +18,7 @@ const useBottomSheet = () => {
     isContentAreaTouched: false,
   });
 
-  const handleTouchStart = (e: TouchEvent) => {
+  const handleStart = (clientY: number) => {
     if (!bottomSheetRef.current) {
       return;
     }
@@ -30,10 +30,10 @@ const useBottomSheet = () => {
         .replace('px)', '') || 0,
     );
     metrics.current.initTransformValue = initTransformValue;
-    metrics.current.initTouchPosition = e.touches[0].clientY;
+    metrics.current.initTouchPosition = clientY;
   };
 
-  const handleTouchMove = (e: TouchEvent) => {
+  const handleMove = (clientY: number, e: Event) => {
     const { initTouchPosition, initTransformValue, isContentAreaTouched } =
       metrics.current;
 
@@ -42,13 +42,13 @@ const useBottomSheet = () => {
     }
 
     e.preventDefault();
-    const currTouchPosition = e.touches[0].clientY;
+    const currTouchPosition = clientY;
     const diff =
       (initTouchPosition - currTouchPosition) * -1 + initTransformValue;
     bottomSheetRef.current.style.transform = `translateY(${diff}px)`;
   };
 
-  const handleTouchEnd = () => {
+  const handleEnd = () => {
     if (!metrics.current.initTouchPosition || !bottomSheetRef.current) {
       return;
     }
@@ -67,25 +67,53 @@ const useBottomSheet = () => {
     }
 
     metrics.current.isContentAreaTouched = false;
+    metrics.current.initTouchPosition = null;
   };
 
   const handleContentTouch = () => {
     metrics.current.isContentAreaTouched = true;
   };
 
+  const handleTouch = {
+    start: (e: TouchEvent) => handleStart(e.touches[0].clientY),
+    move: (e: TouchEvent) => handleMove(e.touches[0].clientY, e),
+    end: handleEnd,
+  };
+
+  const handleMouse = {
+    down: (e: MouseEvent) => handleStart(e.clientY),
+    move: (e: MouseEvent) => handleMove(e.clientY, e),
+    up: handleEnd,
+    leave: handleEnd,
+  };
+
   useEffect(() => {
     const bottomSheetElement = bottomSheetRef.current;
     const contentElement = contentRef.current;
-    bottomSheetElement?.addEventListener('touchstart', handleTouchStart);
-    bottomSheetElement?.addEventListener('touchmove', handleTouchMove);
-    bottomSheetElement?.addEventListener('touchend', handleTouchEnd);
+    bottomSheetElement?.addEventListener('touchstart', handleTouch.start);
+    bottomSheetElement?.addEventListener('touchmove', handleTouch.move);
+    bottomSheetElement?.addEventListener('touchend', handleTouch.end);
+
+    bottomSheetElement?.addEventListener('mousedown', handleMouse.down);
+    bottomSheetElement?.addEventListener('mousemove', handleMouse.move);
+    bottomSheetElement?.addEventListener('mouseup', handleMouse.up);
+    bottomSheetElement?.addEventListener('mouseleave', handleMouse.leave);
+
     contentElement?.addEventListener('touchstart', handleContentTouch);
+    contentElement?.addEventListener('mousedown', handleContentTouch);
 
     return () => {
-      bottomSheetElement?.removeEventListener('touchstart', handleTouchStart);
-      bottomSheetElement?.removeEventListener('touchmove', handleTouchMove);
-      bottomSheetElement?.removeEventListener('touchend', handleTouchEnd);
+      bottomSheetElement?.removeEventListener('touchstart', handleTouch.start);
+      bottomSheetElement?.removeEventListener('touchmove', handleTouch.move);
+      bottomSheetElement?.removeEventListener('touchend', handleTouch.end);
+
+      bottomSheetElement?.removeEventListener('mousedown', handleMouse.down);
+      bottomSheetElement?.removeEventListener('mousemove', handleMouse.move);
+      bottomSheetElement?.removeEventListener('mouseup', handleMouse.up);
+      bottomSheetElement?.removeEventListener('mouseleave', handleMouse.leave);
+
       contentElement?.removeEventListener('touchstart', handleContentTouch);
+      contentElement?.removeEventListener('mousedown', handleContentTouch);
     };
   }, []);
 
