@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import {
   ChangeEvent,
   Dispatch,
@@ -7,53 +8,72 @@ import {
 } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import useManageUserAccessToken from 'hooks/useManageAccessToken';
 import { generateRandomNickname } from 'utils/generateRandomNickname';
-import { postUserSignUpInfo } from 'apis/auth';
-import Button from 'components/commons/Button';
+import { patchProfileEdit } from 'apis/auth';
+import { UserDataType } from 'types/client.types';
 import Input from 'components/commons/Input';
-import RequiredStar from 'components/commons/RequiredStar';
-import { IconCirculation } from 'public/icons';
+import { IconCirculation, IconEditPencil } from 'public/icons';
 
-export interface FormValues {
+export interface ProfileFormValues {
   nickname: string;
   companyName: string;
   brandName: string;
   introduction: string;
 }
 
-const ProfileModal = (props: {
+const DEFAULT_PROFILE_IMAGE = '/images/default-profile-image.png';
+
+const ProfileEditModal = (props: {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+  userInfo?: UserDataType;
 }) => {
-  const { setIsModalOpen } = props;
-  const { control, handleSubmit, register, setValue, reset, formState } =
-    useForm<FormValues>({
+  const { setIsModalOpen, userInfo } = props;
+  const { control, handleSubmit, register, setValue, formState } =
+    useForm<ProfileFormValues>({
       defaultValues: {
-        nickname: '',
-        companyName: '',
-        brandName: '',
-        introduction: '',
+        nickname: userInfo?.nickname,
+        companyName: userInfo?.company,
+        brandName: userInfo?.brand,
+        introduction: userInfo?.description,
       },
     });
 
-  const { saveUserAccessToken } = useManageUserAccessToken();
+  // 프로필 이미지
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
-  const [tags, setTags] = useState<string[]>([]);
-  const [tagText, setTagText] = useState('');
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files ? e.target.files[0] : null;
+    if (file) {
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // 태그
+  const [tags, setTags] = useState<string[] | undefined>(
+    userInfo?.tag.split(','),
+  );
+  const [tagText, setTagText] = useState<string>('');
 
   const addTags = (e: KeyboardEvent<HTMLInputElement>) => {
     const inputVal = (e.target as HTMLInputElement).value;
-    if (e.key === 'Enter' && inputVal !== '' && !tags.includes(inputVal)) {
-      setTags([...tags, inputVal]);
+    if (e.key === 'Enter' && inputVal !== '' && !tags?.includes(inputVal)) {
+      if (tags) setTags([...tags, inputVal]);
       setTagText('');
     }
   };
 
   const removeTags = (indexToRemove: number) => {
-    const filteredTags = tags.filter((_, index) => index !== indexToRemove);
+    const filteredTags = tags?.filter((_, index) => index !== indexToRemove);
     setTags(filteredTags);
   };
 
+  // 닉네임
   const handleChangeNickname = (e: ChangeEvent<HTMLInputElement>) => {
     const newNickname = e.target.value;
     setValue('nickname', newNickname);
@@ -64,30 +84,46 @@ const ProfileModal = (props: {
     setValue('nickname', randomNickname);
   };
 
-  const patchUserInfo: SubmitHandler<FormValues> = async (formData) => {
-    const formDataResult = { ...formData, interests: tags.join(',') };
-    // send user info to server
-    const { resStatus, resData } = await postUserSignUpInfo({
+  // 폼 제출
+  const patchEditUserInfo: SubmitHandler<ProfileFormValues> = async (
+    formData,
+  ) => {
+    const formDataResult = { ...formData, interests: tags?.join(',') };
+    const resStatus: number = await patchProfileEdit({
       formData: formDataResult,
     });
 
-    // sign up succeed
     if (resStatus === 200) {
-      toast.success('회원가입이 완료되었습니다!');
+      toast.success('프로필 편집이 완료되었습니다!');
       setIsModalOpen(false);
+      window.location.reload();
     } else {
-      toast.error('에러가 발생하였습니다! 관리자에게 문의하세요.');
+      toast.error('에러가 발생하였습니다!');
     }
-
-    // accessToken 쿠키에 저장
-    saveUserAccessToken({ data: resData?.accessToken });
   };
 
   return (
     <form className='flex h-full w-600 flex-col gap-8 rounded-24 p-24'>
-      <div className='text-24 font-800'>기본 프로필 설정</div>
-      <div className='mb-16 text-16 font-400 text-gray-400'>
-        공간이음 서비스를 이용하기 전 기본 프로필을 설정해 주세요.
+      <div className='text-24 font-800'>프로필 편집</div>
+      <div className='relative mb-8 h-64 w-64 rounded-full'>
+        <input
+          type='file'
+          accept='image/*'
+          onChange={handleImageChange}
+          className='hidden'
+          id='profile-image-input'
+        />
+        <label htmlFor='profile-image-input'>
+          <Image
+            src={imagePreview || userInfo?.img || DEFAULT_PROFILE_IMAGE}
+            alt='profile'
+            className='cursor-pointer rounded-full object-cover'
+            fill
+          />
+          <div className='absolute bottom-0 right-0 cursor-pointer'>
+            <IconEditPencil />
+          </div>
+        </label>
       </div>
       <div className='mb-24 flex flex-col gap-16'>
         <NicknameInput
@@ -98,9 +134,6 @@ const ProfileModal = (props: {
         <Input
           name='companyName'
           placeholder='회사명을 입력해 주세요.'
-          rules={{
-            required: true,
-          }}
           control={control}
         >
           회사명 <RequiredStar />
@@ -109,9 +142,6 @@ const ProfileModal = (props: {
         <Input
           name='brandName'
           placeholder='브랜드명을 입력해 주세요.'
-          rules={{
-            required: true,
-          }}
           control={control}
         >
           브랜드명 혹은 서비스명 <RequiredStar />
@@ -126,19 +156,31 @@ const ProfileModal = (props: {
         />
         <IntroductionInput register={register} />
       </div>
-      <Button
-        type='button'
-        onClick={handleSubmit(patchUserInfo)}
-        isDisabled={!formState.isValid}
-        errorMsg='필수 입력 필드 값을 모두 입력해주세요!'
-      >
-        기본 프로필 설정
-      </Button>
+      <div className='flex justify-end gap-8'>
+        <button
+          onClick={(prev) => setIsModalOpen(!prev)}
+          className='h-40 w-64 rounded-8 bg-gray-200 px-16 py-8 text-14 font-600'
+        >
+          취소
+        </button>
+        <button
+          // TODO: 함수 수정
+          onClick={handleSubmit(patchEditUserInfo)}
+          className='h-40 w-64 rounded-8 bg-black px-16 py-8 text-14 font-600 text-white'
+        >
+          저장
+        </button>
+      </div>
     </form>
   );
 };
 
-export default ProfileModal;
+export default ProfileEditModal;
+
+const RequiredStar = (props: { className?: string }) => {
+  const { className } = props;
+  return <span className={`text-[15px] text-[#EF5350] ${className}`}>*</span>;
+};
 
 const NicknameInput = (props: {
   register: any;
@@ -178,7 +220,7 @@ const NicknameInput = (props: {
 };
 
 const InterestInput = (props: {
-  tags: string[];
+  tags?: string[];
   tagText: string;
   setTagText: Dispatch<SetStateAction<string>>;
   addTag: (e: KeyboardEvent<HTMLInputElement>) => void;
@@ -191,7 +233,7 @@ const InterestInput = (props: {
         관심 분야
       </label>
       <div
-        className={`mt-8 flex w-full flex-col ${tags.length && 'gap-4'} rounded-8 border border-gray-200 bg-gray-100 p-8 placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400`}
+        className={`mt-8 flex w-full flex-col ${tags?.length && 'gap-4'} rounded-8 border border-gray-200 bg-gray-100 p-8 placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400`}
       >
         <input
           className='bg-gray-100 p-4 text-14 font-500 outline-none placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400'
@@ -204,7 +246,7 @@ const InterestInput = (props: {
         />
 
         <ul id='tags' className='flex flex-wrap gap-4'>
-          {tags.map((tag, index) => (
+          {tags?.map((tag, index) => (
             <li
               key={index}
               className='flex items-center justify-center rounded-8 bg-gray-200 px-8 py-4'
@@ -234,7 +276,7 @@ const IntroductionInput = (props: { register: any }) => {
         </label>
         <textarea
           id='introduction'
-          placeholder={'한 줄 소개를 입력해 주세요.'}
+          placeholder='한 줄 소개를 입력해 주세요.'
           {...register('introduction')}
           className={`text mt-8 h-76 w-full resize-none rounded-8 border border-gray-200 bg-gray-100 px-12 py-8 text-14 font-500 outline-none placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400`}
         />

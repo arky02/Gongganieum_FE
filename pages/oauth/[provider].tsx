@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { usePathname } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import useManageUserAccessToken from 'hooks/useManageAccessToken';
 

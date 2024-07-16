@@ -4,6 +4,7 @@ import {
   CategoryType,
   ContactType,
   OrderType,
+  UserDataType,
 } from 'types/client.types';
 import { instance } from './config/default';
 
@@ -39,8 +40,33 @@ export const getBuildingInfo = async (id: number) => {
 };
 
 // 찜하기
-export const postLikeToggle = async (userId: number, buildingId: number) => {
-  await instance.post(`/user/building/likes?user=${userId}&id=${buildingId}`);
+export const postLikeToggle = async (buildingId: number) => {
+  await instance.post(`/user/building/likes`, {
+    buildingId,
+  });
+};
+
+// 찜한 건물 조회
+export const getLikeBuildingIds = async () => {
+  const res = await instance.get(`/user/building/likes`);
+  return res.data?.buildingIdList as number[] | null;
+};
+
+// 유저 본인 정보 조회
+export const getMyInfo = async () => {
+  try {
+    const res = await instance.get(`/user/info`);
+    return res.data as UserDataType;
+  } catch (error) {
+    console.error('Error fetching user info:', error);
+    throw error;
+  }
+};
+
+// 특정 유저 정보 조회
+export const getUserInfo = async (userId: number) => {
+  const res = await instance.get(`/user/info?id=${userId}`);
+  return res.data as UserDataType;
 };
 
 // 문의하기

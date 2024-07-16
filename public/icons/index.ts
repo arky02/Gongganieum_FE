@@ -20,6 +20,7 @@ import IconCharacter from './character.svg';
 import IconCheck from './check.svg';
 import IconCirculation from './circulation.svg';
 import IconClose from './close.svg';
+import IconEditPencil from './edit-pencil.svg';
 import IconEtc from './etc.svg';
 import IconFashion from './fashion.svg';
 import IconFlag from './flag.svg';
@@ -71,6 +72,7 @@ export {
   IconChange,
   IconArrowPrevButton,
   IconHamburgerMenu,
+  IconEditPencil,
   IconCheck,
   IconSend,
   IconArrowTopRight,

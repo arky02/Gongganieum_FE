@@ -1,11 +1,12 @@
+import { useQuery } from '@tanstack/react-query';
 import { SEARCH_AS } from 'constants/common';
-import { useRouter } from 'next/router';
 import { ChangeEvent, useState } from 'react';
 import useFetch from 'hooks/useFetch';
 import useSearch from 'hooks/useSearch';
+import { getLikeBuildingIds } from 'apis/api';
 import { BuildingType, CategoryType, OrderType } from 'types/client.types';
+import BuildingCard from 'components/commons/BuildingCard';
 import SearchInput from 'components/commons/SearchInput';
-import ListBuildingCard from 'components/pages/list/ListBuildingCard';
 import ListCategoryTabs from 'components/pages/list/ListCategoryTabs';
 import ListCheckBoxs from 'components/pages/list/ListCheckBoxs';
 import ListSortingButton from 'components/pages/list/ListSortingButton';
@@ -17,7 +18,6 @@ const List = () => {
     BuildingType[] | null | undefined
   >(null);
 
-  const router = useRouter();
   const {
     q,
     setQ,
@@ -38,6 +38,16 @@ const List = () => {
     cate,
     isours,
   });
+
+  // TODO: 데이터 꼬임 현상 (7/16): 로그아웃이 되면 likeBuildingIds가 null이 될 수 있게
+  const { data: likeBuildingIds } = useQuery({
+    queryKey: ['likeBuildingIds'],
+    queryFn: () => getLikeBuildingIds(),
+  });
+
+  // const { userAccessToken } = useManageUserAccessToken();
+  // const queryClient = useQueryClient();
+  // queryClient.invalidateQueries({ queryKey: ['likeBuildingIds'] });
 
   const handleClickCategoryTab = (category: string) => {
     setCate(category as ExtendedCategoryType);
@@ -63,7 +73,7 @@ const List = () => {
 
   return (
     <div className='flex justify-center'>
-      <div className='my-76 flex flex-col justify-center gap-24 md:my-28 md:px-16'>
+      <div className='my-76 flex w-full max-w-1232 flex-col justify-center gap-24 md:my-28 md:px-16'>
         <span className='text-32 font-800'>{cate || '전체'}</span>
         <ListCategoryTabs
           cate={cate}
@@ -88,23 +98,16 @@ const List = () => {
           </div>
         </div>
         {/* card-list */}
-        <div className='mx-auto my-20 grid grid-cols-3 gap-x-24 gap-y-36 gap-y-48 md:grid-cols-2'>
+        <div className='mx-auto my-20 grid grid-cols-3 gap-x-24 gap-y-48 md:grid-cols-2 md:gap-y-36'>
           {/* TODO: 진행중인 팝업 로직 생기면 수정 예정 */}
-          {(filteredBuildings || searchResult)
-            ?.slice(0, 30)
-            ?.map((building) => (
-              <ListBuildingCard
-                key={building._id}
-                id={building._id}
-                name={building.name}
-                address={building.address}
-                isours={building.isours}
-                cate={building.cate}
-                tag={building.tag}
-                latest_end_date={building.latest_end_date}
-                img={building.img}
-              />
-            ))}
+          {(filteredBuildings || searchResult)?.map((building) => (
+            <BuildingCard
+              mode='like'
+              key={building._id}
+              building={building}
+              isLiked={likeBuildingIds?.includes(building._id)}
+            />
+          ))}
         </div>
       </div>
     </div>

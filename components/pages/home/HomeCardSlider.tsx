@@ -4,8 +4,8 @@ import 'swiper/css/autoplay';
 import 'swiper/css/navigation';
 import { Autoplay, Navigation } from 'swiper/modules';
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
+import BuildingCard from 'components/commons/BuildingCard';
 import { IconArrowNextButton, IconArrowPrevButton } from 'public/icons';
-import HomeBuildingCard from './HomeBuildingCard';
 
 const MOCK_BUILDING_IMAGE_URLS = [
   '/images/mock-building-image.jpg',
@@ -13,11 +13,6 @@ const MOCK_BUILDING_IMAGE_URLS = [
   '/images/mock-building-image.jpg',
   '/images/mock-building-image2.jpg',
   '/images/mock-building-image.jpg',
-  '/images/mock-building-image2.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image2.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image2.jpg',
 ];
 
 // TODO: 사진 API 붙이기
@@ -37,7 +32,7 @@ const HomeCardSlider = () => {
   };
 
   return (
-    <div className='relative h-504 w-[calc(100dvw-32px)] max-w-1232 md:hidden'>
+    <div className='relative h-508 w-[calc(100dvw-32px)] max-w-1232 md:hidden'>
       <Swiper
         ref={swiperRef}
         modules={[Navigation, Autoplay]}
@@ -52,12 +47,14 @@ const HomeCardSlider = () => {
       >
         {MOCK_BUILDING_IMAGE_URLS.map((slideImage, index) => (
           <SwiperSlide key={slideImage} virtualIndex={index}>
-            <HomeBuildingCard
+            {/* <BuildingCard
+              mode='home'
+              _id={0}
               name='노송 오재'
               address='전라도 전주시'
               tag='안녕, 디지몬'
               img={slideImage}
-            />
+            /> */}
           </SwiperSlide>
         ))}
       </Swiper>

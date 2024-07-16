@@ -16,12 +16,13 @@ const useManageUserAccessToken = () => {
       path: '/',
       expires: expiration,
     });
+
     routePath && router.push(routePath); // routePath로 리다이렉트
   };
 
   const removeUserAccessToken = ({ redirectUri }: { redirectUri: string }) => {
     removeCookie('access_token', { path: '/' });
-    toast('로그아웃 되었습니다!');
+    toast.success('로그아웃 되었습니다!');
     router.push(redirectUri);
   };
 
