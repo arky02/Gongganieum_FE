@@ -16,11 +16,13 @@ const Map = () => {
 
   return (
     <div className='relative flex h-[calc(100dvh-72px)] w-full justify-end overflow-hidden'>
-      <div className='fixed left-432 top-92 z-popup flex h-40 gap-12'>
+      <div className='fixed left-432 top-92 z-nav flex h-40 gap-12 scrollbar-hide md:left-0 md:top-56 md:h-72 md:w-full md:gap-8 md:overflow-x-auto md:overflow-y-hidden md:py-20'>
+        <div />
         {CATEGORY.map((category) => (
           <FilterButton key={category} category={category} />
         ))}
         <IsOursButton />
+        <div />
       </div>
       <Tab />
       <div id='map' className='h-full w-full' />

@@ -4,10 +4,11 @@ interface Metrics {
   initTouchPosition: number | null;
   initTransformValue: number;
   isContentAreaTouched: boolean;
+  snap: number;
 }
 
 const THRESHOLD = -210;
-const SNAP = -650;
+const TOP_MARGIN = 234;
 
 const useBottomSheet = () => {
   const bottomSheetRef = useRef<HTMLDivElement>(null);
@@ -16,6 +17,7 @@ const useBottomSheet = () => {
     initTouchPosition: null,
     initTransformValue: 0,
     isContentAreaTouched: false,
+    snap: 0,
   });
 
   const handleStart = (clientY: number) => {
@@ -49,7 +51,9 @@ const useBottomSheet = () => {
   };
 
   const handleEnd = () => {
-    if (!metrics.current.initTouchPosition || !bottomSheetRef.current) {
+    const { initTouchPosition, snap } = metrics.current;
+
+    if (!initTouchPosition || !bottomSheetRef.current) {
       return;
     }
 
@@ -61,7 +65,7 @@ const useBottomSheet = () => {
     bottomSheetRef.current.style.transitionDuration = '500ms';
 
     if (finalTransformValue <= THRESHOLD) {
-      bottomSheetRef.current.style.transform = `translateY(${SNAP}px)`;
+      bottomSheetRef.current.style.transform = `translateY(${snap}px)`;
     } else {
       bottomSheetRef.current.style.transform = 'translateY(0px)';
     }
@@ -88,6 +92,8 @@ const useBottomSheet = () => {
   };
 
   useEffect(() => {
+    metrics.current.snap = window.innerHeight * -1 + TOP_MARGIN;
+
     const bottomSheetElement = bottomSheetRef.current;
     const contentElement = contentRef.current;
     bottomSheetElement?.addEventListener('touchstart', handleTouch.start);
