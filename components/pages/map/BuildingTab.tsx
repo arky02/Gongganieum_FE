@@ -28,15 +28,19 @@ const BuildingTab = (props: { id: number }) => {
     const coord = buildingInfo.coord.split(',');
     const position = new window.kakao.maps.LatLng(Number(coord[0]), coord[1]);
 
-    const infoWindow = new window.kakao.maps.InfoWindow({
+    const imageSrc = '/icons/selected-pin.svg';
+    const imageSize = new window.kakao.maps.Size(62, 62);
+    const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
+
+    const marker = new window.kakao.maps.Marker({
       map,
       position,
-      content: buildingInfo.name,
+      image: markerImage,
       zIndex: 99,
     });
 
     return () => {
-      infoWindow.close();
+      marker.setMap(null);
     };
   }, [map, buildingInfo]);
 
