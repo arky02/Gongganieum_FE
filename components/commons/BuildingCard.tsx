@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { NO_IMAGE_URL, ROOT_IMAGE_URL } from 'constants/common';
 import Image from 'next/image';
 import Link from 'next/link';
+import router from 'next/router';
 import { MouseEvent, useState } from 'react';
 import { postLikeToggle } from 'apis/api';
 import { CategoryType } from 'types/client.types';
@@ -43,6 +44,9 @@ const BuildingCard = (props: {
   const [isLike, setIsLike] = useState(isLiked);
   const likeMutation = useMutation({
     mutationFn: () => postLikeToggle(_id),
+    onError: () => {
+      router.push('/login');
+    },
   });
 
   // TODO: 옵티미스틱 업데이트 추가
