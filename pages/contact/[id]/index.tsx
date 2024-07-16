@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -58,9 +58,9 @@ const BuildingContact = () => {
   const [submitted, setSubmitted] = useState(false);
 
   return (
-    <div className='flex h-[calc(100dvh-72px)] w-screen'>
+    <div className='flex h-[calc(100dvh-72px)] min-h-640 w-screen'>
       <Banner />
-      <div className='mx-auto mt-128 flex h-full w-704 shrink-0 flex-col gap-24 px-16 md:mt-56 md:w-full'>
+      <div className='mx-auto my-auto flex h-full max-h-640 w-full max-w-564 shrink-0 flex-col gap-24 overflow-y-scroll px-16 md:mt-56 md:w-full'>
         {submitted ? (
           <FinishStep />
         ) : (

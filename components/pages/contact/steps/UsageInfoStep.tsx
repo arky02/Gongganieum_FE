@@ -113,7 +113,7 @@ const UsageInfoStep = (props: {
         사용 목적
         <RequiredStar />
       </TextInput>
-      <div className='grid w-full grid-cols-[30%_70%] gap-4 md:absolute md:bottom-4'>
+      <div className='grid h-64 w-full grid-cols-[3fr_7fr] gap-4 bg-white py-8 md:fixed md:bottom-0 md:left-0 md:px-8'>
         <Button onClick={handlePrevStep}>이전</Button>
         <Button onClick={checkForm}>다음</Button>
       </div>

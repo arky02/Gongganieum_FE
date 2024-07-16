@@ -63,7 +63,7 @@ const ImagePreview = (props: {
         <div className='fixed bottom-32 left-1/2 -translate-x-1/2 text-16 text-white'>
           ( {index + 1} / {urls.length} )
         </div>
-        <div className='fixed left-1/2 top-1/2 h-full max-h-700 w-[calc(100%-24px)] max-w-1000 -translate-x-1/2 -translate-y-1/2'>
+        <div className='fixed left-1/2 top-1/2 h-full max-h-[calc(78dvh)] w-full max-w-[calc(70dvw)] -translate-x-1/2 -translate-y-1/2 md:max-w-[calc(95dvw)]'>
           <Image
             src={urls[index]}
             alt='건물 사진'

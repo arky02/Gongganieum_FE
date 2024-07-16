@@ -37,7 +37,7 @@ const SearchInput = <T extends string>(props: {
   return (
     <form
       onSubmit={handleSubmit}
-      className={`relative flex w-full gap-12 ${size === 'lg' ? 'h-48' : 'h-40'}`}
+      className={`relative flex w-full gap-12 ${size === 'lg' ? 'h-48 md:h-44' : 'h-40'}`}
     >
       {dropdownMenu && selectedMenu && setSelectedMenu && (
         <div className='h-full w-120 shrink-0'>

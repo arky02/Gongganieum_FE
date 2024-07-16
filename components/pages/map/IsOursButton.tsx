@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { IconStar } from 'public/icons';
 
 const IsOursButton = () => {
   const router = useRouter();
@@ -10,7 +11,12 @@ const IsOursButton = () => {
   };
 
   return (
-    <button type='button' onClick={handleClick} className='h-full w-100 bg-red'>
+    <button
+      type='button'
+      onClick={handleClick}
+      className={`flex h-full shrink-0 items-center gap-8 rounded-full pl-16 pr-20 text-16 font-600 shadow-lg md:pl-12 md:pr-16 md:text-14 ${selected ? 'bg-black text-white' : 'bg-white text-black'}`}
+    >
+      <IconStar fill='#ffc815' />
       직영 건물
     </button>
   );

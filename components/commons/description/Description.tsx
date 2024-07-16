@@ -13,7 +13,7 @@ import PopupRankingCard from './PopupRankingCard';
 import ResidentRatioCard from './ResidentRatioCard';
 
 const TITLE_STYLE = {
-  map: 'text-24 font-800 mb-8 pl-[2px]',
+  map: 'text-24 font-800 mb-8 pl-[2px] md:text-20',
   description: 'text-28 font-800 mb-8 pl-[2px] md:text-20',
 };
 
@@ -43,7 +43,7 @@ const Description = (props: {
       <div>
         <h3 className={TITLE_STYLE[page]}>팝업 정보</h3>
         <div
-          className={`gap-24 ${page === 'map' ? 'flex flex-col' : 'grid grid-cols-2 md:flex md:flex-col'}`}
+          className={`gap-24 md:gap-20 ${page === 'map' ? 'flex flex-col' : 'grid grid-cols-2 md:flex md:flex-col'}`}
         >
           <PopupRankingCard page={page} popups={popups} />
           <PopupHistoryCard page={page} popups={popups} />

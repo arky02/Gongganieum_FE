@@ -14,10 +14,10 @@ const BuildingTitle = (props: {
 
   return (
     <div
-      className={`${page === 'map' ? 'mb-36 mt-24' : 'mb-56 md:mb-36'} flex w-full flex-col`}
+      className={`${page === 'map' ? 'mb-36 mt-12 md:mb-24 md:mt-16' : 'mb-56 md:mb-36'} flex w-full flex-col`}
     >
       <div
-        className={`${page == 'map' ? 'text-28' : 'text-[3.6rem]'} flex items-end gap-8 font-800 md:text-[2.2rem]`}
+        className={`${page == 'map' ? 'text-28' : 'text-[3.6rem]'} flex h-44 items-end gap-8 font-800 md:h-32 md:text-[2.2rem]`}
       >
         {buildingInfo?.name}
         {page === 'map' && (
@@ -26,11 +26,11 @@ const BuildingTitle = (props: {
           </Link>
         )}
       </div>
-      <div className='mb-16 mt-8 flex items-center gap-4 text-16 font-500 text-gray-400 opacity-80 md:text-14'>
+      <div className='mb-16 mt-8 flex h-24 items-center gap-4 text-16 font-500 text-gray-400 opacity-80 md:mb-12 md:mt-4 md:text-14'>
         <IconMarker />
         {buildingInfo?.address}
       </div>
-      <div className='flex flex-wrap gap-8'>
+      <div className='flex h-24 flex-wrap gap-8'>
         {!!buildingInfo?.isours && <Tag type='직영' />}
         {isPopup && <Tag type='팝업진행중' />}
         <Tag type='카테고리' text={buildingInfo?.cate} />
