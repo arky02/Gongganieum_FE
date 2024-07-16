@@ -38,7 +38,6 @@ const ProfileEditModal = (props: {
       },
     });
 
-  // TODO: 컴포넌트 분리
   // 프로필 이미지
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -55,7 +54,6 @@ const ProfileEditModal = (props: {
     }
   };
 
-  // TODO: 컴포넌트 분리
   // 태그
   const [tags, setTags] = useState<string[] | undefined>(
     userInfo?.tag.split(','),

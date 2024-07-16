@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { SEARCH_AS } from 'constants/common';
 import { ChangeEvent, useState } from 'react';
-import { useStore } from 'store';
 import useFetch from 'hooks/useFetch';
 import useSearch from 'hooks/useSearch';
 import { getLikeBuildingIds } from 'apis/api';
@@ -18,10 +17,6 @@ const List = () => {
   const [filteredBuildings, setFilteredBuildings] = useState<
     BuildingType[] | null | undefined
   >(null);
-
-  const { userId } = useStore((state) => ({
-    userId: state.userId,
-  }));
 
   const {
     q,
@@ -44,9 +39,10 @@ const List = () => {
     isours,
   });
 
+  // TODO: 데이터 꼬임 현상 (7/16): 로그아웃이 되면 likeBuildingIds가 null이 될 수 있게 다시 실행, invalidateQueries 실행
   const { data: likeBuildingIds }: { data?: number[] } = useQuery({
     queryKey: ['likeBuildingIds'],
-    queryFn: () => getLikeBuildingIds(userId),
+    queryFn: () => getLikeBuildingIds(),
   });
 
   const handleClickCategoryTab = (category: string) => {
@@ -100,23 +96,21 @@ const List = () => {
         {/* card-list */}
         <div className='mx-auto my-20 grid grid-cols-3 gap-x-24 gap-y-48 md:grid-cols-2 md:gap-y-36'>
           {/* TODO: 진행중인 팝업 로직 생기면 수정 예정 */}
-          {(filteredBuildings || searchResult)
-            // ?.slice(0, 30)
-            ?.map((building) => (
-              <BuildingCard
-                mode='like'
-                key={building._id}
-                _id={building._id}
-                name={building.name}
-                address={building.address}
-                isours={building.isours}
-                cate={building.cate}
-                tag={building.tag}
-                latest_end_date={building.latest_end_date}
-                likeBuildingIds={likeBuildingIds}
-                img={building.img}
-              />
-            ))}
+          {(filteredBuildings || searchResult)?.map((building) => (
+            <BuildingCard
+              mode='like'
+              key={building._id}
+              _id={building._id}
+              name={building.name}
+              address={building.address}
+              isours={building.isours}
+              cate={building.cate}
+              tag={building.tag}
+              latest_end_date={building.latest_end_date}
+              likeBuildingIds={likeBuildingIds}
+              img={building.img}
+            />
+          ))}
         </div>
       </div>
     </div>

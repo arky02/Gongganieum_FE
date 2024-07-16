@@ -12,6 +12,7 @@ import SearchInput from './SearchInput';
 
 const Header = () => {
   const access_token = Cookies.get('access_token');
+
   const [doesAccessTokenExist, setDoesAccessTokenExist] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -52,7 +53,11 @@ const Header = () => {
     if (doesAccessTokenExist && userId === null) {
       setUserId(userInfo?._id);
     }
-  }, [access_token, userInfo]);
+
+    if (!doesAccessTokenExist) {
+      setUserId(null);
+    }
+  }, [access_token, userInfo, doesAccessTokenExist]);
 
   return (
     <div>
