@@ -14,7 +14,7 @@ import { UserDataType } from 'types/client.types';
 import Input from 'components/commons/Input';
 import { IconCirculation, IconEditPencil } from 'public/icons';
 
-export interface FormValues {
+export interface ProfileFormValues {
   nickname: string;
   companyName: string;
   brandName: string;
@@ -29,7 +29,7 @@ const ProfileEditModal = (props: {
 }) => {
   const { setIsModalOpen, userInfo } = props;
   const { control, handleSubmit, register, setValue, formState } =
-    useForm<FormValues>({
+    useForm<ProfileFormValues>({
       defaultValues: {
         nickname: userInfo?.nickname,
         companyName: userInfo?.company,
@@ -85,7 +85,9 @@ const ProfileEditModal = (props: {
   };
 
   // 폼 제출
-  const patchEditUserInfo: SubmitHandler<FormValues> = async (formData) => {
+  const patchEditUserInfo: SubmitHandler<ProfileFormValues> = async (
+    formData,
+  ) => {
     const formDataResult = { ...formData, interests: tags?.join(',') };
     const resStatus: number = await patchProfileEdit({
       formData: formDataResult,
