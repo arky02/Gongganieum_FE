@@ -20,18 +20,10 @@ const HomeSliderWithPagination = (props: { mode: ModeType }) => {
   const { mode } = props;
   const swiperRef = useRef<SwiperRef>(null);
 
-  const { data: mainBannerData } = useQuery<CarouselType[]>({
-    queryKey: ['main-banner'],
-    queryFn: () => getHomeCarousel('main_banner'),
+  const { data: bannerData } = useQuery<CarouselType[]>({
+    queryKey: ['banner', mode],
+    queryFn: () => getHomeCarousel(mode),
   });
-
-  const { data: recommendBannerData } = useQuery<CarouselType[]>({
-    queryKey: ['recommend-banner'],
-    queryFn: () => getHomeCarousel('recommend_banner'),
-  });
-
-  const bannerData: CarouselType[] | undefined =
-    mode === 'main_banner' ? mainBannerData : recommendBannerData;
 
   const handlePrev = () => {
     if (swiperRef.current) {

@@ -10,18 +10,11 @@ const HomeMobileBuildingCardSlider = (props: {
 }) => {
   const { mode } = props;
 
-  const { data: primaryCarouselData } = useQuery({
-    queryKey: ['primary-carousel'],
-    queryFn: () => getHomeCarousel('primary'),
+  const { data: carouselData } = useQuery({
+    queryKey: ['carousel', mode],
+    queryFn: () => getHomeCarousel(mode),
   });
 
-  const { data: secondaryCarouselData } = useQuery({
-    queryKey: ['secondary-carousel'],
-    queryFn: () => getHomeCarousel('secondary'),
-  });
-
-  const carouselData =
-    mode === 'primary' ? primaryCarouselData : secondaryCarouselData;
   return (
     // scrollbar-hide 사용
     <div className='hidden w-[100dvw] whitespace-nowrap scrollbar-hide md:flex md:overflow-x-scroll'>
