@@ -19,7 +19,7 @@ const HomeSliderWithPagination = (props: { mode: ModeType }) => {
   const swiperRef = useRef<SwiperRef>(null);
 
   const { data: mainBannerData } = useQuery({
-    queryKey: ['main-banner', 'recommend-banner'],
+    queryKey: ['main-banner'],
     queryFn: () => getHomeCarousel('main_banner'),
   });
 
@@ -63,9 +63,8 @@ const HomeSliderWithPagination = (props: { mode: ModeType }) => {
         scrollbar={{ draggable: true }}
         className='relative'
       >
-        {bannerData?.map((building: any, index) => (
+        {bannerData?.map((building: any, index: number) => (
           <SwiperSlide key={building._id} virtualIndex={index}>
-            {/* TODO: 데이터 교체 */}
             <HeroCard
               mode={mode}
               name={building.content.name}

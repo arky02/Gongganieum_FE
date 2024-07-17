@@ -16,15 +16,14 @@ const BuildingCard = (props: {
   building: BuildingType;
   isLiked?: boolean;
 }) => {
-  const {
-    mode,
-    isLiked,
-    building: { _id, name, address, isours, tag, cate, img, latest_end_date },
-  } = props;
+  const { mode, isLiked, building } = props;
+
+  const { _id, name, address, isours, tag, cate, img, latest_end_date } =
+    building;
+  console.log(building);
 
   const isPopup = new Date(latest_end_date ?? '') > new Date();
   const parsedTags = tag === 'NULL' ? [] : tag?.split(',');
-  // TODO: home에서 뿌려주는 데이터가 없어서 홈에서 에러 뜹니다.
   const imageSrc = img?.split(', ')?.map((url: string) => ROOT_IMAGE_URL + url);
 
   const [isLike, setIsLike] = useState(isLiked);
