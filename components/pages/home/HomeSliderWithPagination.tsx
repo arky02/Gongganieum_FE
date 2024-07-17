@@ -11,6 +11,7 @@ import 'swiper/css/pagination';
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 import { getHomeCarousel } from 'apis/api';
+import { CarouselType } from 'types/client.types';
 import { IconArrowLeft, IconArrowRight, IconWhiteMarker } from 'public/icons';
 
 type ModeType = 'main_banner' | 'recommend_banner';
@@ -19,17 +20,17 @@ const HomeSliderWithPagination = (props: { mode: ModeType }) => {
   const { mode } = props;
   const swiperRef = useRef<SwiperRef>(null);
 
-  const { data: mainBannerData } = useQuery({
+  const { data: mainBannerData } = useQuery<CarouselType[]>({
     queryKey: ['main-banner'],
     queryFn: () => getHomeCarousel('main_banner'),
   });
 
-  const { data: recommendBannerData } = useQuery({
+  const { data: recommendBannerData } = useQuery<CarouselType[]>({
     queryKey: ['recommend-banner'],
     queryFn: () => getHomeCarousel('recommend_banner'),
   });
 
-  const bannerData =
+  const bannerData: CarouselType[] | undefined =
     mode === 'main_banner' ? mainBannerData : recommendBannerData;
 
   const handlePrev = () => {
@@ -64,14 +65,18 @@ const HomeSliderWithPagination = (props: { mode: ModeType }) => {
         scrollbar={{ draggable: true }}
         className='relative'
       >
-        {bannerData?.map((building: any, index: number) => (
+        {bannerData?.map((building: CarouselType, index: number) => (
           <SwiperSlide key={building._id} virtualIndex={index}>
             <Link href={`/list/${building.contentId}`}>
               <HeroCard
                 mode={mode}
                 name={building.content.name}
                 address={building.content.address}
-                img={ROOT_IMAGE_URL + building.content.img.split(',')[0]}
+                img={
+                  building.content.img
+                    ? ROOT_IMAGE_URL + building.content.img.split(',')[0]
+                    : ''
+                }
               />
             </Link>
           </SwiperSlide>

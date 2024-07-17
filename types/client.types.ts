@@ -87,3 +87,12 @@ export interface ContactType {
   enterpath?: string;
   requests?: string;
 }
+
+export interface CarouselType {
+  _id: number;
+  pageType: string;
+  carouselType: string;
+  contentType: string;
+  contentId: number;
+  content: BuildingType;
+}

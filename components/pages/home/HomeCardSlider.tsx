@@ -6,6 +6,7 @@ import 'swiper/css/navigation';
 import { Autoplay, Navigation } from 'swiper/modules';
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 import { getHomeCarousel } from 'apis/api';
+import { CarouselType } from 'types/client.types';
 import BuildingCard from 'components/commons/BuildingCard';
 import { IconArrowNextButton, IconArrowPrevButton } from 'public/icons';
 
@@ -13,17 +14,17 @@ const HomeCardSlider = (props: { mode: 'primary' | 'secondary' }) => {
   const { mode } = props;
   const swiperRef = useRef<SwiperRef>(null);
 
-  const { data: primaryCarouselData } = useQuery({
+  const { data: primaryCarouselData } = useQuery<CarouselType[]>({
     queryKey: ['primary-carousel'],
     queryFn: () => getHomeCarousel('primary'),
   });
 
-  const { data: secondaryCarouselData } = useQuery({
+  const { data: secondaryCarouselData } = useQuery<CarouselType[]>({
     queryKey: ['secondary-carousel'],
     queryFn: () => getHomeCarousel('secondary'),
   });
 
-  const carouselData =
+  const carouselData: CarouselType[] | undefined =
     mode === 'primary' ? primaryCarouselData : secondaryCarouselData;
 
   const handlePrev = () => {
@@ -52,7 +53,7 @@ const HomeCardSlider = (props: { mode: 'primary' | 'secondary' }) => {
         scrollbar={{ draggable: true }}
         className='h-full w-full'
       >
-        {carouselData?.map((building: any, index: number) => {
+        {carouselData?.map((building: CarouselType, index: number) => {
           return (
             <SwiperSlide key={building._id} virtualIndex={index}>
               <BuildingCard

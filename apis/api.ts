@@ -1,6 +1,7 @@
 import {
   AsType,
   BuildingType,
+  CarouselType,
   CategoryType,
   ContactType,
   OrderType,
@@ -80,6 +81,7 @@ export const getHomeCarousel = async (
   type: 'main_banner' | 'primary' | 'secondary' | 'recommend_banner',
 ) => {
   const res = await instance.get(`/carousel/building/main?type=${type}`);
+  return res.data as CarouselType[];
 };
 
 // 지도 페이지 추천 건물
