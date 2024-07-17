@@ -187,7 +187,7 @@ const OneLayout = (props: {
       <div className='h-full w-full backdrop-blur-md'>
         <div
           onClick={() => setIndex(0)}
-          className={`relative mx-auto h-full cursor-pointer overflow-hidden ${page === 'map' ? '' : 'w-852'}`}
+          className={`relative mx-auto h-full cursor-pointer overflow-hidden ${page === 'map' ? 'w-full' : 'w-852 md:w-full'}`}
         >
           <Image src={imageUrl} fill className='object-cover' alt='빌딩 사진' />
         </div>

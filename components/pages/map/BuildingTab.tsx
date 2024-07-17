@@ -28,15 +28,19 @@ const BuildingTab = (props: { id: number }) => {
     const coord = buildingInfo.coord.split(',');
     const position = new window.kakao.maps.LatLng(Number(coord[0]), coord[1]);
 
-    const infoWindow = new window.kakao.maps.InfoWindow({
+    const imageSrc = '/icons/selected-pin.svg';
+    const imageSize = new window.kakao.maps.Size(62, 62);
+    const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
+
+    const marker = new window.kakao.maps.Marker({
       map,
       position,
-      content: buildingInfo.name,
+      image: markerImage,
       zIndex: 99,
     });
 
     return () => {
-      infoWindow.close();
+      marker.setMap(null);
     };
   }, [map, buildingInfo]);
 
@@ -50,11 +54,11 @@ const BuildingTab = (props: { id: number }) => {
     ?.map((url) => ROOT_IMAGE_URL + url);
 
   return (
-    <div className='flex h-full w-full flex-col overflow-y-auto overflow-x-hidden p-24'>
+    <div className='flex h-full w-full flex-col overflow-y-auto overflow-x-hidden p-24 md:p-0 md:pb-100'>
       <button
         type='button'
         onClick={handleGoBack}
-        className='mb-24 flex items-center gap-8 text-14 font-700'
+        className='mb-24 flex items-center gap-8 text-14 font-700 md:mb-16'
       >
         <IconArrowBack />
         뒤로가기
