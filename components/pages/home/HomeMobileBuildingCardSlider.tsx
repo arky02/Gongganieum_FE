@@ -23,8 +23,8 @@ const HomeMobileBuildingCardSlider = (props: {
     mode === 'primary' ? primaryCarouselData : secondaryCarouselData;
   return (
     // scrollbar-hide 사용
-    <div className='hidden w-[calc(100dvw-24px)] whitespace-nowrap scrollbar-hide md:flex md:overflow-x-scroll'>
-      <ScrollContainer className='md:flex md:gap-16'>
+    <div className='hidden w-[100dvw] whitespace-nowrap scrollbar-hide md:flex md:overflow-x-scroll'>
+      <ScrollContainer className='md:flex md:gap-16 md:px-24'>
         {carouselData?.map((building: any) => {
           return (
             <div key={building} className='inline-block'>
