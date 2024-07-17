@@ -37,10 +37,25 @@ const useSession = () => {
     redirectUri && router.push(redirectUri); // routePath로 리다이렉트
   };
 
-  const removeSession = (redirectUri: string) => {
+  const removeSession = (props: {
+    redirectUri: string;
+    toastMessage?: string;
+    toastType?: 'success' | 'error';
+  }) => {
+    const {
+      redirectUri,
+      toastMessage = '로그아웃 되었습니다!',
+      toastType = 'success',
+    } = props;
+
     removeCookie('access_token', { path: '/' });
     removeCookie('session', { path: '/' });
-    toast.success('로그아웃 되었습니다!');
+    if (toastType === 'success') {
+      toast.success(toastMessage);
+    } else {
+      toast.error(toastMessage);
+    }
+
     router.push(redirectUri);
   };
 

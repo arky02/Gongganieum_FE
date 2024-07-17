@@ -1,9 +1,10 @@
+import { AxiosError } from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ReactNode, useEffect, useState } from 'react';
 import useSession from 'hooks/useSession';
 import { requestUserRole } from 'apis/auth';
-import { RoleType } from 'types/client.types';
+import { ERROR_TYPE, RoleType } from 'types/client.types';
 import { IconHamburgerMenu, IconLogo, IconSearch } from 'public/icons';
 import PortalModal from './PortalModal';
 import SearchInput from './SearchInput';
@@ -42,7 +43,7 @@ const Header = () => {
   ];
 
   const handleLogout = () => {
-    removeSession('/');
+    removeSession({ redirectUri: '/' });
   };
 
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
@@ -58,7 +59,21 @@ const Header = () => {
       const isSignUpNeeded = roleRes === 'GUEST';
       setIsSignUpModalOpen(isSignUpNeeded);
     } catch (error) {
-      removeSession('/');
+      const knownError = error as AxiosError<{ error: ERROR_TYPE }>;
+      const errorMessage = knownError.response?.data.error;
+      if (errorMessage === 'USER_SESSION_EXPIRED') {
+        removeSession({
+          redirectUri: '/',
+          toastMessage: '세션이 만료되었습니다. 다시 로그인해주세요',
+          toastType: 'error',
+        });
+      } else {
+        removeSession({
+          redirectUri: '/',
+          toastMessage: '에러가 발생했습니다. 다시 로그인해주세요.',
+          toastType: 'error',
+        });
+      }
     }
   };
 

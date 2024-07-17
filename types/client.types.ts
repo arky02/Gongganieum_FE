@@ -89,3 +89,5 @@ export interface ContactType {
   enterpath?: string;
   requests?: string;
 }
+
+export type ERROR_TYPE = 'USER_SIGNED_OUT' | 'USER_SESSION_EXPIRED';
