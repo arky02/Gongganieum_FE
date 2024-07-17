@@ -1,33 +1,39 @@
+import { useQuery } from '@tanstack/react-query';
 import { ScrollContainer } from 'react-indiana-drag-scroll';
 import 'react-indiana-drag-scroll/dist/style.css';
+import { getHomeCarousel } from 'apis/api';
 import BuildingCard from 'components/commons/BuildingCard';
 
-const MOCK_BUILDING_IMAGE_URLS = [
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image2.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image2.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image2.jpg',
-  '/images/mock-building-image.jpg',
-];
+const HomeMobileBuildingCardSlider = (props: {
+  mode: 'primary' | 'secondary';
+}) => {
+  const { mode } = props;
 
-const HomeMobileBuildingCardSlider = () => {
+  const { data: primaryCarouselData } = useQuery({
+    queryKey: ['primary-carousel'],
+    queryFn: () => getHomeCarousel('primary'),
+  });
+
+  const { data: secondaryCarouselData } = useQuery({
+    queryKey: ['secondary-carousel'],
+    queryFn: () => getHomeCarousel('secondary'),
+  });
+
+  const carouselData =
+    mode === 'primary' ? primaryCarouselData : secondaryCarouselData;
   return (
     // scrollbar-hide 사용
     <div className='hidden w-[calc(100dvw-24px)] whitespace-nowrap scrollbar-hide md:flex md:overflow-x-scroll'>
       <ScrollContainer className='md:flex md:gap-16'>
-        {MOCK_BUILDING_IMAGE_URLS.map((slideImage) => {
+        {carouselData?.map((building: any) => {
           return (
-            <div key={slideImage} className='inline-block'>
-              {/* <BuildingCard
+            <div key={building} className='inline-block'>
+              <BuildingCard
                 mode='home'
-                _id={0}
-                name='노송 오재'
-                address='전라도 전주시'
-                tag='안녕, 디지몬'
-                img={slideImage}
-              /> */}
+                key={building._id}
+                _id={building.contentId}
+                building={building.content}
+              />
             </div>
           );
         })}

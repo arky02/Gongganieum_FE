@@ -13,14 +13,13 @@ type LikeType = 'like' | 'home' | 'none';
 
 const BuildingCard = (props: {
   mode: LikeType;
+  _id: number;
   building: BuildingType;
   isLiked?: boolean;
 }) => {
-  const { mode, isLiked, building } = props;
+  const { mode, _id, isLiked, building } = props;
 
-  const { _id, name, address, isours, tag, cate, img, latest_end_date } =
-    building;
-  console.log(building);
+  const { name, address, isours, tag, cate, img, latest_end_date } = building;
 
   const isPopup = new Date(latest_end_date ?? '') > new Date();
   const parsedTags = tag === 'NULL' ? [] : tag?.split(',');

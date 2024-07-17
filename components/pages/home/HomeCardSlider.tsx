@@ -26,8 +26,6 @@ const HomeCardSlider = (props: { mode: 'primary' | 'secondary' }) => {
   const carouselData =
     mode === 'primary' ? primaryCarouselData : secondaryCarouselData;
 
-  console.log('carouselData', carouselData);
-
   const handlePrev = () => {
     if (swiperRef.current) {
       swiperRef.current.swiper.slidePrev();
@@ -60,6 +58,7 @@ const HomeCardSlider = (props: { mode: 'primary' | 'secondary' }) => {
               <BuildingCard
                 mode='home'
                 key={building._id}
+                _id={building.contentId}
                 building={building.content}
               />
             </SwiperSlide>

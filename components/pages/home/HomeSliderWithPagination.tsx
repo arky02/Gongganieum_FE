@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { ROOT_IMAGE_URL } from 'constants/common';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRef } from 'react';
 import 'swiper/css';
 import 'swiper/css/autoplay';
@@ -65,12 +66,14 @@ const HomeSliderWithPagination = (props: { mode: ModeType }) => {
       >
         {bannerData?.map((building: any, index: number) => (
           <SwiperSlide key={building._id} virtualIndex={index}>
-            <HeroCard
-              mode={mode}
-              name={building.content.name}
-              address={building.content.address}
-              img={ROOT_IMAGE_URL + building.content.img.split(',')[0]}
-            />
+            <Link href={`/list/${building.contentId}`}>
+              <HeroCard
+                mode={mode}
+                name={building.content.name}
+                address={building.content.address}
+                img={ROOT_IMAGE_URL + building.content.img.split(',')[0]}
+              />
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>

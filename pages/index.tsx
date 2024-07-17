@@ -38,13 +38,13 @@ const Home = () => {
       <div className='md:mx-24'>
         <h1 className='mb-24 text-32 font-800'>이번 주 핫한 건물</h1>
         <HomeCardSlider mode='primary' />
-        <HomeMobileBuildingCardSlider />
+        <HomeMobileBuildingCardSlider mode='primary' />
       </div>
       <HomeBanner />
       <div className='md:mx-24'>
         <h1 className='mb-24 text-32 font-800'>서울 성동구 인기 건물</h1>
         <HomeCardSlider mode='secondary' />
-        <HomeMobileBuildingCardSlider />
+        <HomeMobileBuildingCardSlider mode='secondary' />
       </div>
       <div className='grid h-full w-full grid-cols-2 md:flex md:flex-col'>
         <HomeEditorRecommend />

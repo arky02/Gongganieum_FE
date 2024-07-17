@@ -104,6 +104,7 @@ const List = () => {
             <BuildingCard
               mode='like'
               key={building._id}
+              _id={building._id}
               building={building}
               isLiked={likeBuildingIds?.includes(building._id)}
             />
