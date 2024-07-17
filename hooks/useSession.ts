@@ -9,7 +9,7 @@ export interface SessionType {
   role: RoleType;
 }
 
-const LOGIN_TIME = 3600 * 1000 * 3; //3시간
+const LOGIN_TIME = 3600 * 1000 * 3; // 3시간
 
 const useSession = () => {
   const [cookie, setCookie, removeCookie] = useCookies([

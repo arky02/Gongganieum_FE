@@ -36,8 +36,7 @@ const ProfileModal = (props: {
       },
     });
 
-  const { getSession, setSession } = useSession();
-  const session = getSession();
+  const { setSession } = useSession();
 
   const [tags, setTags] = useState<string[]>([]);
   const [tagText, setTagText] = useState('');
