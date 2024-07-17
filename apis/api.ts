@@ -77,7 +77,7 @@ export const postBuildingContact = async (data: ContactType) => {
 
 // 홈페이지 캐러셀 이미지 조회 (타입: 메인, 프라이머리, 세컨더리, 추천)
 export const getHomeCarousel = async (
-  type: 'main_banner' | 'primary' | 'secondary' | 'recommand_banner',
+  type: 'main_banner' | 'primary' | 'secondary' | 'recommend_banner',
 ) => {
   const res = await instance.get(`/carousel/building/main?type=${type}`);
   return res.data as BuildingType[];

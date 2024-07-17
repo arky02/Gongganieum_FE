@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query';
+import { ROOT_IMAGE_URL } from 'constants/common';
 import Image from 'next/image';
 import { useRef } from 'react';
 import 'swiper/css';
@@ -7,21 +9,27 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
+import { getHomeCarousel } from 'apis/api';
 import { IconArrowLeft, IconArrowRight, IconWhiteMarker } from 'public/icons';
 
-const MOCK_BUILDING_IMAGE_URLS = [
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image2.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image2.jpg',
-  '/images/mock-building-image.jpg',
-];
-
-type ModeType = 'hero' | 'recommend';
+type ModeType = 'main_banner' | 'recommend_banner';
 
 const HomeSliderWithPagination = (props: { mode: ModeType }) => {
   const { mode } = props;
   const swiperRef = useRef<SwiperRef>(null);
+
+  const { data: mainBannerData } = useQuery({
+    queryKey: ['main-banner', 'recommend-banner'],
+    queryFn: () => getHomeCarousel('main_banner'),
+  });
+
+  const { data: recommendBannerData } = useQuery({
+    queryKey: ['recommend-banner'],
+    queryFn: () => getHomeCarousel('recommend_banner'),
+  });
+
+  const bannerData =
+    mode === 'main_banner' ? mainBannerData : recommendBannerData;
 
   const handlePrev = () => {
     if (swiperRef.current) {
@@ -55,21 +63,21 @@ const HomeSliderWithPagination = (props: { mode: ModeType }) => {
         scrollbar={{ draggable: true }}
         className='relative'
       >
-        {MOCK_BUILDING_IMAGE_URLS.map((slideImage, index) => (
-          <SwiperSlide key={slideImage} virtualIndex={index}>
+        {bannerData?.map((building: any, index) => (
+          <SwiperSlide key={building._id} virtualIndex={index}>
             {/* TODO: 데이터 교체 */}
             <HeroCard
               mode={mode}
-              name='노송 오재'
-              address='전라도 전주시'
-              img={slideImage}
+              name={building.content.name}
+              address={building.content.address}
+              img={ROOT_IMAGE_URL + building.content.img.split(',')[0]}
             />
           </SwiperSlide>
         ))}
       </Swiper>
       {/* pagination */}
       <div
-        className={`absolute ${mode === 'hero' ? 'bottom-[62px]' : 'bottom-[78px]'} left-256 z-base flex gap-4 md:bottom-24 md:left-220`}
+        className={`absolute bottom-[62px] left-256 z-base flex gap-4 md:bottom-24 md:left-220`}
       >
         <button
           className='h-16 w-16 text-white md:h-20 md:w-20'
@@ -100,34 +108,34 @@ const HeroCard = (props: {
 
   return (
     <div
-      className={`relative ${mode === 'hero' ? 'h-600' : 'h-760'} w-full  flex-col md:aspect-square md:h-full`}
+      className={`relative ${mode === 'main_banner' ? 'h-600' : 'h-760'} w-full  flex-col md:aspect-square md:h-full`}
     >
       <Image
         src={img}
         fill
-        className={`cursor-pointer ${mode === 'hero' ? 'rounded-12' : ''} object-cover md:rounded-none`}
+        className={`cursor-pointer ${mode === 'main_banner' ? 'rounded-12' : ''} object-cover md:rounded-none`}
         alt='빌딩 이미지'
         quality={100}
       />
       {/* Overlay */}
       <div
-        className={`absolute inset-0  ${mode === 'hero' ? 'rounded-12' : ''} bg-gradient-to-tr from-black via-transparent to-transparent opacity-80 md:rounded-none`}
+        className={`absolute inset-0  ${mode === 'main_banner' ? 'rounded-12' : ''} bg-gradient-to-tr from-black via-transparent to-transparent opacity-80 md:rounded-none`}
       ></div>
       {/* Description */}
       <div
-        className={`absolute bottom-80 left-56 ${mode === 'hero' ? 'md:bottom-64' : 'md:bottom-60'} md:left-16`}
+        className={`absolute bottom-80 left-56 ${mode === 'main_banner' ? 'md:bottom-64' : 'md:bottom-60'} md:left-16`}
       >
         <h4
-          className={`text-18 font-500 text-white opacity-70  ${mode === 'recommend' && 'hidden'}`}
+          className={`text-18 font-500 text-white opacity-70  ${mode === 'recommend_banner' && 'hidden'}`}
         >
           에디터 큐레이션
         </h4>
         <h2 className={`mb-8 text-32 font-800 text-white md:text-24`}>
-          {mode === 'hero' ? '공간이음 이달의 인기 건물' : name}
+          {mode === 'main_banner' ? '공간이음 이달의 인기 건물' : name}
         </h2>
         <div className='flex items-center gap-8 text-16 font-500 text-white opacity-70 md:text-[15px]'>
-          {mode === 'hero' && <IconWhiteMarker />}
-          {mode === 'hero' ? `${name} | ${address}` : address}
+          {mode === 'main_banner' && <IconWhiteMarker />}
+          {mode === 'main_banner' ? `${name} | ${address}` : address}
         </div>
       </div>
     </div>

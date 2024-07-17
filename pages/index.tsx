@@ -34,7 +34,7 @@ const Home = () => {
 
   return (
     <div className='mb-76 mt-76 flex  flex-col items-center justify-center gap-76 md:mt-0 md:items-start'>
-      <HomeSliderWithPagination mode='hero' />
+      <HomeSliderWithPagination mode='main_banner' />
       <div className='md:mx-24'>
         <h1 className='mb-24 text-32 font-800'>이번 주 핫한 건물</h1>
         <HomeCardSlider />
@@ -48,7 +48,7 @@ const Home = () => {
       </div>
       <div className='grid h-full w-full grid-cols-2 md:flex md:flex-col'>
         <HomeEditorRecommend />
-        <HomeSliderWithPagination mode='recommend' />
+        <HomeSliderWithPagination mode='recommend_banner' />
       </div>
       <div className='md:mx-24'>
         <h1 className='mb-24 text-32 font-800'>인기 매거진 소개</h1>
