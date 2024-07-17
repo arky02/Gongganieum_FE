@@ -62,6 +62,8 @@ export interface BuildingDataType {
 
 export type PageType = 'map' | 'description';
 
+export type RoleType = 'GUEST' | 'USER' | 'SIGNED_OUT';
+
 export interface UserDataType {
   _id: number;
   name: string;
@@ -72,7 +74,7 @@ export interface UserDataType {
   brand: string;
   company: string;
   tag: string;
-  role: 'GUEST' | 'USER' | 'SIGNED_OUT';
+  role: RoleType;
 }
 export interface ContactType {
   buildingId: number;

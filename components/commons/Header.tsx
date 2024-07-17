@@ -1,20 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
-import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ReactNode, useEffect, useState } from 'react';
 import { useStore } from 'store';
-import useManageUserAccessToken from 'hooks/useManageAccessToken';
+import useSession from 'hooks/useSession';
 import { getMyInfo } from 'apis/api';
 import { UserDataType } from 'types/client.types';
 import { IconHamburgerMenu, IconLogo, IconSearch } from 'public/icons';
 import SearchInput from './SearchInput';
 
 const Header = () => {
-  const access_token = Cookies.get('access_token');
-
-  const [doesAccessTokenExist, setDoesAccessTokenExist] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+
+  const { getSession, removeSession } = useSession();
+  const session = getSession();
 
   const TABS = [
     { name: '홈', path: '/', href: '/' },
@@ -32,32 +31,13 @@ const Header = () => {
     {
       name: '마이페이지',
       path: '/mypage',
-      href: doesAccessTokenExist ? '/mypage' : '/login',
+      href: session ? '/mypage' : '/login',
     },
   ];
 
-  const { data: userInfo }: { data?: UserDataType } = useQuery({
-    queryKey: ['userInfo'],
-    queryFn: () => getMyInfo(),
-  });
-
-  const { userId, setUserId } = useStore((state) => ({
-    userId: state.userId,
-    setUserId: state.setUserId,
-  }));
-
-  const { removeUserAccessToken } = useManageUserAccessToken();
-
-  useEffect(() => {
-    setDoesAccessTokenExist(access_token !== undefined);
-    if (doesAccessTokenExist && userId === null) {
-      setUserId(userInfo?._id);
-    }
-
-    if (!doesAccessTokenExist) {
-      setUserId(null);
-    }
-  }, [access_token, userInfo, doesAccessTokenExist]);
+  const handleLogout = () => {
+    removeSession('/');
+  };
 
   return (
     <div>
@@ -111,10 +91,10 @@ const Header = () => {
             >
               <IconSearch />
             </Link>
-            {doesAccessTokenExist ? (
+            {session ? (
               <div
                 className='flex h-40 w-68 shrink-0 items-center justify-center rounded-8 border border-black bg-white text-14 font-600 text-black hover:bg-black hover:text-white'
-                onClick={() => removeUserAccessToken({ redirectUri: '/' })}
+                onClick={handleLogout}
               >
                 로그아웃
               </div>
