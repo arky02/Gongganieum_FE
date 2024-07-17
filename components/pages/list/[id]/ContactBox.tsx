@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import useOutsideClick from 'hooks/useOutsideClick';
+import useSession from 'hooks/useSession';
 import { IconKakaoLogo, IconLink, IconMarker, IconShare } from 'public/icons';
 
 const ContactBox = (props: { name: string; address: string; id: number }) => {
@@ -41,6 +42,9 @@ const ContactBox = (props: { name: string; address: string; id: number }) => {
     setIsShareVisible(false);
   };
 
+  const { getSession } = useSession();
+  const session = getSession();
+
   return (
     <div
       ref={ref}
@@ -60,7 +64,7 @@ const ContactBox = (props: { name: string; address: string; id: number }) => {
           <IconShare />
         </button>
         <Link
-          href={`/contact/${id}`}
+          href={session ? `/contact/${id}` : '/login'}
           className='flex h-full w-full items-center justify-center rounded-8 bg-black text-16 font-700 text-white'
         >
           문의하기

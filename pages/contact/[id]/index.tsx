@@ -1,7 +1,8 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import useSession from 'hooks/useSession';
 import { getBuildingInfo } from 'apis/api';
 import Banner from 'components/pages/contact/Banner';
 import ContactFunnel from 'components/pages/contact/ContactFunnel';
@@ -57,10 +58,18 @@ const BuildingContact = () => {
 
   const [submitted, setSubmitted] = useState(false);
 
+  const { getSession } = useSession();
+  useEffect(() => {
+    const session = getSession();
+    if (!session) {
+      router.push('/');
+    }
+  }, []);
+
   return (
     <div className='flex h-[calc(100dvh-72px)] min-h-640 w-screen'>
       <Banner />
-      <div className='mx-auto my-auto flex h-full max-h-640 w-full max-w-564 shrink-0 flex-col gap-24 overflow-y-scroll px-16 md:mt-56 md:w-full'>
+      <div className='mx-auto my-auto flex h-full max-h-640 w-full max-w-592 shrink-0 flex-col gap-24 overflow-y-scroll px-16 md:mt-56 md:w-full'>
         {submitted ? (
           <FinishStep />
         ) : (

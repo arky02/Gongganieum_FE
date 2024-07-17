@@ -66,7 +66,7 @@ const UsageInfoStep = (props: {
   return (
     <div className='flex w-full flex-col gap-16'>
       <div className='w-full'>
-        <div className='grid w-full grid-cols-2 gap-12 md:grid-cols-1 md:grid-rows-2'>
+        <div className='flex w-full flex-col gap-12'>
           <DateInput
             label='일정'
             startDate={primaryStartDate}
