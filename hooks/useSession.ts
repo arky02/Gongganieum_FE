@@ -13,8 +13,8 @@ const LOGIN_TIME = 3600 * 1000 * 3; // 3시간
 
 const useSession = () => {
   const [cookie, setCookie, removeCookie] = useCookies([
-    'session',
-    'access_token',
+    'session', // 유저 정보를 담는 쿠키
+    'access_token', // 백엔드에서 받는 토큰을 담는 쿠키
   ]);
   const router = useRouter();
 
