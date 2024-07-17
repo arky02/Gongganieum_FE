@@ -90,4 +90,13 @@ export interface ContactType {
   requests?: string;
 }
 
+export interface CarouselType {
+  _id: number;
+  pageType: string;
+  carouselType: string;
+  contentType: string;
+  contentId: number;
+  content: BuildingType;
+}
+
 export type ERROR_TYPE = 'USER_SIGNED_OUT' | 'USER_SESSION_EXPIRED';

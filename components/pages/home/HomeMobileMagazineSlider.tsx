@@ -15,8 +15,8 @@ const MOCK_BUILDING_IMAGE_URLS = [
 // TODO: 매거진 데이터 갈아끼우기
 const HomeMobileMagazineSlider = () => {
   return (
-    <div className='scrollbar-hide hidden w-[calc(100dvw-24px)] whitespace-nowrap md:flex md:gap-16 md:overflow-x-scroll'>
-      <ScrollContainer className='md: flex gap-16'>
+    <div className='hidden w-[100dvw] whitespace-nowrap scrollbar-hide md:flex md:gap-16 md:overflow-x-scroll'>
+      <ScrollContainer className='md:flex md:gap-16 md:px-24'>
         {MOCK_BUILDING_IMAGE_URLS.slice(0, 3).map((slideImage) => {
           return (
             <div key={slideImage} className='inline-block'>
