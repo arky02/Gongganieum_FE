@@ -1,11 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ReactNode, useEffect, useState } from 'react';
-import { useStore } from 'store';
 import useSession from 'hooks/useSession';
-import { getMyInfo } from 'apis/api';
-import { UserDataType } from 'types/client.types';
 import { IconHamburgerMenu, IconLogo, IconSearch } from 'public/icons';
 import SearchInput from './SearchInput';
 
@@ -13,7 +9,14 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { getSession, removeSession } = useSession();
+
   const session = getSession();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const newSession = getSession();
+    setIsLoggedIn(!!newSession);
+  }, [session]);
 
   const TABS = [
     { name: '홈', path: '/', href: '/' },
@@ -31,7 +34,7 @@ const Header = () => {
     {
       name: '마이페이지',
       path: '/mypage',
-      href: session ? '/mypage' : '/login',
+      href: isLoggedIn ? '/mypage' : '/login',
     },
   ];
 
@@ -91,7 +94,7 @@ const Header = () => {
             >
               <IconSearch />
             </Link>
-            {session ? (
+            {isLoggedIn ? (
               <div
                 className='flex h-40 w-68 shrink-0 items-center justify-center rounded-8 border border-black bg-white text-14 font-600 text-black hover:bg-black hover:text-white'
                 onClick={handleLogout}
