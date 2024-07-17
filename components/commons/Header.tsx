@@ -2,12 +2,15 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ReactNode, useEffect, useState } from 'react';
 import useSession from 'hooks/useSession';
+import { requestUserRole } from 'apis/auth';
+import { RoleType } from 'types/client.types';
 import { IconHamburgerMenu, IconLogo, IconSearch } from 'public/icons';
+import PortalModal from './PortalModal';
 import SearchInput from './SearchInput';
+import ProfileModal from './modals/ProfileModal';
+import WelcomeModal from './modals/WelcomeModal';
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
   const { getSession, removeSession } = useSession();
 
   const session = getSession();
@@ -42,79 +45,111 @@ const Header = () => {
     removeSession('/');
   };
 
+  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
+  const [signUpStatus, setSignUpStatus] = useState('welcome');
+
+  const onNextClick = () => {
+    setSignUpStatus(() => 'signUp');
+  };
+
+  const reqUserRole = async () => {
+    const roleRes: RoleType = await requestUserRole();
+
+    const isSignUpNeeded = roleRes === 'GUEST';
+
+    console.log('RUN ', roleRes);
+
+    setIsSignUpModalOpen(isSignUpNeeded);
+  };
+
+  useEffect(() => {
+    reqUserRole();
+  }, [isLoggedIn]);
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <div>
-      {/* Hamburger Menu Content */}
-      {isOpen && (
-        <>
-          <div className='fixed top-64 z-[4] hidden w-full animate-slideDown flex-col items-start gap-32 bg-white p-20 md:flex'>
-            {TABS.map((el) => (
-              <Link
-                key={el.name}
-                href={el.href}
-                onClick={() => setIsOpen(false)}
-                className='text-gray-700 flex h-24 w-full items-center justify-center gap-12 text-16 font-500'
-              >
-                {el.name}
-              </Link>
-            ))}
-          </div>
-          <div
-            onClick={() => setIsOpen(false)}
-            className='fixed bottom-0 left-0 z-[3] flex h-screen w-full items-end justify-center bg-[#32363e] bg-opacity-70'
-          />
-        </>
-      )}
-      {/* Content */}
-      <header className='sticky top-0 z-nav h-72 w-full border-b border-[#000]/5 bg-white md:z-popup md:h-64'>
-        <div className='m-auto flex h-full max-w-1224 items-center justify-between px-16'>
-          <Link href='/' className='h-32 w-120 md:h-24 md:w-100'>
-            <IconLogo />
-          </Link>
-          <div className='flex h-full gap-60 md:hidden'>
-            {TABS.map((tab) => (
-              <TabButton key={tab.name} path={tab.path} href={tab.href}>
-                {tab.name}
-              </TabButton>
-            ))}
-          </div>
-          <div className='flex items-center gap-12'>
-            <div className='md:hidden'>
-              <SearchBar />
-            </div>
-            <button
-              onClick={() => setIsOpen((prev) => !prev)}
-              className='hidden h-28 w-28 md:inline'
-            >
-              <IconHamburgerMenu />
-            </button>
-            <Link
-              href='/list?as=지역명&q=&order=&cate=전체&isours=false'
-              className='hidden md:inline'
-            >
-              <IconSearch />
-            </Link>
-            {isLoggedIn ? (
-              <div
-                className='flex h-40 w-68 shrink-0 items-center justify-center rounded-8 border border-black bg-white text-14 font-600 text-black hover:bg-black hover:text-white'
-                onClick={handleLogout}
-              >
-                로그아웃
-              </div>
-            ) : (
-              <div>
+    <>
+      <div>
+        {/* Hamburger Menu Content */}
+        {isMenuOpen && (
+          <>
+            <div className='fixed top-64 z-[4] hidden w-full animate-slideDown flex-col items-start gap-32 bg-white p-20 md:flex'>
+              {TABS.map((el) => (
                 <Link
-                  href='/login'
-                  className='flex h-40 w-68 shrink-0 items-center justify-center rounded-8 bg-black text-14 font-600 text-white'
+                  key={el.name}
+                  href={el.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className='text-gray-700 flex h-24 w-full items-center justify-center gap-12 text-16 font-500'
                 >
-                  로그인
+                  {el.name}
                 </Link>
+              ))}
+            </div>
+            <div
+              onClick={() => setIsMenuOpen(false)}
+              className='fixed bottom-0 left-0 z-[3] flex h-screen w-full items-end justify-center bg-[#32363e] bg-opacity-70'
+            />
+          </>
+        )}
+        {/* Content */}
+        <header className='sticky top-0 z-nav h-72 w-full border-b border-[#000]/5 bg-white md:z-popup md:h-64'>
+          <div className='m-auto flex h-full max-w-1224 items-center justify-between px-16'>
+            <Link href='/' className='h-32 w-120 md:h-24 md:w-100'>
+              <IconLogo />
+            </Link>
+            <div className='flex h-full gap-60 md:hidden'>
+              {TABS.map((tab) => (
+                <TabButton key={tab.name} path={tab.path} href={tab.href}>
+                  {tab.name}
+                </TabButton>
+              ))}
+            </div>
+            <div className='flex items-center gap-12'>
+              <div className='md:hidden'>
+                <SearchBar />
               </div>
-            )}
+              <button
+                onClick={() => setIsMenuOpen((prev) => !prev)}
+                className='hidden h-28 w-28 md:inline'
+              >
+                <IconHamburgerMenu />
+              </button>
+              <Link
+                href='/list?as=지역명&q=&order=&cate=전체&isours=false'
+                className='hidden md:inline'
+              >
+                <IconSearch />
+              </Link>
+              {isLoggedIn ? (
+                <div
+                  className='flex h-40 w-68 shrink-0 items-center justify-center rounded-8 border border-black bg-white text-14 font-600 text-black hover:bg-black hover:text-white'
+                  onClick={handleLogout}
+                >
+                  로그아웃
+                </div>
+              ) : (
+                <div>
+                  <Link
+                    href='/login'
+                    className='flex h-40 w-68 shrink-0 items-center justify-center rounded-8 bg-black text-14 font-600 text-white'
+                  >
+                    로그인
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      </header>
-    </div>
+        </header>
+      </div>
+      <PortalModal openStatus={isSignUpModalOpen}>
+        {signUpStatus === 'welcome' ? (
+          <WelcomeModal handleNextClick={onNextClick} />
+        ) : (
+          <ProfileModal setIsModalOpen={setIsSignUpModalOpen} />
+        )}
+      </PortalModal>
+    </>
   );
 };
 

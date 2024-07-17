@@ -12,12 +12,21 @@ export interface SessionType {
 const LOGIN_TIME = 3600 * 1000 * 3; //3시간
 
 const useSession = () => {
-  const [cookie, setCookie, removeCookie] = useCookies(['session']);
+  const [cookie, setCookie, removeCookie] = useCookies([
+    'session',
+    'access_token',
+  ]);
   const router = useRouter();
 
   const setSession = (data: SessionType, redirectUri?: string) => {
     const expiration = new Date(Date.now() + LOGIN_TIME);
 
+    setCookie('access_token', data.accessToken, {
+      secure: false,
+      sameSite: 'lax',
+      path: '/',
+      expires: expiration,
+    });
     setCookie('session', JSON.stringify(data), {
       secure: false,
       sameSite: 'lax',
@@ -29,6 +38,7 @@ const useSession = () => {
   };
 
   const removeSession = (redirectUri: string) => {
+    removeCookie('access_token', { path: '/' });
     removeCookie('session', { path: '/' });
     toast.success('로그아웃 되었습니다!');
     router.push(redirectUri);
