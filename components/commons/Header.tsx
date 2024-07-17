@@ -53,17 +53,19 @@ const Header = () => {
   };
 
   const reqUserRole = async () => {
-    const roleRes: RoleType = await requestUserRole();
-
-    const isSignUpNeeded = roleRes === 'GUEST';
-
-    console.log('RUN ', roleRes);
-
-    setIsSignUpModalOpen(isSignUpNeeded);
+    try {
+      const roleRes: RoleType = await requestUserRole();
+      const isSignUpNeeded = roleRes === 'GUEST';
+      setIsSignUpModalOpen(isSignUpNeeded);
+    } catch (error) {
+      removeSession('/');
+    }
   };
 
   useEffect(() => {
-    reqUserRole();
+    if (isLoggedIn) {
+      reqUserRole();
+    }
   }, [isLoggedIn]);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);

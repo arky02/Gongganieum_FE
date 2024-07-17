@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import useSession from 'hooks/useSession';
 import { getBuildings, getLikeBuildingIds, getMyInfo } from 'apis/api';
 import { BuildingType, UserDataType } from 'types/client.types';
 import BuildingCard from 'components/commons/BuildingCard';
@@ -30,6 +32,16 @@ const Mypage = () => {
   });
 
   const handleClick = () => setIsModalOpen(!isModalOpen);
+
+  const router = useRouter();
+  const { getSession } = useSession();
+  const session = getSession();
+
+  useEffect(() => {
+    if (!session) {
+      router.push('/login');
+    }
+  }, []);
 
   return (
     <div className='mx-auto my-76 flex max-w-1232 flex-col items-center md:my-56'>

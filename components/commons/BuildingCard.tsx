@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import router from 'next/router';
 import { MouseEvent, useState } from 'react';
+import useSession from 'hooks/useSession';
 import { postLikeToggle } from 'apis/api';
 import { BuildingType } from 'types/client.types';
 import Tag from 'components/commons/Tag';
@@ -27,11 +28,13 @@ const BuildingCard = (props: {
   // TODO: home에서 뿌려주는 데이터가 없어서 홈에서 에러 뜹니다.
   const imageSrc = img?.split(', ')?.map((url: string) => ROOT_IMAGE_URL + url);
 
+  const { removeSession } = useSession();
+
   const [isLike, setIsLike] = useState(isLiked);
   const likeMutation = useMutation({
     mutationFn: () => postLikeToggle(_id),
     onError: () => {
-      router.push('/login');
+      removeSession('/login');
     },
   });
 
