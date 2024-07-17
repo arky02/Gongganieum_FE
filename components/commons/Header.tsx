@@ -1,20 +1,26 @@
-import { useQuery } from '@tanstack/react-query';
-import Cookies from 'js-cookie';
+import { AxiosError } from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ReactNode, useEffect, useState } from 'react';
-import { useStore } from 'store';
-import useManageUserAccessToken from 'hooks/useManageAccessToken';
-import { getMyInfo } from 'apis/api';
-import { UserDataType } from 'types/client.types';
+import useSession from 'hooks/useSession';
+import { requestUserRole } from 'apis/auth';
+import { ERROR_TYPE, RoleType } from 'types/client.types';
 import { IconHamburgerMenu, IconLogo, IconSearch } from 'public/icons';
+import PortalModal from './PortalModal';
 import SearchInput from './SearchInput';
+import ProfileModal from './modals/ProfileModal';
+import WelcomeModal from './modals/WelcomeModal';
 
 const Header = () => {
-  const access_token = Cookies.get('access_token');
+  const { getSession, removeSession } = useSession();
 
-  const [doesAccessTokenExist, setDoesAccessTokenExist] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const session = getSession();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const newSession = getSession();
+    setIsLoggedIn(!!newSession);
+  }, [session]);
 
   const TABS = [
     { name: '홈', path: '/', href: '/' },
@@ -32,106 +38,135 @@ const Header = () => {
     {
       name: '마이페이지',
       path: '/mypage',
-      href: doesAccessTokenExist ? '/mypage' : '/login',
+      href: isLoggedIn ? '/mypage' : '/login',
     },
   ];
 
-  const { data: userInfo }: { data?: UserDataType } = useQuery({
-    queryKey: ['userInfo'],
-    queryFn: () => getMyInfo(),
-  });
+  const handleLogout = () => {
+    removeSession({ redirectUri: '/' });
+  };
 
-  const { userId, setUserId } = useStore((state) => ({
-    userId: state.userId,
-    setUserId: state.setUserId,
-  }));
+  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
+  const [signUpStatus, setSignUpStatus] = useState('welcome');
 
-  const { removeUserAccessToken } = useManageUserAccessToken();
+  const onNextClick = () => {
+    setSignUpStatus(() => 'signUp');
+  };
+
+  const reqUserRole = async () => {
+    try {
+      const roleRes: RoleType = await requestUserRole();
+      const isSignUpNeeded = roleRes === 'GUEST';
+      setIsSignUpModalOpen(isSignUpNeeded);
+    } catch (error) {
+      const knownError = error as AxiosError<{ error: ERROR_TYPE }>;
+      const errorMessage = knownError.response?.data.error;
+      if (errorMessage === 'USER_SESSION_EXPIRED') {
+        removeSession({
+          redirectUri: '/',
+          toastMessage: '세션이 만료되었습니다. 다시 로그인해주세요',
+          toastType: 'error',
+        });
+      } else {
+        removeSession({
+          redirectUri: '/',
+          toastMessage: '에러가 발생했습니다. 다시 로그인해주세요.',
+          toastType: 'error',
+        });
+      }
+    }
+  };
 
   useEffect(() => {
-    setDoesAccessTokenExist(access_token !== undefined);
-    if (doesAccessTokenExist && userId === null) {
-      setUserId(userInfo?._id);
+    if (isLoggedIn) {
+      reqUserRole();
     }
+  }, [isLoggedIn]);
 
-    if (!doesAccessTokenExist) {
-      setUserId(null);
-    }
-  }, [access_token, userInfo, doesAccessTokenExist]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div>
-      {/* Hamburger Menu Content */}
-      {isOpen && (
-        <>
-          <div className='fixed top-64 z-[4] hidden w-full animate-slideDown flex-col items-start gap-32 bg-white p-20 md:flex'>
-            {TABS.map((el) => (
-              <Link
-                key={el.name}
-                href={el.href}
-                onClick={() => setIsOpen(false)}
-                className='text-gray-700 flex h-24 w-full items-center justify-center gap-12 text-16 font-500'
-              >
-                {el.name}
-              </Link>
-            ))}
-          </div>
-          <div
-            onClick={() => setIsOpen(false)}
-            className='fixed bottom-0 left-0 z-[3] flex h-screen w-full items-end justify-center bg-[#32363e] bg-opacity-70'
-          />
-        </>
-      )}
-      {/* Content */}
-      <header className='sticky top-0 z-nav h-72 w-full border-b border-[#000]/5 bg-white md:z-popup md:h-64'>
-        <div className='m-auto flex h-full max-w-1224 items-center justify-between px-16'>
-          <Link href='/' className='h-32 w-120 md:h-24 md:w-100'>
-            <IconLogo />
-          </Link>
-          <div className='flex h-full gap-60 md:hidden'>
-            {TABS.map((tab) => (
-              <TabButton key={tab.name} path={tab.path} href={tab.href}>
-                {tab.name}
-              </TabButton>
-            ))}
-          </div>
-          <div className='flex items-center gap-12'>
-            <div className='md:hidden'>
-              <SearchBar />
-            </div>
-            <button
-              onClick={() => setIsOpen((prev) => !prev)}
-              className='hidden h-28 w-28 md:inline'
-            >
-              <IconHamburgerMenu />
-            </button>
-            <Link
-              href='/list?as=지역명&q=&order=&cate=전체&isours=false'
-              className='hidden md:inline'
-            >
-              <IconSearch />
-            </Link>
-            {doesAccessTokenExist ? (
-              <div
-                className='flex h-40 w-68 shrink-0 items-center justify-center rounded-8 border border-black bg-white text-14 font-600 text-black hover:bg-black hover:text-white'
-                onClick={() => removeUserAccessToken({ redirectUri: '/' })}
-              >
-                로그아웃
-              </div>
-            ) : (
-              <div>
+    <>
+      <div>
+        {/* Hamburger Menu Content */}
+        {isMenuOpen && (
+          <>
+            <div className='fixed top-64 z-[4] hidden w-full animate-slideDown flex-col items-start gap-32 bg-white p-20 md:flex'>
+              {TABS.map((el) => (
                 <Link
-                  href='/login'
-                  className='flex h-40 w-68 shrink-0 items-center justify-center rounded-8 bg-black text-14 font-600 text-white'
+                  key={el.name}
+                  href={el.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className='text-gray-700 flex h-24 w-full items-center justify-center gap-12 text-16 font-500'
                 >
-                  로그인
+                  {el.name}
                 </Link>
+              ))}
+            </div>
+            <div
+              onClick={() => setIsMenuOpen(false)}
+              className='fixed bottom-0 left-0 z-[3] flex h-screen w-full items-end justify-center bg-[#32363e] bg-opacity-70'
+            />
+          </>
+        )}
+        {/* Content */}
+        <header className='sticky top-0 z-nav h-72 w-full border-b border-[#000]/5 bg-white md:z-popup md:h-64'>
+          <div className='m-auto flex h-full max-w-1224 items-center justify-between px-16'>
+            <Link href='/' className='h-32 w-120 md:h-24 md:w-100'>
+              <IconLogo />
+            </Link>
+            <div className='flex h-full gap-60 md:hidden'>
+              {TABS.map((tab) => (
+                <TabButton key={tab.name} path={tab.path} href={tab.href}>
+                  {tab.name}
+                </TabButton>
+              ))}
+            </div>
+            <div className='flex items-center gap-12'>
+              <div className='md:hidden'>
+                <SearchBar />
               </div>
-            )}
+              <button
+                onClick={() => setIsMenuOpen((prev) => !prev)}
+                className='hidden h-28 w-28 md:inline'
+              >
+                <IconHamburgerMenu />
+              </button>
+              <Link
+                href='/list?as=지역명&q=&order=&cate=전체&isours=false'
+                className='hidden md:inline'
+              >
+                <IconSearch />
+              </Link>
+              {isLoggedIn ? (
+                <div
+                  className='flex h-40 w-68 shrink-0 items-center justify-center rounded-8 border border-black bg-white text-14 font-600 text-black hover:bg-black hover:text-white'
+                  onClick={handleLogout}
+                >
+                  로그아웃
+                </div>
+              ) : (
+                <div>
+                  <Link
+                    href='/login'
+                    className='flex h-40 w-68 shrink-0 items-center justify-center rounded-8 bg-black text-14 font-600 text-white'
+                  >
+                    로그인
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      </header>
-    </div>
+        </header>
+      </div>
+      <PortalModal openStatus={isSignUpModalOpen}>
+        {signUpStatus === 'welcome' ? (
+          <WelcomeModal handleNextClick={onNextClick} />
+        ) : (
+          <ProfileModal setIsModalOpen={setIsSignUpModalOpen} />
+        )}
+      </PortalModal>
+    </>
   );
 };
 

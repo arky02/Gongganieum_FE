@@ -1,4 +1,5 @@
-import { FormValues } from 'components/modals/ProfileModal';
+import { SessionType } from 'hooks/useSession';
+import { FormValues } from 'components/commons/modals/ProfileModal';
 import { instance } from './config/default';
 
 // 회원가입
@@ -21,7 +22,9 @@ export const postUserSignUpInfo = async (props: {
     tag,
     description,
   });
-  return { resStatus: response.status, resData: response.data };
+  const data: SessionType = response.data;
+
+  return { resStatus: response.status, resData: data };
 };
 
 // 유저 ROLE 체크

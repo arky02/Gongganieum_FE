@@ -1,11 +1,13 @@
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { NO_IMAGE_URL, ROOT_IMAGE_URL } from 'constants/common';
 import Image from 'next/image';
 import Link from 'next/link';
 import router from 'next/router';
 import { MouseEvent, useState } from 'react';
+import useSession from 'hooks/useSession';
 import { postLikeToggle } from 'apis/api';
-import { BuildingType } from 'types/client.types';
+import { BuildingType, ERROR_TYPE } from 'types/client.types';
 import Tag from 'components/commons/Tag';
 import { IconBlankLike, IconRedLike } from 'public/icons';
 
@@ -25,11 +27,26 @@ const BuildingCard = (props: {
   const parsedTags = tag === 'NULL' ? [] : tag?.split(',');
   const imageSrc = img?.split(', ')?.map((url: string) => ROOT_IMAGE_URL + url);
 
+  const { removeSession } = useSession();
+
   const [isLike, setIsLike] = useState(isLiked);
   const likeMutation = useMutation({
     mutationFn: () => postLikeToggle(_id),
-    onError: () => {
-      router.push('/login');
+    onError: (error: AxiosError<{ error: ERROR_TYPE }>) => {
+      const errorMessage = error.response?.data.error;
+      if (errorMessage === 'USER_SESSION_EXPIRED') {
+        removeSession({
+          redirectUri: '/login',
+          toastMessage: '세션이 만료되었습니다. 다시 로그인해주세요',
+          toastType: 'error',
+        });
+      } else {
+        removeSession({
+          redirectUri: '/login',
+          toastMessage: '로그인이 필요한 기능입니다.',
+          toastType: 'error',
+        });
+      }
     },
   });
 

@@ -7,7 +7,7 @@ import {
 } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import useManageUserAccessToken from 'hooks/useManageAccessToken';
+import useSession from 'hooks/useSession';
 import { generateRandomNickname } from 'utils/generateRandomNickname';
 import { postUserSignUpInfo } from 'apis/auth';
 import Button from 'components/commons/Button';
@@ -36,7 +36,7 @@ const ProfileModal = (props: {
       },
     });
 
-  const { saveUserAccessToken } = useManageUserAccessToken();
+  const { setSession } = useSession();
 
   const [tags, setTags] = useState<string[]>([]);
   const [tagText, setTagText] = useState('');
@@ -66,21 +66,18 @@ const ProfileModal = (props: {
 
   const patchUserInfo: SubmitHandler<FormValues> = async (formData) => {
     const formDataResult = { ...formData, interests: tags.join(',') };
-    // send user info to server
+
     const { resStatus, resData } = await postUserSignUpInfo({
       formData: formDataResult,
     });
 
-    // sign up succeed
     if (resStatus === 200) {
       toast.success('회원가입이 완료되었습니다!');
       setIsModalOpen(false);
     } else {
       toast.error('에러가 발생하였습니다! 관리자에게 문의하세요.');
     }
-
-    // accessToken 쿠키에 저장
-    saveUserAccessToken({ data: resData?.accessToken });
+    setSession(resData);
   };
 
   return (
