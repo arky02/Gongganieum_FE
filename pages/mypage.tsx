@@ -4,7 +4,7 @@ import { getBuildings, getLikeBuildingIds, getMyInfo } from 'apis/api';
 import { BuildingType, UserDataType } from 'types/client.types';
 import BuildingCard from 'components/commons/BuildingCard';
 import PortalModal from 'components/commons/PortalModal';
-import ProfileEditModal from 'components/modals/ProfileEditModal';
+import ProfileEditModal from 'components/commons/modals/ProfileEditModal';
 import MypageProfile from 'components/pages/mypage/MypageProfile';
 
 const Mypage = () => {

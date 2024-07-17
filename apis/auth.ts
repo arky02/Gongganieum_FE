@@ -1,5 +1,5 @@
 import { SessionType } from 'hooks/useSession';
-import { FormValues } from 'components/modals/ProfileModal';
+import { FormValues } from 'components/commons/modals/ProfileModal';
 import { instance } from './config/default';
 
 // 회원가입

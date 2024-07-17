@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { requestUserRole } from 'apis/auth';
 import PortalModal from 'components/commons/PortalModal';
-import ProfileModal from 'components/modals/ProfileModal';
-import WelcomeModal from 'components/modals/WelcomeModal';
+import ProfileModal from 'components/commons/modals/ProfileModal';
+import WelcomeModal from 'components/commons/modals/WelcomeModal';
 import HomeBanner from 'components/pages/home/HomeBanner';
 import HomeCardSlider from 'components/pages/home/HomeCardSlider';
 import HomeEditorRecommend from 'components/pages/home/HomeEditorRecommend';
@@ -57,7 +57,7 @@ const Home = () => {
       </div>
       <PortalModal openStatus={isSignUpModalOpen}>
         {signUpStatus === 'welcome' ? (
-          <WelcomeModal handleNextClick={onNextClick}></WelcomeModal>
+          <WelcomeModal handleNextClick={onNextClick} />
         ) : (
           <ProfileModal setIsModalOpen={setIsSignUpModalOpen} />
         )}
