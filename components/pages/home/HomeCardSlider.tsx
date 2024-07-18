@@ -1,23 +1,31 @@
+import { useQuery } from '@tanstack/react-query';
 import { useRef } from 'react';
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/navigation';
 import { Autoplay, Navigation } from 'swiper/modules';
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
+import { getHomeCarousel } from 'apis/api';
+import { CarouselType } from 'types/client.types';
 import BuildingCard from 'components/commons/BuildingCard';
 import { IconArrowNextButton, IconArrowPrevButton } from 'public/icons';
 
-const MOCK_BUILDING_IMAGE_URLS = [
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image2.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image2.jpg',
-  '/images/mock-building-image.jpg',
-];
-
-// TODO: 사진 API 붙이기
-const HomeCardSlider = () => {
+const HomeCardSlider = (props: { mode: 'primary' | 'secondary' }) => {
+  const { mode } = props;
   const swiperRef = useRef<SwiperRef>(null);
+
+  const { data: primaryCarouselData } = useQuery<CarouselType[]>({
+    queryKey: ['primary-carousel'],
+    queryFn: () => getHomeCarousel('primary'),
+  });
+
+  const { data: secondaryCarouselData } = useQuery<CarouselType[]>({
+    queryKey: ['secondary-carousel'],
+    queryFn: () => getHomeCarousel('secondary'),
+  });
+
+  const carouselData: CarouselType[] | undefined =
+    mode === 'primary' ? primaryCarouselData : secondaryCarouselData;
 
   const handlePrev = () => {
     if (swiperRef.current) {
@@ -45,18 +53,18 @@ const HomeCardSlider = () => {
         scrollbar={{ draggable: true }}
         className='h-full w-full'
       >
-        {MOCK_BUILDING_IMAGE_URLS.map((slideImage, index) => (
-          <SwiperSlide key={slideImage} virtualIndex={index}>
-            {/* <BuildingCard
-              mode='home'
-              _id={0}
-              name='노송 오재'
-              address='전라도 전주시'
-              tag='안녕, 디지몬'
-              img={slideImage}
-            /> */}
-          </SwiperSlide>
-        ))}
+        {carouselData?.map((building: CarouselType, index: number) => {
+          return (
+            <SwiperSlide key={building._id} virtualIndex={index}>
+              <BuildingCard
+                mode='home'
+                key={building._id}
+                _id={building.contentId}
+                building={building.content}
+              />
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
       <button
         onClick={handlePrev}

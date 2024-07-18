@@ -164,7 +164,6 @@ const ProfileEditModal = (props: {
           취소
         </button>
         <button
-          // TODO: 함수 수정
           onClick={handleSubmit(patchEditUserInfo)}
           className='h-40 w-64 rounded-8 bg-black px-16 py-8 text-14 font-600 text-white'
         >

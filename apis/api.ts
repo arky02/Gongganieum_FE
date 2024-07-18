@@ -1,6 +1,7 @@
 import {
   AsType,
   BuildingType,
+  CarouselType,
   CategoryType,
   ContactType,
   OrderType,
@@ -73,6 +74,14 @@ export const getUserInfo = async (userId: number) => {
 export const postBuildingContact = async (data: ContactType) => {
   const res = await instance.post('/contact', data);
   return res.data;
+};
+
+// 홈페이지 캐러셀 이미지 조회 (타입: 메인, 프라이머리, 세컨더리, 추천)
+export const getHomeCarousel = async (
+  type: 'main_banner' | 'primary' | 'secondary' | 'recommend_banner',
+) => {
+  const res = await instance.get(`/carousel/building/main?type=${type}`);
+  return res.data as CarouselType[];
 };
 
 // 지도 페이지 추천 건물

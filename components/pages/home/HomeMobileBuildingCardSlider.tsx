@@ -1,34 +1,32 @@
+import { useQuery } from '@tanstack/react-query';
 import { ScrollContainer } from 'react-indiana-drag-scroll';
 import 'react-indiana-drag-scroll/dist/style.css';
+import { getHomeCarousel } from 'apis/api';
+import { CarouselType } from 'types/client.types';
 import BuildingCard from 'components/commons/BuildingCard';
 
-const MOCK_BUILDING_IMAGE_URLS = [
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image2.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image2.jpg',
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image2.jpg',
-  '/images/mock-building-image.jpg',
-];
+const HomeMobileBuildingCardSlider = (props: {
+  mode: 'primary' | 'secondary';
+}) => {
+  const { mode } = props;
 
-const HomeMobileBuildingCardSlider = () => {
+  const { data: carouselData } = useQuery({
+    queryKey: ['carousel', mode],
+    queryFn: () => getHomeCarousel(mode),
+  });
+
   return (
     // scrollbar-hide 사용
-    <div className='hidden w-[calc(100dvw-24px)] whitespace-nowrap scrollbar-hide md:flex md:overflow-x-scroll'>
-      <ScrollContainer className='md:flex md:gap-16'>
-        {MOCK_BUILDING_IMAGE_URLS.map((slideImage) => {
+    <div className='hidden w-[100dvw] whitespace-nowrap scrollbar-hide md:flex md:overflow-x-scroll'>
+      <ScrollContainer className='md:flex md:gap-16 md:px-24'>
+        {carouselData?.map((building: CarouselType) => {
           return (
-            <div key={slideImage} className='inline-block'>
-              {/* <BuildingCard
-                mode='home'
-                _id={0}
-                name='노송 오재'
-                address='전라도 전주시'
-                tag='안녕, 디지몬'
-                img={slideImage}
-              /> */}
-            </div>
+            <BuildingCard
+              mode='home'
+              key={building._id}
+              _id={building.contentId}
+              building={building.content}
+            />
           );
         })}
       </ScrollContainer>

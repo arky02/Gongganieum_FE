@@ -15,18 +15,16 @@ type LikeType = 'like' | 'home' | 'none';
 
 const BuildingCard = (props: {
   mode: LikeType;
+  _id: number;
   building: BuildingType;
   isLiked?: boolean;
 }) => {
-  const {
-    mode,
-    isLiked,
-    building: { _id, name, address, isours, tag, cate, img, latest_end_date },
-  } = props;
+  const { mode, _id, isLiked, building } = props;
+
+  const { name, address, isours, tag, cate, img, latest_end_date } = building;
 
   const isPopup = new Date(latest_end_date ?? '') > new Date();
   const parsedTags = tag === 'NULL' ? [] : tag?.split(',');
-  // TODO: home에서 뿌려주는 데이터가 없어서 홈에서 에러 뜹니다.
   const imageSrc = img?.split(', ')?.map((url: string) => ROOT_IMAGE_URL + url);
 
   const { removeSession } = useSession();
