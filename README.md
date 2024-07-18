@@ -36,7 +36,6 @@
 ```jsx
 $ git clone https://github.com/Neul-pum/Gongganieum_FE.git
 $ npm install
-$ npm build
 $ npm run dev
 ```
 
@@ -96,3 +95,9 @@ $ npm run dev
     <img src="public/images/readme/welcome-modal-screenshot.png" alt="환영 모달  스크린샷" />
   </div>
 </details>
+
+## 🗂️ IA (Information Architecture)
+
+<img src="public/images/readme/IA.png" alt="환영 모달  스크린샷" />
+
+###### 팀원: 임건우 (FE), 송민혁 (FE), 김기연 (BE) (~ 24.08.05)
