@@ -22,6 +22,9 @@ export interface ContactFormValues {
   budget: number;
   purpose: string;
   path: PathType;
+  sizeStart: number;
+  sizeEnd: number;
+  areaList: string;
   etc: string;
   agreed: boolean;
 }
@@ -50,6 +53,9 @@ const BuildingContact = () => {
       budget: undefined,
       purpose: '',
       path: '검색',
+      sizeStart: undefined,
+      sizeEnd: undefined,
+      areaList: '',
       etc: '',
       agreed: false,
     },

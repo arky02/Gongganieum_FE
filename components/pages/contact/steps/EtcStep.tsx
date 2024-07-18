@@ -5,6 +5,7 @@ import { ContactFormValues } from 'pages/contact/[id]';
 import Button from 'components/commons/Button';
 import ConsentCheckBox from 'components/commons/ConsentCheckbox';
 import Dropdown from 'components/commons/Dropdown';
+import Input from 'components/commons/Input';
 import { IconSend } from 'public/icons';
 import TextInput from '../TextInput';
 
@@ -25,6 +26,20 @@ const EtcStep = (props: { handlePrevStep: () => void }) => {
 
   return (
     <div className='flex flex-col gap-16'>
+      <div className='grid grid-cols-[1fr_14px_1fr] gap-16'>
+        <Input name='sizeStart' placeholder='0' type='number' control={control}>
+          희망면적
+          <div className='absolute bottom-[22px] right-12 text-16 font-500'>
+            평
+          </div>
+        </Input>
+        <div className='pt-36 text-20 font-500'>~</div>
+        <Input name='sizeEnd' placeholder='0' type='number' control={control}>
+          <div className='absolute bottom-[22px] right-12 text-16 font-500'>
+            평
+          </div>
+        </Input>
+      </div>
       <div className='flex flex-col gap-8'>
         <div className='text-16 font-700'>유입 경로</div>
         <div className='h-48 w-full'>

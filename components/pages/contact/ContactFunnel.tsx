@@ -43,6 +43,8 @@ const ContactFunnel = (props: {
   });
 
   const submitContactUs: SubmitHandler<ContactFormValues> = (formData) => {
+    console.log(formData);
+
     const parsedFormData: ContactType = {
       buildingId,
       name: formData.name,
@@ -54,8 +56,12 @@ const ContactFunnel = (props: {
       budget: String(formData.budget),
       reason: formData.purpose,
       enterpath: formData.path,
+      size: `${formData.sizeStart} ~ ${formData.sizeEnd}`,
+      areaList: formData.areaList,
       requests: formData.etc,
     };
+    console.log(parsedFormData);
+    return;
     uploadPostMutation.mutate(parsedFormData);
   };
 
