@@ -56,7 +56,7 @@ const ProfileEditModal = (props: {
 
   // 태그
   const [tags, setTags] = useState<string[] | undefined>(
-    userInfo?.tag.split(','),
+    userInfo?.tag?.split(','),
   );
   const [tagText, setTagText] = useState<string>('');
 
