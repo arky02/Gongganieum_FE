@@ -1,4 +1,5 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { GunguType } from 'constants/regions';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -40,6 +41,8 @@ const BuildingContact = () => {
     enabled: !!id,
   });
 
+  const initialRegion = buildingInfo?.address?.split(' ')?.[1] as GunguType;
+
   const methods = useForm<ContactFormValues>({
     defaultValues: {
       name: '',
@@ -75,7 +78,7 @@ const BuildingContact = () => {
   return (
     <div className='flex h-[calc(100dvh-72px)] min-h-640 w-screen'>
       <Banner />
-      <div className='mx-auto my-auto flex h-full max-h-640 w-full max-w-592 shrink-0 flex-col gap-24 overflow-y-scroll px-16 md:mt-56 md:w-full'>
+      <div className='mx-auto my-auto flex h-full max-h-[calc(100dvh-72px)] w-full max-w-592 shrink-0 flex-col gap-24 overflow-y-scroll px-16 pt-[8dvh] md:w-full md:pt-56'>
         {submitted ? (
           <FinishStep />
         ) : (
@@ -84,6 +87,7 @@ const BuildingContact = () => {
             <FormProvider {...methods}>
               <ContactFunnel
                 buildingId={buildingId}
+                initialRegion={initialRegion}
                 setSubmitted={setSubmitted}
               />
             </FormProvider>
