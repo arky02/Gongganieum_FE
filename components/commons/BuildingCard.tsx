@@ -64,7 +64,7 @@ const BuildingCard = (props: {
       className='relative flex aspect-square w-full cursor-pointer flex-col text-start'
     >
       <div
-        className={`relative mb-20 h-full w-full overflow-hidden rounded-12 ${mode === 'home' && 'md:w-240'}`}
+        className={`relative mb-20 h-full w-full overflow-hidden rounded-12 md:mb-12 ${mode === 'home' && 'md:w-240'}`}
       >
         <Image
           src={imageSrc?.[0] ?? NO_IMAGE_URL}
