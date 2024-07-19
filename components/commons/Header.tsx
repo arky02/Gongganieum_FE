@@ -19,7 +19,7 @@ const Header = () => {
 
   useEffect(() => {
     const newSession = getSession();
-    setIsLoggedIn(!!newSession);
+    setIsLoggedIn(newSession);
   }, [session]);
 
   const TABS = [
