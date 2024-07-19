@@ -62,8 +62,6 @@ const ContactFunnel = (props: {
       areaList: formData.areaList,
       requests: formData.etc,
     };
-    console.log(parsedFormData);
-    return;
     uploadPostMutation.mutate(parsedFormData);
   };
 

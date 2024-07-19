@@ -32,7 +32,7 @@ const PersonalInfoStep = (props: { handleNextStep: () => void }) => {
       <button
         onClick={getProfileValues}
         type='button'
-        className='absolute right-0 top-[46px] z-nav flex h-24 w-112 items-center justify-center rounded-4 border border-gray-300 bg-gray-100 text-12 font-500 text-gray-400'
+        className='absolute right-0 top-[46px] z-nav flex h-24 w-112 items-center justify-center rounded-4 border border-gray-300/70 bg-gray-100 text-12 font-500 text-gray-400/85'
       >
         프로필 정보 가져오기
       </button>
