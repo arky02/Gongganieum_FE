@@ -86,6 +86,6 @@ export const getHomeCarousel = async (
 
 // 지도 페이지 추천 건물
 export const getRecommendedBuildings = async () => {
-  const res = await instance.get('/carousel/building/map_page');
-  return res.data as BuildingType[];
+  const res = await instance.get('/carousel/building/map');
+  return res.data as CarouselType[];
 };

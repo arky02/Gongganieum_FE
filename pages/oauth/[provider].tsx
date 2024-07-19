@@ -3,7 +3,7 @@ import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
-import useSession, { SessionType } from 'hooks/useSession';
+import useSession from 'hooks/useSession';
 
 const OAuthProvider = () => {
   const router = useRouter();
@@ -18,11 +18,11 @@ const OAuthProvider = () => {
       const res = await axios.get(
         `https://gongganieum.shop/api/oauth/callback?code=${code}&provider=${provider}`,
       );
-      const data: SessionType = res.data;
+      const data = res.data;
 
       if (!data) throw Error('OAuth AccessToken Response Error');
 
-      setSession(data);
+      setSession(data.accessToken);
       redirectByUserRole({
         role: data.role,
         name: data.name,

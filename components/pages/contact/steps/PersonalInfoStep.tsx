@@ -1,5 +1,6 @@
 import { ERROR_MESSAGES, REG_EXP } from 'constants/form';
 import { useFormContext } from 'react-hook-form';
+import { getMyInfo } from 'apis/api';
 import { ContactFormValues } from 'pages/contact/[id]';
 import Button from 'components/commons/Button';
 import Input from 'components/commons/Input';
@@ -8,7 +9,7 @@ import RequiredStar from 'components/commons/RequiredStar';
 const PersonalInfoStep = (props: { handleNextStep: () => void }) => {
   const { handleNextStep } = props;
 
-  const { control, trigger } = useFormContext<ContactFormValues>();
+  const { control, trigger, setValue } = useFormContext<ContactFormValues>();
 
   const checkForm = async () => {
     const isFormValid = await trigger(['name', 'phone', 'email']);
@@ -18,8 +19,23 @@ const PersonalInfoStep = (props: { handleNextStep: () => void }) => {
     }
   };
 
+  const getProfileValues = async () => {
+    const profile = await getMyInfo();
+
+    setValue('name', profile.name);
+    setValue('email', profile.email);
+    setValue('company', profile.company);
+  };
+
   return (
     <div className='flex flex-col gap-16'>
+      <button
+        onClick={getProfileValues}
+        type='button'
+        className='absolute right-0 top-[46px] z-nav flex h-24 w-112 items-center justify-center rounded-4 border border-gray-300/70 bg-gray-100 text-12 font-500 text-gray-400/85'
+      >
+        프로필 정보 가져오기
+      </button>
       <Input
         name='name'
         placeholder='이름을 입력해주세요.'

@@ -77,7 +77,7 @@ const ProfileModal = (props: {
     } else {
       toast.error('에러가 발생하였습니다! 관리자에게 문의하세요.');
     }
-    setSession(resData);
+    setSession(resData.accessToken);
   };
 
   return (

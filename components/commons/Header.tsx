@@ -19,7 +19,7 @@ const Header = () => {
 
   useEffect(() => {
     const newSession = getSession();
-    setIsLoggedIn(!!newSession);
+    setIsLoggedIn(newSession);
   }, [session]);
 
   const TABS = [
@@ -64,7 +64,7 @@ const Header = () => {
       if (errorMessage === 'USER_SESSION_EXPIRED') {
         removeSession({
           redirectUri: '/',
-          toastMessage: '세션이 만료되었습니다. 다시 로그인해주세요',
+          toastMessage: '세션이 만료되었습니다. 다시 로그인해주세요.',
           toastType: 'error',
         });
       } else {

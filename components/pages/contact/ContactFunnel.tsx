@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
+import { GunguType } from 'constants/regions';
 import { Dispatch, SetStateAction } from 'react';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
 import useFunnel from 'hooks/useFunnel';
@@ -14,9 +15,10 @@ const CONTACT_STEPS = ['문의자 정보', '사용 정보', '기타 정보'] as 
 
 const ContactFunnel = (props: {
   buildingId: number;
+  initialRegion: GunguType;
   setSubmitted: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const { buildingId, setSubmitted } = props;
+  const { buildingId, initialRegion, setSubmitted } = props;
   const { Funnel, Step, setStep, currStepName } = useFunnel(CONTACT_STEPS);
 
   const currIndex = CONTACT_STEPS.indexOf(currStepName);
@@ -54,6 +56,8 @@ const ContactFunnel = (props: {
       budget: String(formData.budget),
       reason: formData.purpose,
       enterpath: formData.path,
+      size: `${formData.sizeStart ?? 0} ~ ${formData.sizeEnd ?? 0}`,
+      areaList: formData.areaList,
       requests: formData.etc,
     };
     uploadPostMutation.mutate(parsedFormData);
@@ -77,7 +81,10 @@ const ContactFunnel = (props: {
           />
         </Step>
         <Step name={CONTACT_STEPS[2]}>
-          <EtcStep handlePrevStep={handlePrevStep} />
+          <EtcStep
+            handlePrevStep={handlePrevStep}
+            initialRegion={initialRegion}
+          />
         </Step>
       </Funnel>
     </form>
