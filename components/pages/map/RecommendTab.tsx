@@ -8,8 +8,6 @@ const RecommendTab = () => {
     queryFn: () => getRecommendedBuildings(),
   });
 
-  console.log(buildings);
-
   return (
     <>
       <h3 className='px-24 text-24 font-800 md:px-0 md:text-20'>

@@ -45,8 +45,6 @@ const ContactFunnel = (props: {
   });
 
   const submitContactUs: SubmitHandler<ContactFormValues> = (formData) => {
-    console.log(formData);
-
     const parsedFormData: ContactType = {
       buildingId,
       name: formData.name,
