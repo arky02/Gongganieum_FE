@@ -81,7 +81,7 @@ const ProfileModal = (props: {
   };
 
   return (
-    <form className='flex h-full w-600 flex-col gap-8 rounded-24 p-24'>
+    <form className='flex h-full w-600 flex-col gap-8 rounded-24 p-24 md:w-full'>
       <div className='text-24 font-800'>기본 프로필 설정</div>
       <div className='mb-16 text-16 font-400 text-gray-400'>
         공간이음 서비스를 이용하기 전 기본 프로필을 설정해 주세요.
@@ -167,7 +167,7 @@ const NicknameInput = (props: {
       >
         <div className='flex items-center gap-8'>
           <IconCirculation />
-          <span>닉네임 랜덤 생성</span>
+          <span className='md:text-[14px]'>닉네임 랜덤 생성</span>
         </div>
       </button>
     </div>

@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { EMPTY_LIST_URL } from 'constants/common';
 import { getRecommendedBuildings } from 'apis/api';
 import BuildingCard from './BuildingCard';
 
@@ -17,6 +18,14 @@ const RecommendTab = () => {
         {buildings?.map((building) => (
           <BuildingCard key={building._id} building={building} />
         ))}
+        {buildings?.length === 0 && (
+          <div className='flex h-[60dvh] w-full flex-col items-center justify-center gap-16'>
+            <img src={EMPTY_LIST_URL} alt='비어있는 리스트 이미지' />
+            <div className='flex flex-col items-center justify-center text-18'>
+              <span>추천하는 건물이 없습니다.</span>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
