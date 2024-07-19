@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { SEARCH_AS } from 'constants/common';
+import { EMPTY_LIST, SEARCH_AS } from 'constants/common';
 import { ChangeEvent, useState } from 'react';
 import useFetch from 'hooks/useFetch';
 import useSearch from 'hooks/useSearch';
@@ -98,18 +98,27 @@ const List = () => {
           </div>
         </div>
         {/* card-list */}
-        <div className='mx-auto my-20 grid grid-cols-3 gap-x-24 gap-y-48 md:my-0 md:grid-cols-2 md:gap-y-24'>
-          {/* TODO: 진행중인 팝업 로직 생기면 수정 예정 */}
-          {(filteredBuildings || searchResult)?.map((building) => (
-            <BuildingCard
-              mode='like'
-              key={building._id}
-              _id={building._id}
-              building={building}
-              isLiked={likeBuildingIds?.includes(building._id)}
-            />
-          ))}
-        </div>
+        {searchResult?.length === 0 ? (
+          <div className='flex h-[60dvh] w-full flex-col items-center justify-center gap-20'>
+            <img src={EMPTY_LIST} alt='비어있는 리스트 이미지' />
+            <div className='flex flex-col items-center justify-center text-18'>
+              <span>조건과 일치하는 건물이 없습니다.</span>
+            </div>
+          </div>
+        ) : (
+          <div className='mx-auto my-20 grid grid-cols-3 gap-x-24 gap-y-48 md:my-0 md:grid-cols-2 md:gap-y-24'>
+            {/* TODO: 진행중인 팝업 로직 생기면 수정 예정 */}
+            {searchResult?.map((building) => (
+              <BuildingCard
+                mode='like'
+                key={building._id}
+                _id={building._id}
+                building={building}
+                isLiked={likeBuildingIds?.includes(building._id)}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

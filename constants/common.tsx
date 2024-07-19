@@ -78,6 +78,8 @@ export const MARKER_ICON_SRC = {
 
 export const NO_IMAGE_URL = '/images/no-image.png';
 
+export const EMPTY_LIST = '/images/listpage-empty-cart.png';
+
 export const ROOT_IMAGE_URL =
   'https://poppop-bucket.s3.ap-northeast-2.amazonaws.com/';
 
