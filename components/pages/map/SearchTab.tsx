@@ -1,4 +1,4 @@
-import { EMPTY_LIST } from 'constants/common';
+import { EMPTY_LIST_URL } from 'constants/common';
 import { BuildingType } from 'types/client.types';
 import BuildingCard from './BuildingCard';
 
@@ -21,7 +21,7 @@ const SearchTab = (props: { buildings: BuildingType[] | undefined }) => {
         ))}
         {buildings?.length === 0 && (
           <div className='flex h-[60dvh] w-full flex-col items-center justify-center gap-16'>
-            <img src={EMPTY_LIST} alt='비어있는 리스트 이미지' />
+            <img src={EMPTY_LIST_URL} alt='비어있는 리스트 이미지' />
             <div className='flex flex-col items-center justify-center text-18'>
               <span>검색어와 일치하는 건물이 없습니다.</span>
               <span>다른 검색어를 입력해 보세요.</span>
