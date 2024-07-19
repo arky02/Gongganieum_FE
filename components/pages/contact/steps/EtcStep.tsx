@@ -28,14 +28,19 @@ const EtcStep = (props: {
     setValue('path', selectedPath);
   }, [selectedPath]);
 
+  const region = getValues().areaList?.split(', ') as (GunguType | undefined)[];
+  const initialFirstRegion = region?.[0] || initialRegion;
+  const initialSecondRegion = region?.[1] || '-';
+  const initialThirdRegion = region?.[2] || '-';
+
   const [selectedFirstRegion, setSelectedFirstRegion] =
-    useState<GunguType>(initialRegion);
+    useState<GunguType>(initialFirstRegion);
   const [selectedSecondRegion, setSelectedSecondRegion] = useState<
     GunguType | '-'
-  >('-');
+  >(initialSecondRegion);
   const [selectedThirdRegion, setSelectedThirdRegion] = useState<
     GunguType | '-'
-  >('-');
+  >(initialThirdRegion);
 
   useEffect(() => {
     setValue(
@@ -76,12 +81,12 @@ const EtcStep = (props: {
             setSelected={setSelectedFirstRegion}
           />
           <Dropdown
-            elements={GUNGU}
+            elements={['-', ...GUNGU]}
             selected={selectedSecondRegion}
             setSelected={setSelectedSecondRegion}
           />
           <Dropdown
-            elements={GUNGU}
+            elements={['-', ...GUNGU]}
             selected={selectedThirdRegion}
             setSelected={setSelectedThirdRegion}
           />
