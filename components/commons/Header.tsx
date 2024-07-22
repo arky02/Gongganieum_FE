@@ -11,6 +11,9 @@ import SearchInput from './SearchInput';
 import ProfileModal from './modals/ProfileModal';
 import WelcomeModal from './modals/WelcomeModal';
 
+const DEFAULT_QUERY =
+  '?as=지역명&q=&order=&cate=전체&isours=false&iscurrent=false';
+
 const Header = () => {
   const { getSession, removeSession } = useSession();
 
@@ -27,12 +30,12 @@ const Header = () => {
     {
       name: '지도',
       path: '/map',
-      href: '/map?as=지역명&q=&order=&cate=전체&isours=false',
+      href: '/map' + DEFAULT_QUERY,
     },
     {
       name: '리스트',
       path: '/list',
-      href: '/list?as=지역명&q=&order=&cate=전체&isours=false',
+      href: '/list' + DEFAULT_QUERY,
     },
     { name: '매거진', path: '/magazine', href: '/magazine' },
     {

@@ -31,12 +31,18 @@ const useSearch = () => {
       : router.query['isours'];
     const isours = unparsedIsours === 'true' ? true : false;
 
-    return { q, as, order, cate, isours } as {
+    const unparsedIsCurrent = Array.isArray(router.query['iscurrent'])
+      ? router.query['iscurrent'][0]
+      : router.query['iscurrent'];
+    const iscurrent = unparsedIsCurrent === 'true' ? true : false;
+
+    return { q, as, order, cate, isours, iscurrent } as {
       q: string;
       as: AsType;
       order: OrderType;
       cate: CategoryType | '전체';
       isours: boolean;
+      iscurrent: boolean;
     };
   };
 
@@ -47,13 +53,14 @@ const useSearch = () => {
   const [order, setOrder] = useState<OrderType>(initialQuery.order);
   const [cate, setCate] = useState<CategoryType | '전체'>(initialQuery.cate);
   const [isours, setIsours] = useState<boolean>(initialQuery.isours);
+  const [iscurrent, setIscurrent] = useState<boolean>(initialQuery.iscurrent);
 
   useEffect(() => {
     if (!router.isReady || router.query['building']) {
       return;
     }
-    router.push({ query: { as, q, order, cate, isours } });
-  }, [as, q, order, cate, isours]);
+    router.push({ query: { as, q, order, cate, isours, iscurrent } });
+  }, [as, q, order, cate, isours, iscurrent]);
 
   useEffect(() => {
     if (!router.isReady) {
@@ -65,6 +72,7 @@ const useSearch = () => {
     setOrder(query.order);
     setCate(query.cate);
     setIsours(query.isours);
+    setIscurrent(query.iscurrent);
   }, [router.query]);
 
   return {
@@ -78,6 +86,8 @@ const useSearch = () => {
     setCate,
     isours,
     setIsours,
+    iscurrent,
+    setIscurrent,
   };
 };
 

@@ -26,6 +26,8 @@ const List = () => {
     setCate,
     isours,
     setIsours,
+    iscurrent,
+    setIscurrent,
   } = useSearch();
 
   const { searchResult } = useFetch({
@@ -34,6 +36,7 @@ const List = () => {
     order,
     cate,
     isours,
+    iscurrent,
   });
 
   // TODO: 데이터 꼬임 현상 (7/16): 로그아웃이 되면 likeBuildingIds가 null이 될 수 있게
@@ -52,10 +55,12 @@ const List = () => {
   };
 
   const handleClickOurs = () => {
-    setIsours(!isours);
+    setIsours((prev) => !prev);
   };
 
-  const handleClickIsPopup = () => {};
+  const handleClickIsPopup = () => {
+    setIscurrent((prev) => !prev);
+  };
 
   return (
     <div className='flex justify-center'>
@@ -77,6 +82,8 @@ const List = () => {
           </div>
           <div className='flex items-center gap-8'>
             <ListCheckBoxs
+              isours={isours}
+              iscurrent={iscurrent}
               onClickOurs={handleClickOurs}
               onClickIsPopup={handleClickIsPopup}
             />

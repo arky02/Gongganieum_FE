@@ -1,22 +1,17 @@
-import useSearch from 'hooks/useSearch';
-
 const ListCheckBoxs = (props: {
+  isours: boolean;
+  iscurrent: boolean;
   onClickIsPopup: () => void;
   onClickOurs: () => void;
 }) => {
-  const { onClickIsPopup, onClickOurs } = props;
-  {
-    /* TODO: 진행중인 팝업 로직 추가 */
-  }
-  const { isours } = useSearch();
+  const { isours, iscurrent, onClickIsPopup, onClickOurs } = props;
 
   return (
     <div className='flex gap-[10px] py-8'>
-      {/* TODO: 진행중인 팝업 로직 추가 */}
       <CheckBoxInput
         text='진행중인 팝업'
         onChange={onClickIsPopup}
-        isClicked={false}
+        isClicked={iscurrent}
       />
       <CheckBoxInput
         text='직영 건물'

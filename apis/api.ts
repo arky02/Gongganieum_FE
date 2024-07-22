@@ -20,15 +20,23 @@ export const getFilteredBuildings = async (params: {
   q?: string;
   order?: OrderType;
   cate?: CategoryType | '전체';
-  isours?: boolean;
   as?: AsType;
+  isours?: boolean;
+  iscurrent?: boolean;
 }) => {
-  const { q, order, cate, isours, as } = params;
+  const { q, order, cate, as, isours, iscurrent } = params;
   const parsedAs =
     as === '빌딩명' ? 'building' : as === '팝업명' ? 'popup' : 'address';
 
   const res = await instance.get(`/building/search?`, {
-    params: { q, order, cate, isours, as: parsedAs },
+    params: {
+      q,
+      order,
+      cate,
+      as: parsedAs,
+      is_ours: isours,
+      is_current: iscurrent,
+    },
   });
 
   return res.data as { result: BuildingType[]; count?: number };
