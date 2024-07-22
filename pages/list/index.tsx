@@ -73,7 +73,7 @@ const List = () => {
 
   return (
     <div className='flex justify-center'>
-      <div className='my-76 flex w-full max-w-1232 flex-col justify-center gap-24 md:my-8 md:gap-12 md:px-16'>
+      <div className='my-76 flex h-full w-full max-w-1232 flex-col justify-center gap-24 md:my-8 md:gap-12 md:px-16'>
         <span className='text-32 font-800 md:text-24'>{cate || '전체'}</span>
         <ListCategoryTabs
           cate={cate}
