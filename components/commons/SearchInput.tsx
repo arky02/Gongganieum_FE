@@ -4,7 +4,7 @@ import Dropdown from './Dropdown';
 
 const SearchInput = <T extends string>(props: {
   value: string;
-  setValue: Dispatch<SetStateAction<string>>;
+  setValue: Dispatch<SetStateAction<string>> | ((value: string) => void);
   onSubmit?: (value: string) => void;
   dropdownMenu?: T[];
   selectedMenu?: T;

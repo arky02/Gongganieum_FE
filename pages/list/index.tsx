@@ -1,16 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
 import { EMPTY_LIST_URL, SEARCH_AS } from 'constants/common';
 import Image from 'next/image';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import useFetch from 'hooks/useFetch';
 import useSearch from 'hooks/useSearch';
 import { getLikeBuildingIds } from 'apis/api';
-import { BuildingType, CategoryType, OrderType } from 'types/client.types';
+import { CategoryType, OrderType } from 'types/client.types';
 import BuildingCard from 'components/commons/BuildingCard';
 import SearchInput from 'components/commons/SearchInput';
 import ListCategoryTabs from 'components/pages/list/ListCategoryTabs';
 import ListCheckBoxs from 'components/pages/list/ListCheckBoxs';
 import ListSortingButton from 'components/pages/list/ListSortingButton';
+import PageButton from 'components/pages/list/PageButton';
 
 type ExtendedCategoryType = CategoryType & '전체';
 
@@ -28,6 +29,8 @@ const List = () => {
     setIsours,
     iscurrent,
     setIscurrent,
+    page,
+    setPage,
   } = useSearch();
 
   const { searchResult } = useFetch({
@@ -37,6 +40,7 @@ const List = () => {
     cate,
     isours,
     iscurrent,
+    page,
   });
 
   // TODO: 데이터 꼬임 현상 (7/16): 로그아웃이 되면 likeBuildingIds가 null이 될 수 있게
@@ -46,25 +50,34 @@ const List = () => {
   });
 
   const handleClickCategoryTab = (category: string) => {
+    setPage('1');
     setCate(category as ExtendedCategoryType);
   };
 
   const handleSelectSortButton = (e: ChangeEvent<HTMLSelectElement>) => {
+    setPage('1');
     const order = e.target.value as OrderType;
     setOrder(order);
   };
 
   const handleClickOurs = () => {
+    setPage('1');
     setIsours((prev) => !prev);
   };
 
   const handleClickIsPopup = () => {
+    setPage('1');
     setIscurrent((prev) => !prev);
+  };
+
+  const setValue = (q: string) => {
+    setPage('1');
+    setQ(q);
   };
 
   return (
     <div className='flex justify-center'>
-      <div className='my-76 flex h-full w-full max-w-1232 flex-col justify-center gap-24 md:my-8 md:gap-12 md:px-16'>
+      <div className='mb-56 mt-76 flex h-full w-full max-w-1232 flex-col justify-center gap-24 md:my-8 md:gap-12 md:px-16'>
         <span className='text-32 font-800 md:text-24'>{cate || '전체'}</span>
         <ListCategoryTabs
           cate={cate}
@@ -74,7 +87,7 @@ const List = () => {
           <div className='w-394 flex'>
             <SearchInput
               value={q}
-              setValue={setQ}
+              setValue={setValue}
               dropdownMenu={SEARCH_AS}
               selectedMenu={as}
               setSelectedMenu={setAs}
@@ -107,7 +120,6 @@ const List = () => {
           </div>
         ) : (
           <div className='mx-auto my-20 grid grid-cols-3 gap-x-24 gap-y-48 md:my-0 md:grid-cols-2 md:gap-y-24'>
-            {/* TODO: 진행중인 팝업 로직 생기면 수정 예정 */}
             {searchResult?.result.map((building) => (
               <BuildingCard
                 mode='like'
@@ -119,6 +131,11 @@ const List = () => {
             ))}
           </div>
         )}
+        <PageButton
+          count={searchResult?.count ?? 0}
+          selectedPage={Number(page)}
+          setPage={setPage}
+        />
       </div>
     </div>
   );

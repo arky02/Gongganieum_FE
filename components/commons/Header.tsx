@@ -12,7 +12,7 @@ import ProfileModal from './modals/ProfileModal';
 import WelcomeModal from './modals/WelcomeModal';
 
 const DEFAULT_QUERY =
-  '?as=지역명&q=&order=&cate=전체&isours=false&iscurrent=false';
+  '?as=지역명&q=&order=&cate=전체&isours=false&iscurrent=false&page=';
 
 const Header = () => {
   const { getSession, removeSession } = useSession();
@@ -35,7 +35,7 @@ const Header = () => {
     {
       name: '리스트',
       path: '/list',
-      href: '/list' + DEFAULT_QUERY,
+      href: '/list' + DEFAULT_QUERY + '1',
     },
     { name: '매거진', path: '/magazine', href: '/magazine' },
     {
@@ -136,7 +136,7 @@ const Header = () => {
                 <IconHamburgerMenu />
               </button>
               <Link
-                href='/list?as=지역명&q=&order=&cate=전체&isours=false'
+                href={'/list' + DEFAULT_QUERY + '1'}
                 className='hidden md:inline'
               >
                 <IconSearch />

@@ -36,13 +36,18 @@ const useSearch = () => {
       : router.query['iscurrent'];
     const iscurrent = unparsedIsCurrent === 'true' ? true : false;
 
-    return { q, as, order, cate, isours, iscurrent } as {
+    const page = Array.isArray(router.query['page'])
+      ? router.query['page'][0]
+      : router.query['page'] ?? '';
+
+    return { q, as, order, cate, isours, iscurrent, page } as {
       q: string;
       as: AsType;
       order: OrderType;
       cate: CategoryType | '전체';
       isours: boolean;
       iscurrent: boolean;
+      page: string;
     };
   };
 
@@ -54,13 +59,14 @@ const useSearch = () => {
   const [cate, setCate] = useState<CategoryType | '전체'>(initialQuery.cate);
   const [isours, setIsours] = useState<boolean>(initialQuery.isours);
   const [iscurrent, setIscurrent] = useState<boolean>(initialQuery.iscurrent);
+  const [page, setPage] = useState<string>(initialQuery.page);
 
   useEffect(() => {
     if (!router.isReady || router.query['building']) {
       return;
     }
-    router.push({ query: { as, q, order, cate, isours, iscurrent } });
-  }, [as, q, order, cate, isours, iscurrent]);
+    router.push({ query: { as, q, order, cate, isours, iscurrent, page } });
+  }, [as, q, order, cate, isours, iscurrent, page]);
 
   useEffect(() => {
     if (!router.isReady) {
@@ -73,6 +79,7 @@ const useSearch = () => {
     setCate(query.cate);
     setIsours(query.isours);
     setIscurrent(query.iscurrent);
+    setPage(query.page);
   }, [router.query]);
 
   return {
@@ -88,6 +95,8 @@ const useSearch = () => {
     setIsours,
     iscurrent,
     setIscurrent,
+    page,
+    setPage,
   };
 };
 

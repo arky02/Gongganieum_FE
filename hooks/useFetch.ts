@@ -11,9 +11,10 @@ const useFetch = (props: {
   cate?: CategoryType | '전체';
   isours?: boolean;
   iscurrent?: boolean;
+  page?: string;
   mapFlag?: boolean;
 }) => {
-  const { as, q, order, cate, isours, iscurrent, mapFlag } = props;
+  const { as, q, order, cate, isours, iscurrent, page, mapFlag } = props;
 
   const { createMarkers, deleteMarkers } = useMarkers();
 
@@ -36,6 +37,7 @@ const useFetch = (props: {
       cate,
       isours,
       iscurrent,
+      page,
     });
 
     if (mapFlag && !showDefaultMarkers) {
@@ -46,7 +48,7 @@ const useFetch = (props: {
   };
 
   const { data: searchResult } = useQuery({
-    queryKey: ['search', as, q, order, cate, isours, iscurrent],
+    queryKey: ['search', as, q, order, cate, isours, iscurrent, page],
     queryFn: handleFetch,
     enabled: !!cate,
   });

@@ -7,6 +7,7 @@ import {
   OrderType,
   UserDataType,
 } from 'types/client.types';
+import { PAGE_LIMIT } from 'components/pages/list/PageButton';
 import { instance } from './config/default';
 
 // 건물 전체 조회
@@ -23,8 +24,9 @@ export const getFilteredBuildings = async (params: {
   as?: AsType;
   isours?: boolean;
   iscurrent?: boolean;
+  page?: string;
 }) => {
-  const { q, order, cate, as, isours, iscurrent } = params;
+  const { q, order, cate, as, isours, iscurrent, page } = params;
   const parsedAs =
     as === '빌딩명' ? 'building' : as === '팝업명' ? 'popup' : 'address';
 
@@ -36,6 +38,8 @@ export const getFilteredBuildings = async (params: {
       as: parsedAs,
       is_ours: isours,
       is_current: iscurrent,
+      page: page ? Number(page) : undefined,
+      limit: PAGE_LIMIT,
     },
   });
 
