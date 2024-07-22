@@ -13,12 +13,12 @@ const Mypage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data: userInfo }: { data?: UserDataType } = useQuery({
-    queryKey: ['userInfo'],
+    queryKey: ['user', 'userInfo'],
     queryFn: () => getMyInfo(),
   });
 
   const { data: likeBuildingIds }: { data?: number[] } = useQuery({
-    queryKey: ['likeBuildingIds'],
+    queryKey: ['user', 'likeBuildingIds'],
     queryFn: () => getLikeBuildingIds(),
   });
 

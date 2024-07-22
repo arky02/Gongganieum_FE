@@ -45,7 +45,7 @@ const List = () => {
 
   // TODO: 데이터 꼬임 현상 (7/16): 로그아웃이 되면 likeBuildingIds가 null이 될 수 있게
   const { data: likeBuildingIds } = useQuery({
-    queryKey: ['likeBuildingIds'],
+    queryKey: ['user', 'likeBuildingIds'],
     queryFn: () => getLikeBuildingIds(),
   });
 
