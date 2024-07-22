@@ -38,6 +38,7 @@ const ProfileModal = (props: {
 
   const { setSession } = useSession();
 
+  // 태그
   const [tags, setTags] = useState<string[]>([]);
   const [tagText, setTagText] = useState('');
 
@@ -54,6 +55,7 @@ const ProfileModal = (props: {
     setTags(filteredTags);
   };
 
+  // 닉네임
   const handleChangeNickname = (e: ChangeEvent<HTMLInputElement>) => {
     const newNickname = e.target.value;
     setValue('nickname', newNickname);
@@ -64,6 +66,7 @@ const ProfileModal = (props: {
     setValue('nickname', randomNickname);
   };
 
+  // 폼 제출
   const patchUserInfo: SubmitHandler<FormValues> = async (formData) => {
     const formDataResult = { ...formData, interests: tags.join(',') };
 

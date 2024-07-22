@@ -55,15 +55,13 @@ const ProfileEditModal = (props: {
   };
 
   // 태그
-  const [tags, setTags] = useState<string[] | undefined>(
-    userInfo?.tag?.split(','),
-  );
+  const [tags, setTags] = useState<string[]>(userInfo?.tag?.split(',') || []);
   const [tagText, setTagText] = useState<string>('');
 
   const addTags = (e: KeyboardEvent<HTMLInputElement>) => {
     const inputVal = (e.target as HTMLInputElement).value;
     if (e.key === 'Enter' && inputVal !== '' && !tags?.includes(inputVal)) {
-      if (tags) setTags([...tags, inputVal]);
+      setTags([...tags, inputVal]);
       setTagText('');
     }
   };
@@ -103,7 +101,7 @@ const ProfileEditModal = (props: {
   };
 
   return (
-    <form className='flex h-full w-600 flex-col gap-8 rounded-24 p-24 md:w-full'>
+    <div className='flex h-full w-600 flex-col gap-8 rounded-24 p-24 md:w-full'>
       <div className='text-24 font-800'>프로필 편집</div>
       <div className='relative mb-8 h-64 w-64 rounded-full'>
         <input
@@ -169,7 +167,7 @@ const ProfileEditModal = (props: {
           저장
         </button>
       </div>
-    </form>
+    </div>
   );
 };
 
