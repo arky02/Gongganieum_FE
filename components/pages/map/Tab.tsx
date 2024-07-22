@@ -37,7 +37,7 @@ const Tab = () => {
               setSelectedMenu={setAs}
             />
           </div>
-          <SearchTab buildings={searchResult} />
+          <SearchTab buildings={searchResult?.result} />
         </>
       );
     } else {
