@@ -30,8 +30,10 @@ const useFetch = (props: {
 
     const data = await getFilteredBuildings({ as, q, order, cate, isours });
 
+    console.log(data);
+
     if (mapFlag && !showDefaultMarkers) {
-      createMarkers(data);
+      createMarkers(data.result);
     }
 
     return data;

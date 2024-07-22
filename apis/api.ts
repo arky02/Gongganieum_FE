@@ -31,7 +31,7 @@ export const getFilteredBuildings = async (params: {
     params: { q, order, cate, isours, as: parsedAs },
   });
 
-  return res.data as BuildingType[];
+  return res.data as { result: BuildingType[]; count?: number };
 };
 
 // 특정 건물 조회
