@@ -6,7 +6,7 @@ import { postLikeToggle } from 'apis/api';
 import { ERROR_TYPE } from 'types/client.types';
 import useSession from './useSession';
 
-const QUERY_KEY = 'likeBuildingIds';
+const QUERY_KEY = ['user', 'likeBuildingIds'];
 
 const useLike = (props: { initialIsLiked: boolean; id: number }) => {
   const { initialIsLiked, id } = props;
@@ -17,31 +17,21 @@ const useLike = (props: { initialIsLiked: boolean; id: number }) => {
   const likeMutation = useMutation({
     mutationFn: () => postLikeToggle(id),
     onMutate: async () => {
-      const prevStatus = queryClient.getQueryData([QUERY_KEY]);
+      await queryClient.cancelQueries({
+        queryKey: QUERY_KEY,
+      });
 
-      console.log(prevStatus);
+      const prevStatus: number[] = queryClient.getQueryData(QUERY_KEY) ?? [];
 
-      return;
+      queryClient.setQueryData(QUERY_KEY, (prev: number[]) =>
+        prev.includes(id) ? prev.filter((el) => el !== id) : [...prev, id],
+      );
 
-      if (prevStatus) {
-        await queryClient.cancelQueries({
-          queryKey: [QUERY_KEY],
-        });
-
-        // queryClient.setQueryData(
-        //   [QUERY_KEY],
-        //   (prev: Res_Get_Type['eventLike']) => ({
-        //     status: !prev.status,
-        //     likeCount: prev.status ? prev.likeCount - 1 : prev.likeCount + 1,
-        //   }),
-        // );
-
-        return prevStatus;
-      }
-
-      return { status: initialLike, likeCount: initialLikeCount };
+      return prevStatus;
     },
-    onError: (error: AxiosError<{ error: ERROR_TYPE }>) => {
+    onError: (error: AxiosError<{ error: ERROR_TYPE }>, _, context) => {
+      queryClient.setQueryData(QUERY_KEY, context);
+
       const errorMessage = error.response?.data.error;
       if (errorMessage === 'USER_SESSION_EXPIRED') {
         removeSession({
@@ -56,6 +46,9 @@ const useLike = (props: { initialIsLiked: boolean; id: number }) => {
           toastType: 'error',
         });
       }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY });
     },
   });
 
