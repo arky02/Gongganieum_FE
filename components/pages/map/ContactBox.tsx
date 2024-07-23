@@ -57,7 +57,7 @@ const ContactBox = (props: { id: number; initialIsLiked: boolean }) => {
   return (
     <div
       ref={ref}
-      className='mt-20 flex h-44 w-full shrink-0 items-center gap-8 bg-white'
+      className='relative mt-20 flex h-44 w-full shrink-0 items-center gap-8 bg-white'
     >
       <button
         onClick={handleLike}
@@ -78,7 +78,7 @@ const ContactBox = (props: { id: number; initialIsLiked: boolean }) => {
         문의하기
       </Link>
       {isShareVisible && (
-        <div className='absolute -bottom-80 flex h-88 w-160 items-center justify-center gap-20 rounded-8 border border-[rgba(0,0,0,0.06)] bg-white p-12 pb-8 shadow-lg md:-top-76'>
+        <div className='absolute bottom-52 flex h-88 w-160 items-center justify-center gap-20 rounded-8 border border-[rgba(0,0,0,0.06)] bg-white p-12 pb-8 shadow-lg'>
           <button
             onClick={handleShareWithKakao}
             className='flex flex-col items-center gap-4 text-12 text-gray-300'
