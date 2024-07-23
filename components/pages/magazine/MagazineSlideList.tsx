@@ -21,57 +21,111 @@ const MagazineSlideList = () => {
     }
   };
   return (
-    <div className='flex w-full flex-row gap-8 px-28'>
-      <Swiper
-        ref={swiperRef}
-        modules={[Navigation, Autoplay]}
-        navigation={{ nextEl: null, prevEl: null }}
-        autoplay={{ delay: 4000, disableOnInteraction: false }}
-        loop={true}
-        spaceBetween={10}
-        slidesPerView={3}
-        pagination={{ clickable: true }}
-        scrollbar={{ draggable: true }}
-        className='flex h-full w-full'
-      >
-        <SwiperSlide>
-          <Card
-            img='/images/magazine-architecture.jpg'
-            category='건물 정보'
-            title='송민혁과 사당에 간다면'
-            date='24.07.22'
-            writer='송민혁'
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Card
-            img='/images/magazine-glass-building.jpg'
-            category='건물 정보'
-            title='송민혁과 수원에 간다면'
-            date='24.07.28'
-            writer='송민혁'
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Card
-            img='/images/magazine-architecture-2.jpg'
-            category='건물 정보'
-            title='송민혁과 해방촌에 간다면'
-            date='24.07.25'
-            writer='송민혁'
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Card
-            img='/images/magazine-architecture-3.jpg'
-            category='건물 정보'
-            title='송민혁과 헬스장에 간다면'
-            date='24.07.23'
-            writer='송민혁'
-          />
-        </SwiperSlide>
-      </Swiper>
-    </div>
+    <>
+      <div className='flex w-full flex-row gap-8 px-28 md:hidden'>
+        <Swiper
+          ref={swiperRef}
+          modules={[Navigation, Autoplay]}
+          navigation={{ nextEl: null, prevEl: null }}
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          loop={true}
+          spaceBetween={10}
+          slidesPerView={3}
+          pagination={{ clickable: true }}
+          scrollbar={{ draggable: true }}
+          className='flex h-full w-full md:hidden'
+        >
+          <SwiperSlide>
+            <Card
+              img='/images/magazine-architecture.jpg'
+              category='건물 정보'
+              title='송민혁과 사당에 간다면'
+              date='24.07.22'
+              writer='송민혁'
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Card
+              img='/images/magazine-glass-building.jpg'
+              category='건물 정보'
+              title='송민혁과 수원에 간다면'
+              date='24.07.28'
+              writer='송민혁'
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Card
+              img='/images/magazine-architecture-2.jpg'
+              category='건물 정보'
+              title='송민혁과 해방촌에 간다면'
+              date='24.07.25'
+              writer='송민혁'
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Card
+              img='/images/magazine-architecture-3.jpg'
+              category='건물 정보'
+              title='송민혁과 헬스장에 간다면'
+              date='24.07.23'
+              writer='송민혁'
+            />
+          </SwiperSlide>
+        </Swiper>
+      </div>
+      {/* 모바일 버전 스와이퍼 */}
+      <div className='hidden w-full flex-row gap-8 px-28 md:flex'>
+        <Swiper
+          ref={swiperRef}
+          modules={[Navigation, Autoplay]}
+          navigation={{ nextEl: null, prevEl: null }}
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          loop={true}
+          spaceBetween={10}
+          slidesPerView={1}
+          pagination={{ clickable: true }}
+          scrollbar={{ draggable: true }}
+          className='hidden h-full w-full md:flex'
+        >
+          <SwiperSlide>
+            <Card
+              img='/images/magazine-architecture.jpg'
+              category='건물 정보'
+              title='송민혁과 사당에 간다면'
+              date='24.07.22'
+              writer='송민혁'
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Card
+              img='/images/magazine-glass-building.jpg'
+              category='건물 정보'
+              title='송민혁과 수원에 간다면'
+              date='24.07.28'
+              writer='송민혁'
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Card
+              img='/images/magazine-architecture-2.jpg'
+              category='건물 정보'
+              title='송민혁과 해방촌에 간다면'
+              date='24.07.25'
+              writer='송민혁'
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Card
+              img='/images/magazine-architecture-3.jpg'
+              category='건물 정보'
+              title='송민혁과 헬스장에 간다면'
+              date='24.07.23'
+              writer='송민혁'
+            />
+          </SwiperSlide>
+        </Swiper>
+      </div>
+    </>
   );
 };
 
