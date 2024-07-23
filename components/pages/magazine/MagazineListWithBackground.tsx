@@ -13,7 +13,11 @@ const MagazineListWithBackground = () => {
           title='시대를 초월하는 외모'
           img='/images/덱스.jpg'
         />
-        <Card category='인물 화보' title='궁극의 민지' img='/images/민지.jpg' />
+        <Card
+          category='인물 화보'
+          title='말로 표현할 수 없는 것'
+          img='/images/민지.jpg'
+        />
         <Card
           category='인물 화보'
           title='아이린을 설명하는 다섯 가지'
