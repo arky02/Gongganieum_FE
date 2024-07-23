@@ -6,9 +6,14 @@ const IsOursButton = () => {
   const selected = router.query['isours'] === 'true';
 
   const handleClick = () => {
-    const { q = '', as = '지역명', cate = '전체' } = router.query;
+    const {
+      q = '',
+      as = '지역명',
+      cate = '전체',
+      iscurrent = false,
+    } = router.query;
     router.push(
-      `/map?as=${as}&q=${q}&order=&cate=${cate}&isours=${!selected}&iscurrent=&page=`,
+      `/map?as=${as}&q=${q}&order=&cate=${cate}&isours=${!selected}&iscurrent=${iscurrent}&page=`,
     );
   };
 
