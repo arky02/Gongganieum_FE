@@ -1,7 +1,7 @@
 // TODO: 멘트 수정, 이미지랑 데이터 연결
 const MagazineBanner = () => {
   return (
-    <div className='relative  w-[90dvw] bg-[#000]'>
+    <div className='relative  w-full bg-[#000]'>
       <div className="relative h-640 w-full bg-[url('/images/mock-son.webp')] bg-center bg-no-repeat">
         <div className='flex h-full  w-full flex-col items-center justify-center gap-16 bg-[#000] opacity-60'></div>
         <div className='absolute bottom-1/3 left-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col gap-8'>
