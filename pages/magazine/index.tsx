@@ -15,7 +15,7 @@ const magazine = () => {
       {/* 매거진 리스트 그리드 형태 */}
       {/* <MagazineGridList /> */}
       {/* 배너 및 슬라이드 리스트 */}
-      {/* <MagazineBanner /> */}
+      <MagazineBanner />
       {/* <MagazineSlideList /> */}
       {/* 피플 나우 리스트 */}
       {/* <MagazineListWithBackground /> */}
