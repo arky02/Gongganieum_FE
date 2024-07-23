@@ -5,7 +5,12 @@ import { ReactNode, useEffect, useState } from 'react';
 import useSession from 'hooks/useSession';
 import { requestUserRole } from 'apis/auth';
 import { ERROR_TYPE, RoleType } from 'types/client.types';
-import { IconHamburgerMenu, IconLogo, IconSearch } from 'public/icons';
+import {
+  IconHamburgerMenu,
+  IconLogo,
+  IconSearch,
+  IconSmallLogo,
+} from 'public/icons';
 import PortalModal from './PortalModal';
 import SearchInput from './SearchInput';
 import ProfileModal from './modals/ProfileModal';
@@ -115,10 +120,13 @@ const Header = () => {
         {/* Content */}
         <header className='sticky top-0 z-nav h-72 w-full border-b border-[#000]/5 bg-white md:z-popup md:h-64'>
           <div className='m-auto flex h-full max-w-1224 items-center justify-between px-16'>
-            <Link href='/' className='h-32 w-120 md:h-24 md:w-100'>
+            <Link href='/' className='md:hidden'>
               <IconLogo />
             </Link>
-            <div className='flex h-full gap-60 md:hidden'>
+            <Link href='/' className='hidden md:block'>
+              <IconSmallLogo />
+            </Link>
+            <div className='flex h-full gap-52 md:hidden'>
               {TABS.map((tab) => (
                 <TabButton key={tab.name} path={tab.path} href={tab.href}>
                   {tab.name}

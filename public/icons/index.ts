@@ -38,6 +38,7 @@ import IconRedLike from './red-like.svg';
 import IconSearch from './search.svg';
 import IconSend from './send.svg';
 import IconShare from './share.svg';
+import IconSmallLogo from './small-logo.svg';
 import IconStar from './star.svg';
 import IconWhiteMarker from './white-marker.svg';
 
@@ -84,4 +85,5 @@ export {
   IconStar,
   IconHeart,
   IconGrayLike,
+  IconSmallLogo,
 };
