@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { ROOT_IMAGE_URL } from 'constants/common';
 import { useRouter } from 'next/router';
-import { getBuildingInfo } from 'apis/api';
+import { useEffect, useState } from 'react';
+import { getBuildingInfo, getLikeBuildingIds } from 'apis/api';
 import BuildingTitle from 'components/commons/BuildingTitle';
 import ImageLayout from 'components/commons/ImageLayout';
 import Description from 'components/commons/description/Description';
@@ -26,6 +27,18 @@ const BuildingDescriptionPage = () => {
   const handleGoBack = () => {
     router.back();
   };
+
+  const { data: likeBuildingIds } = useQuery({
+    queryKey: ['user', 'likeBuildingIds'],
+    queryFn: () => getLikeBuildingIds(),
+  });
+
+  const [initialIsLiked, setInitialIsLiked] = useState(false);
+
+  useEffect(() => {
+    console.log(likeBuildingIds?.includes(buildingId));
+    setInitialIsLiked(likeBuildingIds?.includes(buildingId) ?? false);
+  }, [likeBuildingIds, buildingId]);
 
   return (
     <div className='mx-auto max-w-1280 px-24 pb-76 pt-56 md:p-24'>
@@ -52,6 +65,7 @@ const BuildingDescriptionPage = () => {
           name={buildingInfo?.name ?? ''}
           address={buildingInfo?.address ?? ''}
           id={buildingId}
+          initialIsLiked={initialIsLiked}
         />
       </div>
     </div>

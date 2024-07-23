@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useRouter } from 'next/navigation';
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import { postLikeToggle } from 'apis/api';
 import { ERROR_TYPE } from 'types/client.types';
 import useSession from './useSession';
@@ -13,6 +12,10 @@ const useLike = (props: { initialIsLiked: boolean; id: number }) => {
   const queryClient = useQueryClient();
   const { removeSession } = useSession();
   const [isLiked, setIsLiked] = useState(initialIsLiked);
+
+  useEffect(() => {
+    setIsLiked(initialIsLiked);
+  }, [initialIsLiked]);
 
   const likeMutation = useMutation({
     mutationFn: () => postLikeToggle(id),
