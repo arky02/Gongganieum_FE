@@ -7,7 +7,7 @@ import MagazineSlideList from 'components/pages/magazine/MagazineSlideList';
 
 const magazine = () => {
   return (
-    <div className='my-48 flex w-[100dvw] flex-col items-center justify-center gap-40'>
+    <div className='my-48 flex w-[100dvw] flex-col items-center justify-center gap-60'>
       {/* 카테고리 */}
       <MagazineCategory />
       {/* 메인 배너 */}

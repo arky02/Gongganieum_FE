@@ -2,12 +2,12 @@ import Image from 'next/image';
 
 const MagazineGridList = () => {
   return (
-    <div className='flex w-full items-start justify-center gap-40'>
+    <div className='flex w-full items-start justify-around gap-40 px-40'>
       <h1 className='border-b-4 border-black text-[50px] font-400'>POPUP</h1>
       {/* 큰 이미지 카드*/}
       <div className='relative min-h-600 min-w-[25dvw]'>
         <Image src={'/images/mock-son.webp'} alt='매거진 표지 이미지' fill />
-        <div className='absolute left-[10%] top-[10%]'>
+        <div className='absolute left-1/2 top-[10%] -translate-x-1/2'>
           <h2 className='whitespace-nowrap text-[22px] font-800 text-white'>
             {'송민혁과 토트넘 팝업 이벤트에 간다면'}
           </h2>
