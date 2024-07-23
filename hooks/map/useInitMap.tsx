@@ -22,7 +22,11 @@ const HOT_PLACE_COLOR = [
   { bg: 'bg-[rgb(33,35,37)]', border: 'border-t-[rgb(33,35,37)]' },
 ];
 
-const useInitMap = (buildings: BuildingType[] | undefined) => {
+const useInitMap = (props: {
+  buildings: BuildingType[] | undefined;
+  likeBuildingIds: number[];
+}) => {
+  const { buildings, likeBuildingIds } = props;
   const {
     map,
     setMap,
@@ -104,12 +108,15 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
         : '기타';
       const isPopup = new Date(building.latest_end_date ?? '') > new Date();
       const isours = building.isours;
+      const isLiked = likeBuildingIds.includes(building._id);
 
-      const imageSrc = isours
-        ? MARKER_ICON_SRC[category].isours
-        : isPopup
-          ? MARKER_ICON_SRC[category].popup
-          : MARKER_ICON_SRC[category].default;
+      const imageSrc = isLiked
+        ? MARKER_ICON_SRC[category].liked
+        : isours
+          ? MARKER_ICON_SRC[category].isours
+          : isPopup
+            ? MARKER_ICON_SRC[category].popup
+            : MARKER_ICON_SRC[category].default;
       const imageSize = new window.kakao.maps.Size(45, 45);
       const markerImage = new window.kakao.maps.MarkerImage(
         imageSrc,

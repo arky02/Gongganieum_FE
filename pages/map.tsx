@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { CATEGORY } from 'constants/common';
 import useInitMap from 'hooks/map/useInitMap';
-import { getBuildings } from 'apis/api';
+import { getBuildings, getLikeBuildingIds } from 'apis/api';
 import FilterButton from 'components/pages/map/FilterButton';
 import IsOursButton from 'components/pages/map/IsOursButton';
 import LikedButton from 'components/pages/map/LikedButton';
@@ -13,7 +13,12 @@ const Map = () => {
     queryFn: getBuildings,
   });
 
-  useInitMap(buildings);
+  const { data: likeBuildingIds } = useQuery({
+    queryKey: ['user', 'likeBuildingIds'],
+    queryFn: () => getLikeBuildingIds(),
+  });
+
+  useInitMap({ buildings, likeBuildingIds: likeBuildingIds ?? [] });
 
   return (
     <div className='relative flex h-[calc(100dvh-72px)] w-full justify-end overflow-hidden'>
