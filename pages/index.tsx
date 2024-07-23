@@ -8,7 +8,7 @@ import HomeSliderWithPagination from 'components/pages/home/HomeSliderWithPagina
 
 const Home = () => {
   return (
-    <div className='mb-76 mt-76 flex  flex-col items-center justify-center gap-76 md:mb-24 md:mt-0 md:items-start md:gap-24'>
+    <div className='mb-76 mt-76 flex flex-col items-center justify-center gap-76 md:mb-24 md:mt-0 md:items-start md:gap-24'>
       <HomeSliderWithPagination mode='main_banner' />
       <div>
         <h1 className='mb-24 text-32 font-800 md:mx-24 md:mb-16 md:text-24'>
