@@ -1,4 +1,4 @@
-import { SyntheticEvent, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface Metrics {
   initTouchPosition: number | null;
@@ -7,7 +7,7 @@ interface Metrics {
   snap: number;
 }
 
-const THRESHOLD = -210;
+const THRESHOLD = -170;
 const TOP_MARGIN = 234;
 
 const useBottomSheet = () => {
