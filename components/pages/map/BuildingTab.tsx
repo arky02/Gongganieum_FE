@@ -1,13 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import { ROOT_IMAGE_URL } from 'constants/common';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useStore } from 'store';
-import { getBuildingInfo } from 'apis/api';
+import { getBuildingInfo, getLikeBuildingIds } from 'apis/api';
 import BuildingTitle from 'components/commons/BuildingTitle';
 import ImageLayout from 'components/commons/ImageLayout';
 import Description from 'components/commons/description/Description';
 import { IconArrowBack } from 'public/icons';
+import ContactBox from './ContactBox';
 
 const BuildingTab = (props: { id: number }) => {
   const { id } = props;
@@ -53,8 +54,19 @@ const BuildingTab = (props: { id: number }) => {
     ?.split(', ')
     ?.map((url) => ROOT_IMAGE_URL + url);
 
+  const { data: likeBuildingIds } = useQuery({
+    queryKey: ['user', 'likeBuildingIds'],
+    queryFn: () => getLikeBuildingIds(),
+  });
+
+  const [initialIsLiked, setInitialIsLiked] = useState(false);
+
+  useEffect(() => {
+    setInitialIsLiked(likeBuildingIds?.includes(id) ?? false);
+  }, [likeBuildingIds, id]);
+
   return (
-    <div className='flex h-full w-full flex-col overflow-y-auto overflow-x-hidden p-24 md:p-0 md:pb-100'>
+    <div className='flex h-full w-full flex-col overflow-y-auto overflow-x-hidden p-24 md:p-0 md:pb-52'>
       <button
         type='button'
         onClick={handleGoBack}
@@ -73,6 +85,7 @@ const BuildingTab = (props: { id: number }) => {
           page='map'
         />
       </div>
+      <ContactBox id={id} initialIsLiked={initialIsLiked} />
     </div>
   );
 };

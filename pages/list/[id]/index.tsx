@@ -36,7 +36,6 @@ const BuildingDescriptionPage = () => {
   const [initialIsLiked, setInitialIsLiked] = useState(false);
 
   useEffect(() => {
-    console.log(likeBuildingIds?.includes(buildingId));
     setInitialIsLiked(likeBuildingIds?.includes(buildingId) ?? false);
   }, [likeBuildingIds, buildingId]);
 
