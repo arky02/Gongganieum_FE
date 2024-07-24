@@ -26,9 +26,12 @@ const useLike = (props: { initialIsLiked: boolean; id: number }) => {
 
       const prevStatus: number[] = queryClient.getQueryData(QUERY_KEY) ?? [];
 
-      queryClient.setQueryData(QUERY_KEY, (prev: number[]) =>
-        prev.includes(id) ? prev.filter((el) => el !== id) : [...prev, id],
-      );
+      queryClient.setQueryData(QUERY_KEY, (prev: number[] | null) => {
+        if (!prev) {
+          return [id];
+        }
+        prev.includes(id) ? prev.filter((el) => el !== id) : [...prev, id];
+      });
 
       return prevStatus;
     },
