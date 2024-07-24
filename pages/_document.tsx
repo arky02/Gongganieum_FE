@@ -4,6 +4,7 @@ export default function Document() {
   return (
     <Html lang='kr'>
       <Head>
+        <link id='favicon' rel='icon' href='/icons/xs-logo.svg' />
         <script
           defer
           src='https://developers.kakao.com/sdk/js/kakao.min.js'
