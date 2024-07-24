@@ -9,18 +9,12 @@ import {
   IconGrayLike,
   IconKakaoLogo,
   IconLink,
-  IconMarker,
   IconRedLike,
   IconShare,
 } from 'public/icons';
 
-const ContactBox = (props: {
-  name: string;
-  address: string;
-  id: number;
-  initialIsLiked: boolean;
-}) => {
-  const { name, address, id, initialIsLiked } = props;
+const ContactBox = (props: { id: number; initialIsLiked: boolean }) => {
+  const { id, initialIsLiked } = props;
 
   const { getSession } = useSession();
   const session = getSession();
@@ -63,35 +57,28 @@ const ContactBox = (props: {
   return (
     <div
       ref={ref}
-      className='sticky top-92 z-nav h-172 w-400 shrink-0 rounded-16 border border-[rgba(0,0,0,0.06)] bg-white p-24 shadow-lg md:fixed md:bottom-0 md:left-0 md:right-0 md:top-auto md:h-92 md:w-screen md:rounded-none'
+      className='relative mt-20 flex h-44 w-full shrink-0 items-center gap-8 bg-white'
     >
-      <div className='h-44 pb-8 text-24 font-800 md:hidden'>{name}</div>
-      <div className='flex h-40 items-center gap-8 pb-16 text-16 font-500 text-gray-400 md:hidden'>
-        <IconMarker />
-        {address}
-      </div>
-      <div className='flex h-44 gap-8'>
-        <button
-          onClick={handleLike}
-          className='flex shrink-0 items-center justify-center rounded-full border border-[rgba(0,0,0,0.2)]'
-        >
-          {isLiked ? <IconRedLike /> : <IconGrayLike />}
-        </button>
-        <button
-          onClick={() => setIsShareVisible((prev) => !prev)}
-          className='flex h-44 w-44 shrink-0 items-center justify-center rounded-full border border-[rgba(0,0,0,0.2)]'
-        >
-          <IconShare />
-        </button>
-        <Link
-          href={session ? `/contact/${id}` : '/login'}
-          className='flex h-full w-full items-center justify-center rounded-8 bg-black text-16 font-700 text-white'
-        >
-          문의하기
-        </Link>
-      </div>
+      <button
+        onClick={handleLike}
+        className='flex h-44 w-44 shrink-0 items-center justify-center rounded-full border border-[rgba(0,0,0,0.2)]'
+      >
+        {isLiked ? <IconRedLike /> : <IconGrayLike />}
+      </button>
+      <button
+        onClick={() => setIsShareVisible((prev) => !prev)}
+        className='flex h-44 w-44 shrink-0 items-center justify-center rounded-full border border-[rgba(0,0,0,0.2)]'
+      >
+        <IconShare />
+      </button>
+      <Link
+        href={session ? `/contact/${id}` : '/login'}
+        className='flex h-full w-full items-center justify-center rounded-8 bg-black text-16 font-700 text-white'
+      >
+        문의하기
+      </Link>
       {isShareVisible && (
-        <div className='absolute -bottom-80 flex h-88 w-160 items-center justify-center gap-20 rounded-8 border border-[rgba(0,0,0,0.06)] bg-white p-12 pb-8 shadow-lg md:-top-76'>
+        <div className='absolute bottom-52 flex h-88 w-160 items-center justify-center gap-20 rounded-8 border border-[rgba(0,0,0,0.06)] bg-white p-12 pb-8 shadow-lg'>
           <button
             onClick={handleShareWithKakao}
             className='flex flex-col items-center gap-4 text-12 text-gray-300'
