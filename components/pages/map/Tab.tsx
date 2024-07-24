@@ -11,12 +11,13 @@ import SearchTab from './SearchTab';
 
 const Tab = () => {
   const router = useRouter();
-  const { as, setAs, q, setQ, cate, isours } = useSearch();
+  const { as, setAs, q, setQ, cate, isours, isliked } = useSearch();
   const { searchResult } = useFetch({
     as,
     q,
     cate,
     isours,
+    isliked,
     mapFlag: true,
   });
 

@@ -2,19 +2,15 @@ import { CATEGORY, MARKER_ICON_SRC } from 'constants/common';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useStore } from 'store';
+import { getIsDefaultMarkersVisible } from 'utils/getIsDefaultMarkersVisible';
 import { BuildingType, CategoryType } from 'types/client.types';
 
 const useMarkers = () => {
   const router = useRouter();
-  const showDefaultMarkers =
-    !router.query['q'] &&
-    (router.query['cate'] === '전체' || !router.query['cate']) &&
-    router.query['isours'] === 'false';
+  const isDefaultVisible = getIsDefaultMarkersVisible(router.query);
 
-  const { map, showMarkers, hideMarkers } = useStore((state) => ({
+  const { map } = useStore((state) => ({
     map: state.map,
-    showMarkers: state.showMarkers,
-    hideMarkers: state.hideMarkers,
   }));
   const [markers, setMarkers] = useState<any[]>([]);
   const [initialBuildings, setInitialBuildings] = useState<BuildingType[]>();
@@ -56,8 +52,10 @@ const useMarkers = () => {
         zIndex: 99,
       });
       window.kakao.maps.event.addListener(marker, 'click', () => {
-        const currCate = router.query['cate'];
-        router.push({ query: { cate: currCate, building: building._id } });
+        const { as, q, cate, isliked } = router.query;
+        router.push({
+          query: { as, q, cate, isliked, building: building._id },
+        });
       });
       setMarkers((prev) => [...prev, marker]);
       marker.setMap(map);
@@ -81,13 +79,10 @@ const useMarkers = () => {
     if (router.query['building']) {
       return;
     }
-    if (!showDefaultMarkers) {
-      hideMarkers?.();
-    } else {
-      showMarkers?.();
+    if (!isDefaultVisible) {
       deleteMarkers();
     }
-  }, [router.query, showMarkers, hideMarkers]);
+  }, [router.query]);
 
   return { createMarkers, deleteMarkers };
 };
