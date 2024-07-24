@@ -3,19 +3,19 @@ import Image from 'next/image';
 const MagazineGridList = () => {
   return (
     <div className='flex h-full w-full items-start justify-around gap-40 px-40 md:flex-col md:gap-16 md:px-24'>
-      <h1 className='border-b-4 border-black text-[50px] font-400 md:hidden'>
+      <h1 className='border-b-4 border-black text-[50px] font-400 md:text-32'>
         POPUP
       </h1>
       {/* 큰 이미지 카드*/}
-      <div className='relative min-h-600 min-w-[25dvw] md:min-h-500 md:min-w-full'>
+      <div className='relative min-h-600 min-w-[25dvw] md:min-h-600 md:w-full'>
         <Image
           src={'/images/mock-son.webp'}
           alt='매거진 표지 이미지'
           fill
-          className='object-contain'
+          className='object-cover'
         />
-        <div className='absolute left-1/2 top-[10%] -translate-x-1/2 md:top-[80%]'>
-          <h2 className='whitespace-nowrap text-[22px] font-800 text-white md:text-18'>
+        <div className='absolute left-1/2 top-[10%] flex -translate-x-1/2 flex-col gap-12 md:top-[80%]'>
+          <h2 className='whitespace-nowrap text-[22px] font-800 text-white md:text-20'>
             {'송민혁과 토트넘 팝업 이벤트에 간다면'}
           </h2>
           <p className='text-16 font-400 text-white md:text-14'>
