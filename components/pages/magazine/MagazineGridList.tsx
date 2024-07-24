@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 const MagazineGridList = () => {
   return (
-    <div className='flex w-full items-start justify-around gap-40 px-40 md:flex-col md:px-24'>
+    <div className='flex h-full w-full items-start justify-around gap-40 px-40 md:flex-col md:gap-16 md:px-24'>
       <h1 className='border-b-4 border-black text-[50px] font-400 md:hidden'>
         POPUP
       </h1>
@@ -24,11 +24,35 @@ const MagazineGridList = () => {
         </div>
       </div>
       {/* 작은 이미지들 */}
-      <div className='grid min-h-600 min-w-680 grid-cols-2 grid-rows-2 gap-x-12 gap-y-24 md:hidden md:grid-cols-1'>
-        <SmallCard />
-        <SmallCard />
-        <SmallCard />
-        <SmallCard />
+      <div className='grid min-h-600 min-w-680 grid-cols-2 grid-rows-2 gap-x-12 gap-y-24 md:min-h-full md:min-w-full md:grid-cols-1 md:gap-y-12'>
+        <SmallCard
+          img={'/images/mock-son.webp'}
+          category={'팝업 정보'}
+          title={'어쩌구저쩌구'}
+          writer={'송민혁'}
+          date={'2024.07.10'}
+        />
+        <SmallCard
+          img={'/images/mock-son.webp'}
+          category={'팝업 정보'}
+          title={'어쩌구저쩌구'}
+          writer={'송민혁'}
+          date={'2024.07.10'}
+        />
+        <SmallCard
+          img={'/images/mock-son.webp'}
+          category={'팝업 정보'}
+          title={'어쩌구저쩌구'}
+          writer={'송민혁'}
+          date={'2024.07.10'}
+        />
+        <SmallCard
+          img={'/images/mock-son.webp'}
+          category={'팝업 정보'}
+          title={'어쩌구저쩌구'}
+          writer={'송민혁'}
+          date={'2024.07.10'}
+        />
       </div>
     </div>
   );
@@ -37,24 +61,31 @@ const MagazineGridList = () => {
 export default MagazineGridList;
 
 // TODO: 넣을 데이터 : 이미지, 제목, 작성자, 작성일
-const SmallCard = () => {
+const SmallCard = (props: {
+  img: string;
+  category: string;
+  title: string;
+  writer: string;
+  date: string;
+}) => {
+  const { img, category, title, writer, date } = props;
   return (
-    <div className='flex h-full flex-col gap-8 p-12'>
-      <div className='relative h-[90%] w-full bg-[#000]'>
+    <div className='flex h-full w-full flex-col gap-8 p-12 md:grid md:grid-cols-2 md:p-0'>
+      <div className='relative h-[90%] w-full bg-[#000] md:h-100 md:w-152'>
         <Image
-          src={'/images/mock-son.webp'}
+          src={img}
           alt='매거진 표지 이미지'
           fill
           className='object-cover'
         />
       </div>
       <div className='flex flex-col gap-4'>
-        <h2 className='text-[14px] font-600'>{'팝업 정보'}</h2>
-        <h2 className='w-380 border-b-2 border-white text-[18px] font-800 duration-300 hover:underline hover:transition-all'>
-          {'송민혁과 토트넘 팝업 이벤트에 간다면 어떻게 될까?'}
+        <h2 className='text-14 font-600  md:text-12'>{category}</h2>
+        <h2 className='w-380 border-b-2 border-white text-[18px] font-800 duration-300 hover:underline md:w-full md:text-14 md:font-700'>
+          {title}
         </h2>
-        <p className='text-12 font-400 text-gray-300'>
-          {'2024.07.21'} | {'by 송민혁'}
+        <p className='text-12 font-400 text-gray-300 md:text-[10px]'>
+          {date} | {`by ${writer}`}
         </p>
       </div>
     </div>
