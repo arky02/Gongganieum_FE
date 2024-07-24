@@ -73,7 +73,7 @@ const ContactBox = (props: {
       <div className='flex h-44 gap-8'>
         <button
           onClick={handleLike}
-          className='flex h-44 w-44 shrink-0 items-center justify-center rounded-full border border-[rgba(0,0,0,0.2)]'
+          className='flex shrink-0 items-center justify-center rounded-full border border-[rgba(0,0,0,0.2)]'
         >
           {isLiked ? <IconRedLike /> : <IconGrayLike />}
         </button>
