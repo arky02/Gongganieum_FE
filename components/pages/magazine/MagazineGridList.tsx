@@ -9,14 +9,14 @@ const MagazineGridList = () => {
       {/* 큰 이미지 카드*/}
       <div className='relative min-h-600 min-w-[25dvw] md:min-h-600 md:w-full'>
         <Image
-          src={'/images/mock-son.webp'}
+          src={'/images/magazine/popup_1.jpg'}
           alt='매거진 표지 이미지'
           fill
           className='object-cover'
         />
-        <div className='absolute left-1/2 top-[10%] flex -translate-x-1/2 flex-col gap-12 md:top-[80%]'>
-          <h2 className='whitespace-nowrap text-[22px] font-800 text-white md:text-20'>
-            {'송민혁과 토트넘 팝업 이벤트에 간다면'}
+        <div className='absolute left-1/2 top-[10%] flex w-full -translate-x-1/2 flex-col gap-12 px-20 md:top-[80%]'>
+          <h2 className='whitespace-nowrap text-[22px] font-800 text-white md:text-[22px]'>
+            {'익숙한 공간을 익숙하지 않게'}
           </h2>
           <p className='text-16 font-400 text-white md:text-14'>
             {'팝업 정보'} | <span className='opacity-60'>{'2024.07.21'}</span>
@@ -26,32 +26,32 @@ const MagazineGridList = () => {
       {/* 작은 이미지들 */}
       <div className='grid min-h-600 min-w-680 grid-cols-2 grid-rows-2 gap-x-12 gap-y-24 md:min-h-full md:min-w-full md:grid-cols-1 md:gap-y-12'>
         <SmallCard
-          img={'/images/mock-son.webp'}
+          img={'/images/magazine/popup_2.jpg'}
           category={'팝업 정보'}
-          title={'어쩌구저쩌구'}
+          title={'따뜻한 겨울, 따뜻한 주방 공간'}
           writer={'송민혁'}
-          date={'2024.07.10'}
+          date={'2024.07.21'}
         />
         <SmallCard
-          img={'/images/mock-son.webp'}
+          img={'/images/magazine/popup_3.jpg'}
           category={'팝업 정보'}
-          title={'어쩌구저쩌구'}
+          title={'수많은 사람들과 함께하는 공간'}
           writer={'송민혁'}
-          date={'2024.07.10'}
+          date={'2024.07.24'}
         />
         <SmallCard
-          img={'/images/mock-son.webp'}
+          img={'/images/magazine/popup_4.jpg'}
           category={'팝업 정보'}
-          title={'어쩌구저쩌구'}
+          title={'분위기 맛집은 어떻게 탄생할까'}
           writer={'송민혁'}
-          date={'2024.07.10'}
+          date={'2024.07.30'}
         />
         <SmallCard
-          img={'/images/mock-son.webp'}
+          img={'/images/magazine/popup_5.jpg'}
           category={'팝업 정보'}
-          title={'어쩌구저쩌구'}
+          title={'타지 음식을 현지에서도'}
           writer={'송민혁'}
-          date={'2024.07.10'}
+          date={'2024.08.05'}
         />
       </div>
     </div>
@@ -70,8 +70,8 @@ const SmallCard = (props: {
 }) => {
   const { img, category, title, writer, date } = props;
   return (
-    <div className='flex h-full w-full flex-col gap-8 p-12 md:grid md:grid-cols-2 md:p-0'>
-      <div className='relative h-[90%] w-full bg-[#000] md:h-100 md:w-152'>
+    <div className='flex h-full w-full flex-col gap-8 p-12 md:grid md:grid-cols-2 md:gap-12 md:p-0'>
+      <div className='relative h-[90%] w-full bg-[#000] md:h-100 md:w-full'>
         <Image
           src={img}
           alt='매거진 표지 이미지'
