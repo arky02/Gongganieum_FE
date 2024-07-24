@@ -161,8 +161,6 @@ const useLikedMarkers = (buildings: BuildingType[]) => {
       hideFilteredLikedMarkers();
     }
   }, [router.query, map, buildings]);
-
-  // useEffect(() => {}, [map, initialBuildings]);
 };
 
 export default useLikedMarkers;
