@@ -43,36 +43,42 @@ export const MARKER_ICON_SRC = {
     popup: '/icons/fashion-popup-pin.svg',
     isours: '/icons/fashion-isours-pin.svg',
     search: '/icons/fashion-search-pin.svg',
+    liked: '/icons/fashion-liked-pin.svg',
   },
   뷰티: {
     default: '/icons/beauty-pin.svg',
     popup: '/icons/beauty-popup-pin.svg',
     isours: '/icons/beauty-isours-pin.svg',
     search: '/icons/beauty-search-pin.svg',
+    liked: '/icons/beauty-liked-pin.svg',
   },
   'F&B': {
     default: '/icons/food-pin.svg',
     popup: '/icons/food-popup-pin.svg',
     isours: '/icons/food-isours-pin.svg',
     search: '/icons/food-search-pin.svg',
+    liked: '/icons/food-liked-pin.svg',
   },
   캐릭터: {
     default: '/icons/character-pin.svg',
     popup: '/icons/character-popup-pin.svg',
     isours: '/icons/character-isours-pin.svg',
     search: '/icons/character-search-pin.svg',
+    liked: '/icons/character-liked-pin.svg',
   },
   미디어: {
     default: '/icons/media-pin.svg',
     popup: '/icons/media-popup-pin.svg',
     isours: '/icons/media-isours-pin.svg',
     search: '/icons/media-search-pin.svg',
+    liked: '/icons/media-liked-pin.svg',
   },
   기타: {
     default: '/icons/etc-pin.svg',
     popup: '/icons/etc-popup-pin.svg',
     isours: '/icons/etc-isours-pin.svg',
     search: '/icons/etc-search-pin.svg',
+    liked: '/icons/etc-liked-pin.svg',
   },
 };
 

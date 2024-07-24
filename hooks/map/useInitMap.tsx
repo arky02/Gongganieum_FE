@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useStore } from 'store';
 import useKakaoMap from 'hooks/useKakaoMap';
+import { getIsDefaultMarkersVisible } from 'utils/getIsDefaultMarkersVisible';
 import { parseNumberWithComma } from 'utils/parseNumberWithComma';
 import { getBuildingInfo } from 'apis/api';
 import { BuildingType, CategoryType } from 'types/client.types';
@@ -23,27 +24,13 @@ const HOT_PLACE_COLOR = [
 ];
 
 const useInitMap = (buildings: BuildingType[] | undefined) => {
-  const {
-    map,
-    setMap,
-    showMarkers,
-    hideMarkers,
-    setShowMarkers,
-    setHideMarkers,
-  } = useStore((state) => ({
+  const { map, setMap } = useStore((state) => ({
     map: state.map,
     setMap: state.setMap,
-    showMarkers: state.showMarkers,
-    hideMarkers: state.hideMarkers,
-    setShowMarkers: state.setShowMarkers,
-    setHideMarkers: state.setHideMarkers,
   }));
 
   const router = useRouter();
-  const showDefaultMarkers =
-    !router.query['q'] &&
-    (router.query['cate'] === '전체' || !router.query['cate']) &&
-    router.query['isours'] === 'false';
+  const isDefaultVisible = getIsDefaultMarkersVisible(router.query);
 
   const initMap = async () => {
     window.kakao?.maps?.load(() => {
@@ -63,32 +50,6 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
     building: [],
     gungu: [],
   });
-
-  const showMapMarkers = () => {
-    markers.gungu.forEach((marker) => {
-      marker.setMap(map);
-      const zoomLevel = map.getLevel();
-      if (zoomLevel <= 6) {
-        marker.setVisible(false);
-      } else {
-        marker.setVisible(true);
-      }
-    });
-    markers.building.forEach((marker) => {
-      marker.setMap(map);
-      const zoomLevel = map.getLevel();
-      if (zoomLevel <= 6) {
-        marker.setVisible(true);
-      } else {
-        marker.setVisible(false);
-      }
-    });
-  };
-
-  const hideMapMarkers = () => {
-    markers.gungu.forEach((marker) => marker.setMap(null));
-    markers.building.forEach((marker) => marker.setMap(null));
-  };
 
   const initMarkers = async () => {
     if (!buildings || !map) {
@@ -138,7 +99,10 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
         }
       });
       window.kakao.maps.event.addListener(marker, 'click', () => {
-        router.push({ query: { building: building._id } });
+        const { as, q, cate, isliked } = router.query;
+        router.push({
+          query: { as, q, cate, isliked, building: building._id },
+        });
       });
     });
 
@@ -197,7 +161,7 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
       }));
 
       customOverlay.setMap(map);
-      customOverlay.setVisible(showDefaultMarkers);
+      customOverlay.setVisible(isDefaultVisible);
       window.kakao.maps.event.addListener(map, 'zoom_changed', () => {
         const zoomLevel = map.getLevel();
         const isSet = !!customOverlay.getMap();
@@ -230,18 +194,39 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
     initMarkers();
   }, [map, buildings]);
 
+  const showMapMarkers = () => {
+    markers.gungu.forEach((marker) => {
+      marker.setMap(map);
+      const zoomLevel = map.getLevel();
+      if (zoomLevel <= 6) {
+        marker.setVisible(false);
+      } else {
+        marker.setVisible(true);
+      }
+    });
+    markers.building.forEach((marker) => {
+      marker.setMap(map);
+      const zoomLevel = map.getLevel();
+      if (zoomLevel <= 6) {
+        marker.setVisible(true);
+      } else {
+        marker.setVisible(false);
+      }
+    });
+  };
+
+  const hideMapMarkers = () => {
+    markers.gungu.forEach((marker) => marker.setMap(null));
+    markers.building.forEach((marker) => marker.setMap(null));
+  };
+
   useEffect(() => {
-    if (
-      markers.gungu.length === 0 ||
-      markers.building.length === 0 ||
-      !!showMarkers ||
-      !!hideMarkers
-    ) {
-      return;
+    if (isDefaultVisible) {
+      showMapMarkers();
+    } else {
+      hideMapMarkers();
     }
-    setShowMarkers(showMapMarkers);
-    setHideMarkers(hideMapMarkers);
-  }, [showMapMarkers, hideMapMarkers]);
+  }, [router.query, showMapMarkers, hideMapMarkers]);
 };
 
 export default useInitMap;

@@ -2,12 +2,28 @@ import { BASE_URL } from 'constants/common';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
+import useLike from 'hooks/useLike';
 import useOutsideClick from 'hooks/useOutsideClick';
 import useSession from 'hooks/useSession';
-import { IconKakaoLogo, IconLink, IconMarker, IconShare } from 'public/icons';
+import {
+  IconGrayLike,
+  IconKakaoLogo,
+  IconLink,
+  IconMarker,
+  IconRedLike,
+  IconShare,
+} from 'public/icons';
 
-const ContactBox = (props: { name: string; address: string; id: number }) => {
-  const { name, address, id } = props;
+const ContactBox = (props: {
+  name: string;
+  address: string;
+  id: number;
+  initialIsLiked: boolean;
+}) => {
+  const { name, address, id, initialIsLiked } = props;
+
+  const { getSession } = useSession();
+  const session = getSession();
 
   const router = useRouter();
   const url = BASE_URL + router.asPath;
@@ -42,21 +58,25 @@ const ContactBox = (props: { name: string; address: string; id: number }) => {
     setIsShareVisible(false);
   };
 
-  const { getSession } = useSession();
-  const session = getSession();
+  const { isLiked, handleLike } = useLike({ id, initialIsLiked });
 
   return (
     <div
       ref={ref}
       className='sticky top-92 z-nav h-172 w-400 shrink-0 rounded-16 border border-[rgba(0,0,0,0.06)] bg-white p-24 shadow-lg md:fixed md:bottom-0 md:left-0 md:right-0 md:top-auto md:h-92 md:w-screen md:rounded-none'
     >
-      <div className='pb-8 text-24 font-800 md:hidden'>{name}</div>
-      <div className='flex items-center gap-8 pb-16 text-16 font-500 text-gray-400 md:hidden'>
+      <div className='h-44 pb-8 text-24 font-800 md:hidden'>{name}</div>
+      <div className='flex h-40 items-center gap-8 pb-16 text-16 font-500 text-gray-400 md:hidden'>
         <IconMarker />
         {address}
       </div>
       <div className='flex h-44 gap-8'>
-        <button className='h-44 w-44 shrink-0 rounded-full border border-[rgba(0,0,0,0.2)]'></button>
+        <button
+          onClick={handleLike}
+          className='flex shrink-0 items-center justify-center rounded-full border border-[rgba(0,0,0,0.2)]'
+        >
+          {isLiked ? <IconRedLike /> : <IconGrayLike />}
+        </button>
         <button
           onClick={() => setIsShareVisible((prev) => !prev)}
           className='flex h-44 w-44 shrink-0 items-center justify-center rounded-full border border-[rgba(0,0,0,0.2)]'

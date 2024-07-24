@@ -25,6 +25,7 @@ import IconEtc from './etc.svg';
 import IconFashion from './fashion.svg';
 import IconFlag from './flag.svg';
 import IconFood from './food.svg';
+import IconGrayLike from './gray-like.svg';
 import IconHamburgerMenu from './hamburger-menu.svg';
 import IconHeart from './heart.svg';
 import IconKakaoLogo from './kakao-logo.svg';
@@ -37,6 +38,7 @@ import IconRedLike from './red-like.svg';
 import IconSearch from './search.svg';
 import IconSend from './send.svg';
 import IconShare from './share.svg';
+import IconSmallLogo from './small-logo.svg';
 import IconStar from './star.svg';
 import IconWhiteMarker from './white-marker.svg';
 
@@ -82,4 +84,6 @@ export {
   IconLink,
   IconStar,
   IconHeart,
+  IconGrayLike,
+  IconSmallLogo,
 };
