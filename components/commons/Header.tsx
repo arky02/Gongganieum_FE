@@ -17,7 +17,7 @@ import ProfileModal from './modals/ProfileModal';
 import WelcomeModal from './modals/WelcomeModal';
 
 const DEFAULT_QUERY =
-  '?as=지역명&q=&order=&cate=전체&isours=false&iscurrent=false&page=';
+  '?as=지역명&q=&order=&cate=전체&isours=false&iscurrent=false&isliked=false&page=';
 
 const Header = () => {
   const { getSession, removeSession } = useSession();

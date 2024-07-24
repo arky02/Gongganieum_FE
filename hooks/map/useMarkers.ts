@@ -56,7 +56,8 @@ const useMarkers = () => {
         zIndex: 99,
       });
       window.kakao.maps.event.addListener(marker, 'click', () => {
-        router.push({ query: { building: building._id } });
+        const currCate = router.query['cate'];
+        router.push({ query: { cate: currCate, building: building._id } });
       });
       setMarkers((prev) => [...prev, marker]);
       marker.setMap(map);

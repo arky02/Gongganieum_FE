@@ -22,11 +22,7 @@ const HOT_PLACE_COLOR = [
   { bg: 'bg-[rgb(33,35,37)]', border: 'border-t-[rgb(33,35,37)]' },
 ];
 
-const useInitMap = (props: {
-  buildings: BuildingType[] | undefined;
-  likeBuildingIds: number[];
-}) => {
-  const { buildings, likeBuildingIds } = props;
+const useInitMap = (buildings: BuildingType[] | undefined) => {
   const {
     map,
     setMap,
@@ -108,15 +104,12 @@ const useInitMap = (props: {
         : '기타';
       const isPopup = new Date(building.latest_end_date ?? '') > new Date();
       const isours = building.isours;
-      const isLiked = likeBuildingIds.includes(building._id);
 
-      const imageSrc = isLiked
-        ? MARKER_ICON_SRC[category].liked
-        : isours
-          ? MARKER_ICON_SRC[category].isours
-          : isPopup
-            ? MARKER_ICON_SRC[category].popup
-            : MARKER_ICON_SRC[category].default;
+      const imageSrc = isours
+        ? MARKER_ICON_SRC[category].isours
+        : isPopup
+          ? MARKER_ICON_SRC[category].popup
+          : MARKER_ICON_SRC[category].default;
       const imageSize = new window.kakao.maps.Size(45, 45);
       const markerImage = new window.kakao.maps.MarkerImage(
         imageSrc,
@@ -145,7 +138,8 @@ const useInitMap = (props: {
         }
       });
       window.kakao.maps.event.addListener(marker, 'click', () => {
-        router.push({ query: { building: building._id } });
+        const currCate = router.query['cate'];
+        router.push({ query: { cate: currCate, building: building._id } });
       });
     });
 

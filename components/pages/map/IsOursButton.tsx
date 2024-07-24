@@ -13,7 +13,7 @@ const IsOursButton = () => {
       iscurrent = false,
     } = router.query;
     router.push(
-      `/map?as=${as}&q=${q}&order=&cate=${cate}&isours=${!selected}&iscurrent=${iscurrent}&page=`,
+      `/map?as=${as}&q=${q}&order=&cate=${cate}&isours=${!selected}&iscurrent=${iscurrent}&isliked=false&page=`,
     );
   };
 
