@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
@@ -7,6 +8,7 @@ const LOGIN_TIME = 3600 * 1000 * 3; // 3시간
 const useSession = () => {
   const [cookie, setCookie, removeCookie] = useCookies(['access_token']);
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const setSession = (accessToken: string, redirectUri?: string) => {
     const expiration = new Date(Date.now() + LOGIN_TIME);
@@ -33,6 +35,7 @@ const useSession = () => {
     } = props;
 
     removeCookie('access_token', { path: '/' });
+    queryClient.removeQueries({ queryKey: ['user'] });
 
     if (toastType === 'success') {
       toast.success(toastMessage);
