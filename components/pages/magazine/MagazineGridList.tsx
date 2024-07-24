@@ -8,13 +8,14 @@ const MagazineGridList = () => {
       </h1>
       {/* 큰 이미지 카드*/}
       <div className='relative min-h-600 min-w-[25dvw] md:min-h-600 md:w-full'>
+        <div className='absolute inset-0 z-base bg-[#000] opacity-30'></div>
         <Image
           src={'/images/magazine/popup_1.jpg'}
           alt='매거진 표지 이미지'
           fill
           className='object-cover'
         />
-        <div className='absolute left-1/2 top-[10%] flex w-full -translate-x-1/2 flex-col gap-12 px-20 md:top-[80%]'>
+        <div className='absolute left-1/2 top-[10%] z-base flex w-full -translate-x-1/2 flex-col gap-12 px-20 md:top-[80%]'>
           <h2 className='whitespace-nowrap text-[22px] font-800 text-white md:text-[22px]'>
             {'익숙한 공간을 익숙하지 않게'}
           </h2>
