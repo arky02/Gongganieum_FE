@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { useStore } from 'store';
+import { useEffect } from 'react';
 import useLikedMarkers from 'hooks/map/useLikedMarkers';
+import useSession from 'hooks/useSession';
 import { BuildingType } from 'types/client.types';
 import { IconHeart } from 'public/icons';
 
@@ -9,14 +9,29 @@ const LikedButton = (props: { buildings: BuildingType[] }) => {
   const { buildings } = props;
   const router = useRouter();
   const selected = router.query['isliked'] === 'true';
+  const { getSession } = useSession();
+  const session = getSession();
 
   const handleClick = () => {
+    if (!session) {
+      router.push('/login');
+      return;
+    }
     router.push(
       `/map?as=지역명&q=&order=&cate=전체&isours=false&iscurrent=false&isliked=${!selected}&page=`,
     );
   };
 
   useLikedMarkers(buildings);
+
+  useEffect(() => {
+    if (!session) {
+      const { as, q, cate, isours } = router.query;
+      router.push(
+        `/map?as=${as ?? '지역명'}&q=${q ?? ''}&order=&cate=${cate ?? '전체'}&isours=${isours ?? 'false'}&iscurrent=false&isliked=false&page=`,
+      );
+    }
+  }, []);
 
   return (
     <button
