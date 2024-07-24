@@ -66,7 +66,7 @@ const BuildingTab = (props: { id: number }) => {
   }, [likeBuildingIds, id]);
 
   return (
-    <div className='flex h-full w-full flex-col overflow-y-auto overflow-x-hidden p-24 md:p-0 md:pb-52'>
+    <div className='flex h-full w-full flex-col overflow-y-auto overflow-x-hidden p-24 md:p-0 md:pb-100'>
       <button
         type='button'
         onClick={handleGoBack}
