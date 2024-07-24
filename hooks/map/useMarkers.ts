@@ -16,6 +16,9 @@ const useMarkers = () => {
   const [initialBuildings, setInitialBuildings] = useState<BuildingType[]>();
 
   const createMarkers = (buildings: BuildingType[] | undefined) => {
+    if (router.query['isliked'] === 'true') {
+      return;
+    }
     if (!initialBuildings) {
       setInitialBuildings(buildings);
     }

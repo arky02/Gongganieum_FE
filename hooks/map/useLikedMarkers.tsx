@@ -29,12 +29,11 @@ const useLikedMarkers = (buildings: BuildingType[]) => {
     if (!map || !buildings) {
       return;
     }
-
-    hideDefaultLikedMarkers();
-
     const likedBuildings = buildings.filter((building) =>
       likeBuildingIds?.includes(building._id),
     );
+
+    hideDefaultLikedMarkers();
 
     likedBuildings.forEach((building) => {
       const coord = building.coord.split(',');
@@ -102,7 +101,6 @@ const useLikedMarkers = (buildings: BuildingType[]) => {
     if (!map || !buildings) {
       return;
     }
-
     hideFilteredLikedMarkers();
 
     const likedBuildings = buildings.filter((building) =>
@@ -145,7 +143,7 @@ const useLikedMarkers = (buildings: BuildingType[]) => {
       marker.setVisible(true);
     });
 
-    if (buildings.length) {
+    if (likedBuildings.length) {
       map.panTo(bound);
     }
   };
@@ -162,7 +160,9 @@ const useLikedMarkers = (buildings: BuildingType[]) => {
     } else {
       hideFilteredLikedMarkers();
     }
-  }, [router.query]);
+  }, [router.query, map, buildings]);
+
+  // useEffect(() => {}, [map, initialBuildings]);
 };
 
 export default useLikedMarkers;
