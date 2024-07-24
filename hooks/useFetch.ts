@@ -10,9 +10,11 @@ const useFetch = (props: {
   order?: OrderType;
   cate?: CategoryType | '전체';
   isours?: boolean;
+  iscurrent?: boolean;
+  page?: string;
   mapFlag?: boolean;
 }) => {
-  const { as, q, order, cate, isours, mapFlag } = props;
+  const { as, q, order, cate, isours, iscurrent, page, mapFlag } = props;
 
   const { createMarkers, deleteMarkers } = useMarkers();
 
@@ -28,17 +30,25 @@ const useFetch = (props: {
       return;
     }
 
-    const data = await getFilteredBuildings({ as, q, order, cate, isours });
+    const data = await getFilteredBuildings({
+      as,
+      q,
+      order,
+      cate,
+      isours,
+      iscurrent,
+      page,
+    });
 
     if (mapFlag && !showDefaultMarkers) {
-      createMarkers(data);
+      createMarkers(data.result);
     }
 
     return data;
   };
 
   const { data: searchResult } = useQuery({
-    queryKey: ['search', as, q, order, cate, isours],
+    queryKey: ['search', as, q, order, cate, isours, iscurrent, page],
     queryFn: handleFetch,
     enabled: !!cate,
   });

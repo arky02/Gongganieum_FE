@@ -7,6 +7,7 @@ import {
   OrderType,
   UserDataType,
 } from 'types/client.types';
+import { PAGE_LIMIT } from 'components/pages/list/PageButton';
 import { instance } from './config/default';
 
 // 건물 전체 조회
@@ -20,18 +21,29 @@ export const getFilteredBuildings = async (params: {
   q?: string;
   order?: OrderType;
   cate?: CategoryType | '전체';
-  isours?: boolean;
   as?: AsType;
+  isours?: boolean;
+  iscurrent?: boolean;
+  page?: string;
 }) => {
-  const { q, order, cate, isours, as } = params;
+  const { q, order, cate, as, isours, iscurrent, page } = params;
   const parsedAs =
     as === '빌딩명' ? 'building' : as === '팝업명' ? 'popup' : 'address';
 
   const res = await instance.get(`/building/search?`, {
-    params: { q, order, cate, isours, as: parsedAs },
+    params: {
+      q,
+      order,
+      cate,
+      as: parsedAs,
+      is_ours: isours,
+      is_current: iscurrent,
+      page: page ? Number(page) : undefined,
+      limit: PAGE_LIMIT,
+    },
   });
 
-  return res.data as BuildingType[];
+  return res.data as { result: BuildingType[]; count?: number };
 };
 
 // 특정 건물 조회
