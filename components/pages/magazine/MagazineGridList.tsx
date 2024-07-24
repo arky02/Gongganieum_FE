@@ -2,22 +2,29 @@ import Image from 'next/image';
 
 const MagazineGridList = () => {
   return (
-    <div className='flex w-full items-start justify-around gap-40 px-40'>
-      <h1 className='border-b-4 border-black text-[50px] font-400'>POPUP</h1>
+    <div className='flex w-full items-start justify-around gap-40 px-40 md:flex-col md:px-24'>
+      <h1 className='border-b-4 border-black text-[50px] font-400 md:hidden'>
+        POPUP
+      </h1>
       {/* 큰 이미지 카드*/}
-      <div className='relative min-h-600 min-w-[25dvw]'>
-        <Image src={'/images/mock-son.webp'} alt='매거진 표지 이미지' fill />
-        <div className='absolute left-1/2 top-[10%] -translate-x-1/2'>
-          <h2 className='whitespace-nowrap text-[22px] font-800 text-white'>
+      <div className='relative min-h-600 min-w-[25dvw] md:min-h-500 md:min-w-full'>
+        <Image
+          src={'/images/mock-son.webp'}
+          alt='매거진 표지 이미지'
+          fill
+          className='object-contain'
+        />
+        <div className='absolute left-1/2 top-[10%] -translate-x-1/2 md:top-[80%]'>
+          <h2 className='whitespace-nowrap text-[22px] font-800 text-white md:text-18'>
             {'송민혁과 토트넘 팝업 이벤트에 간다면'}
           </h2>
-          <p className='text-16 font-400 text-white'>
+          <p className='text-16 font-400 text-white md:text-14'>
             {'팝업 정보'} | <span className='opacity-60'>{'2024.07.21'}</span>
           </p>
         </div>
       </div>
       {/* 작은 이미지들 */}
-      <div className='grid min-h-600 min-w-680 grid-cols-2 grid-rows-2 gap-x-12 gap-y-24'>
+      <div className='grid min-h-600 min-w-680 grid-cols-2 grid-rows-2 gap-x-12 gap-y-24 md:hidden md:grid-cols-1'>
         <SmallCard />
         <SmallCard />
         <SmallCard />

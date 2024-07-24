@@ -2,12 +2,16 @@ import Image from 'next/image';
 
 const MagazineListWithBackground = () => {
   return (
-    <div className='flex min-h-500 w-full items-center justify-between bg-[#f5f5f5] px-60'>
+    <div className='flex min-h-500 w-full items-center justify-between bg-[#f5f5f5] px-60 md:flex-col md:gap-20 md:px-24 md:py-20'>
       <div className='flex flex-col gap-12 text-black'>
-        <h1 className='border-b-4 border-black text-[60px] font-800'>PEOPLE</h1>
-        <h2 className='text-[18px] font-500'>공간이음이 주목하는 인물</h2>
+        <h1 className='border-b-4 border-black text-[60px] font-800 md:text-32'>
+          PEOPLE
+        </h1>
+        <h2 className='text-[18px] font-500 md:text-12'>
+          공간이음이 주목하는 인물
+        </h2>
       </div>
-      <div className='flex gap-12'>
+      <div className='flex gap-12 md:w-full md:overflow-y-scroll'>
         <Card
           category='인물 화보'
           title='시대를 초월하는 외모'
@@ -33,7 +37,7 @@ export default MagazineListWithBackground;
 const Card = (props: { category: string; title: string; img: string }) => {
   const { category, title, img } = props;
   return (
-    <div className='relative min-h-400 min-w-320 bg-gray-200'>
+    <div className='relative min-h-400 min-w-320 bg-gray-200 md:min-w-full'>
       <Image src={img} alt='인물 이미지' fill className='object-cover' />
       <div className='absolute bottom-32 left-16 flex flex-col gap-4 whitespace-nowrap text-white'>
         <p className='text-16 font-400'>{category}</p>
