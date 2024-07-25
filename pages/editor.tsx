@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
 
 const formats = [
@@ -20,6 +20,26 @@ const formats = [
 ];
 
 const EditorPage = () => {
+  const modules = useMemo(
+    () => ({
+      toolbar: [
+        [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+        ['bold', 'italic', 'underline', 'strike'],
+        ['blockquote', 'link', 'image'],
+
+        [{ list: 'ordered' }, { list: 'bullet' }, { list: 'check' }],
+
+        [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+        [{ align: [] }],
+
+        ['clean'], // remove formatting button
+      ],
+    }),
+    [],
+  );
+
   const [editorValue, setEditorValue] = useState('');
   const [isClient, setIsClient] = useState(false);
 
@@ -31,7 +51,7 @@ const EditorPage = () => {
   const ReactQuill = isClient ? require('react-quill') : () => false;
 
   return (
-    <div className='mx-auto mt-40 flex min-h-[70dvh] max-w-1000 flex-col items-center gap-12'>
+    <div className='mx-auto mt-40 flex min-h-[70dvh] max-w-1000 flex-col items-center gap-20'>
       {/* 제목 입력란 */}
       <input
         placeholder='제목을 입력해주세요'
@@ -54,10 +74,11 @@ const EditorPage = () => {
       </div>
       {/* 에디터 */}
       {isClient ? (
-        <div className='min-w-1000 max-w-1232'>
+        <div className='min-w-1000 max-w-1232 px-24 pt-40'>
           <ReactQuill
             theme='snow'
             formats={formats}
+            modules={modules}
             value={editorValue}
             onChange={setEditorValue}
           />
