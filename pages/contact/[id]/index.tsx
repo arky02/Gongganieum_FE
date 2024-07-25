@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import useSession from 'hooks/useSession';
 import { getBuildingInfo } from 'apis/api';
+import MetaTag from 'components/commons/MetaTag';
 import Banner from 'components/pages/contact/Banner';
 import ContactFunnel from 'components/pages/contact/ContactFunnel';
 import FunnelTitle from 'components/pages/contact/FunnelTitle';
@@ -76,25 +77,30 @@ const BuildingContact = () => {
   }, []);
 
   return (
-    <div className='flex h-[calc(100dvh-72px)] min-h-640 w-screen'>
-      <Banner />
-      <div className='mx-auto my-auto flex h-full max-h-[calc(100dvh-72px)] w-full max-w-592 shrink-0 flex-col gap-24 overflow-y-scroll px-16 pt-[8dvh] md:w-full md:pt-56'>
-        {submitted ? (
-          <FinishStep />
-        ) : (
-          <>
-            <FunnelTitle name={buildingInfo?.name ?? ''} />
-            <FormProvider {...methods}>
-              <ContactFunnel
-                buildingId={buildingId}
-                initialRegion={initialRegion}
-                setSubmitted={setSubmitted}
-              />
-            </FormProvider>
-          </>
-        )}
+    <>
+      <MetaTag
+        title={`문의하기${buildingInfo?.name ? ` | ${buildingInfo?.name}` : ''}`}
+      />
+      <div className='flex h-[calc(100dvh-72px)] min-h-640 w-screen'>
+        <Banner />
+        <div className='mx-auto my-auto flex h-full max-h-[calc(100dvh-72px)] w-full max-w-592 shrink-0 flex-col gap-24 overflow-y-scroll px-16 pt-[8dvh] md:w-full md:pt-56'>
+          {submitted ? (
+            <FinishStep />
+          ) : (
+            <>
+              <FunnelTitle name={buildingInfo?.name ?? ''} />
+              <FormProvider {...methods}>
+                <ContactFunnel
+                  buildingId={buildingId}
+                  initialRegion={initialRegion}
+                  setSubmitted={setSubmitted}
+                />
+              </FormProvider>
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
