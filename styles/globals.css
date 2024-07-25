@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    font-size: 62.5%;
+  }
+
+  :root {
+    --white: 255 255 255;
+    --black: 25 31 40;
+    --gray-100: 248 250 251;
+    --gray-200: 214 218 225;
+    --gray-300: 110 121 135;
+    --gray-400: 52 62 75;
+    --red: 239 83 80;
+    --green: 46 125 50;
+    --green-light: 232 245 233;
+  }
+
+  body {
+    @apply text-14 font-400 text-black;
+  }
+
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}

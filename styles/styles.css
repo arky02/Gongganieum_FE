@@ -1,0 +1,122 @@
+/* 슬라이더 페이지네이션 */
+.swiper-pagination {
+  text-align: start !important;
+  margin-left: 52px;
+  margin-bottom: 52px;
+
+  @media screen and (max-width: 787px) {
+    margin-left: 16px;
+    margin-bottom: 16px;
+  }
+}
+
+.swiper-pagination .swiper-pagination-bullet-custom {
+  bottom: 56px;
+  width: 28px;
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: inline-block;
+  margin: 0 4px;
+  border-radius: 4px;
+  transition: all 0.3s ease-out;
+}
+
+.swiper-pagination-bullet-custom.swiper-pagination-bullet-active {
+  width: 40px;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+/* 달력 라이브러리 */
+.react-datepicker__input-container input {
+  background-color: transparent;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+  width: 100%;
+  font-weight: 500;
+  padding: 12px;
+
+  &::placeholder {
+    color: rgb(138, 144, 159);
+  }
+}
+
+.react-datepicker {
+  overflow: hidden;
+  border-color: rgba(110, 121, 135, 0.8) !important;
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker__triangle {
+  display: none;
+}
+
+.react-datepicker__month-container {
+  width: 265px;
+  height: 265px;
+}
+
+.react-datepicker__header {
+  background: white !important;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  border-bottom: none !important;
+  padding-bottom: 20px !important;
+}
+
+.react-datepicker__current-month {
+  font-size: 1.5rem !important;
+  font-weight: 400 !important;
+}
+
+.react-datepicker__day-names {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: white !important;
+}
+
+.react-datepicker__month {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.react-datepicker__week {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.react-datepicker__day {
+  display: flex;
+  flex-shrink: 0;
+  width: 22px !important;
+  height: 22px !important;
+  padding-top: 3px;
+  font-size: 1.4rem;
+  border-radius: 9999px !important;
+}
+
+.react-datepicker__day--outside-month {
+  color: rgb(200, 200, 200) !important;
+}
+
+@media screen and (max-width: 767px) {
+  .react-datepicker-popper {
+    position: fixed !important;
+    left: 50% !important;
+    top: 50% !important;
+    bottom: 0;
+    transform: translateY(-40%) translateX(-50%) !important;
+  }
+}
