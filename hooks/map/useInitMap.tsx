@@ -32,6 +32,8 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
   const router = useRouter();
   const isDefaultVisible = getIsDefaultMarkersVisible(router.query);
 
+  const [isReady, setIsReady] = useState(false);
+
   const initMap = async () => {
     window.kakao?.maps?.load(() => {
       const mapContainer = document.getElementById('map');
@@ -41,6 +43,7 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
       };
       const map = new window.kakao.maps.Map(mapContainer, mapOption);
       setMap(map);
+      setIsReady(true);
     });
   };
 
@@ -52,7 +55,11 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
   });
 
   const initMarkers = async () => {
-    if (!buildings || !map) {
+    if (
+      !buildings ||
+      !map ||
+      (markers.gungu.length !== 0 && markers.building.length !== 0)
+    ) {
       return;
     }
 
@@ -161,7 +168,7 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
       }));
 
       customOverlay.setMap(map);
-      customOverlay.setVisible(isDefaultVisible);
+      customOverlay.setVisible(false);
       window.kakao.maps.event.addListener(map, 'zoom_changed', () => {
         const zoomLevel = map.getLevel();
         const isSet = !!customOverlay.getMap();
@@ -191,8 +198,11 @@ const useInitMap = (buildings: BuildingType[] | undefined) => {
   };
 
   useEffect(() => {
+    if (!isReady) {
+      return;
+    }
     initMarkers();
-  }, [map, buildings]);
+  }, [map, buildings, isReady]);
 
   const showMapMarkers = () => {
     markers.gungu.forEach((marker) => {
