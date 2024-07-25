@@ -207,7 +207,9 @@ const SearchBar = () => {
   const router = useRouter();
 
   const handleSubmit = (value: string) => {
-    router.push({ pathname: '/list', query: { as: '지역명', q: value } });
+    router.push(
+      `/list?as=지역명&q=${value}&order=&cate=전체&isours=false&iscurrent=false&isliked=false&page=1`,
+    );
   };
 
   return (
