@@ -7,6 +7,7 @@ import useSearch from 'hooks/useSearch';
 import { getLikeBuildingIds } from 'apis/api';
 import { CategoryType, OrderType } from 'types/client.types';
 import BuildingCard from 'components/commons/BuildingCard';
+import MetaTag from 'components/commons/MetaTag';
 import SearchInput from 'components/commons/SearchInput';
 import ListCategoryTabs from 'components/pages/list/ListCategoryTabs';
 import ListCheckBoxs from 'components/pages/list/ListCheckBoxs';
@@ -75,68 +76,71 @@ const List = () => {
   };
 
   return (
-    <div className='flex justify-center'>
-      <div className='mb-56 mt-76 flex h-full w-full max-w-1232 flex-col justify-center gap-24 md:my-8 md:gap-12 md:px-16'>
-        <span className='text-32 font-800 md:text-24'>{cate || '전체'}</span>
-        <ListCategoryTabs
-          cate={cate}
-          onClickCategoryTab={handleClickCategoryTab}
-        />
-        <div className='flex justify-between md:flex-col md:gap-16'>
-          <div className='w-394 flex'>
-            <SearchInput
-              value={q}
-              setValue={setValue}
-              dropdownMenu={SEARCH_AS}
-              selectedMenu={as}
-              setSelectedMenu={setAs}
-            />
+    <>
+      <MetaTag title='공간이음 | 리스트' />
+      <div className='flex justify-center'>
+        <div className='mb-56 mt-76 flex h-full w-full max-w-1232 flex-col justify-center gap-24 md:my-8 md:gap-12 md:px-16'>
+          <span className='text-32 font-800 md:text-24'>{cate || '전체'}</span>
+          <ListCategoryTabs
+            cate={cate}
+            onClickCategoryTab={handleClickCategoryTab}
+          />
+          <div className='flex justify-between md:flex-col md:gap-16'>
+            <div className='w-394 flex'>
+              <SearchInput
+                value={q}
+                setValue={setValue}
+                dropdownMenu={SEARCH_AS}
+                selectedMenu={as}
+                setSelectedMenu={setAs}
+              />
+            </div>
+            <div className='flex items-center gap-8'>
+              <ListCheckBoxs
+                isours={isours}
+                iscurrent={iscurrent}
+                onClickOurs={handleClickOurs}
+                onClickIsPopup={handleClickIsPopup}
+              />
+              <ListSortingButton onSelected={handleSelectSortButton} />
+            </div>
           </div>
-          <div className='flex items-center gap-8'>
-            <ListCheckBoxs
-              isours={isours}
-              iscurrent={iscurrent}
-              onClickOurs={handleClickOurs}
-              onClickIsPopup={handleClickIsPopup}
-            />
-            <ListSortingButton onSelected={handleSelectSortButton} />
-          </div>
+          {/* card-list */}
+          {searchResult?.result.length === 0 ? (
+            <div className='flex h-[60dvh] w-full flex-col items-center justify-center gap-20'>
+              <div className='relative h-152 w-152'>
+                <Image
+                  src={EMPTY_LIST_URL}
+                  alt='비어있는 리스트 이미지'
+                  fill
+                  className='object-cover'
+                />
+              </div>
+              <div className='flex flex-col items-center justify-center text-18'>
+                <span>조건과 일치하는 건물이 없습니다.</span>
+              </div>
+            </div>
+          ) : (
+            <div className='mx-auto my-20 grid grid-cols-3 gap-x-24 gap-y-48 md:my-0 md:grid-cols-2 md:gap-y-24'>
+              {searchResult?.result.map((building) => (
+                <BuildingCard
+                  mode='like'
+                  key={building._id}
+                  _id={building._id}
+                  building={building}
+                  isLiked={likeBuildingIds?.includes(building._id)}
+                />
+              ))}
+            </div>
+          )}
+          <PageButton
+            count={searchResult?.count ?? 0}
+            selectedPage={Number(page)}
+            setPage={setPage}
+          />
         </div>
-        {/* card-list */}
-        {searchResult?.result.length === 0 ? (
-          <div className='flex h-[60dvh] w-full flex-col items-center justify-center gap-20'>
-            <div className='relative h-152 w-152'>
-              <Image
-                src={EMPTY_LIST_URL}
-                alt='비어있는 리스트 이미지'
-                fill
-                className='object-cover'
-              />
-            </div>
-            <div className='flex flex-col items-center justify-center text-18'>
-              <span>조건과 일치하는 건물이 없습니다.</span>
-            </div>
-          </div>
-        ) : (
-          <div className='mx-auto my-20 grid grid-cols-3 gap-x-24 gap-y-48 md:my-0 md:grid-cols-2 md:gap-y-24'>
-            {searchResult?.result.map((building) => (
-              <BuildingCard
-                mode='like'
-                key={building._id}
-                _id={building._id}
-                building={building}
-                isLiked={likeBuildingIds?.includes(building._id)}
-              />
-            ))}
-          </div>
-        )}
-        <PageButton
-          count={searchResult?.count ?? 0}
-          selectedPage={Number(page)}
-          setPage={setPage}
-        />
       </div>
-    </div>
+    </>
   );
 };
 
