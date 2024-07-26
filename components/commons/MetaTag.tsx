@@ -26,7 +26,7 @@ const MetaTag = (props: {
         }
       />
       <meta property='og:image' content={image || '/icons/logo.svg'} />
-      <meta property='og:url' content='https://neul-pum.vercel.app/' />
+      <meta property='og:url' content='https://www.gongganieum.com' />
       <meta property='og:type' content='website' />
       <meta property='og:site_name' content='공간이음' />
       <meta property='og:locale' content='ko' />

@@ -91,4 +91,4 @@ export const NOT_FOUND_PAGE_IMAGE_URL = '/images/404.png';
 export const ROOT_IMAGE_URL =
   'https://poppop-bucket.s3.ap-northeast-2.amazonaws.com/';
 
-export const BASE_URL = 'https://neul-pum.vercel.app/';
+export const BASE_URL = 'https://www.gongganieum.com';
