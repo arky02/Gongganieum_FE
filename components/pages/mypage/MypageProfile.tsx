@@ -1,9 +1,10 @@
+import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
 
 const DEFAULT_PROFILE_IMAGE = '/images/default-profile-image.png';
 
 const MypageProfile = (props: {
-  profileImage?: string;
+  profileImage: string | 'null';
   nickname?: string;
   email?: string;
   description?: string;
@@ -17,7 +18,7 @@ const MypageProfile = (props: {
         {/* 프로필 이미지 */}
         <div className='relative h-96 w-96 rounded-full md:h-56 md:w-56'>
           <Image
-            src={profileImage || DEFAULT_PROFILE_IMAGE}
+            src={profileImage === 'null' ? DEFAULT_PROFILE_IMAGE : profileImage}
             alt='프로필 사진'
             fill
             className='rounded-full object-cover'
