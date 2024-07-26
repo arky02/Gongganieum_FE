@@ -18,7 +18,7 @@ const ListCategoryTabs = (props: {
         <button
           key={index}
           onClick={() => onClickCategoryTab(el)}
-          className={`${cate === el && 'border-b-2 border-black'} text-nowrap px-16 py-20 text-14 font-600 md:px-8 md:py-8 md:text-[13px]`}
+          className={`${cate === el ? 'border-black' : 'border-transparent'} text-nowrap border-b-2 px-16 py-20 text-14 font-600 md:px-8 md:py-8 md:text-[13px]`}
         >
           {el}
         </button>
