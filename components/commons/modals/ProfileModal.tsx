@@ -127,7 +127,7 @@ const ProfileModal = (props: {
           addTag={addTags}
           removeTags={removeTags}
         />
-        <descriptionInput register={register} />
+        <DescriptionInput register={register} />
       </div>
       <Button
         type='button'
@@ -227,7 +227,7 @@ const InterestInput = (props: {
   );
 };
 
-const descriptionInput = (props: { register: any }) => {
+const DescriptionInput = (props: { register: any }) => {
   const { register } = props;
   return (
     <div className='relative'>

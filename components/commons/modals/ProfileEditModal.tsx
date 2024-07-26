@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import {
   ChangeEvent,
   Dispatch,
@@ -8,7 +9,8 @@ import {
 } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { putProfileEdit } from 'apis/auth';
+import useSession from 'hooks/useSession';
+import { deleteUser, putProfileEdit } from 'apis/auth';
 import { UserDataType } from 'types/client.types';
 import Input from 'components/commons/Input';
 import { IconEditPencil } from 'public/icons';
@@ -98,6 +100,21 @@ const ProfileEditModal = (props: {
     }
   };
 
+  const { removeSession } = useSession();
+
+  const handleClickWithdraw = async () => {
+    if (confirm('회원 탈퇴를 진행하시겠습니까?')) {
+      const resStatus = await deleteUser();
+      if (resStatus === 200) {
+        removeSession({
+          redirectUri: '/',
+          toastMessage: '회원탈퇴가 완료되었습니다.',
+          toastType: 'success',
+        });
+      }
+    }
+  };
+
   return (
     <div className='flex h-full w-600 flex-col gap-8 rounded-24 p-24 md:w-full'>
       <div className='text-24 font-800'>프로필 편집</div>
@@ -151,19 +168,27 @@ const ProfileEditModal = (props: {
         />
         <DescriptionInput register={register} />
       </div>
-      <div className='flex justify-end gap-8'>
+      <div className='flex items-center justify-between gap-8'>
         <button
-          onClick={(prev) => setIsModalOpen(!prev)}
-          className='h-40 w-64 rounded-8 bg-gray-200 px-16 py-8 text-14 font-600'
+          onClick={handleClickWithdraw}
+          className='border-gray-300 text-12 font-700 text-gray-300 underline underline-offset-4 opacity-50 md:mr-4 md:mt-120'
         >
-          취소
+          회원 탈퇴
         </button>
-        <button
-          onClick={handleSubmit(putEditUserInfo)}
-          className='h-40 w-64 rounded-8 bg-black px-16 py-8 text-14 font-600 text-white'
-        >
-          저장
-        </button>
+        <div className='flex items-center gap-8'>
+          <button
+            onClick={(prev) => setIsModalOpen(!prev)}
+            className='h-40 w-64 rounded-8 bg-gray-200 px-16 py-8 text-14 font-600'
+          >
+            취소
+          </button>
+          <button
+            onClick={handleSubmit(putEditUserInfo)}
+            className='h-40 w-64 rounded-8 bg-black px-16 py-8 text-14 font-600 text-white'
+          >
+            저장
+          </button>
+        </div>
       </div>
     </div>
   );

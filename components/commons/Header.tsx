@@ -17,8 +17,6 @@ import ProfileModal from './modals/ProfileModal';
 import TermsModal from './modals/TermsModal';
 import WelcomeModal from './modals/WelcomeModal';
 
-// type SignupStatusType = 'welcome' | ''
-
 const DEFAULT_QUERY =
   '?as=지역명&q=&order=&cate=전체&isours=false&iscurrent=false&isliked=false&page=';
 
@@ -55,6 +53,7 @@ const Header = () => {
 
   const handleLogout = () => {
     removeSession({ redirectUri: '/' });
+    setIsSignUpModalOpen(false);
   };
 
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);

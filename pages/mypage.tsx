@@ -15,6 +15,10 @@ import MypageProfile from 'components/pages/mypage/MypageProfile';
 const Mypage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const router = useRouter();
+  const { getSession } = useSession();
+  const session = getSession();
+
   const { data: userInfo }: { data?: UserDataType } = useQuery({
     queryKey: ['user', 'userInfo'],
     queryFn: () => getMyInfo(),
@@ -34,19 +38,13 @@ const Mypage = () => {
     return likeBuildingIds?.includes(el._id);
   });
 
-  const handleClick = () => setIsModalOpen(!isModalOpen);
-
-  const router = useRouter();
-  const { getSession } = useSession();
-  const session = getSession();
+  const handleClickEditButton = () => setIsModalOpen(!isModalOpen);
 
   useEffect(() => {
     if (!session) {
       router.push('/login');
     }
   }, []);
-
-  console.log(likeBuildings);
 
   return (
     <>
@@ -57,7 +55,7 @@ const Mypage = () => {
           nickname={userInfo?.nickname}
           email={userInfo?.email}
           description={userInfo?.description}
-          onClick={handleClick}
+          onClick={handleClickEditButton}
         />
         {/* 찜하기 카드 리스트 */}
         <div className='flex w-full flex-col gap-24 px-16 md:my-28'>
@@ -100,5 +98,4 @@ const Mypage = () => {
     </>
   );
 };
-
 export default Mypage;
