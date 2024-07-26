@@ -17,7 +17,7 @@ const HomeMobileBuildingCardSlider = (props: {
 
   return (
     // scrollbar-hide 사용
-    <div className='hidden w-[100dvw] whitespace-nowrap scrollbar-hide md:flex md:overflow-x-scroll'>
+    <div className='hidden h-340 w-[100dvw] whitespace-nowrap scrollbar-hide md:flex md:overflow-x-scroll'>
       <ScrollContainer className='md:flex md:gap-16 md:px-24'>
         {carouselData?.map((building: CarouselType) => {
           return (

@@ -14,7 +14,7 @@ export const postUserSignUpInfo = async (props: {
     introduction: description,
   } = formData;
 
-  const response = await instance.patch(`/user/guest/update`, {
+  const response = await instance.put(`/user/guest/update`, {
     nickname,
     company,
     brand,
@@ -44,7 +44,7 @@ export const patchProfileEdit = async (props: {
     interests: tag,
     introduction: description,
   } = formData;
-  const response = await instance.patch(`/user/guest/update`, {
+  const response = await instance.put(`/user/guest/update`, {
     nickname,
     company,
     brand,
