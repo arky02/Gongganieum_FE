@@ -27,7 +27,9 @@ const MypageProfile = (props: {
         <div className='flex flex-col gap-4'>
           <div className='flex items-center gap-8'>
             <span className='text-24 font-800'>{nickname}</span>
-            <span className='text-16 font-500 md:text-14'>({email})</span>
+            <span className='text-16 font-500 md:text-14'>
+              {email && `(${email})`}
+            </span>
           </div>
           <span className='text-balance text-16 font-400 md:text-14'>
             {description}

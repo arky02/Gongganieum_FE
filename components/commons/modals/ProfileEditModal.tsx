@@ -92,7 +92,7 @@ const ProfileEditModal = (props: {
     if (resStatus === 200) {
       toast.success('프로필 편집이 완료되었습니다!');
       setIsModalOpen(false);
-      // window.location.reload();
+      window.location.reload();
     } else {
       toast.error('에러가 발생하였습니다!');
     }
