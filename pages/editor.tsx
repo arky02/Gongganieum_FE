@@ -1,44 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import 'react-quill/dist/quill.snow.css';
-
-const formats = [
-  'font',
-  'bold',
-  'italic',
-  'underline',
-  'strike',
-  'blockquote',
-  'list',
-  'bullet',
-  'indent',
-  'link',
-  'align',
-  'color',
-  'background',
-  'size',
-  'h1',
-];
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import 'react-quill/diszt/quill.snow.css';
 
 const EditorPage = () => {
-  const modules = useMemo(
-    () => ({
-      toolbar: [
-        [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
-        [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
-        ['bold', 'italic', 'underline', 'strike'],
-        ['blockquote', 'link', 'image'],
-
-        [{ list: 'ordered' }, { list: 'bullet' }, { list: 'check' }],
-
-        [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-        [{ align: [] }],
-
-        ['clean'], // remove formatting button
-      ],
-    }),
-    [],
-  );
+  const quillRef = useRef<any>(null);
 
   const [value, setValue] = useState({
     title: '',
@@ -71,8 +35,6 @@ const EditorPage = () => {
       alert('모든 항목을 입력해주세요.');
       return;
     }
-    console.log(value);
-    console.log(editorValue);
   };
 
   // 비밀번호
@@ -85,7 +47,6 @@ const EditorPage = () => {
 
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: 환경변수에 담기
     if (password === '1234') {
       setIsAuthenticated(true);
     } else {
@@ -93,8 +54,84 @@ const EditorPage = () => {
     }
   };
 
+  // 이미지 핸들러
+  const handleImageUpload = async (file: File) => {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    // TODO: 이미지 업로드 API 호출
+    const response = await fetch('/api/upload', {
+      method: 'POST',
+      body: formData,
+    });
+
+    const data = await response.json();
+    return data.url;
+  };
+
+  const imageHandler = () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.onchange = async () => {
+      if (input.files === null) return;
+      const file = input.files?.[0];
+      const url = await handleImageUpload(file);
+
+      const quill = quillRef.current;
+      if (quill) {
+        const range = quill.getSelection();
+        quill.insertEmbed(range.index, 'image', url);
+      }
+    };
+  };
+
+  // 리액트 퀼 설정 (모듈, 포맷)]
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          [{ size: ['small', false, 'large', 'huge'] }],
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+          ['bold', 'italic', 'underline', 'strike'],
+          ['blockquote', 'link', 'image'],
+
+          [{ list: 'ordered' }, { list: 'bullet' }, { list: 'check' }],
+
+          [{ color: [] }, { background: [] }],
+          [{ align: [] }],
+
+          ['clean'],
+        ],
+        handlers: {
+          image: imageHandler,
+        },
+      },
+    }),
+    [],
+  );
+
+  const formats = [
+    'header',
+    'font',
+    'size',
+    'bold',
+    'italic',
+    'underline',
+    'strike',
+    'blockquote',
+    'list',
+    'bullet',
+    'indent',
+    'link',
+    'image',
+  ];
+
   return (
-    <div className='mx-auto my-40 flex min-h-[70dvh] max-w-1000 flex-col items-center gap-20'>
+    <div className='mx-auto my-40 flex min-h-[60dvh] max-w-1000 flex-col items-center gap-20'>
       {/* 비밀번호 입력 전 */}
       {!isAuthenticated && (
         <div className='mx-auto my-40 flex min-h-[60dvh] max-w-1000 items-center gap-20'>
@@ -150,7 +187,7 @@ const EditorPage = () => {
               name='category'
               value={value.category}
               onChange={handleChange}
-              className='rounded-12 border-r-8 border-transparent bg-[#f5f5f5] px-24 py-12 font-500 focus:outline-none'
+              className='rounded-12 border-r-8 border-transparent bg-[#f5f5f5] py-12 pl-12 pr-24 font-500 focus:outline-none'
             >
               <option>카테고리를 선택해주세요</option>
               <option>팝업 매거진</option>
@@ -161,12 +198,14 @@ const EditorPage = () => {
           {isClient ? (
             <div className='min-w-1000 max-w-1232 pt-40'>
               <ReactQuill
+                ref={quillRef}
                 name='editor'
                 theme='snow'
                 formats={formats}
                 modules={modules}
                 value={editorValue}
                 onChange={setEditorValue}
+                // imageHandler={(image: File) => handleImageUpload(image)}
                 placeholder='글을 작성해 주세요.'
               />
             </div>
