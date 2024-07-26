@@ -39,7 +39,7 @@ export const requestUserRole = async () => {
 
 // 프로필 편집
 export const putProfileEdit = async (props: {
-  formData: {
+  profileFormData: {
     nickname: string;
     company: string;
     brand: string;
@@ -48,7 +48,7 @@ export const putProfileEdit = async (props: {
     img?: File;
   };
 }) => {
-  const { formData } = props;
+  const { profileFormData } = props;
   const {
     nickname,
     company,
@@ -56,7 +56,7 @@ export const putProfileEdit = async (props: {
     interests: tag,
     description,
     img,
-  } = formData;
+  } = profileFormData;
 
   const bodyData = JSON.stringify({
     nickname,
@@ -66,14 +66,11 @@ export const putProfileEdit = async (props: {
     description,
   });
 
-  console.log('formData', formData);
-  console.log('bodyData', bodyData);
+  const formData = new FormData();
+  formData.append('bodyData', bodyData);
+  formData.append('file', img!);
 
-  const formData2 = new FormData();
-  formData2.append('bodyData', bodyData);
-  formData2.append('file', img!);
-
-  const response = await instance.put(`/user/info`, formData2);
+  const response = await instance.put(`/user/info`, formData);
 
   return response?.status;
 };

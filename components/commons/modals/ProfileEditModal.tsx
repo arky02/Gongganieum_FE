@@ -86,7 +86,7 @@ const ProfileEditModal = (props: {
       img: imageFile as File,
     };
     const resStatus: number = await putProfileEdit({
-      formData: formDataResult,
+      profileFormData: formDataResult,
     });
 
     if (resStatus === 200) {
