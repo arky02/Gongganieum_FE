@@ -38,7 +38,9 @@ const HomeSliderWithPagination = (props: { mode: ModeType }) => {
   };
 
   return (
-    <div className='relative h-full w-full max-w-1232'>
+    <div
+      className={`relative h-full w-full max-w-1232 md:min-h-[100dvw] ${mode === 'main_banner' ? 'min-h-600' : 'min-h-760'}`}
+    >
       <Swiper
         ref={swiperRef}
         modules={[Navigation, Autoplay, Pagination, EffectFade]}

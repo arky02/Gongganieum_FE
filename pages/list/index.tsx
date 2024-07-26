@@ -121,7 +121,7 @@ const List = () => {
               </div>
             </div>
           ) : (
-            <div className='mx-auto my-20 grid grid-cols-3 gap-x-24 gap-y-48 md:my-0 md:grid-cols-2 md:gap-y-24'>
+            <div className='my-20 grid min-h-500 grid-cols-3 gap-x-24 gap-y-48 md:my-0 md:grid-cols-2 md:gap-y-24'>
               {searchResult?.result.map((building) => (
                 <BuildingCard
                   mode='like'
