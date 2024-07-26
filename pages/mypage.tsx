@@ -52,7 +52,7 @@ const Mypage = () => {
           profileImage={userInfo?.img}
           nickname={userInfo?.nickname}
           email={userInfo?.email}
-          introduction={userInfo?.description}
+          description={userInfo?.description}
           onClick={handleClick}
         />
         {/* 찜하기 카드 리스트 */}

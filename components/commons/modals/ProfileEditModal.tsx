@@ -8,18 +8,10 @@ import {
 } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { generateRandomNickname } from 'utils/generateRandomNickname';
-import { patchProfileEdit } from 'apis/auth';
+import { putProfileEdit } from 'apis/auth';
 import { UserDataType } from 'types/client.types';
 import Input from 'components/commons/Input';
 import { IconEditPencil } from 'public/icons';
-
-export interface ProfileFormValues {
-  nickname: string;
-  companyName: string;
-  brandName: string;
-  introduction: string;
-}
 
 const DEFAULT_PROFILE_IMAGE = '/images/default-profile-image.png';
 
@@ -28,15 +20,19 @@ const ProfileEditModal = (props: {
   userInfo?: UserDataType;
 }) => {
   const { setIsModalOpen, userInfo } = props;
-  const { control, handleSubmit, register, setValue, formState } =
-    useForm<ProfileFormValues>({
-      defaultValues: {
-        nickname: userInfo?.nickname,
-        companyName: userInfo?.company,
-        brandName: userInfo?.brand,
-        introduction: userInfo?.description,
-      },
-    });
+  const { control, handleSubmit, register, setValue, formState } = useForm<{
+    nickname: string;
+    company: string;
+    brand: string;
+    description: string;
+  }>({
+    defaultValues: {
+      nickname: userInfo?.nickname,
+      company: userInfo?.company,
+      brand: userInfo?.brand,
+      description: userInfo?.description,
+    },
+  });
 
   // 프로필 이미지
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -77,24 +73,26 @@ const ProfileEditModal = (props: {
     setValue('nickname', newNickname);
   };
 
-  const handleRandomNickname = () => {
-    const randomNickname = generateRandomNickname();
-    setValue('nickname', randomNickname);
-  };
-
   // 폼 제출
-  const patchEditUserInfo: SubmitHandler<ProfileFormValues> = async (
-    formData,
-  ) => {
-    const formDataResult = { ...formData, interests: tags?.join(',') };
-    const resStatus: number = await patchProfileEdit({
+  const putEditUserInfo: SubmitHandler<{
+    nickname: string;
+    company: string;
+    brand: string;
+    description: string;
+  }> = async (formData) => {
+    const formDataResult = {
+      ...formData,
+      interests: tags?.join(','),
+      img: imageFile as File,
+    };
+    const resStatus: number = await putProfileEdit({
       formData: formDataResult,
     });
 
     if (resStatus === 200) {
       toast.success('프로필 편집이 완료되었습니다!');
       setIsModalOpen(false);
-      window.location.reload();
+      // window.location.reload();
     } else {
       toast.error('에러가 발생하였습니다!');
     }
@@ -129,7 +127,7 @@ const ProfileEditModal = (props: {
           onChangeNickname={handleChangeNickname}
         />
         <Input
-          name='companyName'
+          name='company'
           placeholder='회사명을 입력해 주세요.'
           control={control}
         >
@@ -137,7 +135,7 @@ const ProfileEditModal = (props: {
         </Input>
 
         <Input
-          name='brandName'
+          name='brand'
           placeholder='브랜드명을 입력해 주세요.'
           control={control}
         >
@@ -151,7 +149,7 @@ const ProfileEditModal = (props: {
           addTag={addTags}
           removeTags={removeTags}
         />
-        <IntroductionInput register={register} />
+        <DescriptionInput register={register} />
       </div>
       <div className='flex justify-end gap-8'>
         <button
@@ -161,7 +159,7 @@ const ProfileEditModal = (props: {
           취소
         </button>
         <button
-          onClick={handleSubmit(patchEditUserInfo)}
+          onClick={handleSubmit(putEditUserInfo)}
           className='h-40 w-64 rounded-8 bg-black px-16 py-8 text-14 font-600 text-white'
         >
           저장
@@ -253,18 +251,18 @@ const InterestInput = (props: {
   );
 };
 
-const IntroductionInput = (props: { register: any }) => {
+const DescriptionInput = (props: { register: any }) => {
   const { register } = props;
   return (
     <div className='relative'>
       <div className='relative w-full'>
-        <label htmlFor='introduction' className='text-16 font-700'>
+        <label htmlFor='description' className='text-16 font-700'>
           한 줄 소개
         </label>
         <textarea
-          id='introduction'
+          id='description'
           placeholder='한 줄 소개를 입력해 주세요.'
-          {...register('introduction')}
+          {...register('description')}
           className={`text mt-8 h-76 w-full resize-none rounded-8 border border-gray-200 bg-gray-100 px-12 py-8 text-14 font-500 outline-none placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400`}
         />
       </div>

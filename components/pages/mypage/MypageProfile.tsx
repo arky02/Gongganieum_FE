@@ -6,10 +6,10 @@ const MypageProfile = (props: {
   profileImage?: string;
   nickname?: string;
   email?: string;
-  introduction?: string;
+  description?: string;
   onClick: () => void;
 }) => {
-  const { profileImage, nickname, email, introduction, onClick } = props;
+  const { profileImage, nickname, email, description, onClick } = props;
 
   return (
     <div className='mb-76 flex w-full items-center justify-between px-16 md:mb-36 md:flex-col md:gap-24'>
@@ -30,7 +30,7 @@ const MypageProfile = (props: {
             <span className='text-16 font-500 md:text-14'>({email})</span>
           </div>
           <span className='text-balance text-16 font-400 md:text-14'>
-            {introduction}
+            {description}
           </span>
         </div>
       </div>
