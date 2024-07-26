@@ -14,7 +14,10 @@ import {
 import PortalModal from './PortalModal';
 import SearchInput from './SearchInput';
 import ProfileModal from './modals/ProfileModal';
+import TermsModal from './modals/TermsModal';
 import WelcomeModal from './modals/WelcomeModal';
+
+// type SignupStatusType = 'welcome' | ''
 
 const DEFAULT_QUERY =
   '?as=지역명&q=&order=&cate=전체&isours=false&iscurrent=false&isliked=false&page=';
@@ -55,10 +58,10 @@ const Header = () => {
   };
 
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
-  const [signUpStatus, setSignUpStatus] = useState('welcome');
+  const [signUpStatus, setSignUpStatus] = useState(0);
 
   const onNextClick = () => {
-    setSignUpStatus(() => 'signUp');
+    setSignUpStatus((prev) => prev + 1);
   };
 
   const reqUserRole = async () => {
@@ -171,8 +174,10 @@ const Header = () => {
         </header>
       </div>
       <PortalModal openStatus={isSignUpModalOpen}>
-        {signUpStatus === 'welcome' ? (
+        {signUpStatus === 0 ? (
           <WelcomeModal handleNextClick={onNextClick} />
+        ) : signUpStatus === 1 ? (
+          <TermsModal handleNextClick={onNextClick} />
         ) : (
           <ProfileModal setIsModalOpen={setIsSignUpModalOpen} />
         )}
