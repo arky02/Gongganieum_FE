@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import 'react-quill/diszt/quill.snow.css';
+import 'react-quill/dist/quill.snow.css';
 
 const EditorPage = () => {
   const quillRef = useRef<any>(null);

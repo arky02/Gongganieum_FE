@@ -172,7 +172,10 @@ const Header = () => {
       </div>
       <PortalModal openStatus={isSignUpModalOpen}>
         {signUpStatus === 'welcome' ? (
-          <WelcomeModal handleNextClick={onNextClick} />
+          <WelcomeModal
+            handleNextClick={onNextClick}
+            handleLogout={handleLogout}
+          />
         ) : (
           <ProfileModal setIsModalOpen={setIsSignUpModalOpen} />
         )}
