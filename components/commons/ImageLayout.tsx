@@ -22,11 +22,7 @@ const ImageLayout = (props: {
   if (!imageUrls) {
     return (
       <div className={STYLE[page]}>
-        <OneLayout
-          imageUrl={NO_IMAGE_URL}
-          setIndex={setImagePreviewIndex}
-          page={page}
-        />
+        <DefaultLayout />
       </div>
     );
   }
@@ -192,6 +188,14 @@ const OneLayout = (props: {
           <Image src={imageUrl} fill className='object-cover' alt='빌딩 사진' />
         </div>
       </div>
+    </div>
+  );
+};
+
+const DefaultLayout = () => {
+  return (
+    <div className='relative h-full w-full shrink-0 gap-4 overflow-hidden rounded-16'>
+      <Image src={NO_IMAGE_URL} fill className='object-cover' alt='빌딩 사진' />
     </div>
   );
 };
