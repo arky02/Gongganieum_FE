@@ -40,13 +40,9 @@ const MyContact = () => {
     enabled: !!contact.buildingId,
   });
 
-  console.log(buildingInfo);
-
   const imageUrls = buildingInfo?.img
     ?.split(', ')
     ?.map((url) => ROOT_IMAGE_URL + url);
-
-  console.log(imageUrls);
 
   return (
     <div className='flex h-180 w-full items-center gap-16 rounded-12 border border-gray-200 p-16'>
@@ -59,16 +55,16 @@ const MyContact = () => {
         />
       </div>
       <div className='flex flex-col gap-8'>
-        <div className='text-14 text-gray-300'>접수일: 8/16</div>
-        <div className='text-20 font-500 underline underline-offset-2'>
+        <div className='h-20 text-14 text-gray-300'>접수일: 8/16</div>
+        <div className='h-32 text-20 font-500 underline underline-offset-2'>
           {buildingInfo?.name}
         </div>
-        <div className='text-gray-400'>{buildingInfo?.address}</div>
+        <div className='h-20 text-gray-400'>{buildingInfo?.address}</div>
       </div>
-      <div className='ml-auto flex text-[#7799ff]'>
-        상세보기{' '}
+      <button className='ml-auto flex items-center text-[#7799ff]'>
+        상세보기
         <IconArrowRight stroke={'#7799ff'} width={16} stroke-width={2} />
-      </div>
+      </button>
     </div>
   );
 };
