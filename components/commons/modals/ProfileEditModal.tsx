@@ -28,10 +28,10 @@ const ProfileEditModal = (props: {
     description: string;
   }>({
     defaultValues: {
-      nickname: userInfo?.nickname,
-      company: userInfo?.company,
-      brand: userInfo?.brand,
-      description: userInfo?.description,
+      nickname: userInfo?.nickname ?? '',
+      company: userInfo?.company ?? '',
+      brand: userInfo?.brand ?? '',
+      description: userInfo?.description ?? '',
     },
   });
 
@@ -54,6 +54,8 @@ const ProfileEditModal = (props: {
   // 태그
   const [tags, setTags] = useState<string[]>(userInfo?.tag?.split(',') || []);
   const [tagText, setTagText] = useState<string>('');
+
+  console.log(tags);
 
   const addTags = (e: KeyboardEvent<HTMLInputElement>) => {
     const inputVal = (e.target as HTMLInputElement).value;
@@ -256,20 +258,22 @@ const InterestInput = (props: {
         />
 
         <ul id='tags' className='flex flex-wrap gap-4'>
-          {tags?.map((tag, index) => (
-            <li
-              key={index}
-              className='flex items-center justify-center rounded-8 bg-gray-200 px-8 py-4'
-            >
-              <span
-                id='tag-title'
-                className='text-12 font-700'
-                onClick={() => removeTags(index)}
+          {tags?.map((tag, index) => {
+            if (tag === '') return;
+            return (
+              <li
+                key={index}
+                className='flex items-center justify-center rounded-8 bg-gray-200 px-8 py-4'
               >
-                #{tag}
-              </span>
-            </li>
-          ))}
+                <span
+                  className='text-12 font-700'
+                  onClick={() => removeTags(index)}
+                >
+                  #{tag}
+                </span>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>
