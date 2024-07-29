@@ -55,11 +55,13 @@ const ProfileEditModal = (props: {
   const [tags, setTags] = useState<string[]>(userInfo?.tag?.split(',') || []);
   const [tagText, setTagText] = useState<string>('');
 
-  console.log(tags);
-
   const addTags = (e: KeyboardEvent<HTMLInputElement>) => {
     const inputVal = (e.target as HTMLInputElement).value;
-    if (e.key === 'Enter' && inputVal !== '' && !tags?.includes(inputVal)) {
+    if (
+      (e.key === 'Enter' || e.key === ' ') &&
+      inputVal !== '' &&
+      !tags?.includes(inputVal)
+    ) {
       setTags([...tags, inputVal]);
       setTagText('');
     }

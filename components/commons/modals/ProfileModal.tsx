@@ -42,7 +42,11 @@ const ProfileModal = (props: {
 
   const addTags = (e: KeyboardEvent<HTMLInputElement>) => {
     const inputVal = (e.target as HTMLInputElement).value;
-    if (e.key === 'Enter' && inputVal !== '' && !tags.includes(inputVal)) {
+    if (
+      (e.key === 'Enter' || e.key === ' ') &&
+      inputVal !== '' &&
+      !tags?.includes(inputVal)
+    ) {
       setTags([...tags, inputVal]);
       setTagText('');
     }

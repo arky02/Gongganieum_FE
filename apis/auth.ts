@@ -11,13 +11,7 @@ export const postUserSignUpInfo = async (props: {
   };
 }) => {
   const { formData } = props;
-  const {
-    nickname,
-    company: company,
-    brand: brand,
-    interests: tag,
-    description: description,
-  } = formData;
+  const { nickname, company, brand, description, interests: tag } = formData;
 
   const response = await instance.put(`/user/guest/update`, {
     nickname,
