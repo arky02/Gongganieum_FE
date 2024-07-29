@@ -29,7 +29,7 @@ const WelcomeModal = (props: {
       </Button>
       <div>
         <button className='border-b-2 border-black' onClick={handleLogout}>
-          프로필 설정하지 않고 로그아웃하기
+          다음에 회원가입하기
         </button>
       </div>
     </div>
