@@ -1,15 +1,16 @@
+import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
 
 const DEFAULT_PROFILE_IMAGE = '/images/default-profile-image.png';
 
 const MypageProfile = (props: {
-  profileImage?: string;
+  profileImage: string | 'null';
   nickname?: string;
   email?: string;
-  introduction?: string;
+  description?: string;
   onClick: () => void;
 }) => {
-  const { profileImage, nickname, email, introduction, onClick } = props;
+  const { profileImage, nickname, email, description, onClick } = props;
 
   return (
     <div className='mb-76 flex w-full items-center justify-between px-16 md:mb-36 md:flex-col md:gap-24'>
@@ -17,7 +18,7 @@ const MypageProfile = (props: {
         {/* 프로필 이미지 */}
         <div className='relative h-96 w-96 rounded-full md:h-56 md:w-56'>
           <Image
-            src={profileImage || DEFAULT_PROFILE_IMAGE}
+            src={profileImage === 'null' ? DEFAULT_PROFILE_IMAGE : profileImage}
             alt='프로필 사진'
             fill
             className='rounded-full object-cover'
@@ -27,10 +28,12 @@ const MypageProfile = (props: {
         <div className='flex flex-col gap-4'>
           <div className='flex items-center gap-8'>
             <span className='text-24 font-800'>{nickname}</span>
-            <span className='text-16 font-500 md:text-14'>({email})</span>
+            <span className='text-16 font-500 md:text-14'>
+              {email && `(${email})`}
+            </span>
           </div>
           <span className='text-balance text-16 font-400 md:text-14'>
-            {introduction}
+            {description}
           </span>
         </div>
       </div>
