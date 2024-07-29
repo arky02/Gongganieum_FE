@@ -63,8 +63,8 @@ const Admin = ({
 
   const isAdminAuthorized = async (props: { pwd: string }) => {
     const { pwd } = props;
-    const AuthorizeStatus = await authorizeAdmin(pwd);
-    switch (AuthorizeStatus) {
+    const authorizeStatus = await authorizeAdmin(pwd);
+    switch (authorizeStatus) {
       case 200:
         return true;
       case 409:
