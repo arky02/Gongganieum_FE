@@ -9,7 +9,7 @@ const LikeBuildingTab = (props: {
   const { likeBuildings } = props;
 
   return (
-    <div className='grid min-h-300 grid-cols-3 gap-x-24 gap-y-48 md:grid-cols-2 md:gap-x-8 md:gap-y-36'>
+    <>
       {likeBuildings?.length !== 0 ? (
         <div className='grid min-h-300 grid-cols-3 gap-x-24 gap-y-48 md:grid-cols-2 md:gap-x-8 md:gap-y-36'>
           {likeBuildings?.map((building: BuildingType) => (
@@ -37,7 +37,7 @@ const LikeBuildingTab = (props: {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
