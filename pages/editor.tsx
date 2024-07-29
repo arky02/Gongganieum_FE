@@ -1,4 +1,11 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import 'react-quill/dist/quill.snow.css';
 
 const EditorPage = () => {
@@ -12,7 +19,7 @@ const EditorPage = () => {
   const [editorValue, setEditorValue] = useState('');
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     setValue((prevValue) => ({
       ...prevValue,
@@ -29,7 +36,7 @@ const EditorPage = () => {
 
   const ReactQuill = isClient ? require('react-quill') : () => false;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!value.title || !value.writer || !value.category || !editorValue) {
       alert('모든 항목을 입력해주세요.');
@@ -41,11 +48,11 @@ const EditorPage = () => {
   const [password, setPassword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  const handlePasswordSubmit = (e: React.FormEvent) => {
+  const handlePasswordSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (password === '1234') {
       setIsAuthenticated(true);
@@ -205,7 +212,6 @@ const EditorPage = () => {
                 modules={modules}
                 value={editorValue}
                 onChange={setEditorValue}
-                // imageHandler={(image: File) => handleImageUpload(image)}
                 placeholder='글을 작성해 주세요.'
               />
             </div>
