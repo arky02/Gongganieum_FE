@@ -15,24 +15,22 @@ import Input from 'components/commons/Input';
 import RequiredStar from 'components/commons/RequiredStar';
 import { IconCirculation } from 'public/icons';
 
-export interface FormValues {
-  nickname: string;
-  companyName: string;
-  brandName: string;
-  introduction: string;
-}
-
 const ProfileModal = (props: {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
   const { setIsModalOpen } = props;
   const { control, handleSubmit, register, setValue, reset, formState } =
-    useForm<FormValues>({
+    useForm<{
+      nickname: string;
+      company: string;
+      brand: string;
+      description: string;
+    }>({
       defaultValues: {
         nickname: '',
-        companyName: '',
-        brandName: '',
-        introduction: '',
+        company: '',
+        brand: '',
+        description: '',
       },
     });
 
@@ -44,7 +42,11 @@ const ProfileModal = (props: {
 
   const addTags = (e: KeyboardEvent<HTMLInputElement>) => {
     const inputVal = (e.target as HTMLInputElement).value;
-    if (e.key === 'Enter' && inputVal !== '' && !tags.includes(inputVal)) {
+    if (
+      (e.key === 'Enter' || e.key === ' ') &&
+      inputVal !== '' &&
+      !tags?.includes(inputVal)
+    ) {
       setTags([...tags, inputVal]);
       setTagText('');
     }
@@ -67,7 +69,12 @@ const ProfileModal = (props: {
   };
 
   // 폼 제출
-  const patchUserInfo: SubmitHandler<FormValues> = async (formData) => {
+  const patchUserInfo: SubmitHandler<{
+    nickname: string;
+    company: string;
+    brand: string;
+    description: string;
+  }> = async (formData) => {
     const formDataResult = { ...formData, interests: tags.join(',') };
 
     const { resStatus, resData } = await postUserSignUpInfo({
@@ -96,7 +103,7 @@ const ProfileModal = (props: {
           onRandomNickname={handleRandomNickname}
         />
         <Input
-          name='companyName'
+          name='company'
           placeholder='회사명을 입력해 주세요.'
           rules={{
             required: true,
@@ -107,7 +114,7 @@ const ProfileModal = (props: {
         </Input>
 
         <Input
-          name='brandName'
+          name='brand'
           placeholder='브랜드명을 입력해 주세요.'
           rules={{
             required: true,
@@ -124,7 +131,7 @@ const ProfileModal = (props: {
           addTag={addTags}
           removeTags={removeTags}
         />
-        <IntroductionInput register={register} />
+        <DescriptionInput register={register} />
       </div>
       <Button
         type='button'
@@ -224,18 +231,18 @@ const InterestInput = (props: {
   );
 };
 
-const IntroductionInput = (props: { register: any }) => {
+const DescriptionInput = (props: { register: any }) => {
   const { register } = props;
   return (
     <div className='relative'>
       <div className='relative w-full'>
-        <label htmlFor='introduction' className='text-16 font-700'>
+        <label htmlFor='description' className='text-16 font-700'>
           한 줄 소개
         </label>
         <textarea
-          id='introduction'
+          id='description'
           placeholder={'한 줄 소개를 입력해 주세요.'}
-          {...register('introduction')}
+          {...register('description')}
           className={`text mt-8 h-76 w-full resize-none rounded-8 border border-gray-200 bg-gray-100 px-12 py-8 text-14 font-500 outline-none placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400`}
         />
       </div>

@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
+import { EMPTY_LIST_URL } from 'constants/common';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useSession from 'hooks/useSession';
@@ -15,6 +17,10 @@ type TabType = 'like' | 'contact';
 
 const Mypage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const router = useRouter();
+  const { getSession } = useSession();
+  const session = getSession();
 
   const { data: userInfo }: { data?: UserDataType } = useQuery({
     queryKey: ['user', 'userInfo'],
@@ -35,11 +41,7 @@ const Mypage = () => {
     return likeBuildingIds?.includes(el._id);
   });
 
-  const handleClick = () => setIsModalOpen(!isModalOpen);
-
-  const router = useRouter();
-  const { getSession } = useSession();
-  const session = getSession();
+  const handleClickEditButton = () => setIsModalOpen(!isModalOpen);
 
   useEffect(() => {
     if (!session) {
@@ -54,11 +56,11 @@ const Mypage = () => {
       <MetaTag title='공간이음 | 마이페이지' />
       <div className='mx-auto my-76 flex max-w-1232 flex-col items-center md:my-56'>
         <MypageProfile
-          profileImage={userInfo?.img}
+          profileImage={userInfo?.img as string}
           nickname={userInfo?.nickname}
           email={userInfo?.email}
-          introduction={userInfo?.description}
-          onClick={handleClick}
+          description={userInfo?.description}
+          onClick={handleClickEditButton}
         />
         {/* 찜하기 카드 리스트 */}
         <div className='flex w-full flex-col gap-24 px-16 md:my-28'>
@@ -92,5 +94,4 @@ const Mypage = () => {
     </>
   );
 };
-
 export default Mypage;
