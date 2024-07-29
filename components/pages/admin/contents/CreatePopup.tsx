@@ -104,7 +104,6 @@ const CreatePopup = () => {
               value={selectedBuilding}
               onChange={(value) => {
                 setSelectedBuilding(value ?? { id: 0, address: '' });
-                console.log(value);
               }}
               onClose={() => setQuery('')}
             >

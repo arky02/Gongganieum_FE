@@ -34,7 +34,6 @@ const ShowContacts = () => {
         value={selectedContact}
         onChange={(value) => {
           if (value?._id) setSelectedContact(value!);
-          console.log(value);
         }}
         onClose={() => setQuery('')}
       >

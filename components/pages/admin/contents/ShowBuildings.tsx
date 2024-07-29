@@ -36,7 +36,6 @@ const ShowBuilding = () => {
         value={selectedBuilding}
         onChange={(value) => {
           if (value?._id) setSelectedBuilding(value!);
-          console.log(value);
         }}
         onClose={() => setQuery('')}
       >

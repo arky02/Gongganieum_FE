@@ -35,7 +35,6 @@ const Admin = ({
   const [, setCookie] = useCookies(['admin_access']);
   const [isAuthorized, setIsAuthorized] =
     useState<boolean>(isAdminAuthenticated);
-  console.log(isAuthorized);
 
   const ADMIN_CONTENTS = [
     '건물 목록 조회',

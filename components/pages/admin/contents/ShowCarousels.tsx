@@ -36,7 +36,6 @@ const ShowCarousels = () => {
         value={selectedUser}
         onChange={(value) => {
           if (value?._id) setSelectedUser(value!);
-          console.log(value);
         }}
         onClose={() => setQuery('')}
       >
