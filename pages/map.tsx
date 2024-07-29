@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { CATEGORY } from 'constants/common';
 import useInitMap from 'hooks/map/useInitMap';
-import { getBuildings } from 'apis/api';
+import { getAllBuildingInfos } from 'apis/api';
 import FilterButton from 'components/pages/map/FilterButton';
 import IsOursButton from 'components/pages/map/IsOursButton';
 import LikedButton from 'components/pages/map/LikedButton';
@@ -10,7 +10,7 @@ import Tab from 'components/pages/map/Tab';
 const Map = () => {
   const { data: buildings } = useQuery({
     queryKey: ['buildings'],
-    queryFn: getBuildings,
+    queryFn: getAllBuildingInfos,
   });
 
   useInitMap(buildings);

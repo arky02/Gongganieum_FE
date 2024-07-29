@@ -10,7 +10,7 @@ import {
 import { instance } from './config/default';
 
 // 건물 전체 조회
-export const getBuildings = async () => {
+export const getAllBuildingInfos = async () => {
   const res = await instance.get('/building/infos');
   return res.data as BuildingType[];
 };
@@ -64,15 +64,33 @@ export const getMyInfo = async () => {
   }
 };
 
+// 전체 유저 목록 조회
+export const getAllUserInfo = async () => {
+  const res = await instance.get('/user/infos');
+  return res.data;
+};
+
 // 특정 유저 정보 조회
 export const getUserInfo = async (userId: number) => {
   const res = await instance.get(`/user/info?id=${userId}`);
   return res.data as UserDataType;
 };
 
+// 전체 문의하기 목록 조회
+export const getAllBuildingContactInfo = async () => {
+  const res = await instance.get('/contact/infos');
+  return res.data;
+};
+
 // 문의하기
 export const postBuildingContact = async (data: ContactType) => {
   const res = await instance.post('/contact', data);
+  return res.data;
+};
+
+// 전체 케러셀 목록 조회
+export const getAllCarouselInfo = async () => {
+  const res = await instance.get('/carousel/infos');
   return res.data;
 };
 
