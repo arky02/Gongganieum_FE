@@ -51,7 +51,7 @@ const Mypage = () => {
       <MetaTag title='공간이음 | 마이페이지' />
       <div className='mx-auto my-76 flex max-w-1232 flex-col items-center md:my-56'>
         <MypageProfile
-          profileImage={userInfo?.img as string}
+          profileImage={userInfo?.img ?? 'null'}
           nickname={userInfo?.nickname}
           email={userInfo?.email}
           description={userInfo?.description}
