@@ -1,0 +1,120 @@
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useCookies } from 'react-cookie';
+import toast from 'react-hot-toast';
+import { getCookieContent } from 'utils/getCookieContent';
+import { authorizeAdmin } from 'apis/admin';
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext,
+) => {
+  try {
+    const isAdminAuthenticated = await getCookieContent({
+      context: context,
+      name: 'admin_access',
+    });
+    return {
+      props: { isAdminAuthenticated },
+    };
+  } catch {
+    return { notFound: true };
+  }
+};
+
+const Admin = ({
+  isAdminAuthenticated,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const [pwd, setPwd] = useState('');
+  const [, setCookie] = useCookies(['admin_access']);
+
+  const ADMIN_CONTENTS = [
+    '건물 목록 조회',
+    '새로운 건물 추가',
+    '건물에 새 팝업 정보 추가',
+    '유저 목록 조회',
+    '캐러셀(배너) 목록 조회',
+    '문의하기 목록 조회',
+  ];
+
+  const handleLogin = async () => {
+    if (await isAdminAuthorized({ pwd })) {
+      toast.success('관리자로 로그인 하였습니다');
+      const expiration = new Date(Date.now() + 3600 * 1000); // 1시간
+      setCookie('admin_access', true, {
+        secure: false,
+        sameSite: 'lax',
+        path: '/',
+        expires: expiration,
+      });
+    }
+  };
+
+  const isAdminAuthorized = async (props: { pwd: string }) => {
+    const { pwd } = props;
+    const AuthorizeStatus = await authorizeAdmin(pwd);
+    switch (AuthorizeStatus) {
+      case 200:
+        return true;
+      case 409:
+        toast.error(
+          'DB에서 정보를 불러오는 데 오류가 발생하였습니다.\n다시 시도해주세요.',
+        );
+        return false;
+      case 400:
+        toast.error('비밀번호가 잘못되었습니다.');
+        return false;
+      default:
+        toast.error('문제가 발생하였습니다. 관리자에게 문의하세요.');
+        return false;
+    }
+  };
+
+  return (
+    <div
+      className={`flex h-[700px] w-full items-center justify-center ${isAdminAuthenticated ? 'bg-[#f1f1f1]' : 'bg-white'}`}
+    >
+      {isAdminAuthenticated ? (
+        <div className='grid grid-cols-3 grid-rows-2 gap-72'>
+          {ADMIN_CONTENTS.map((el, idx) => (
+            <ContentRouteBtn key={idx} content={el} />
+          ))}
+        </div>
+      ) : (
+        <div className='mx-auto my-40 flex min-h-[60dvh] max-w-1000 items-center gap-20 '>
+          <form onSubmit={handleLogin} className='flex items-center gap-20'>
+            <input
+              type='password'
+              value={pwd}
+              onChange={(e) => setPwd(e.target.value)}
+              placeholder='Enter password'
+              className='h-80 w-full border-gray-200 text-[36px] font-700 placeholder:opacity-20 focus:border-gray-300 focus:outline-none'
+            />
+            <button
+              type='submit'
+              className='h-full whitespace-nowrap rounded-10 bg-black px-16 py-12 text-14 font-600 text-white'
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const ContentRouteBtn = (props: { content: string }) => {
+  const { content } = props;
+
+  const router = useRouter();
+  return (
+    <div
+      className='flex h-[200px] w-[300px] cursor-pointer flex-col items-center justify-center gap-[10px] rounded-12 bg-white shadow-lg md:h-[300px] md:w-[500px] md:gap-[15px]'
+      onClick={() => router.push(`/admin/${content}`)}
+    >
+      <h2 className='text-24 font-700'>{content}</h2>
+      <h2 className='text-24 font-400 text-[#6e6e6e]'>바로가기</h2>
+    </div>
+  );
+};
+export default Admin;
