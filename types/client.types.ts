@@ -12,7 +12,7 @@ export interface BuildingType {
   popups: PopupType[];
   tag?: string;
   cate: CategoryType;
-  is_ours?: boolean;
+  isours?: boolean;
   latest_end_date: Date;
   img: string | null;
 }
