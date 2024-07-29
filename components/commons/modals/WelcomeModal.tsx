@@ -1,8 +1,11 @@
 import Image from 'next/image';
 import Button from 'components/commons/Button';
 
-const WelcomeModal = (props: { handleNextClick: () => void }) => {
-  const { handleNextClick } = props;
+const WelcomeModal = (props: {
+  handleNextClick: () => void;
+  handleLogout: () => void;
+}) => {
+  const { handleNextClick, handleLogout } = props;
   return (
     <div className='flex h-full w-600 flex-col items-center gap-24 rounded-24 bg-white p-36 md:w-[90dvw] md:min-w-360 md:p-24'>
       <div className='relative h-240 w-240'>
@@ -24,6 +27,11 @@ const WelcomeModal = (props: { handleNextClick: () => void }) => {
       <Button onClick={handleNextClick}>
         기본 프로필 설정 <span>&gt;</span>
       </Button>
+      <div>
+        <button className='border-b-2 border-black' onClick={handleLogout}>
+          다음에 회원가입하기
+        </button>
+      </div>
     </div>
   );
 };

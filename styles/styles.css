@@ -120,3 +120,29 @@
     transform: translateY(-40%) translateX(-50%) !important;
   }
 }
+
+/* 텍스트 에디터 스타일 */
+.ql-editor {
+  border-radius: 0px 0px 15px 15px;
+  min-height: 1000px !important;
+  font-size: 16px;
+}
+
+.ql-toolbar {
+  border-radius: 15px 15psx 0px 0px;
+}
+
+.ql-container.ql-snow {
+  border: 1px solid #d6dae1 !important;
+  padding-top: 10px !important;
+}
+
+.ql-toolbar.ql-snow {
+  border: 1px solid #d6dae1 !important;
+  margin-bottom: 10px;
+  padding: 20px !important;
+}
+
+.ql-fill {
+  color: #fff !important;
+}
