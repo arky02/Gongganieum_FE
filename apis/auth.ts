@@ -75,7 +75,7 @@ export const putProfileEdit = async (props: {
   return response?.status;
 };
 
-// 회원 탈퇴  (/user/remove)
+// 회원 탈퇴
 export const deleteUser = async () => {
   const response = await instance.get(`/user/remove`);
   return response?.status;

@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import {
   ChangeEvent,
   Dispatch,
@@ -100,6 +99,7 @@ const ProfileEditModal = (props: {
     }
   };
 
+  // 회원 탈퇴
   const { removeSession } = useSession();
 
   const handleClickWithdraw = async () => {
