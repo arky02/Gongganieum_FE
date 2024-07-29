@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { postPopupType } from 'components/pages/admin/contents/CreatePopup';
 import { instance } from './config/default';
 
@@ -13,7 +14,12 @@ export const postNewPopupData = async (newPopupData: postPopupType) => {
   return res;
 };
 
+// 관리자 비밀번호 검증
 export const authorizeAdmin = async (pwd: string) => {
-  const res = await instance.post('/admin/authorize', pwd);
-  return res.status;
+  try {
+    const res = await instance.post('/admin/authorize', { pwd });
+    return res.status;
+  } catch (e: any) {
+    return e.response.status;
+  }
 };

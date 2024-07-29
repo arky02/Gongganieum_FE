@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
 import { getCookieContent } from 'utils/getCookieContent';
@@ -11,10 +11,15 @@ export const getServerSideProps = async (
   context: GetServerSidePropsContext,
 ) => {
   try {
-    const isAdminAuthenticated = await getCookieContent({
+    let isAdminAuthenticated = false;
+
+    const getAdminAccessCookie = await getCookieContent({
       context: context,
       name: 'admin_access',
     });
+
+    if (getAdminAccessCookie) isAdminAuthenticated = true;
+
     return {
       props: { isAdminAuthenticated },
     };
@@ -28,6 +33,9 @@ const Admin = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [pwd, setPwd] = useState('');
   const [, setCookie] = useCookies(['admin_access']);
+  const [isAuthorized, setIsAuthorized] =
+    useState<boolean>(isAdminAuthenticated);
+  console.log(isAuthorized);
 
   const ADMIN_CONTENTS = [
     '건물 목록 조회',
@@ -38,9 +46,10 @@ const Admin = ({
     '문의하기 목록 조회',
   ];
 
-  const handleLogin = async () => {
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (await isAdminAuthorized({ pwd })) {
-      toast.success('관리자로 로그인 하였습니다');
+      toast.success('관리자로 로그인 되었습니다!');
       const expiration = new Date(Date.now() + 3600 * 1000); // 1시간
       setCookie('admin_access', true, {
         secure: false,
@@ -48,6 +57,7 @@ const Admin = ({
         path: '/',
         expires: expiration,
       });
+      setIsAuthorized(true);
     }
   };
 
@@ -63,7 +73,7 @@ const Admin = ({
         );
         return false;
       case 400:
-        toast.error('비밀번호가 잘못되었습니다.');
+        toast.error('비밀번호가 잘못되었습니다!');
         return false;
       default:
         toast.error('문제가 발생하였습니다. 관리자에게 문의하세요.');
@@ -77,7 +87,7 @@ const Admin = ({
       <div
         className={`flex h-[700px] w-full items-center justify-center ${isAdminAuthenticated ? 'bg-[#f1f1f1]' : 'bg-white'}`}
       >
-        {isAdminAuthenticated ? (
+        {isAuthorized ? (
           <div className='grid grid-cols-3 grid-rows-2 gap-72'>
             {ADMIN_CONTENTS.map((el, idx) => (
               <ContentRouteBtn key={idx} content={el} />
@@ -85,7 +95,10 @@ const Admin = ({
           </div>
         ) : (
           <div className='mx-auto my-40 flex min-h-[60dvh] max-w-1000 items-center gap-20 '>
-            <form onSubmit={handleLogin} className='flex items-center gap-20'>
+            <form
+              onSubmit={(e) => handleLogin(e)}
+              className='flex items-center gap-20'
+            >
               <input
                 type='password'
                 value={pwd}
