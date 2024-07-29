@@ -12,7 +12,7 @@ export interface BuildingType {
   popups: PopupType[];
   tag?: string;
   cate: CategoryType;
-  isours?: boolean;
+  is_ours?: boolean;
   latest_end_date: Date;
   img: string | null;
 }
@@ -77,16 +77,20 @@ export interface UserDataType {
   role: RoleType;
 }
 export interface ContactType {
+  _id?: number;
   buildingId: number;
-  name?: string;
-  phone?: string;
-  email?: string;
+  name: string;
+  userId?: number;
+  phone: string;
+  email: string;
   company?: string;
-  date1?: string;
+  date1: string;
   date2?: string;
-  budget?: string;
-  reason?: string;
+  budget: string;
+  reason: string;
   enterpath?: string;
+  areaList?: string;
+  size?: string;
   requests?: string;
 }
 
