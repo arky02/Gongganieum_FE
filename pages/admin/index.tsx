@@ -5,6 +5,7 @@ import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
 import { getCookieContent } from 'utils/getCookieContent';
 import { authorizeAdmin } from 'apis/admin';
+import MetaTag from 'components/commons/MetaTag';
 
 export const getServerSideProps = async (
   context: GetServerSidePropsContext,
@@ -71,35 +72,38 @@ const Admin = ({
   };
 
   return (
-    <div
-      className={`flex h-[700px] w-full items-center justify-center ${isAdminAuthenticated ? 'bg-[#f1f1f1]' : 'bg-white'}`}
-    >
-      {isAdminAuthenticated ? (
-        <div className='grid grid-cols-3 grid-rows-2 gap-72'>
-          {ADMIN_CONTENTS.map((el, idx) => (
-            <ContentRouteBtn key={idx} content={el} />
-          ))}
-        </div>
-      ) : (
-        <div className='mx-auto my-40 flex min-h-[60dvh] max-w-1000 items-center gap-20 '>
-          <form onSubmit={handleLogin} className='flex items-center gap-20'>
-            <input
-              type='password'
-              value={pwd}
-              onChange={(e) => setPwd(e.target.value)}
-              placeholder='Enter password'
-              className='h-80 w-full border-gray-200 text-[36px] font-700 placeholder:opacity-20 focus:border-gray-300 focus:outline-none'
-            />
-            <button
-              type='submit'
-              className='h-full whitespace-nowrap rounded-10 bg-black px-16 py-12 text-14 font-600 text-white'
-            >
-              Submit
-            </button>
-          </form>
-        </div>
-      )}
-    </div>
+    <>
+      <MetaTag title='공간이음 | 관리자' />
+      <div
+        className={`flex h-[700px] w-full items-center justify-center ${isAdminAuthenticated ? 'bg-[#f1f1f1]' : 'bg-white'}`}
+      >
+        {isAdminAuthenticated ? (
+          <div className='grid grid-cols-3 grid-rows-2 gap-72'>
+            {ADMIN_CONTENTS.map((el, idx) => (
+              <ContentRouteBtn key={idx} content={el} />
+            ))}
+          </div>
+        ) : (
+          <div className='mx-auto my-40 flex min-h-[60dvh] max-w-1000 items-center gap-20 '>
+            <form onSubmit={handleLogin} className='flex items-center gap-20'>
+              <input
+                type='password'
+                value={pwd}
+                onChange={(e) => setPwd(e.target.value)}
+                placeholder='Enter password'
+                className='h-80 w-full border-gray-200 text-[36px] font-700 placeholder:opacity-20 focus:border-gray-300 focus:outline-none'
+              />
+              <button
+                type='submit'
+                className='h-full whitespace-nowrap rounded-10 bg-black px-16 py-12 text-14 font-600 text-white'
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

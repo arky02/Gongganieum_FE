@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import MetaTag from 'components/commons/MetaTag';
 import CreateBuilding from 'components/pages/admin/contents/CreateBuilding';
 import CreatePopup from 'components/pages/admin/contents/CreatePopup';
 import ShowBuilding from 'components/pages/admin/contents/ShowBuildings';
@@ -29,10 +30,13 @@ const AdminRouteContent = () => {
     }
   };
   return (
-    <div className='flex h-full w-full flex-col items-center py-60'>
-      <div className='pb-60 text-32 font-700'>{content}</div>
-      {getAdminContent({ contentParams: String(content) })}
-    </div>
+    <>
+      <MetaTag title='공간이음 | 관리자' />
+      <div className='flex h-full w-full flex-col items-center py-60'>
+        <div className='pb-60 text-32 font-700'>{content}</div>
+        {getAdminContent({ contentParams: String(content) })}
+      </div>
+    </>
   );
 };
 export default AdminRouteContent;
