@@ -111,6 +111,10 @@
   color: rgb(200, 200, 200) !important;
 }
 
+.react-datepicker__week .react-datepicker__day--keyboard-selected {
+  background-color: transparent;
+}
+
 @media screen and (max-width: 767px) {
   .react-datepicker-popper {
     position: fixed !important;
