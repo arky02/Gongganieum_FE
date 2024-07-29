@@ -28,7 +28,7 @@ const ShowContacts = () => {
         });
 
   return (
-    <div className='-mt-12 h-680 w-1640 rounded-8 bg-[#f1f1f1] p-20'>
+    <div className='-mt-12 h-680 w-1460 rounded-8 bg-[#f1f1f1] p-20'>
       <h3 className='mb-12 ml-8 mt-4 text-20 font-700'>문의 검색</h3>
       <Combobox
         value={selectedContact}
