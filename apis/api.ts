@@ -36,7 +36,7 @@ export const getFilteredBuildings = async (params: {
       order,
       cate,
       as: parsedAs,
-      is_ours: isours,
+      isours,
       is_current: iscurrent,
       page: page ? Number(page) : undefined,
       limit: PAGE_LIMIT,

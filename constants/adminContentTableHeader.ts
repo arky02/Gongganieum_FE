@@ -5,7 +5,7 @@ export const BUILDING_LIST_HEADER = {
   name: '건물 이름',
   address: '주소',
   coord: '좌표',
-  is_ours: false,
+  isours: false,
   tag: '관련 태그',
   cate: '기타' as CategoryType,
   img: '건물 이미지',

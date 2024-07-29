@@ -16,15 +16,7 @@ const BuildingCard = (props: {
 }) => {
   const { mode, _id, isLiked: initialIsLiked, building } = props;
 
-  const {
-    name,
-    address,
-    isours: is_ours,
-    tag,
-    cate,
-    img,
-    latest_end_date,
-  } = building;
+  const { name, address, isours, tag, cate, img, latest_end_date } = building;
 
   const isPopup = new Date(latest_end_date ?? '') > new Date();
   const parsedTags = tag === 'NULL' ? [] : tag?.split(',');

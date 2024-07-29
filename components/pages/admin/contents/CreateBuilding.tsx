@@ -84,7 +84,7 @@ const CreateBuilding = () => {
             </div>
             <div className='flex items-center'>
               <input
-                {...register('is_ours', { required: true })}
+                {...register('isours', { required: true })}
                 type='radio'
                 value={'true'}
                 id='is_ours_true'
@@ -94,7 +94,7 @@ const CreateBuilding = () => {
                 예
               </label>
               <input
-                {...register('is_ours', { required: true })}
+                {...register('isours', { required: true })}
                 type='radio'
                 value={'false'}
                 id='is_ours_false'

@@ -92,7 +92,7 @@ const BuildingListCell = (props: { building: showBuildingType }) => {
 
       <h5 className='w-120 overflow-ellipsis'>{building.img}</h5>
       <h5 className='w-60 overflow-ellipsis'>
-        {building._id === 0 ? '직영 건물' : building.is_ours ? 'O' : 'X'}
+        {building._id === 0 ? '직영 건물' : building.isours ? 'O' : 'X'}
       </h5>
       <h5 className='w-160 overflow-ellipsis'>{building.tag}</h5>
       <div className='max-h-100 w-300 overflow-y-auto overflow-ellipsis'>
