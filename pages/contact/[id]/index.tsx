@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { GunguType } from 'constants/regions';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
