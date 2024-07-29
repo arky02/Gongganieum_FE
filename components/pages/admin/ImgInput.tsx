@@ -15,7 +15,7 @@ type ImageType = {
 };
 
 const ImageInput = (props: {
-  setImgFormData: Dispatch<SetStateAction<FormData | null>>;
+  setImgFormData: Dispatch<SetStateAction<File[] | null>>;
 }) => {
   const { setImgFormData } = props;
   const [isDragging, setIsDragging] = useState(false);
@@ -24,6 +24,7 @@ const ImageInput = (props: {
 
   const handleFiles = async (files: FileList | null) => {
     const formData = new FormData();
+    const fileList: File[] = [];
     if (!files) {
       console.log('선택된 파일이 없습니다');
       return;
@@ -40,9 +41,10 @@ const ImageInput = (props: {
 
         // FormData에 이미지 Append
         formData.append('file', files[i]);
+        fileList.push(files[i]);
       }
     }
-    setImgFormData(formData);
+    setImgFormData(fileList);
   };
 
   const selectFile = (e: ChangeEvent<HTMLInputElement>) => {
@@ -80,42 +82,45 @@ const ImageInput = (props: {
   };
 
   return (
-    <div className='middle-text mobile:items-end relative flex w-full flex-col'>
-      <input
-        type='file'
-        id='imageUpload'
-        style={{ display: 'none' }}
-        multiple={true}
-        accept='image/*'
-        onChange={selectFile}
-        ref={inputRef}
-      />
-      <button
-        role='button'
-        className={`border-gray-20 tablet:h-131 tablet:w-full tablet:border-dashed tablet:border-black flex w-fit items-center justify-center rounded-10 border px-12 py-4 ${
-          isDragging && 'bg-gray-30'
-        }`}
-        onDragEnter={handleDragEnter}
-        onDragLeave={handleDragLeave}
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-        onClick={() => {
-          inputRef.current?.click();
-        }}
-        type='button'
-      >
-        <Image
-          src={CameraImg}
-          alt='cameraIcon'
-          className='mr-8'
-          height={30}
-          width={30}
+    <div className='flex w-full items-end justify-between'>
+      <div className='mb-8 w-fit'>
+        <input
+          type='file'
+          id='imageUpload'
+          style={{ display: 'none' }}
+          multiple={true}
+          accept='image/*'
+          onChange={selectFile}
+          ref={inputRef}
         />
-        <div className='tablet:block pointer-events-none '>
-          {isDragging ? '이곳에 드롭해주세요' : '클릭 혹은 파일을 드롭해주세요'}
-        </div>
-      </button>
-      <div className='absolute -left-60 top-52 mt-8 flex h-[90px] w-400 gap-8 overflow-x-scroll'>
+        <button
+          role='button'
+          className={`border-gray-20 tablet:h-131 tablet:w-full tablet:border-dashed tablet:border-black flex w-fit items-center justify-center rounded-10 border px-12 py-4 ${
+            isDragging && 'bg-gray-30'
+          }`}
+          onDragEnter={handleDragEnter}
+          onDragLeave={handleDragLeave}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+          onClick={() => {
+            inputRef.current?.click();
+          }}
+          type='button'
+        >
+          <Image
+            src={CameraImg}
+            alt='cameraIcon'
+            className='mr-8'
+            height={30}
+            width={30}
+          />
+          <div className='pointer-events-none whitespace-nowrap'>
+            {isDragging ? '이곳에 드롭해주세요' : '파일 드롭 혹은 선택'}
+          </div>
+        </button>
+      </div>
+      {/* Img Preview Section */}
+      <div className='mt-8 flex h-[90px] max-w-400 gap-8 overflow-x-scroll'>
         {showImages.map((el, idx) => (
           <div className='rounded-lg max-w-90 relative aspect-square' key={idx}>
             <button
