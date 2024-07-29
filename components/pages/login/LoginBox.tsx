@@ -2,16 +2,16 @@ import LoginButton from './LoginButton';
 
 const LoginBox = () => {
   return (
-    <div className='flex w-768 flex-col items-center justify-center gap-36 rounded-16 bg-white px-84 py-64'>
+    <div className='flex w-768 flex-col items-center justify-center gap-36 rounded-16 bg-white px-84 py-64 md:w-full md:px-16'>
       <div className='text-32 font-800'>공간이음 로그인</div>
-      <div className='flex flex-col gap-20'>
+      <div className='flex w-full flex-col items-center justify-center gap-20'>
         <LoginButton
           mode='kakao'
-          href='https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=10e27455bc8bc405be98a80e91415931&redirect_uri=http://localhost:3000/oauth/kakao'
+          href='https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=10e27455bc8bc405be98a80e91415931&redirect_uri=https://www.gongganieum.com/oauth/kakao'
         />
         <LoginButton
           mode='naver'
-          href='https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=8_nLWgqOkGlSkyVVYEGj&redirect_uri=http://localhost:3000/oauth/naver&state=null'
+          href='https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=8_nLWgqOkGlSkyVVYEGj&redirect_uri=https://www.gongganieum.com/oauth/naver&state=null'
         />
       </div>
       <span className='flex flex-col items-center text-center text-16 text-gray-300'>

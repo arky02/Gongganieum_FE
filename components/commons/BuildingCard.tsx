@@ -1,13 +1,8 @@
-import { useMutation } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import { NO_IMAGE_URL, ROOT_IMAGE_URL } from 'constants/common';
 import Image from 'next/image';
 import Link from 'next/link';
-import router from 'next/router';
-import { MouseEvent, useState } from 'react';
-import useSession from 'hooks/useSession';
-import { postLikeToggle } from 'apis/api';
-import { BuildingType, ERROR_TYPE } from 'types/client.types';
+import useLike from 'hooks/useLike';
+import { BuildingType } from 'types/client.types';
 import Tag from 'components/commons/Tag';
 import { IconBlankLike, IconRedLike } from 'public/icons';
 
@@ -19,7 +14,7 @@ const BuildingCard = (props: {
   building: BuildingType;
   isLiked?: boolean;
 }) => {
-  const { mode, _id, isLiked, building } = props;
+  const { mode, _id, isLiked: initialIsLiked, building } = props;
 
   const { name, address, isours, tag, cate, img, latest_end_date } = building;
 
@@ -27,36 +22,10 @@ const BuildingCard = (props: {
   const parsedTags = tag === 'NULL' ? [] : tag?.split(',');
   const imageSrc = img?.split(', ')?.map((url: string) => ROOT_IMAGE_URL + url);
 
-  const { removeSession } = useSession();
-
-  const [isLike, setIsLike] = useState(isLiked);
-  const likeMutation = useMutation({
-    mutationFn: () => postLikeToggle(_id),
-    onError: (error: AxiosError<{ error: ERROR_TYPE }>) => {
-      const errorMessage = error.response?.data.error;
-      if (errorMessage === 'USER_SESSION_EXPIRED') {
-        removeSession({
-          redirectUri: '/login',
-          toastMessage: '세션이 만료되었습니다. 다시 로그인해주세요',
-          toastType: 'error',
-        });
-      } else {
-        removeSession({
-          redirectUri: '/login',
-          toastMessage: '로그인이 필요한 기능입니다.',
-          toastType: 'error',
-        });
-      }
-    },
+  const { isLiked, handleLike } = useLike({
+    initialIsLiked: initialIsLiked ?? false,
+    id: _id,
   });
-
-  // TODO: 옵티미스틱 업데이트 추가
-  const handleClickLikeButton = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsLike(!isLike);
-    likeMutation.mutate();
-  };
 
   return (
     <Link
@@ -64,7 +33,7 @@ const BuildingCard = (props: {
       className='relative flex aspect-square w-full cursor-pointer flex-col text-start'
     >
       <div
-        className={`relative mb-20 h-full w-full overflow-hidden rounded-12 ${mode === 'home' && 'md:w-240'}`}
+        className={`relative mb-20 h-full w-full overflow-hidden rounded-12 md:mb-12 ${mode === 'home' && 'md:w-240'}`}
       >
         <Image
           src={imageSrc?.[0] ?? NO_IMAGE_URL}
@@ -77,9 +46,9 @@ const BuildingCard = (props: {
         {mode === 'like' && (
           <button
             className='absolute right-20 top-20 z-[2] md:right-12 md:top-12'
-            onClick={handleClickLikeButton}
+            onClick={handleLike}
           >
-            {isLike ? <IconRedLike /> : <IconBlankLike />}
+            {isLiked ? <IconRedLike /> : <IconBlankLike />}
           </button>
         )}
       </div>

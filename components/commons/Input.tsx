@@ -32,7 +32,7 @@ const Input = <T extends FieldValues>({
 
   return (
     <div className='relative'>
-      <label htmlFor={field.name} className='text-16 font-700'>
+      <label htmlFor={field.name} className='block h-20 text-16 font-700'>
         {children}
       </label>
       <input

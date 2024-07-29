@@ -12,7 +12,7 @@ import { generateRandomNickname } from 'utils/generateRandomNickname';
 import { patchProfileEdit } from 'apis/auth';
 import { UserDataType } from 'types/client.types';
 import Input from 'components/commons/Input';
-import { IconCirculation, IconEditPencil } from 'public/icons';
+import { IconEditPencil } from 'public/icons';
 
 export interface ProfileFormValues {
   nickname: string;
@@ -55,15 +55,13 @@ const ProfileEditModal = (props: {
   };
 
   // 태그
-  const [tags, setTags] = useState<string[] | undefined>(
-    userInfo?.tag.split(','),
-  );
+  const [tags, setTags] = useState<string[]>(userInfo?.tag?.split(',') || []);
   const [tagText, setTagText] = useState<string>('');
 
   const addTags = (e: KeyboardEvent<HTMLInputElement>) => {
     const inputVal = (e.target as HTMLInputElement).value;
     if (e.key === 'Enter' && inputVal !== '' && !tags?.includes(inputVal)) {
-      if (tags) setTags([...tags, inputVal]);
+      setTags([...tags, inputVal]);
       setTagText('');
     }
   };
@@ -103,7 +101,7 @@ const ProfileEditModal = (props: {
   };
 
   return (
-    <form className='flex h-full w-600 flex-col gap-8 rounded-24 p-24'>
+    <div className='flex h-full w-600 flex-col gap-8 rounded-24 p-24 md:w-full'>
       <div className='text-24 font-800'>프로필 편집</div>
       <div className='relative mb-8 h-64 w-64 rounded-full'>
         <input
@@ -129,7 +127,6 @@ const ProfileEditModal = (props: {
         <NicknameInput
           register={register}
           onChangeNickname={handleChangeNickname}
-          onRandomNickname={handleRandomNickname}
         />
         <Input
           name='companyName'
@@ -170,7 +167,7 @@ const ProfileEditModal = (props: {
           저장
         </button>
       </div>
-    </form>
+    </div>
   );
 };
 
@@ -184,9 +181,8 @@ const RequiredStar = (props: { className?: string }) => {
 const NicknameInput = (props: {
   register: any;
   onChangeNickname: (e: ChangeEvent<HTMLInputElement>) => void;
-  onRandomNickname: () => void;
 }) => {
-  const { register, onChangeNickname, onRandomNickname } = props;
+  const { register, onChangeNickname } = props;
   return (
     <div className='flex items-end gap-16'>
       <div className='relative w-full'>
@@ -194,26 +190,18 @@ const NicknameInput = (props: {
           닉네임
           <RequiredStar className='ml-[3px]' />
         </label>
-        <input
-          id='nickname'
-          placeholder={'닉네임을 입력해 주세요.'}
-          {...register('nickname', {
-            required: true,
-            onChange: onChangeNickname,
-          })}
-          className={`mt-8 w-full rounded-8 border border-gray-200 bg-gray-100 p-12 text-14 font-500 outline-none placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400`}
-        />
-      </div>
-      <button
-        type='button'
-        onClick={onRandomNickname}
-        className='flex h-48 w-fit items-center justify-center whitespace-nowrap rounded-8 bg-[#efefef] px-12 py-20 text-16 font-500'
-      >
-        <div className='flex items-center gap-8'>
-          <IconCirculation />
-          <span>닉네임 랜덤 생성</span>
+        <div className='flex gap-8'>
+          <input
+            id='nickname'
+            placeholder={'닉네임을 입력해 주세요.'}
+            {...register('nickname', {
+              required: true,
+              onChange: onChangeNickname,
+            })}
+            className={`mt-8 w-full rounded-8 border border-gray-200 bg-gray-100 p-12 text-14 font-500 outline-none placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400`}
+          />
         </div>
-      </button>
+      </div>
     </div>
   );
 };

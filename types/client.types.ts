@@ -89,8 +89,8 @@ export interface ContactType {
   budget: string;
   reason: string;
   enterpath?: string;
-  areaList?: string;
   size?: string;
+  areaList?: string;
   requests?: string;
 }
 

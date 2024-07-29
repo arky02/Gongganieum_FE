@@ -5,11 +5,22 @@ import { ReactNode, useEffect, useState } from 'react';
 import useSession from 'hooks/useSession';
 import { requestUserRole } from 'apis/auth';
 import { ERROR_TYPE, RoleType } from 'types/client.types';
-import { IconHamburgerMenu, IconLogo, IconSearch } from 'public/icons';
+import {
+  IconHamburgerMenu,
+  IconLogo,
+  IconSearch,
+  IconSmallLogo,
+} from 'public/icons';
 import PortalModal from './PortalModal';
 import SearchInput from './SearchInput';
 import ProfileModal from './modals/ProfileModal';
+import TermsModal from './modals/TermsModal';
 import WelcomeModal from './modals/WelcomeModal';
+
+// type SignupStatusType = 'welcome' | ''
+
+const DEFAULT_QUERY =
+  '?as=지역명&q=&order=&cate=전체&isours=false&iscurrent=false&isliked=false&page=';
 
 const Header = () => {
   const { getSession, removeSession } = useSession();
@@ -19,7 +30,7 @@ const Header = () => {
 
   useEffect(() => {
     const newSession = getSession();
-    setIsLoggedIn(!!newSession);
+    setIsLoggedIn(newSession);
   }, [session]);
 
   const TABS = [
@@ -27,12 +38,12 @@ const Header = () => {
     {
       name: '지도',
       path: '/map',
-      href: '/map?as=지역명&q=&order=&cate=전체&isours=false',
+      href: '/map' + DEFAULT_QUERY,
     },
     {
       name: '리스트',
       path: '/list',
-      href: '/list?as=지역명&q=&order=&cate=전체&isours=false',
+      href: '/list' + DEFAULT_QUERY + '1',
     },
     { name: '매거진', path: '/magazine', href: '/magazine' },
     {
@@ -47,10 +58,10 @@ const Header = () => {
   };
 
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
-  const [signUpStatus, setSignUpStatus] = useState('welcome');
+  const [signUpStatus, setSignUpStatus] = useState(0);
 
   const onNextClick = () => {
-    setSignUpStatus(() => 'signUp');
+    setSignUpStatus((prev) => prev + 1);
   };
 
   const reqUserRole = async () => {
@@ -64,7 +75,7 @@ const Header = () => {
       if (errorMessage === 'USER_SESSION_EXPIRED') {
         removeSession({
           redirectUri: '/',
-          toastMessage: '세션이 만료되었습니다. 다시 로그인해주세요',
+          toastMessage: '세션이 만료되었습니다. 다시 로그인해주세요.',
           toastType: 'error',
         });
       } else {
@@ -112,10 +123,13 @@ const Header = () => {
         {/* Content */}
         <header className='sticky top-0 z-nav h-72 w-full border-b border-[#000]/5 bg-white md:z-popup md:h-64'>
           <div className='m-auto flex h-full max-w-1224 items-center justify-between px-16'>
-            <Link href='/' className='h-32 w-120 md:h-24 md:w-100'>
+            <Link href='/' className='md:hidden'>
               <IconLogo />
             </Link>
-            <div className='flex h-full gap-60 md:hidden'>
+            <Link href='/' className='hidden md:block'>
+              <IconSmallLogo />
+            </Link>
+            <div className='flex h-full gap-52 md:hidden'>
               {TABS.map((tab) => (
                 <TabButton key={tab.name} path={tab.path} href={tab.href}>
                   {tab.name}
@@ -133,7 +147,7 @@ const Header = () => {
                 <IconHamburgerMenu />
               </button>
               <Link
-                href='/list?as=지역명&q=&order=&cate=전체&isours=false'
+                href={'/list' + DEFAULT_QUERY + '1'}
                 className='hidden md:inline'
               >
                 <IconSearch />
@@ -160,8 +174,10 @@ const Header = () => {
         </header>
       </div>
       <PortalModal openStatus={isSignUpModalOpen}>
-        {signUpStatus === 'welcome' ? (
+        {signUpStatus === 0 ? (
           <WelcomeModal handleNextClick={onNextClick} />
+        ) : signUpStatus === 1 ? (
+          <TermsModal handleNextClick={onNextClick} />
         ) : (
           <ProfileModal setIsModalOpen={setIsSignUpModalOpen} />
         )}
@@ -196,7 +212,9 @@ const SearchBar = () => {
   const router = useRouter();
 
   const handleSubmit = (value: string) => {
-    router.push({ pathname: '/list', query: { as: '지역명', q: value } });
+    router.push(
+      `/list?as=지역명&q=${value}&order=&cate=전체&isours=false&iscurrent=false&isliked=false&page=1`,
+    );
   };
 
   return (

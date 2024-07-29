@@ -1,4 +1,3 @@
-import { SessionType } from 'hooks/useSession';
 import { FormValues } from 'components/commons/modals/ProfileModal';
 import { instance } from './config/default';
 
@@ -15,14 +14,14 @@ export const postUserSignUpInfo = async (props: {
     introduction: description,
   } = formData;
 
-  const response = await instance.patch(`/user/guest/update`, {
+  const response = await instance.put(`/user/guest/update`, {
     nickname,
     company,
     brand,
     tag,
     description,
   });
-  const data: SessionType = response.data;
+  const data: { accessToken: string } = response.data;
 
   return { resStatus: response.status, resData: data };
 };
@@ -45,7 +44,7 @@ export const patchProfileEdit = async (props: {
     interests: tag,
     introduction: description,
   } = formData;
-  const response = await instance.patch(`/user/guest/update`, {
+  const response = await instance.put(`/user/guest/update`, {
     nickname,
     company,
     brand,
