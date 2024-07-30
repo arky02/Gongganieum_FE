@@ -101,3 +101,12 @@ export const getRecommendedBuildings = async () => {
   const res = await instance.get('/carousel/building/map');
   return res.data as CarouselType[];
 };
+
+// 에디터 이미지 등록
+export const postEditorImage = async (file: File) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  const res = await instance.post('/magazine/upload_image', formData);
+
+  return res.data.image_url as string;
+};

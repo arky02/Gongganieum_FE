@@ -7,6 +7,7 @@ import {
   useState,
 } from 'react';
 import 'react-quill/dist/quill.snow.css';
+import { postEditorImage } from 'apis/api';
 
 const EditorPage = () => {
   const quillRef = useRef<any>(null);
@@ -61,19 +62,10 @@ const EditorPage = () => {
     }
   };
 
-  // 이미지 핸들러
+  // 이미지 업로드
   const handleImageUpload = async (file: File) => {
-    const formData = new FormData();
-    formData.append('image', file);
-
-    // TODO: 이미지 업로드 API 호출
-    const response = await fetch('/api/upload', {
-      method: 'POST',
-      body: formData,
-    });
-
-    const data = await response.json();
-    return data.url;
+    const response = await postEditorImage(file);
+    return response;
   };
 
   const imageHandler = () => {
@@ -81,21 +73,19 @@ const EditorPage = () => {
     input.setAttribute('type', 'file');
     input.setAttribute('accept', 'image/*');
     input.click();
-
-    input.onchange = async () => {
+    input.addEventListener('change', async () => {
       if (input.files === null) return;
       const file = input.files?.[0];
-      const url = await handleImageUpload(file);
+      const imageUrl = await handleImageUpload(file as File); // BASE64에서 이미지 URL로 변경
 
-      const quill = quillRef.current;
-      if (quill) {
-        const range = quill.getSelection();
-        quill.insertEmbed(range.index, 'image', url);
-      }
-    };
+      const editor = quillRef.current.getEditor();
+      const range = editor.getSelection(); // 커서 위치 반환
+      editor.insertEmbed(range.index, 'image', imageUrl); // 이미지 삽입
+    });
   };
 
   // 리액트 퀼 설정 (모듈, 포맷)]
+  // useMemo를 사용하지 않으면, 이미지 삽입할 때마다 modules가 리렌더링 되고, 리렌더링된 뒤에 커서 위치를 찾지 못해서 에러가 발생
   const modules = useMemo(
     () => ({
       toolbar: {
@@ -114,7 +104,7 @@ const EditorPage = () => {
           ['clean'],
         ],
         handlers: {
-          image: imageHandler,
+          image: imageHandler, // 이미지 핸들러 추가
         },
       },
     }),
@@ -213,6 +203,7 @@ const EditorPage = () => {
                 value={editorValue}
                 onChange={setEditorValue}
                 placeholder='글을 작성해 주세요.'
+                imageHandler={imageHandler}
               />
             </div>
           ) : (
