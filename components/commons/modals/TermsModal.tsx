@@ -1,8 +1,7 @@
-import Image from 'next/image';
 import { useState } from 'react';
 import Button from 'components/commons/Button';
-import PrivacyPolicy from 'components/commons/PrivacyPolicy';
-import TermsAndConditions from 'components/commons/TermsAndConditions';
+import PrivacyPolicy from '../policy/PrivacyPolicy';
+import TermsAndConditions from '../policy/TermsAndConditions';
 
 const TermsModal = (props: { handleNextClick: () => void }) => {
   const { handleNextClick } = props;
