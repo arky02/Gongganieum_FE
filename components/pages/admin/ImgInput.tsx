@@ -82,20 +82,20 @@ const ImageInput = (props: {
   };
 
   return (
-    <div className='flex w-full items-end justify-between'>
-      <div className='mb-8 w-fit'>
+    <div className='flex w-full items-end justify-between '>
+      <div className='mb-8 w-fit '>
         <input
           type='file'
           id='imageUpload'
-          style={{ display: 'none' }}
           multiple={true}
           accept='image/*'
           onChange={selectFile}
           ref={inputRef}
+          className='hidden'
         />
         <button
           role='button'
-          className={`border-gray-20 tablet:h-131 tablet:w-full tablet:border-dashed tablet:border-black flex w-fit items-center justify-center rounded-10 border px-12 py-4 ${
+          className={`border-gray-20 flex w-fit items-center justify-center rounded-10 border px-12 py-4 ${
             isDragging && 'bg-gray-30'
           }`}
           onDragEnter={handleDragEnter}
@@ -122,7 +122,7 @@ const ImageInput = (props: {
       {/* Img Preview Section */}
       <div className='mt-8 flex h-[90px] max-w-400 gap-8 overflow-x-scroll'>
         {showImages.map((el, idx) => (
-          <div className='rounded-lg max-w-90 relative aspect-square' key={idx}>
+          <div className='relative aspect-square' key={idx}>
             <button
               className='bg-gray-900 z-10 absolute right-0 top-0 flex size-24 cursor-pointer items-center justify-center rounded-full text-white'
               onClick={() => deleteFile(idx)}

@@ -110,7 +110,7 @@ const CreatePopup = () => {
               <div className='relative'>
                 <ComboboxInput
                   className={
-                    'w-[400px] rounded-full border-[2px] border-[#6b6b6b]  px-20 py-[12px] placeholder-gray-300'
+                    'w-400 rounded-full border-[2px] border-[#6b6b6b] px-20 py-12 placeholder-gray-300'
                   }
                   placeholder='팝업 정보를 추가할 건물 주소 검색'
                   style={{ borderRadius: 20 }}
@@ -120,7 +120,7 @@ const CreatePopup = () => {
                   }
                   onChange={(event) => setQuery(event.target.value)}
                 />
-                <ComboboxButton className='px-2.5 group absolute inset-y-0 right-0'>
+                <ComboboxButton className='group absolute inset-y-0 right-0'>
                   <IconArrowDown className='size-4 fill-white/60 group-data-[hover]:fill-white' />
                 </ComboboxButton>
               </div>
@@ -128,7 +128,7 @@ const CreatePopup = () => {
                 anchor='bottom'
                 transition
                 className={
-                  'rounded-xl p-1 w-[var(--input-width)] border border-white/5 bg-white/5 [--anchor-gap:var(--spacing-1)] empty:invisible'
+                  'rounded-xl p-1 w-[var(--input-width)] border border-white/5 bg-white/5 empty:invisible'
                 }
               >
                 {filteredBuildingList?.map((Building) => (

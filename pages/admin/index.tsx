@@ -13,7 +13,7 @@ export const getServerSideProps = async (
   try {
     let isAdminAuthenticated = false;
 
-    const getAdminAccessCookie = await getCookieContent({
+    const getAdminAccessCookie = getCookieContent({
       context: context,
       name: 'admin_access',
     });
@@ -84,7 +84,7 @@ const Admin = ({
     <>
       <MetaTag title='공간이음 | 관리자' />
       <div
-        className={`flex h-[700px] w-full items-center justify-center ${isAdminAuthenticated ? 'bg-[#f1f1f1]' : 'bg-white'}`}
+        className={`flex h-[700px] w-full items-center justify-center ${isAuthorized ? 'bg-[#f1f1f1]' : 'bg-white'}`}
       >
         {isAuthorized ? (
           <div className='grid grid-cols-3 grid-rows-2 gap-72'>

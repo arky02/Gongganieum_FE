@@ -1,5 +1,4 @@
 import { forwardRef } from 'react';
-import * as React from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import RequiredStar from 'components/commons/RequiredStar';
 
@@ -20,7 +19,7 @@ const TextInput = (props: {
       <input
         {...register}
         placeholder={placeholder ? placeholder : `${label} 입력`}
-        className='w-[400px] rounded-full bg-[#f1f1f1] px-20 py-[12px] placeholder-gray-300'
+        className='w-400 rounded-full bg-[#f1f1f1] px-20 py-12 placeholder-gray-300'
       />
     </div>
   );
