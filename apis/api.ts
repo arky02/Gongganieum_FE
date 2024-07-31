@@ -4,6 +4,7 @@ import {
   CarouselType,
   CategoryType,
   ContactType,
+  MagazineType,
   OrderType,
   UserDataType,
 } from 'types/client.types';
@@ -127,4 +128,22 @@ export const postEditorImage = async (file: File) => {
   const res = await instance.post('/magazine/upload_image', formData);
 
   return res.data.image_url as string;
+};
+
+// 매거진 전제 조회
+export const getAllMagazines = async () => {
+  const res = await instance.get('/magazine/infos');
+  return res.data;
+};
+
+// 특정 매거진 본문 조회
+export const getMagazineContent = async (id: number) => {
+  const res = await instance.get(`/magazine/contentHTML?id=${id}`);
+  return res.data;
+};
+
+// 매거진 게시
+export const postMagazine = async (data: MagazineType) => {
+  const res = await instance.post(`/magazine`, data);
+  return res.data;
 };
