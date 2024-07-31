@@ -8,18 +8,11 @@ import {
 } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { generateRandomNickname } from 'utils/generateRandomNickname';
-import { patchProfileEdit } from 'apis/auth';
+import useSession from 'hooks/useSession';
+import { deleteUser, putProfileEdit } from 'apis/auth';
 import { UserDataType } from 'types/client.types';
 import Input from 'components/commons/Input';
 import { IconEditPencil } from 'public/icons';
-
-export interface ProfileFormValues {
-  nickname: string;
-  companyName: string;
-  brandName: string;
-  introduction: string;
-}
 
 const DEFAULT_PROFILE_IMAGE = '/images/default-profile-image.png';
 
@@ -28,15 +21,19 @@ const ProfileEditModal = (props: {
   userInfo?: UserDataType;
 }) => {
   const { setIsModalOpen, userInfo } = props;
-  const { control, handleSubmit, register, setValue, formState } =
-    useForm<ProfileFormValues>({
-      defaultValues: {
-        nickname: userInfo?.nickname,
-        companyName: userInfo?.company,
-        brandName: userInfo?.brand,
-        introduction: userInfo?.description,
-      },
-    });
+  const { control, handleSubmit, register, setValue, formState } = useForm<{
+    nickname: string;
+    company: string;
+    brand: string;
+    description: string;
+  }>({
+    defaultValues: {
+      nickname: userInfo?.nickname ?? '',
+      company: userInfo?.company ?? '',
+      brand: userInfo?.brand ?? '',
+      description: userInfo?.description ?? '',
+    },
+  });
 
   // 프로필 이미지
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -60,7 +57,11 @@ const ProfileEditModal = (props: {
 
   const addTags = (e: KeyboardEvent<HTMLInputElement>) => {
     const inputVal = (e.target as HTMLInputElement).value;
-    if (e.key === 'Enter' && inputVal !== '' && !tags?.includes(inputVal)) {
+    if (
+      (e.key === 'Enter' || e.key === ' ') &&
+      inputVal !== '' &&
+      !tags?.includes(inputVal)
+    ) {
       setTags([...tags, inputVal]);
       setTagText('');
     }
@@ -77,18 +78,20 @@ const ProfileEditModal = (props: {
     setValue('nickname', newNickname);
   };
 
-  const handleRandomNickname = () => {
-    const randomNickname = generateRandomNickname();
-    setValue('nickname', randomNickname);
-  };
-
   // 폼 제출
-  const patchEditUserInfo: SubmitHandler<ProfileFormValues> = async (
-    formData,
-  ) => {
-    const formDataResult = { ...formData, interests: tags?.join(',') };
-    const resStatus: number = await patchProfileEdit({
-      formData: formDataResult,
+  const putEditUserInfo: SubmitHandler<{
+    nickname: string;
+    company: string;
+    brand: string;
+    description: string;
+  }> = async (formData) => {
+    const formDataResult = {
+      ...formData,
+      interests: tags?.join(','),
+      img: imageFile as File,
+    };
+    const resStatus: number = await putProfileEdit({
+      profileFormData: formDataResult,
     });
 
     if (resStatus === 200) {
@@ -97,6 +100,22 @@ const ProfileEditModal = (props: {
       window.location.reload();
     } else {
       toast.error('에러가 발생하였습니다!');
+    }
+  };
+
+  // 회원 탈퇴
+  const { removeSession } = useSession();
+
+  const handleClickWithdraw = async () => {
+    if (confirm('회원 탈퇴를 진행하시겠습니까?')) {
+      const resStatus = await deleteUser();
+      if (resStatus === 200) {
+        removeSession({
+          redirectUri: '/',
+          toastMessage: '회원탈퇴가 완료되었습니다.',
+          toastType: 'success',
+        });
+      }
     }
   };
 
@@ -129,7 +148,7 @@ const ProfileEditModal = (props: {
           onChangeNickname={handleChangeNickname}
         />
         <Input
-          name='companyName'
+          name='company'
           placeholder='회사명을 입력해 주세요.'
           control={control}
         >
@@ -137,7 +156,7 @@ const ProfileEditModal = (props: {
         </Input>
 
         <Input
-          name='brandName'
+          name='brand'
           placeholder='브랜드명을 입력해 주세요.'
           control={control}
         >
@@ -151,21 +170,29 @@ const ProfileEditModal = (props: {
           addTag={addTags}
           removeTags={removeTags}
         />
-        <IntroductionInput register={register} />
+        <DescriptionInput register={register} />
       </div>
-      <div className='flex justify-end gap-8'>
+      <div className='flex items-center justify-between gap-8'>
         <button
-          onClick={(prev) => setIsModalOpen(!prev)}
-          className='h-40 w-64 rounded-8 bg-gray-200 px-16 py-8 text-14 font-600'
+          onClick={handleClickWithdraw}
+          className='border-gray-300 text-12 font-700 text-gray-300 underline underline-offset-4 opacity-50 md:mr-4 md:mt-120'
         >
-          취소
+          회원 탈퇴
         </button>
-        <button
-          onClick={handleSubmit(patchEditUserInfo)}
-          className='h-40 w-64 rounded-8 bg-black px-16 py-8 text-14 font-600 text-white'
-        >
-          저장
-        </button>
+        <div className='flex items-center gap-8'>
+          <button
+            onClick={(prev) => setIsModalOpen(!prev)}
+            className='h-40 w-64 rounded-8 bg-gray-200 px-16 py-8 text-14 font-600'
+          >
+            취소
+          </button>
+          <button
+            onClick={handleSubmit(putEditUserInfo)}
+            className='h-40 w-64 rounded-8 bg-black px-16 py-8 text-14 font-600 text-white'
+          >
+            저장
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -233,38 +260,40 @@ const InterestInput = (props: {
         />
 
         <ul id='tags' className='flex flex-wrap gap-4'>
-          {tags?.map((tag, index) => (
-            <li
-              key={index}
-              className='flex items-center justify-center rounded-8 bg-gray-200 px-8 py-4'
-            >
-              <span
-                id='tag-title'
-                className='text-12 font-700'
-                onClick={() => removeTags(index)}
+          {tags?.map((tag, index) => {
+            if (tag === '') return;
+            return (
+              <li
+                key={index}
+                className='flex items-center justify-center rounded-8 bg-gray-200 px-8 py-4'
               >
-                #{tag}
-              </span>
-            </li>
-          ))}
+                <span
+                  className='text-12 font-700'
+                  onClick={() => removeTags(index)}
+                >
+                  #{tag}
+                </span>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>
   );
 };
 
-const IntroductionInput = (props: { register: any }) => {
+const DescriptionInput = (props: { register: any }) => {
   const { register } = props;
   return (
     <div className='relative'>
       <div className='relative w-full'>
-        <label htmlFor='introduction' className='text-16 font-700'>
+        <label htmlFor='description' className='text-16 font-700'>
           한 줄 소개
         </label>
         <textarea
-          id='introduction'
+          id='description'
           placeholder='한 줄 소개를 입력해 주세요.'
-          {...register('introduction')}
+          {...register('description')}
           className={`text mt-8 h-76 w-full resize-none rounded-8 border border-gray-200 bg-gray-100 px-12 py-8 text-14 font-500 outline-none placeholder:text-[#8A909F] focus:border-gray-400 active:border-gray-400`}
         />
       </div>

@@ -75,7 +75,7 @@ const MagazineSlideList = () => {
       </div>
       {/* 모바일 버전 스와이퍼 */}
       <div className='hidden w-full flex-row gap-8 px-28 md:flex md:flex-col'>
-        <h1 className='hidden text-32 font-400 underline md:flex'>POPUP</h1>
+        <h1 className='hidden text-32 font-400 underline md:flex'>SPACE</h1>
         <Swiper
           ref={swiperRef}
           modules={[Navigation, Autoplay]}

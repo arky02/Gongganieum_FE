@@ -1,18 +1,17 @@
-import { FormValues } from 'components/commons/modals/ProfileModal';
 import { instance } from './config/default';
 
 // 회원가입
 export const postUserSignUpInfo = async (props: {
-  formData: FormValues & { interests?: string };
+  formData: {
+    nickname: string;
+    company: string;
+    brand: string;
+    description: string;
+    interests?: string;
+  };
 }) => {
   const { formData } = props;
-  const {
-    nickname,
-    companyName: company,
-    brandName: brand,
-    interests: tag,
-    introduction: description,
-  } = formData;
+  const { nickname, company, brand, description, interests: tag } = formData;
 
   const response = await instance.put(`/user/guest/update`, {
     nickname,
@@ -33,18 +32,27 @@ export const requestUserRole = async () => {
 };
 
 // 프로필 편집
-export const patchProfileEdit = async (props: {
-  formData: FormValues & { interests?: string };
+export const putProfileEdit = async (props: {
+  profileFormData: {
+    nickname: string;
+    company: string;
+    brand: string;
+    description: string;
+    interests?: string;
+    img?: File;
+  };
 }) => {
-  const { formData } = props;
+  const { profileFormData } = props;
   const {
     nickname,
-    companyName: company,
-    brandName: brand,
+    company,
+    brand,
     interests: tag,
-    introduction: description,
-  } = formData;
-  const response = await instance.put(`/user/guest/update`, {
+    description,
+    img,
+  } = profileFormData;
+
+  const bodyData = JSON.stringify({
     nickname,
     company,
     brand,
@@ -52,5 +60,17 @@ export const patchProfileEdit = async (props: {
     description,
   });
 
+  const formData = new FormData();
+  formData.append('bodyData', bodyData);
+  formData.append('file', img!);
+
+  const response = await instance.put(`/user/info`, formData);
+
+  return response?.status;
+};
+
+// 회원 탈퇴
+export const deleteUser = async () => {
+  const response = await instance.get(`/user/remove`);
   return response?.status;
 };
