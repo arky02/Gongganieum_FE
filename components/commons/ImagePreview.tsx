@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { Dispatch, SetStateAction, SyntheticEvent, useEffect } from 'react';
+import usePreventScroll from 'hooks/usePreventScroll';
 import { IconArrowLeft, IconArrowRight, IconClose } from 'public/icons';
 import PortalImagePreview from './PortalImagePreview';
 
@@ -32,12 +33,7 @@ const ImagePreview = (props: {
     setIndex((prev) => prev! - 1);
   };
 
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, []);
+  usePreventScroll();
 
   return (
     <PortalImagePreview>
