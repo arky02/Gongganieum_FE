@@ -20,6 +20,8 @@ const EditorPage = () => {
     writer: '',
     category: '',
   });
+  const [thumbnailImage, setThumbnailImage] = useState<string>('');
+  const [thumbnailImageUrl, setThumbnailImageUrl] = useState<string>('');
   const [editorValue, setEditorValue] = useState('');
 
   const handleChange = (
@@ -57,6 +59,7 @@ const EditorPage = () => {
     const res = await postMagazine({
       title: value.title,
       writer: value.writer,
+      img: thumbnailImageUrl,
       date: dateString,
       cate: value.category,
       contentHTML: editorValue,
@@ -83,6 +86,22 @@ const EditorPage = () => {
     } else {
       alert('잘못된 비밀번호입니다.');
     }
+  };
+
+  // 썸네일 업로드
+  const handleThumbnailUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setThumbnailImage(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+
+    const response = await handleImageUpload(file);
+    console.log(response);
+    setThumbnailImageUrl(response);
   };
 
   // 이미지 업로드
@@ -214,6 +233,24 @@ const EditorPage = () => {
               <option>공간 매거진</option>
               <option>인물 매거진</option>
             </select>
+          </div>
+          {/* 썸네일 */}
+          <div className='flex w-full items-end justify-between'>
+            {thumbnailImage && (
+              <div className='flex flex-col gap-16'>
+                <h1 className='text-20 font-700'>썸네일 이미지</h1>
+                <img
+                  src={thumbnailImage}
+                  alt='썸네일 이미지'
+                  className='w-360 object-cover'
+                />
+              </div>
+            )}
+            <input
+              type='file'
+              onChange={handleThumbnailUpload}
+              accept='image/*'
+            />
           </div>
           {isClient ? (
             <div className='min-w-1000 max-w-1232 pt-40'>
