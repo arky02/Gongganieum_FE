@@ -11,7 +11,7 @@ const PopupHistoryCard = (props: { popups: PopupType[]; page: PageType }) => {
       title={`팝업 이력 (${parseNumberWithComma(popups.length)}건)`}
       page={page}
     >
-      <ul className='flex max-h-232 w-full flex-col gap-16 overflow-y-scroll'>
+      <ul className='flex max-h-232 w-full flex-col gap-16 overflow-y-auto pr-4'>
         {popups.map((popup) => (
           <Popup key={popup.name} popup={popup} />
         ))}

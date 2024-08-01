@@ -19,7 +19,7 @@ const BuildingTitle = (props: {
       <Link href={`/list/${buildingInfo?._id}`} legacyBehavior passHref>
         <a
           target='_blank'
-          className={`${page == 'map' ? 'text-28' : 'text-[3.6rem]'} line-clamp-1 flex h-44 items-end gap-8 font-800 md:h-32 md:text-[2.2rem]`}
+          className={`${page == 'map' ? 'text-28' : 'text-[3.6rem]'} line-clamp-1 flex h-44 w-fit items-end gap-8 font-800 md:h-32 md:text-[2.2rem]`}
         >
           {buildingInfo?.name}
           {page === 'map' && (
