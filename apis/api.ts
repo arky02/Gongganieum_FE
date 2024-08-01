@@ -107,7 +107,7 @@ export const getUserContact = async () => {
   return res.data as UserContactType[];
 };
 
-// 유저별 문의하기 삭제
+// 문의하기 삭제
 export const removeUserContact = async (id: number) => {
   const res = await instance.get(`/contact/remove?id=${id}`);
   return res.data;
