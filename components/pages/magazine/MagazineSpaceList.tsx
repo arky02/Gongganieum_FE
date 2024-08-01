@@ -6,7 +6,7 @@ import 'swiper/css/navigation';
 import { Autoplay, Navigation } from 'swiper/modules';
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 
-const MagazineSlideList = () => {
+const MagazineSpaceList = () => {
   const swiperRef = useRef<SwiperRef>(null);
 
   const handlePrev = () => {
@@ -130,7 +130,7 @@ const MagazineSlideList = () => {
   );
 };
 
-export default MagazineSlideList;
+export default MagazineSpaceList;
 
 const Card = (props: {
   img: string;

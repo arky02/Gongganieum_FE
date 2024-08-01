@@ -109,7 +109,13 @@ export interface MagazineType {
   title: string;
   cate: string;
   date: string;
-  writer: string;
   img?: string;
+  writer: string;
+  contentHTML: string;
+}
+
+export interface MagazineDetailType {
+  id: number;
+  magazineId: number;
   contentHTML: string;
 }

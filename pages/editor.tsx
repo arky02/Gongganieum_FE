@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import {
   ChangeEvent,
   FormEvent,
@@ -7,10 +8,11 @@ import {
   useState,
 } from 'react';
 import 'react-quill/dist/quill.snow.css';
-import { postEditorImage } from 'apis/api';
+import { postEditorImage, postMagazine } from 'apis/api';
 
 const EditorPage = () => {
   const quillRef = useRef<any>(null);
+  const router = useRouter();
 
   const [value, setValue] = useState({
     title: '',
@@ -37,12 +39,22 @@ const EditorPage = () => {
 
   const ReactQuill = isClient ? require('react-quill') : () => false;
 
-  const handleSubmit = (e: FormEvent) => {
+  // 작성하기
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!value.title || !value.writer || !value.category || !editorValue) {
       alert('모든 항목을 입력해주세요.');
       return;
     }
+    const res = await postMagazine({
+      title: value.title,
+      writer: value.writer,
+      date: new Date().toISOString(),
+      cate: value.category,
+      contentHTML: editorValue,
+    });
+
+    if (res === 200) router.push('/magazine');
   };
 
   // 비밀번호

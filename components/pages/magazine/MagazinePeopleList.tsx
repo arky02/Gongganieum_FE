@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-const MagazineListWithBackground = () => {
+const MagazinePeopleList = () => {
   return (
     <div className='flex min-h-500 w-full items-center justify-between bg-[#f5f5f5] px-60 md:flex-col md:gap-20 md:px-24 md:py-20'>
       <div className='a flex flex-col gap-12 text-black md:items-center'>
@@ -30,7 +30,7 @@ const MagazineListWithBackground = () => {
   );
 };
 
-export default MagazineListWithBackground;
+export default MagazinePeopleList;
 
 const Card = (props: { category: string; title: string; img: string }) => {
   const { category, title, img } = props;

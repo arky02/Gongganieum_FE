@@ -145,5 +145,5 @@ export const getMagazineContent = async (id: number) => {
 // 매거진 게시
 export const postMagazine = async (data: MagazineType) => {
   const res = await instance.post(`/magazine`, data);
-  return res.data;
+  return res.status;
 };

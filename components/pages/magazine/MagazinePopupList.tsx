@@ -1,13 +1,15 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
-const MagazineGridList = () => {
+const MagazinePopupList = () => {
   return (
     <div className='flex h-full w-full items-start justify-around gap-40 px-40 md:flex-col md:gap-16 md:px-24'>
       <h1 className='border-b-4 border-black text-[50px] font-400 md:text-32'>
         POPUP
       </h1>
       {/* 큰 이미지 카드*/}
-      <div className='relative min-h-600 min-w-[25dvw] md:min-h-600 md:w-full'>
+      {/* <Link href={`/list/${id}`}></Link> */}
+      <div className='relative min-h-600 min-w-[25dvw] md:min-h-400 md:w-full'>
         <div className='absolute inset-0 z-base bg-[#000] opacity-30'></div>
         <Image
           src={'/images/magazine/popup_1.jpg'}
@@ -59,7 +61,7 @@ const MagazineGridList = () => {
   );
 };
 
-export default MagazineGridList;
+export default MagazinePopupList;
 
 // TODO: 넣을 데이터 : 이미지, 제목, 작성자, 작성일
 const SmallCard = (props: {
