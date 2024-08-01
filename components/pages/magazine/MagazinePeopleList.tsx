@@ -16,14 +16,13 @@ const MagazinePeopleList = (props: { peopleMagazine?: MagazineType[] }) => {
       </div>
       <div className='flex gap-12 md:w-full md:overflow-y-scroll'>
         {peopleMagazine?.map((magazine) => (
-          <Link href={`/magazine/${magazine?._id}`} key={magazine?._id}>
-            <Card
-              key={magazine._id}
-              cate={magazine.cate ?? '인물 매거진'}
-              title={magazine.title ?? '공간이음 인물 매거진'}
-              img={magazine.img ?? NO_IMAGE_URL}
-            />
-          </Link>
+          <Card
+            id={magazine._id}
+            key={magazine._id}
+            cate={magazine.cate ?? '인물 매거진'}
+            title={magazine.title ?? '공간이음 인물 매거진'}
+            img={magazine.img ?? NO_IMAGE_URL}
+          />
         ))}
       </div>
     </div>
@@ -32,15 +31,22 @@ const MagazinePeopleList = (props: { peopleMagazine?: MagazineType[] }) => {
 
 export default MagazinePeopleList;
 
-const Card = (props: { cate: string; title: string; img: string }) => {
-  const { cate, title, img } = props;
+const Card = (props: {
+  id: number;
+  cate: string;
+  title: string;
+  img: string;
+}) => {
+  const { id, cate, title, img } = props;
   return (
     <div className='relative min-h-400 min-w-320 bg-gray-200 md:min-w-full'>
-      <Image src={img} alt='인물 이미지' fill className='object-cover' />
-      <div className='absolute bottom-32 left-16 flex flex-col gap-4 whitespace-nowrap text-white'>
-        <p className='text-16 font-400'>{cate}</p>
-        <h1 className='text-24 font-600'>{title}</h1>
-      </div>
+      <Link href={`/magazine/${id}`} key={id}>
+        <Image src={img} alt='인물 이미지' fill className='object-cover' />
+        <div className='absolute bottom-32 left-16 flex flex-col gap-4 whitespace-nowrap text-white'>
+          <p className='text-16 font-400'>{cate}</p>
+          <h1 className='text-24 font-600'>{title}</h1>
+        </div>
+      </Link>
     </div>
   );
 };

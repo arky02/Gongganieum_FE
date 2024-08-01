@@ -14,8 +14,8 @@ const MagazinePopupList = (props: { popupMagazine?: MagazineType[] }) => {
         POPUP
       </h1>
       {/* 큰 이미지 카드*/}
-      <Link href={`/magazine/${mainPopup?._id}`}>
-        <div className='relative min-h-600 min-w-[25dvw] md:min-h-400 md:w-full'>
+      <div className='relative min-h-600 min-w-[25dvw] md:min-h-400 md:w-full'>
+        <Link href={`/magazine/${mainPopup?._id}`}>
           <div className='absolute inset-0 z-base bg-[#000] opacity-30'></div>
           <Image
             src={mainPopup?.img ?? NO_IMAGE_URL}
@@ -32,8 +32,8 @@ const MagazinePopupList = (props: { popupMagazine?: MagazineType[] }) => {
               <span className='ml-4 opacity-60'>{mainPopup?.date}</span>
             </p>
           </div>
-        </div>
-      </Link>
+        </Link>
+      </div>
       {/* 작은 이미지들 */}
       <div className='grid min-h-600 min-w-680 grid-cols-2 grid-rows-2 gap-x-12 gap-y-24 md:min-h-full md:min-w-full md:grid-cols-1 md:gap-y-12'>
         {subPopups?.map((popup) => (
