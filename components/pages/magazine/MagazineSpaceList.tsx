@@ -1,5 +1,6 @@
 import { NO_IMAGE_URL } from 'constants/common';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRef } from 'react';
 import 'swiper/css';
 import 'swiper/css/autoplay';
@@ -41,13 +42,15 @@ const MagazineSpaceList = (props: { spaceMagazine?: MagazineType[] }) => {
         >
           {spaceMagazine?.map((magazine) => (
             <SwiperSlide key={magazine._id}>
-              <Card
-                img={magazine?.img ?? NO_IMAGE_URL}
-                cate={magazine?.cate ?? '공간 매거진'}
-                title={magazine?.title ?? '공간이음 매거진'}
-                date={magazine?.date ?? ''}
-                writer={magazine?.writer ?? ''}
-              />
+              <Link href={`/magazine/${magazine?._id}`}>
+                <Card
+                  img={magazine?.img ?? NO_IMAGE_URL}
+                  cate={magazine?.cate ?? '공간 매거진'}
+                  title={magazine?.title ?? '공간이음 매거진'}
+                  date={magazine?.date ?? ''}
+                  writer={magazine?.writer ?? ''}
+                />
+              </Link>
             </SwiperSlide>
           ))}
         </Swiper>

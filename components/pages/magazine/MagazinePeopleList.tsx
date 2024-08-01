@@ -1,5 +1,6 @@
 import { NO_IMAGE_URL } from 'constants/common';
 import Image from 'next/image';
+import Link from 'next/link';
 import { MagazineType } from 'types/client.types';
 
 const MagazinePeopleList = (props: { peopleMagazine?: MagazineType[] }) => {
@@ -15,12 +16,14 @@ const MagazinePeopleList = (props: { peopleMagazine?: MagazineType[] }) => {
       </div>
       <div className='flex gap-12 md:w-full md:overflow-y-scroll'>
         {peopleMagazine?.map((magazine) => (
-          <Card
-            key={magazine._id}
-            cate={magazine.cate ?? '인물 매거진'}
-            title={magazine.title ?? '공간이음 인물 매거진'}
-            img={magazine.img ?? NO_IMAGE_URL}
-          />
+          <Link href={`/magazine/${magazine?._id}`} key={magazine?._id}>
+            <Card
+              key={magazine._id}
+              cate={magazine.cate ?? '인물 매거진'}
+              title={magazine.title ?? '공간이음 인물 매거진'}
+              img={magazine.img ?? NO_IMAGE_URL}
+            />
+          </Link>
         ))}
       </div>
     </div>
