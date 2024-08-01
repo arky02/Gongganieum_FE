@@ -71,7 +71,6 @@ const EditorPage = () => {
     reader.readAsDataURL(file);
 
     const response = await handleImageUpload(file);
-    console.log(response);
     setThumbnailImageUrl(response);
   };
 

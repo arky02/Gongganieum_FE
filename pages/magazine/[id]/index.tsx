@@ -21,7 +21,6 @@ const MagazineDescriptionPage = () => {
     queryKey: ['magazineDescription'],
     queryFn: () => getMagazineContent(pageId),
   });
-  console.log(magazineContent);
 
   const magazine = magazinesData?.find((el) => el._id === pageId);
 
