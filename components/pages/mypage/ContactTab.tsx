@@ -13,7 +13,7 @@ const ContactTab = () => {
   return (
     <>
       {contacts?.length !== 0 ? (
-        <div className='grid min-h-400 w-full grid-cols-2 gap-12'>
+        <div className='grid min-h-400 w-full grid-cols-2 gap-12 md:grid-cols-1'>
           {contacts?.map((contact) => (
             <MyContact key={contact._id} contact={contact} />
           ))}

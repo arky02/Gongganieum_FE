@@ -30,7 +30,7 @@ const MyContact = (props: { contact: UserContactType }) => {
         <Link href={`/list/${contact.buildingId}`} legacyBehavior passHref>
           <a
             target='_blank'
-            className='relative aspect-square h-full overflow-hidden rounded-8'
+            className='relative aspect-square h-full shrink-0 overflow-hidden rounded-8'
           >
             <Image
               src={imageUrls?.[0] ?? NO_IMAGE_URL}
@@ -41,23 +41,24 @@ const MyContact = (props: { contact: UserContactType }) => {
           </a>
         </Link>
         <div className='flex flex-col gap-8'>
-          <div className='h-20 text-14 text-gray-300'>
+          <div className='line-clamp-1 h-20 text-14 text-gray-300'>
             접수일: {parsedAddedDate}
           </div>
-
           <Link href={`/list/${contact.buildingId}`} legacyBehavior passHref>
             <a
               target='_blank'
-              className='h-32 text-20 font-500 underline underline-offset-2'
+              className='line-clamp-1 h-32 text-20 font-500 underline underline-offset-2'
             >
               {buildingInfo?.name}
             </a>
           </Link>
-          <div className='h-20 text-gray-400'>{buildingInfo?.address}</div>
+          <div className='line-clamp-1 h-20 text-gray-400'>
+            {buildingInfo?.address}
+          </div>
         </div>
         <button
           onClick={() => setIsModalOpen(true)}
-          className='ml-auto flex items-center text-[#7799ff]'
+          className='ml-auto flex shrink-0 items-center text-[#7799ff]'
         >
           상세보기
           <IconArrowRight stroke={'#7799ff'} width={16} stroke-width={2} />
