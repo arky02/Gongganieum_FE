@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useSession from 'hooks/useSession';
-import { getBuildings, getLikeBuildingIds, getMyInfo } from 'apis/api';
+import { getAllBuildingInfos, getLikeBuildingIds, getMyInfo } from 'apis/api';
 import { BuildingType, UserDataType } from 'types/client.types';
 import MetaTag from 'components/commons/MetaTag';
 import PortalModal from 'components/commons/PortalModal';
@@ -34,7 +34,7 @@ const Mypage = () => {
 
   const { data: buildings }: { data?: BuildingType[] } = useQuery({
     queryKey: ['buildings'],
-    queryFn: () => getBuildings(),
+    queryFn: () => getAllBuildingInfos(),
   });
 
   const likeBuildings = buildings?.filter((el) => {
