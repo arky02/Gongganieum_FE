@@ -19,7 +19,7 @@ const BuildingTitle = (props: {
       <Link href={`/list/${buildingInfo?._id}`} legacyBehavior passHref>
         <a
           target='_blank'
-          className={`${page == 'map' ? 'text-28' : 'text-[3.6rem]'} flex h-44 items-end gap-8 font-800 md:h-32 md:text-[2.2rem]`}
+          className={`${page == 'map' ? 'text-28' : 'text-[3.6rem]'} line-clamp-1 flex h-44 items-end gap-8 font-800 md:h-32 md:text-[2.2rem]`}
         >
           {buildingInfo?.name}
           {page === 'map' && (
@@ -29,7 +29,7 @@ const BuildingTitle = (props: {
           )}
         </a>
       </Link>
-      <div className='mb-16 mt-8 flex h-24 items-center gap-4 text-16 font-500 text-gray-400 opacity-80 md:mb-12 md:mt-4 md:text-14'>
+      <div className='mb-16 mt-8 line-clamp-1 flex h-24 items-center gap-4 text-16 font-500 text-gray-400 opacity-80 md:mb-12 md:mt-4 md:text-14'>
         <IconMarker />
         {buildingInfo?.address}
       </div>
