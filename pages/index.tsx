@@ -1,3 +1,4 @@
+import usePreserveScroll from 'hooks/usePreserveScroll';
 import MetaTag from 'components/commons/MetaTag';
 import HomeBanner from 'components/pages/home/HomeBanner';
 import HomeCardSlider from 'components/pages/home/HomeCardSlider';
@@ -8,6 +9,7 @@ import HomeMobileMagazineSlider from 'components/pages/home/HomeMobileMagazineSl
 import HomeSliderWithPagination from 'components/pages/home/HomeSliderWithPagination';
 
 const Home = () => {
+  usePreserveScroll();
   return (
     <>
       <MetaTag />

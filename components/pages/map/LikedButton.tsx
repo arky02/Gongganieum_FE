@@ -25,13 +25,14 @@ const LikedButton = (props: { buildings: BuildingType[] }) => {
   useLikedMarkers(buildings);
 
   useEffect(() => {
-    if (!session) {
-      const { as, q, cate, isours } = router.query;
-      router.push(
-        `/map?as=${as ?? '지역명'}&q=${q ?? ''}&order=&cate=${cate ?? '전체'}&isours=${isours ?? 'false'}&iscurrent=false&isliked=false&page=`,
-      );
+    if (!router.isReady) {
+      return;
     }
-  }, []);
+    if (!session && router.query['isliked'] === 'true') {
+      const newPath = router.asPath.replace('isliked=true', 'isliked=false');
+      router.push(newPath);
+    }
+  }, [router, session]);
 
   return (
     <button

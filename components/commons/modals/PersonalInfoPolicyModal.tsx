@@ -1,4 +1,4 @@
-import PersonalInfoPolicy from '../PersonalInfoPolicy';
+import PersonalInfoPolicy from '../policy/PersonalInfoPolicy';
 
 const PersonalInfoPolicyModal = () => {
   return (
