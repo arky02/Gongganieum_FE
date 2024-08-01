@@ -1,7 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
+import { NO_IMAGE_URL } from 'constants/common';
 import DOMPurify from 'dompurify';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
+import usePreserveScroll from 'hooks/usePreserveScroll';
 import { getAllMagazines, getMagazineContent } from 'apis/api';
 import { MagazineType } from 'types/client.types';
 import MetaTag from 'components/commons/MetaTag';
@@ -29,6 +31,8 @@ const MagazineDescriptionPage = () => {
     ref.current = true;
   }, []);
 
+  usePreserveScroll();
+
   return (
     <>
       <MetaTag title='공간이음 | 매거진' />
@@ -54,11 +58,6 @@ const MagazineDescriptionPage = () => {
               <span className='text-18 opacity-70'>
                 {`${magazine?.date} | ${magazine?.writer}`}
               </span>
-              {/* <p className='max-w-700 text-pretty text-center text-14 leading-10 md:min-w-full'>
-                {
-                  '매끄러운 메탈릭 골드 케이스와 대담한 컬러 팔레트 그리고 독창적인 텍스처. 입생로랑 뷰티 ‘루쥬 쀠르 꾸뛰르’와 뉴진스 민지는 여성이 더 아름답고, 강인하고, 담대하게 느끼도록 이끈다.'
-                }
-              </p> */}
             </div>
           </div>
         </div>
@@ -66,7 +65,7 @@ const MagazineDescriptionPage = () => {
         <div className='my-28 flex min-h-1000 w-full flex-col items-center gap-40 md:px-20'>
           {/* 본문 */}
           {ref.current && (
-            <div className='flex min-h-200 w-900 flex-col gap-20 text-16 leading-10 text-[#525559] md:w-full'>
+            <div className='flex min-h-200 w-800 flex-col gap-20 text-16 leading-10 text-[#525559] md:w-full'>
               <div
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(magazineContent as string),

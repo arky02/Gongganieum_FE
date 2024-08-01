@@ -157,9 +157,12 @@ export const getMagazineContent = async (id: number) => {
 
 // 매거진 게시
 export const postMagazine = async (data: Omit<MagazineType, '_id'>) => {
+  const parsedContentHTML = data.contentHTML
+    .replaceAll('img', 'img style="width: 100%"')
+    .replaceAll('"', '""');
   const parsedData = {
     ...data,
-    contentHTML: data.contentHTML.replaceAll('"', '""'),
+    contentHTML: parsedContentHTML,
   };
   const res = await instance.post(`/magazine`, parsedData);
   return res.status;

@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import usePreserveScroll from 'hooks/usePreserveScroll';
 import { getAllMagazines } from 'apis/api';
 import { MagazineType } from 'types/client.types';
 import MetaTag from 'components/commons/MetaTag';
@@ -16,13 +17,15 @@ const Magazine = () => {
 
   const popupMagazine = magazineData
     ?.filter((el) => el.cate === '팝업 매거진')
-    .slice(0, 5);
+    .slice(-5);
   const spaceMagazine = magazineData
     ?.filter((el) => el.cate === '공간 매거진')
-    .slice(0, 4);
+    .slice(-4);
   const peopleMagazine = magazineData
     ?.filter((el) => el.cate === '인물 매거진')
-    .slice(0, 3);
+    .slice(-3);
+
+  usePreserveScroll();
 
   return (
     <>
