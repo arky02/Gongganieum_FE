@@ -54,7 +54,6 @@ const MagazinePopupList = (props: { popupMagazine?: MagazineType[] }) => {
 
 export default MagazinePopupList;
 
-// TODO: 넣을 데이터 : 이미지, 제목, 작성자, 작성일
 const SmallCard = (props: {
   img: string;
   cate: string;

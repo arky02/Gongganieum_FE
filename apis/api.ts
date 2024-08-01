@@ -139,11 +139,15 @@ export const getAllMagazines = async () => {
 // 특정 매거진 본문 조회
 export const getMagazineContent = async (id: number) => {
   const res = await instance.get(`/magazine/contentHTML?id=${id}`);
-  return res.data;
+  return res.data[0].contentHTML as string;
 };
 
 // 매거진 게시
 export const postMagazine = async (data: Omit<MagazineType, '_id'>) => {
-  const res = await instance.post(`/magazine`, data);
+  const parsedData = {
+    ...data,
+    contentHTML: data.contentHTML.replaceAll('"', '""'),
+  };
+  const res = await instance.post(`/magazine`, parsedData);
   return res.status;
 };

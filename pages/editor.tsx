@@ -123,6 +123,8 @@ const EditorPage = () => {
     if (res === 201) {
       toast.success('게시물 작성이 완료되었습니다!');
       router.push('/magazine');
+    } else {
+      toast.error('게시물 작성에 실패했습니다.');
     }
   };
 

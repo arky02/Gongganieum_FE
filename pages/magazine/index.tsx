@@ -14,8 +14,6 @@ const Magazine = () => {
     queryFn: () => getAllMagazines(),
   });
 
-  // console.log(magazineData);
-
   const popupMagazine = magazineData
     ?.filter((el) => el.cate === '팝업 매거진')
     .slice(0, 5);
@@ -25,10 +23,6 @@ const Magazine = () => {
   const peopleMagazine = magazineData
     ?.filter((el) => el.cate === '인물 매거진')
     .slice(0, 3);
-
-  console.log('popupMagazine', popupMagazine);
-  console.log('spaceMagazine', spaceMagazine);
-  console.log('peopleMagazine', peopleMagazine);
 
   return (
     <>
