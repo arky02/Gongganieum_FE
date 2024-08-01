@@ -37,7 +37,7 @@ const BuildingTab = (props: { id: number }) => {
       map,
       position,
       image: markerImage,
-      zIndex: 99,
+      zIndex: 100,
     });
 
     return () => {

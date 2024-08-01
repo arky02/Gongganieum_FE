@@ -5,6 +5,7 @@ import {
   CategoryType,
   ContactType,
   OrderType,
+  UserContactType,
   UserDataType,
 } from 'types/client.types';
 import { PAGE_LIMIT } from 'components/pages/list/PageButton';
@@ -97,6 +98,18 @@ export const getAllBuildingContactInfo = async () => {
 // 문의하기
 export const postBuildingContact = async (data: ContactType) => {
   const res = await instance.post('/contact', data);
+  return res.data;
+};
+
+// 유저별 문의하기 조회
+export const getUserContact = async () => {
+  const res = await instance.get('/contact/info');
+  return res.data as UserContactType[];
+};
+
+// 문의하기 삭제
+export const removeUserContact = async (id: number) => {
+  const res = await instance.get(`/contact/remove?id=${id}`);
   return res.data;
 };
 

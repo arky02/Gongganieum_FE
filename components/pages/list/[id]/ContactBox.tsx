@@ -2,6 +2,7 @@ import { BASE_URL } from 'constants/common';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
+import toast from 'react-hot-toast';
 import useLike from 'hooks/useLike';
 import useOutsideClick from 'hooks/useOutsideClick';
 import useSession from 'hooks/useSession';
@@ -51,9 +52,10 @@ const ContactBox = (props: {
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(url);
+      toast.success('클립보드에 복사됐습니다.', { position: 'bottom-center' });
     } catch (err) {
       console.error(err);
-      return;
+      toast.error('에러가 발생했습니다.', { position: 'bottom-center' });
     }
     setIsShareVisible(false);
   };
