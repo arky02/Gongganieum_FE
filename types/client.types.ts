@@ -94,6 +94,12 @@ export interface ContactType {
   requests?: string;
 }
 
+export interface UserContactType extends ContactType {
+  addedDate: string;
+  _id: number;
+  userId: number;
+}
+
 export interface CarouselType {
   _id: number;
   pageType: string;

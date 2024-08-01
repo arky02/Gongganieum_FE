@@ -6,11 +6,14 @@ import { useEffect, useState } from 'react';
 import useSession from 'hooks/useSession';
 import { getAllBuildingInfos, getLikeBuildingIds, getMyInfo } from 'apis/api';
 import { BuildingType, UserDataType } from 'types/client.types';
-import BuildingCard from 'components/commons/BuildingCard';
 import MetaTag from 'components/commons/MetaTag';
 import PortalModal from 'components/commons/PortalModal';
 import ProfileEditModal from 'components/commons/modals/ProfileEditModal';
+import ContactTab from 'components/pages/mypage/ContactTab';
+import LikeBuildingTab from 'components/pages/mypage/LikeBuildingTab';
 import MypageProfile from 'components/pages/mypage/MypageProfile';
+
+type TabType = 'like' | 'contact';
 
 const Mypage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,6 +49,8 @@ const Mypage = () => {
     }
   }, []);
 
+  const [tab, setTab] = useState<TabType>('like');
+
   return (
     <>
       <MetaTag title='공간이음 | 마이페이지' />
@@ -59,33 +64,24 @@ const Mypage = () => {
         />
         {/* 찜하기 카드 리스트 */}
         <div className='flex w-full flex-col gap-24 px-16 md:my-28'>
-          <h1 className='mb-24 text-32 font-800'>내 찜 목록</h1>
-          {likeBuildings?.length !== 0 ? (
-            <div className='grid min-h-300 grid-cols-3 gap-x-24 gap-y-48 md:grid-cols-2 md:gap-x-8 md:gap-y-36'>
-              {likeBuildings?.map((building: BuildingType) => (
-                <BuildingCard
-                  mode='like'
-                  key={building._id}
-                  _id={building._id}
-                  building={building}
-                  isLiked={likeBuildingIds?.includes(building._id)}
-                />
-              ))}
-            </div>
+          <div className='flex gap-32'>
+            <button
+              onClick={() => setTab('like')}
+              className={`mb-24 text-32 font-800 ${tab === 'like' ? 'text-black' : 'text-gray-300/50'}`}
+            >
+              내 찜 목록
+            </button>
+            <button
+              onClick={() => setTab('contact')}
+              className={`mb-24 text-32 font-800 ${tab === 'contact' ? 'text-black' : 'text-gray-300/50'}`}
+            >
+              문의 내역
+            </button>
+          </div>
+          {tab === 'like' ? (
+            <LikeBuildingTab likeBuildings={likeBuildings} />
           ) : (
-            <div className='flex h-[40dvh] w-full flex-col items-center justify-center gap-24'>
-              <div className='relative h-152 w-152'>
-                <Image
-                  src={EMPTY_LIST_URL}
-                  alt='비어있는 리스트 이미지'
-                  fill
-                  className='object-cover'
-                />
-              </div>
-              <div className='flex flex-col items-center justify-center text-18'>
-                <span>아직 찜한 건물이 없습니다.</span>
-              </div>
-            </div>
+            <ContactTab />
           )}
         </div>
         <PortalModal openStatus={isModalOpen}>

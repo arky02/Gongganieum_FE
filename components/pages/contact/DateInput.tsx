@@ -73,6 +73,7 @@ const DateInput = (props: {
           startDate={startDate}
           endDate={endDate}
           locale={ko}
+          minDate={new Date()}
           dateFormat='yyyy년 MM월 dd일'
           placeholderText='시작일을 선택해주세요.'
         />

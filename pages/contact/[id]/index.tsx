@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { GunguType } from 'constants/regions';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -83,7 +83,7 @@ const BuildingContact = () => {
       />
       <div className='flex h-[calc(100dvh-72px)] min-h-640 w-screen'>
         <Banner />
-        <div className='mx-auto my-auto flex h-full max-h-[calc(100dvh-72px)] w-full max-w-592 shrink-0 flex-col gap-24 overflow-y-scroll px-16 pt-[8dvh] md:w-full md:pt-56'>
+        <div className='mx-auto my-auto flex h-full max-h-[calc(100dvh-72px)] w-full max-w-592 shrink-0 flex-col gap-24 overflow-y-scroll px-16 pt-[8dvh] scrollbar-hide md:w-full md:pt-56'>
           {submitted ? (
             <FinishStep />
           ) : (

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useStore } from 'store';
 import useKakaoMap from 'hooks/useKakaoMap';
+import useSession from 'hooks/useSession';
 import { getIsDefaultMarkersVisible } from 'utils/getIsDefaultMarkersVisible';
 import { parseNumberWithComma } from 'utils/parseNumberWithComma';
 import { getBuildingInfo } from 'apis/api';

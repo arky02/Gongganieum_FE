@@ -68,7 +68,7 @@ const EtcStep = (props: {
         </Input>
       </div>
       <div className='flex flex-col gap-4'>
-        <div className='text-16 font-700'>기타 희망 지역</div>
+        <div className='text-16 font-700'>희망 지역</div>
         <div className='grid grid-cols-3 font-600'>
           <span>1순위</span>
           <span>2순위</span>

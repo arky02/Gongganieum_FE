@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { CATEGORY } from 'constants/common';
 import useInitMap from 'hooks/map/useInitMap';
+import usePreventScroll from 'hooks/usePreventScroll';
 import { getAllBuildingInfos } from 'apis/api';
 import MetaTag from 'components/commons/MetaTag';
 import FilterButton from 'components/pages/map/FilterButton';
@@ -15,6 +16,8 @@ const Map = () => {
   });
 
   useInitMap(buildings);
+
+  usePreventScroll();
 
   return (
     <>
