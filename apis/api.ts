@@ -143,7 +143,7 @@ export const getMagazineContent = async (id: number) => {
 };
 
 // 매거진 게시
-export const postMagazine = async (data: MagazineType) => {
+export const postMagazine = async (data: Omit<MagazineType, '_id'>) => {
   const res = await instance.post(`/magazine`, data);
   return res.status;
 };

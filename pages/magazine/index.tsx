@@ -14,17 +14,21 @@ const Magazine = () => {
     queryFn: () => getAllMagazines(),
   });
 
-  console.log(magazineData);
+  // console.log(magazineData);
 
-  const popupMagazine = magazineData?.filter((el) => el.cate === '팝업 매거진');
-  const spaceMagazine = magazineData?.filter((el) => el.cate === '공간 매거진');
-  const peopleMagazine = magazineData?.filter(
-    (el) => el.cate === '인물 매거진',
-  );
+  const popupMagazine = magazineData
+    ?.filter((el) => el.cate === '팝업 매거진')
+    .slice(0, 5);
+  const spaceMagazine = magazineData
+    ?.filter((el) => el.cate === '공간 매거진')
+    .slice(0, 4);
+  const peopleMagazine = magazineData
+    ?.filter((el) => el.cate === '인물 매거진')
+    .slice(0, 3);
 
-  // console.log('popupMagazine', popupMagazine);
-  // console.log('spaceMagazine', spaceMagazine);
-  // console.log('peopleMagazine', peopleMagazine);
+  console.log('popupMagazine', popupMagazine);
+  console.log('spaceMagazine', spaceMagazine);
+  console.log('peopleMagazine', peopleMagazine);
 
   return (
     <>
@@ -35,12 +39,12 @@ const Magazine = () => {
         {/* 메인 배너 */}
         <MagazineMainBanner />
         {/* 매거진 리스트 그리드 형태 */}
-        <MagazinePopupList />
+        <MagazinePopupList popupMagazine={popupMagazine} />
         {/* 배너 및 슬라이드 리스트 */}
         <MagazineBanner />
-        <MagazineSpaceList />
+        <MagazineSpaceList spaceMagazine={spaceMagazine} />
         {/* 피플 나우 리스트 */}
-        <MagazinePeopleList />
+        <MagazinePeopleList peopleMagazine={peopleMagazine} />
       </div>
     </>
   );

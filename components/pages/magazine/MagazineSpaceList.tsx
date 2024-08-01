@@ -1,3 +1,4 @@
+import { NO_IMAGE_URL } from 'constants/common';
 import Image from 'next/image';
 import { useRef } from 'react';
 import 'swiper/css';
@@ -5,8 +6,11 @@ import 'swiper/css/autoplay';
 import 'swiper/css/navigation';
 import { Autoplay, Navigation } from 'swiper/modules';
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
+import { MagazineType } from 'types/client.types';
 
-const MagazineSpaceList = () => {
+const MagazineSpaceList = (props: { spaceMagazine?: MagazineType[] }) => {
+  const { spaceMagazine } = props;
+
   const swiperRef = useRef<SwiperRef>(null);
 
   const handlePrev = () => {
@@ -35,42 +39,17 @@ const MagazineSpaceList = () => {
           scrollbar={{ draggable: true }}
           className='flex h-full w-full md:hidden'
         >
-          <SwiperSlide>
-            <Card
-              img='/images/magazine/magazine-architecture.jpg'
-              category='건물 정보'
-              title='별마당을 이어, 달마당 도서관을 만든다면'
-              date='24.07.01'
-              writer='유현준'
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Card
-              img='/images/magazine/magazine-glass-building.jpg'
-              category='건물 정보'
-              title='빌딩에서도 팝업을?'
-              date='24.07.08'
-              writer='호종훈'
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Card
-              img='/images/magazine/magazine-architecture-2.jpg'
-              category='건물 정보'
-              title='감각적인 공간이 되고 싶다면'
-              date='24.07.11'
-              writer='송준혁'
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Card
-              img='/images/magazine/magazine-architecture-3.jpg'
-              category='건물 정보'
-              title='분위기에 취하게 하는 건물이란'
-              date='24.07.24'
-              writer='원상연'
-            />
-          </SwiperSlide>
+          {spaceMagazine?.map((magazine) => (
+            <SwiperSlide key={magazine._id}>
+              <Card
+                img={magazine?.img ?? NO_IMAGE_URL}
+                cate={magazine?.cate ?? '공간 매거진'}
+                title={magazine?.title ?? '공간이음 매거진'}
+                date={magazine?.date ?? ''}
+                writer={magazine?.writer ?? ''}
+              />
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
       {/* 모바일 버전 스와이퍼 */}
@@ -88,42 +67,17 @@ const MagazineSpaceList = () => {
           scrollbar={{ draggable: true }}
           className='hidden h-full w-full md:flex'
         >
-          <SwiperSlide>
-            <Card
-              img='/images/magazine-architecture.jpg'
-              category='건물 정보'
-              title='별마당을 이어, 달마당 도서관을 만든다면'
-              date='24.07.01'
-              writer='유현준'
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Card
-              img='/images/magazine-glass-building.jpg'
-              category='건물 정보'
-              title='빌딩에서도 팝업을?'
-              date='24.07.08'
-              writer='호종훈'
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Card
-              img='/images/magazine-architecture-2.jpg'
-              category='건물 정보'
-              title='감각적인 공간이 되고 싶다면'
-              date='24.07.11'
-              writer='송준혁'
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Card
-              img='/images/magazine-architecture-3.jpg'
-              category='건물 정보'
-              title='분위기에 취하게 하는 건물이란'
-              date='24.07.24'
-              writer='원상연'
-            />
-          </SwiperSlide>
+          {spaceMagazine?.map((magazine) => (
+            <SwiperSlide key={magazine._id}>
+              <Card
+                img={magazine?.img ?? NO_IMAGE_URL}
+                cate={magazine?.cate ?? '공간 매거진'}
+                title={magazine?.title ?? '공간이음 매거진'}
+                date={magazine?.date ?? ''}
+                writer={magazine?.writer ?? ''}
+              />
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </>
@@ -134,12 +88,12 @@ export default MagazineSpaceList;
 
 const Card = (props: {
   img: string;
-  category: string;
+  cate: string;
   title: string;
   date: string;
   writer: string;
 }) => {
-  const { img, category, title, date, writer } = props;
+  const { img, cate, title, date, writer } = props;
   return (
     <div className='flex w-full min-w-300 flex-col gap-8'>
       <div
@@ -154,7 +108,7 @@ const Card = (props: {
         />
       </div>
       <div className='flex flex-col gap-[2px]'>
-        <h2 className='text-14 font-600'>{category}</h2>
+        <h2 className='text-14 font-600'>{cate}</h2>
         <h2 className='line-clamp-1 border-b-2 border-white text-24 font-800 duration-300 hover:underline hover:transition-all'>
           {title}
         </h2>
