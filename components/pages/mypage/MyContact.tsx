@@ -20,12 +20,9 @@ const MyContact = (props: { contact: UserContactType }) => {
   const imageUrls = buildingInfo?.img
     ?.split(', ')
     ?.map((url) => ROOT_IMAGE_URL + url);
+  const parsedAddedDate = contact.addedDate.split(' ')?.[0];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  console.log(contact);
-
-  const parsedAddedDate = contact.addedDate.split(' ')?.[0];
 
   return (
     <>
@@ -74,6 +71,7 @@ const MyContact = (props: { contact: UserContactType }) => {
           buildingName={buildingInfo?.name}
           addedDate={parsedAddedDate}
           contact={contact}
+          closeModal={() => setIsModalOpen(false)}
         />
       </PortalModal>
     </>
