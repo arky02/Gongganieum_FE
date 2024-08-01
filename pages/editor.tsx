@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import toast from 'react-hot-toast';
 import 'react-quill/dist/quill.snow.css';
 import { postEditorImage, postMagazine } from 'apis/api';
 
@@ -46,15 +47,25 @@ const EditorPage = () => {
       alert('모든 항목을 입력해주세요.');
       return;
     }
+
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const date = today.getDate();
+    const dateString = `${year}.${month < 10 ? `0${month}` : month}.${date < 10 ? `0${date}` : date}`;
+
     const res = await postMagazine({
       title: value.title,
       writer: value.writer,
-      date: new Date().toISOString(),
+      date: dateString,
       cate: value.category,
       contentHTML: editorValue,
     });
 
-    if (res === 200) router.push('/magazine');
+    if (res === 201) {
+      toast.success('게시물 작성이 완료되었습니다!');
+      router.push('/magazine');
+    }
   };
 
   // 비밀번호
