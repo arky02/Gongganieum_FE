@@ -1,4 +1,3 @@
-// TODO: 멘트 수정, 이미지랑 데이터 연결
 const MagazineMainBanner = () => {
   return (
     <div className='relative  w-full bg-[#000]'>

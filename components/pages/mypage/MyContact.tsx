@@ -26,7 +26,7 @@ const MyContact = (props: { contact: UserContactType }) => {
 
   return (
     <>
-      <div className='flex h-180 w-full items-center gap-16 rounded-12 border border-gray-200 p-16'>
+      <div className='flex h-180 w-full items-center gap-16 rounded-12 border border-gray-200 p-16 md:h-140'>
         <Link href={`/list/${contact.buildingId}`} legacyBehavior passHref>
           <a
             target='_blank'

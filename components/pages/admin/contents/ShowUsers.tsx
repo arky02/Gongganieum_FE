@@ -79,7 +79,9 @@ const UserListCell = (props: { user: UserDataType }) => {
         {user._id === 0 ? '유저ID' : user._id}
       </h5>
       <h5 className='w-80 overflow-ellipsis'>{user.name}</h5>
-      <h5 className='w-80 overflow-ellipsis'>{user.role}</h5>
+      <h5 className='w-80 overflow-ellipsis'>
+        {user._id === 0 ? '로그인 상태' : user.role}
+      </h5>
       <h5 className='w-140 overflow-ellipsis'>{user.nickname}</h5>
       <h5 className='w-220 overflow-ellipsis'>{user.email}</h5>
       <h5 className='w-120 overflow-ellipsis'>{user.company}</h5>
@@ -88,7 +90,7 @@ const UserListCell = (props: { user: UserDataType }) => {
       <h5 className='w-300 overflow-ellipsis'>{user.description}</h5>
       {user._id ? (
         <div
-          className='w-40 cursor-pointer overflow-ellipsis text-[#000000]'
+          className={`w-fit cursor-pointer overflow-ellipsis text-[#000000]`}
           onClick={() => {
             const res = confirm(
               `ID: ${user._id}, 이름: ${user.name} 유저를 DB에서 정말로 삭제하시겠습니까?`,
@@ -99,7 +101,7 @@ const UserListCell = (props: { user: UserDataType }) => {
           <IconClose></IconClose>
         </div>
       ) : (
-        <></>
+        <div className='w-44'></div>
       )}
     </div>
   );
