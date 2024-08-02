@@ -95,6 +95,12 @@ export interface ContactType {
   addedDate?: string;
 }
 
+export interface UserContactType extends ContactType {
+  addedDate: string;
+  _id: number;
+  userId: number;
+}
+
 export interface CarouselType {
   _id: number;
   pageType: string;
@@ -105,3 +111,19 @@ export interface CarouselType {
 }
 
 export type ERROR_TYPE = 'USER_SIGNED_OUT' | 'USER_SESSION_EXPIRED';
+
+export interface MagazineType {
+  _id: number;
+  title: string;
+  cate: string;
+  date: string;
+  img?: string;
+  writer: string;
+  contentHTML: string;
+}
+
+export interface MagazineDetailType {
+  id: number;
+  magazineId: number;
+  contentHTML: string;
+}

@@ -1,12 +1,32 @@
+import { useQuery } from '@tanstack/react-query';
+import usePreserveScroll from 'hooks/usePreserveScroll';
+import { getAllMagazines } from 'apis/api';
+import { MagazineType } from 'types/client.types';
 import MetaTag from 'components/commons/MetaTag';
 import MagazineBanner from 'components/pages/magazine/MagazineBanner';
-import MagazineCategory from 'components/pages/magazine/MagazineCategory';
-import MagazineGridList from 'components/pages/magazine/MagazineGridList';
-import MagazineListWithBackground from 'components/pages/magazine/MagazineListWithBackground';
 import MagazineMainBanner from 'components/pages/magazine/MagazineMainBanner';
-import MagazineSlideList from 'components/pages/magazine/MagazineSlideList';
+import MagazinePeopleList from 'components/pages/magazine/MagazinePeopleList';
+import MagazinePopupList from 'components/pages/magazine/MagazinePopupList';
+import MagazineSpaceList from 'components/pages/magazine/MagazineSpaceList';
 
-const magazine = () => {
+const Magazine = () => {
+  const { data: magazineData } = useQuery<MagazineType[]>({
+    queryKey: ['magazine'],
+    queryFn: () => getAllMagazines(),
+  });
+
+  const popupMagazine = magazineData
+    ?.filter((el) => el.cate === '팝업 매거진')
+    .slice(-5);
+  const spaceMagazine = magazineData
+    ?.filter((el) => el.cate === '공간 매거진')
+    .slice(-4);
+  const peopleMagazine = magazineData
+    ?.filter((el) => el.cate === '인물 매거진')
+    .slice(-3);
+
+  usePreserveScroll();
+
   return (
     <>
       <MetaTag title='공간이음 | 매거진' />
@@ -16,15 +36,15 @@ const magazine = () => {
         {/* 메인 배너 */}
         <MagazineMainBanner />
         {/* 매거진 리스트 그리드 형태 */}
-        <MagazineGridList />
+        <MagazinePopupList popupMagazine={popupMagazine} />
         {/* 배너 및 슬라이드 리스트 */}
         <MagazineBanner />
-        <MagazineSlideList />
+        <MagazineSpaceList spaceMagazine={spaceMagazine} />
         {/* 피플 나우 리스트 */}
-        <MagazineListWithBackground />
+        <MagazinePeopleList peopleMagazine={peopleMagazine} />
       </div>
     </>
   );
 };
 
-export default magazine;
+export default Magazine;

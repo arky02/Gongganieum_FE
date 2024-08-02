@@ -3,6 +3,7 @@ import { EMPTY_LIST_URL, SEARCH_AS } from 'constants/common';
 import Image from 'next/image';
 import { ChangeEvent, useEffect } from 'react';
 import useFetch from 'hooks/useFetch';
+import usePreserveScroll from 'hooks/usePreserveScroll';
 import useSearch from 'hooks/useSearch';
 import { getLikeBuildingIds } from 'apis/api';
 import { CategoryType, OrderType } from 'types/client.types';
@@ -74,6 +75,8 @@ const List = () => {
     setPage('1');
     setQ(q);
   };
+
+  usePreserveScroll();
 
   return (
     <>

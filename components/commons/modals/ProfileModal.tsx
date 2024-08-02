@@ -15,17 +15,19 @@ import Input from 'components/commons/Input';
 import RequiredStar from 'components/commons/RequiredStar';
 import { IconCirculation } from 'public/icons';
 
+interface FormType {
+  nickname: string;
+  company: string;
+  brand: string;
+  description: string;
+}
+
 const ProfileModal = (props: {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
   const { setIsModalOpen } = props;
   const { control, handleSubmit, register, setValue, reset, formState } =
-    useForm<{
-      nickname: string;
-      company: string;
-      brand: string;
-      description: string;
-    }>({
+    useForm<FormType>({
       defaultValues: {
         nickname: '',
         company: '',

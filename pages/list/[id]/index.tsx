@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ROOT_IMAGE_URL } from 'constants/common';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import usePreserveScroll from 'hooks/usePreserveScroll';
 import { getBuildingInfo, getLikeBuildingIds } from 'apis/api';
 import BuildingTitle from 'components/commons/BuildingTitle';
 import ImageLayout from 'components/commons/ImageLayout';
@@ -11,6 +12,7 @@ import ContactBox from 'components/pages/list/[id]/ContactBox';
 import { IconArrowBack } from 'public/icons';
 
 const BuildingDescriptionPage = () => {
+  usePreserveScroll();
   const router = useRouter();
   const { id } = router.query as { id: string };
   const buildingId = Number(id);
