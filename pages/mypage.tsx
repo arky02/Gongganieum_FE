@@ -67,13 +67,13 @@ const Mypage = () => {
           <div className='flex gap-32'>
             <button
               onClick={() => setTab('like')}
-              className={`mb-24 text-32 font-800 ${tab === 'like' ? 'text-black' : 'text-gray-300/50'}`}
+              className={`mb-24 text-32 font-800 md:text-28 ${tab === 'like' ? 'text-black' : 'text-gray-300/50'}`}
             >
               내 찜 목록
             </button>
             <button
               onClick={() => setTab('contact')}
-              className={`mb-24 text-32 font-800 ${tab === 'contact' ? 'text-black' : 'text-gray-300/50'}`}
+              className={`mb-24 text-32 font-800 md:text-28 ${tab === 'contact' ? 'text-black' : 'text-gray-300/50'}`}
             >
               문의 내역
             </button>
