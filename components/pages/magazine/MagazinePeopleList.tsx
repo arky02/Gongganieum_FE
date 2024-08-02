@@ -8,7 +8,7 @@ const MagazinePeopleList = (props: { peopleMagazine?: MagazineType[] }) => {
 
   return (
     <div className='flex min-h-500 w-full items-center justify-between bg-[#f5f5f5] px-60 md:flex-col md:gap-20 md:px-24 md:py-20'>
-      <div className='a flex flex-col gap-12 text-black md:items-center'>
+      <div className='flex flex-col gap-12 text-black md:items-center'>
         <h1 className='text-[60px] font-800 underline md:text-32'>PEOPLE</h1>
         <h2 className='text-[18px] font-500 md:text-16'>
           공간이음이 주목하는 인물
