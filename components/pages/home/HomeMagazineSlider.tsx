@@ -37,6 +37,7 @@ const HomeMagazineSlider = () => {
         {sliceMagazineData?.map((magazine, index) => (
           <SwiperSlide key={magazine._id} virtualIndex={index}>
             <HomeMagazineCard
+              id={magazine._id}
               title={magazine.title}
               subtitle={`${magazine.writer} | ${magazine.date}`}
               img={magazine.img ?? NO_IMAGE_URL}
