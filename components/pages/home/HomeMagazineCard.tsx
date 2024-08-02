@@ -1,25 +1,29 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 const HomeMagazineCard = (props: {
+  id: number;
   title: string;
   subtitle: string;
   img: string;
 }) => {
-  const { title, subtitle, img } = props;
+  const { id, title, subtitle, img } = props;
 
   return (
     <div className='relative'>
-      <div className='h-560 w-396 flex-col md:h-340 md:w-240 '>
-        <Image
-          src={img}
-          fill
-          className='cursor-pointer rounded-12 object-cover'
-          alt='빌딩 이미지'
-          quality={100}
-        />
-      </div>
-      <div className='absolute inset-0 rounded-12 bg-gradient-to-tr from-black via-transparent to-transparent opacity-80'></div>
-      <Description title={title} subtitle={subtitle} />
+      <Link href={`/magazine/${id}`}>
+        <div className='h-560 w-396 flex-col md:h-340 md:w-240 '>
+          <Image
+            src={img}
+            fill
+            className='cursor-pointer rounded-12 object-cover'
+            alt='빌딩 이미지'
+            quality={100}
+          />
+        </div>
+        <div className='absolute inset-0 rounded-12 bg-gradient-to-tr from-black via-transparent to-transparent opacity-80'></div>
+        <Description title={title} subtitle={subtitle} />
+      </Link>
     </div>
   );
 };

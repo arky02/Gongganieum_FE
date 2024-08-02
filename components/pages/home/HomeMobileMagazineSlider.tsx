@@ -21,6 +21,7 @@ const HomeMobileMagazineSlider = () => {
           return (
             <div key={magazine?._id} className='inline-block'>
               <HomeMagazineCard
+                id={magazine?._id}
                 title={magazine?.title}
                 subtitle={`${magazine?.writer} | ${magazine?.date}`}
                 img={magazine?.img ?? NO_IMAGE_URL}
