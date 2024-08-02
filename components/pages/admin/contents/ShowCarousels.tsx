@@ -85,7 +85,9 @@ const CarouselListCell = (props: { carousel: CarouselType }) => {
       <h5 className='w-200 overflow-ellipsis'>{carousel.carouselType}</h5>
       <h5 className='w-200 overflow-ellipsis'>{carousel.contentType}</h5>
       <h5 className='w-180 overflow-ellipsis'>{carousel.pageType}</h5>
-      <h5 className='w-180 overflow-ellipsis'>{carousel.contentId}</h5>
+      <h5 className='w-180 overflow-ellipsis'>
+        {carousel._id === 0 ? '컨텐츠 ID' : carousel.contentId}
+      </h5>
       <div className='max-h-100 w-full overflow-y-auto overflow-ellipsis'>
         {carousel._id === 0 ? (
           '캐러셀 컨텐츠 내용'

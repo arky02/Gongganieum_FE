@@ -92,6 +92,7 @@ export interface ContactType {
   size?: string;
   areaList?: string;
   requests?: string;
+  addedDate?: string;
 }
 
 export interface UserContactType extends ContactType {
