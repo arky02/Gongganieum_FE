@@ -1,19 +1,24 @@
+import { useQuery } from '@tanstack/react-query';
+import { NO_IMAGE_URL } from 'constants/common';
 import { useRef } from 'react';
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/navigation';
 import { Autoplay, Navigation } from 'swiper/modules';
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
+import { getAllMagazines } from 'apis/api';
+import { MagazineType } from 'types/client.types';
 import HomeMagazineCard from './HomeMagazineCard';
-
-const MOCK_BUILDING_IMAGE_URLS = [
-  '/images/mock-building-image.jpg',
-  '/images/mock-building-image2.jpg',
-  '/images/mock-building-image.jpg',
-];
 
 const HomeMagazineSlider = () => {
   const swiperRef = useRef<SwiperRef>(null);
+
+  const { data: magazineData } = useQuery<MagazineType[]>({
+    queryKey: ['magazine'],
+    queryFn: () => getAllMagazines(),
+  });
+
+  const sliceMagazineData = magazineData?.slice(0, 3);
 
   return (
     <div className='relative w-[calc(100dvw-32px)] max-w-1232 md:hidden'>
@@ -29,13 +34,12 @@ const HomeMagazineSlider = () => {
         scrollbar={{ draggable: true }}
         className='h-full w-full'
       >
-        {MOCK_BUILDING_IMAGE_URLS.map((slideImage, index) => (
-          <SwiperSlide key={slideImage} virtualIndex={index}>
-            {/* TODO: 데이터 교체 */}
+        {sliceMagazineData?.map((magazine, index) => (
+          <SwiperSlide key={magazine._id} virtualIndex={index}>
             <HomeMagazineCard
-              title='프라빗한 한강 파티룸'
-              subtitle='내 자리 없는 한강공원 대신에'
-              img={slideImage}
+              title={magazine.title}
+              subtitle={`${magazine.writer} | ${magazine.date}`}
+              img={magazine.img ?? NO_IMAGE_URL}
             />
           </SwiperSlide>
         ))}

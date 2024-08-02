@@ -110,3 +110,19 @@ export interface CarouselType {
 }
 
 export type ERROR_TYPE = 'USER_SIGNED_OUT' | 'USER_SESSION_EXPIRED';
+
+export interface MagazineType {
+  _id: number;
+  title: string;
+  cate: string;
+  date: string;
+  img?: string;
+  writer: string;
+  contentHTML: string;
+}
+
+export interface MagazineDetailType {
+  id: number;
+  magazineId: number;
+  contentHTML: string;
+}

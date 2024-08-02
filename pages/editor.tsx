@@ -1,18 +1,31 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
+import {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import toast from 'react-hot-toast';
 import 'react-quill/dist/quill.snow.css';
+import { postEditorImage, postMagazine } from 'apis/api';
 
 const EditorPage = () => {
   const quillRef = useRef<any>(null);
+  const router = useRouter();
 
   const [value, setValue] = useState({
     title: '',
     writer: '',
     category: '',
   });
+  const [thumbnailImage, setThumbnailImage] = useState<string>('');
+  const [thumbnailImageUrl, setThumbnailImageUrl] = useState<string>('');
   const [editorValue, setEditorValue] = useState('');
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     setValue((prevValue) => ({
       ...prevValue,
@@ -29,23 +42,15 @@ const EditorPage = () => {
 
   const ReactQuill = isClient ? require('react-quill') : () => false;
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!value.title || !value.writer || !value.category || !editorValue) {
-      alert('모든 항목을 입력해주세요.');
-      return;
-    }
-  };
-
   // 비밀번호
   const [password, setPassword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  const handlePasswordSubmit = (e: React.FormEvent) => {
+  const handlePasswordSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (password === '1234') {
       setIsAuthenticated(true);
@@ -54,19 +59,25 @@ const EditorPage = () => {
     }
   };
 
-  // 이미지 핸들러
+  // 썸네일 업로드
+  const handleThumbnailUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setThumbnailImage(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+
+    const response = await handleImageUpload(file);
+    setThumbnailImageUrl(response);
+  };
+
+  // 이미지 업로드
   const handleImageUpload = async (file: File) => {
-    const formData = new FormData();
-    formData.append('image', file);
-
-    // TODO: 이미지 업로드 API 호출
-    const response = await fetch('/api/upload', {
-      method: 'POST',
-      body: formData,
-    });
-
-    const data = await response.json();
-    return data.url;
+    const response = await postEditorImage(file);
+    return response;
   };
 
   const imageHandler = () => {
@@ -75,20 +86,50 @@ const EditorPage = () => {
     input.setAttribute('accept', 'image/*');
     input.click();
 
-    input.onchange = async () => {
+    input.addEventListener('change', async () => {
       if (input.files === null) return;
       const file = input.files?.[0];
-      const url = await handleImageUpload(file);
+      const imageUrl = await handleImageUpload(file as File); // BASE64에서 이미지 URL로 변경
 
-      const quill = quillRef.current;
-      if (quill) {
-        const range = quill.getSelection();
-        quill.insertEmbed(range.index, 'image', url);
-      }
-    };
+      const editor = quillRef.current.getEditor();
+      const range = editor.getSelection(); // 커서 위치 반환
+      editor.insertEmbed(range.index, 'image', imageUrl); // 이미지 삽입
+    });
+  };
+
+  // 작성하기
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!value.title || !value.writer || !value.category || !editorValue) {
+      alert('모든 항목을 입력해주세요.');
+      return;
+    }
+
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const date = today.getDate();
+    const dateString = `${year}.${month < 10 ? `0${month}` : month}.${date < 10 ? `0${date}` : date}`;
+
+    const res = await postMagazine({
+      title: value.title,
+      writer: value.writer,
+      img: thumbnailImageUrl,
+      date: dateString,
+      cate: value.category,
+      contentHTML: editorValue,
+    });
+
+    if (res === 201) {
+      toast.success('게시물 작성이 완료되었습니다!');
+      router.push('/magazine');
+    } else {
+      toast.error('게시물 작성에 실패했습니다.');
+    }
   };
 
   // 리액트 퀼 설정 (모듈, 포맷)]
+  // useMemo를 사용하지 않으면, 이미지 삽입할 때마다 modules가 리렌더링 되고, 리렌더링된 뒤에 커서 위치를 찾지 못해서 에러가 발생
   const modules = useMemo(
     () => ({
       toolbar: {
@@ -107,7 +148,7 @@ const EditorPage = () => {
           ['clean'],
         ],
         handlers: {
-          image: imageHandler,
+          image: imageHandler, // 이미지 핸들러 추가
         },
       },
     }),
@@ -195,6 +236,24 @@ const EditorPage = () => {
               <option>인물 매거진</option>
             </select>
           </div>
+          {/* 썸네일 */}
+          <div className='flex w-full items-end justify-between'>
+            {thumbnailImage && (
+              <div className='flex flex-col gap-16'>
+                <h1 className='text-20 font-700'>썸네일 이미지</h1>
+                <img
+                  src={thumbnailImage}
+                  alt='썸네일 이미지'
+                  className='w-360 object-cover'
+                />
+              </div>
+            )}
+            <input
+              type='file'
+              onChange={handleThumbnailUpload}
+              accept='image/*'
+            />
+          </div>
           {isClient ? (
             <div className='min-w-1000 max-w-1232 pt-40'>
               <ReactQuill
@@ -205,8 +264,8 @@ const EditorPage = () => {
                 modules={modules}
                 value={editorValue}
                 onChange={setEditorValue}
-                // imageHandler={(image: File) => handleImageUpload(image)}
                 placeholder='글을 작성해 주세요.'
+                imageHandler={imageHandler}
               />
             </div>
           ) : (
