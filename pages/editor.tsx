@@ -85,6 +85,7 @@ const EditorPage = () => {
     input.setAttribute('type', 'file');
     input.setAttribute('accept', 'image/*');
     input.click();
+
     input.addEventListener('change', async () => {
       if (input.files === null) return;
       const file = input.files?.[0];
