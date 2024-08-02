@@ -16,6 +16,7 @@ export const CONTACT_LIST_HEADER = {
   _id: 0,
   buildingId: 0,
   userId: 0,
+  added_date: '문의 작성 날짜',
   name: '유저 이름',
   phone: '전화번호',
   email: '이메일',

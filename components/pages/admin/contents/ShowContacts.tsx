@@ -78,12 +78,15 @@ const ContactListCell = (props: { contact: ContactType }) => {
       <h5 className='w-72 overflow-ellipsis'>
         {contact._id === 0 ? 'ID' : contact._id}
       </h5>
+      <h5 className='w-160 overflow-ellipsis'>
+        {contact._id === 0 ? '작성 날짜' : contact.addedDate}
+      </h5>
       <h5 className='w-100 overflow-ellipsis'>
-        {contact._id === 0 ? '빌딩 ID' : contact.buildingId}
+        {contact._id === 0 ? '유저 ID' : contact.userId}
       </h5>
       <h5 className='w-100 overflow-ellipsis'>
         {' '}
-        {contact._id === 0 ? '유저 ID' : contact.buildingId}
+        {contact._id === 0 ? '빌딩 ID' : contact.buildingId}
       </h5>
       <h5 className='w-180 overflow-hidden overflow-ellipsis '>
         {contact.name}

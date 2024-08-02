@@ -74,7 +74,7 @@ const BuildingListCell = (props: { building: showBuildingType }) => {
   const { building } = props;
   return (
     <div
-      className={`flex w-full rounded-4 p-8 text-center font-500 shadow ${building._id === 0 ? 'bg-[#4a4a4a] text-white' : 'bg-white'}`}
+      className={`flex w-full justify-between rounded-4 p-8 text-center font-500 shadow ${building._id === 0 ? 'bg-[#4a4a4a] text-white' : 'bg-white'}`}
     >
       <h5 className='w-44 overflow-ellipsis'>
         {building._id === 0 ? '건물ID' : building._id}
@@ -103,7 +103,7 @@ const BuildingListCell = (props: { building: showBuildingType }) => {
       </div>
       {building._id ? (
         <div
-          className='w-40 cursor-pointer overflow-ellipsis text-[#000000]'
+          className='w-fit cursor-pointer overflow-ellipsis text-[#000000]'
           onClick={() => {
             const res = confirm(
               `ID: ${building._id}, 이름: ${building.name} 유저를 DB에서 정말로 삭제하시겠습니까?`,
@@ -114,7 +114,7 @@ const BuildingListCell = (props: { building: showBuildingType }) => {
           <IconClose />
         </div>
       ) : (
-        <></>
+        <div className='w-44'></div>
       )}
     </div>
   );
