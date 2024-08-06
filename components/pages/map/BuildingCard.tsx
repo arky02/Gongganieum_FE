@@ -18,8 +18,10 @@ const BuildingCard = (props: { building: BuildingType }) => {
       return;
     }
 
-    const { as, q, cate, isliked } = router.query;
-    router.push({ query: { as, q, cate, isliked, building: building._id } });
+    const { as, q, cate, isliked, isours } = router.query;
+    router.push({
+      query: { as, q, cate, isours, isliked, building: building._id },
+    });
 
     const coord = building.coord.split(',');
     const position = new window.kakao.maps.LatLng(coord[0], coord[1]);

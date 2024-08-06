@@ -9,7 +9,8 @@ export const getIsDefaultMarkersVisible = (query: ParsedUrlQuery) => {
     (query['building'] &&
       query['cate'] === '전체' &&
       !query['q'] &&
-      query['isliked'] === 'false');
+      query['isliked'] === 'false' &&
+      query['isours'] === 'false');
 
   return !!isVisible;
 };
