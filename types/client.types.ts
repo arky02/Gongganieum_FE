@@ -127,3 +127,7 @@ export interface MagazineDetailType {
   magazineId: number;
   contentHTML: string;
 }
+
+export interface StringObj {
+  [key: string]: string;
+}
