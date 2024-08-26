@@ -6,6 +6,7 @@ import {
 } from '@headlessui/react';
 import { useQuery } from '@tanstack/react-query';
 import { CONTACT_LIST_HEADER } from 'constants/admin\bContentTableHeader';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import useHandleServerReq from 'hooks/useHandleServerReq';
 import { deleteContactData } from 'apis/admin';
@@ -71,8 +72,9 @@ const ShowAndDeleteContacts = () => {
 
 const ContactListCell = (props: { contact: ContactType }) => {
   const { contact } = props;
+  const router = useRouter();
 
-  const { handleServerReq } = useHandleServerReq();
+  const { handleServerReq } = useHandleServerReq({ router });
 
   const handleContactDelete = async (id: number) => {
     handleServerReq({

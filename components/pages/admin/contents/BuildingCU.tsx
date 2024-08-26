@@ -48,7 +48,7 @@ function PostAndEditBuilding() {
       : {},
   );
 
-  const { handleServerReq } = useHandleServerReq();
+  const { handleServerReq } = useHandleServerReq({ router });
 
   useEffect(() => {
     if (!isPageTypeBuildingEdit) return;
@@ -102,7 +102,7 @@ function PostAndEditBuilding() {
 
     handleServerReq({
       reqFunc,
-      toastMsg: '성공적으로 해당 건물 정보를 삭제하였습니다!',
+      toastMsg: '성공적으로 해당 건물 정보를 추가하였습니다!',
       queryKey: ['buildings'],
     });
   };

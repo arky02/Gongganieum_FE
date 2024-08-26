@@ -74,10 +74,9 @@ const ShowAndDeleteBuilding = () => {
 
 const BuildingCell = (props: { building: showBuildingType }) => {
   const { building } = props;
-
-  const { handleServerReq } = useHandleServerReq();
-
   const router = useRouter();
+
+  const { handleServerReq } = useHandleServerReq({ router });
 
   const handleBuildingDelete = async (id: number) => {
     handleServerReq({

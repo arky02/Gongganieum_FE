@@ -6,6 +6,7 @@ import {
   ComboboxOptions,
 } from '@headlessui/react';
 import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -36,7 +37,9 @@ const PostAndEditPopup = () => {
     formState: { isValid },
   } = useForm<postPopupType>();
 
-  const { handleServerReq } = useHandleServerReq();
+  const router = useRouter();
+
+  const { handleServerReq } = useHandleServerReq({ router });
 
   const [buildingIDAddressDict, setBuildingIDAddressDict] =
     useState<BuildingIDAddressDictType[]>();
@@ -70,8 +73,6 @@ const PostAndEditPopup = () => {
       queryKey: ['buildings'],
     });
   };
-
-  const handlePopupCreate = () => {};
 
   const validateForm = () => {
     if (!isValid || !selectedBuilding.id) {

@@ -79,7 +79,7 @@ const CarouselListCell = (props: { carousel: CarouselType }) => {
 
   const router = useRouter();
 
-  const { handleServerReq } = useHandleServerReq();
+  const { handleServerReq } = useHandleServerReq({ router });
 
   const handleCarouselDelete = async (id: number) => {
     handleServerReq({

@@ -46,7 +46,7 @@ function PostAndEditCarousel() {
       : {},
   );
 
-  const { handleServerReq } = useHandleServerReq();
+  const { handleServerReq } = useHandleServerReq({ router });
 
   const handleFormSubmit: SubmitHandler<postCarouselType> = async (data) => {
     if (!checkIsFormValid()) return;

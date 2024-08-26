@@ -6,6 +6,7 @@ import {
 } from '@headlessui/react';
 import { useQuery } from '@tanstack/react-query';
 import { USER_LIST_HEADER } from 'constants/admin\bContentTableHeader';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import useHandleServerReq from 'hooks/useHandleServerReq';
 import { deleteUserData } from 'apis/admin';
@@ -71,8 +72,9 @@ const ShowAndDeleteUsers = () => {
 
 const UserListCell = (props: { user: UserDataType }) => {
   const { user } = props;
+  const router = useRouter();
 
-  const { handleServerReq } = useHandleServerReq();
+  const { handleServerReq } = useHandleServerReq({ router });
 
   const handleUserDelete = async (id: number) => {
     handleServerReq({
