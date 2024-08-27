@@ -25,10 +25,10 @@ const useHandleServerReq = ({ router }: { router: NextRouter }) => {
       toast.success(toastMsg);
       queryClient.invalidateQueries({ queryKey });
 
-      const returnBackConfirmed = confirm(
-        '변경 사항이 성공적으로 반영되었습니다. 확인을 누르면 뒤로 이동합니다.',
+      const pageReloadConfirmed = confirm(
+        '변경 사항이 성공적으로 반영되었습니다. 페이지를 새로고침 합니다.',
       );
-      if (returnBackConfirmed) router.back();
+      if (pageReloadConfirmed) router.reload();
     } catch {
       toast.error(toastErrorMsg ?? '서버 오류가 발생하였습니다!');
     }
