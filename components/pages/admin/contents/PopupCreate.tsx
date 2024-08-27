@@ -18,12 +18,10 @@ import RequiredStar from 'components/commons/RequiredStar';
 import { IconArrowDown } from 'public/icons';
 import TextInput from '../TextInput';
 
-export type postPopupType =
-  | {
-      keyword: string;
-      building: number;
-    }
-  | PopupType;
+export type postPopupType = {
+  keyword: string;
+  buildingId: number;
+} & PopupType;
 
 interface BuildingIDAddressDictType {
   id: number;
@@ -65,7 +63,7 @@ const PostAndEditPopup = () => {
 
   const handleFormSubmit: SubmitHandler<postPopupType> = async (data) => {
     if (!isFormValid) return;
-    const newPopupData = { ...data, building: selectedBuilding.id };
+    const newPopupData = { ...data, buildingId: selectedBuilding.id };
 
     handleServerReq({
       reqFunc: () => postNewPopupData(newPopupData),
