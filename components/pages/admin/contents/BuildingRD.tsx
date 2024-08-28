@@ -5,9 +5,10 @@ import {
   ComboboxOptions,
 } from '@headlessui/react';
 import { useQuery } from '@tanstack/react-query';
-import { BUILDING_LIST_HEADER } from 'constants/admin\bContentTableHeader';
+import { BUILDING_LIST_HEADER } from 'constants/adminContentTableHeader';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import useHandleServerReq from 'hooks/useHandleServerReq';
 import { deleteBuildingData } from 'apis/admin';
 import { getAllBuildingInfos } from 'apis/api';
@@ -32,8 +33,16 @@ const ShowAndDeleteBuilding = () => {
           return buildingInfo.name.toLowerCase().includes(query.toLowerCase());
         });
 
+  useEffect(() => {
+    !allBuildingInfos && toast.loading('해당 건물 정보를 불러오는 중입니다...');
+
+    if (allBuildingInfos && toast) {
+      setTimeout(() => toast.remove(), 1500);
+    }
+  }, [allBuildingInfos]);
+
   return (
-    <div className='-mt-12 h-680 w-1340 rounded-8 bg-[#f1f1f1] p-20'>
+    <div className='-mt-12 h-680 w-1440 rounded-8 bg-[#f1f1f1] p-20'>
       <h3 className='mb-12 ml-8 mt-4 text-20 font-700'>건물 검색</h3>
       <Combobox
         value={selectedBuilding}
@@ -44,7 +53,7 @@ const ShowAndDeleteBuilding = () => {
         <ComboboxInput
           className={'mb-20 w-full rounded-16 px-20 py-12 placeholder-gray-300'}
           placeholder='건물 이름(name)으로 원하는 건물 검색'
-          aria-label='Assignee'
+          aria-label='SearchInput'
           displayValue={(building: showBuildingType) => building?.name ?? ''}
           onChange={(event) => setQuery(event.target.value)}
         />
@@ -90,27 +99,28 @@ const BuildingCell = (props: { building: showBuildingType }) => {
     <div
       className={`flex w-full justify-between rounded-4 p-8 text-center font-500 shadow ${building._id === 0 ? 'bg-[#4a4a4a] text-white' : 'bg-white'}`}
     >
-      <h5 className='w-44 overflow-ellipsis'>
+      <h5 className=' w-44 font-800'>
         {building._id === 0 ? '건물ID' : building._id}
       </h5>
-      <h5 className='w-160 overflow-hidden overflow-ellipsis whitespace-nowrap'>
+      <h5 className='w-160 overflow-hidden whitespace-nowrap'>
         {building.name}
       </h5>
-      <h5 className='w-80 overflow-ellipsis'>
+      <h5 className='w-80'>
         {building._id === 0 ? '카테고리' : building.cate}
       </h5>
-      <h5 className='w-280 overflow-ellipsis whitespace-nowrap'>
-        {building.address}
-      </h5>
+      <h5 className='w-252 whitespace-nowrap'>{building.address}</h5>
 
-      <h5 className='w-120 overflow-ellipsis'>{building.img}</h5>
-      <h5 className='w-60 overflow-ellipsis'>
+      <h5 className='w-[150px] break-words'>{building.img}</h5>
+      <h5 className='w-52'>
         {building._id === 0 ? '직영 건물' : building.isours ? 'O' : 'X'}
       </h5>
-      <h5 className='w-160 overflow-ellipsis'>{building.tag}</h5>
-      <div className='max-h-100 w-300 overflow-y-auto overflow-ellipsis'>
+      <h5 className='w-52'>
+        {building._id === 0 ? building.scanUrl : building.scanUrl ? 'O' : 'X'}
+      </h5>
+      <h5 className='w-[120px]'>{building.tag}</h5>
+      <div className='max-h-100 w-280 overflow-y-auto'>
         {building._id === 0
-          ? '팝업 정보'
+          ? '팝업 목록 (팝업 이름)'
           : building.popups?.map((el: PopupType, idx: number) => (
               <p key={idx}>{el.name}</p>
             ))}
@@ -142,7 +152,7 @@ const BuildingCell = (props: { building: showBuildingType }) => {
           </div>
         </div>
       ) : (
-        <div className='w-44'></div>
+        <div className='w-68'></div>
       )}
     </div>
   );
