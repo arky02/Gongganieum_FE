@@ -115,7 +115,7 @@ const PostAndEditPopup = () => {
                   }
                   placeholder='팝업 정보를 추가할 건물 주소 검색'
                   style={{ borderRadius: 20 }}
-                  aria-label='Assignee'
+                  aria-label='SearchInput'
                   displayValue={(Building: BuildingIDAddressDictType) =>
                     Building?.address
                   }
