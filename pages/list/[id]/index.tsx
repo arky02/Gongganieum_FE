@@ -72,7 +72,7 @@ const BuildingDescriptionPage = () => {
             address={buildingInfo?.address ?? ''}
             id={buildingId}
             initialIsLiked={initialIsLiked}
-            scanUrl={buildingInfo?.scanUrl}
+            scanUrl={buildingInfo?.scanUrl ?? ''}
           />
         </div>
       </div>
