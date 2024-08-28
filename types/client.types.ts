@@ -15,6 +15,8 @@ export interface BuildingType {
   isours?: boolean;
   latest_end_date: Date;
   img: string | null;
+
+  scanUrl: string; // 3D 스캔 URL
 }
 
 export type CategoryType =

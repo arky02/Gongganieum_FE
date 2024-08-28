@@ -22,8 +22,9 @@ const ContactBox = (props: {
   address: string;
   id: number;
   initialIsLiked: boolean;
+  scanUrl: string;
 }) => {
-  const { name, address, id, initialIsLiked } = props;
+  const { name, address, id, initialIsLiked, scanUrl } = props;
 
   const { getSession } = useSession();
   const session = getSession();
@@ -96,15 +97,24 @@ const ContactBox = (props: {
           </Link>
         </div>
         <section className='z-0 relative'>
-          <div className='text-center'>
+          <div
+            className='text-center'
+            onClick={() => {
+              if (!scanUrl) alert('3D스캔 준비중 입니다.');
+            }}
+          >
             <a
               className='before:-z-10 group flex flex-row flex-col items-center justify-center space-x-[2px] space-y-0 space-y-4 text-16 font-700 text-[#0f172a] text-black  before:absolute before:inset-0 before:transition-colors before:duration-500'
-              href={'https://my.matterport.com/show/?m=Bjr4YykpUCt'}
-              target='_blank'
+              href={scanUrl ?? '#'}
+              target={scanUrl ? '_blank' : '_self'}
             >
-              <style>
-                {`.border-shine-effect::before { background-image: linear-gradient(90deg, #6366f100 0%, #191f28c9 35%, #ffffff 50%, #191f28c9 65%, #6366f100 100%); }`}
-              </style>
+              {scanUrl ? (
+                <style>
+                  {`.border-shine-effect::before { background-image: linear-gradient(90deg, #6366f100 0%, #191f28c9 35%, #ffffff 50%, #191f28c9 65%, #6366f100 100%); }`}
+                </style>
+              ) : (
+                <></>
+              )}
               <div className='border-shine-effect relative flex w-full items-center justify-center overflow-hidden rounded-8 bg-[#e2e8f0] p-[1px] transition duration-500 before:absolute before:w-1/2 before:animate-[spin_3s_linear_infinite] before:pb-[100%] before:opacity-0 hover:shadow-md  group-hover:before:opacity-100'>
                 <div className='relative w-full'>
                   <div className='to-slate-100 z-10 block flex w-full justify-center gap-8 rounded-8 bg-gradient-to-r from-[#e2e8f0]  px-8 py-[6px] transition-opacity duration-500 ease-in-out group-hover:opacity-0'>
