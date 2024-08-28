@@ -50,30 +50,7 @@ function PostAndEditBuilding() {
 
   const { handleServerReq } = useHandleServerReq({ router });
 
-  useEffect(() => {
-    if (!isPageTypeBuildingEdit) return;
-
-    const getInitialBuildingInfo = async () => {
-      const initialBuildingData = await getBuildingInfo(Number(id));
-      setInitialBuildingInfo(initialBuildingData);
-    };
-
-    getInitialBuildingInfo();
-  }, []);
-
-  // save initial values
-  useEffect(() => {
-    setEditedImgList(
-      initialBuildingInfo?.img ? initialBuildingInfo?.img?.split(', ') : [],
-    );
-    setPopupJSONStrData(
-      initialBuildingInfo?.popups
-        ? JSON.stringify(initialBuildingInfo?.popups).replaceAll('},{', '},\n{')
-        : '',
-    );
-  }, [initialBuildingInfo]);
-
-  const handleFormSubmit: SubmitHandler<postBuildingType> = async (data) => {
+  const handleFormSubmit: SubmitHandler<postBuildingType> = (data) => {
     if (!checkIsFormValid()) return;
 
     let buildingInfoData: {} = data;
@@ -97,8 +74,8 @@ function PostAndEditBuilding() {
     // 이미지 있는경우 이미지도 함께 업로드
     if (imgData) imgData?.map((el) => buildingFormData.append('file', el));
     const reqFunc = isPageTypeBuildingEdit
-      ? async () => await editBuildingData(buildingFormData!)
-      : async () => await postNewBuildingData(buildingFormData!);
+      ? () => editBuildingData(buildingFormData!)
+      : () => postNewBuildingData(buildingFormData!);
 
     handleServerReq({
       reqFunc,
@@ -114,6 +91,34 @@ function PostAndEditBuilding() {
     }
     return true;
   };
+
+  // save initial values
+  useEffect(() => {
+    setEditedImgList(
+      initialBuildingInfo?.img ? initialBuildingInfo?.img?.split(', ') : [],
+    );
+    setPopupJSONStrData(
+      initialBuildingInfo?.popups
+        ? JSON.stringify(initialBuildingInfo?.popups).replaceAll('},{', '},\n{')
+        : '',
+    );
+  }, [initialBuildingInfo]);
+
+  useEffect(() => {
+    if (!isPageTypeBuildingEdit) return;
+
+    toast.loading('해당 건물 정보를 불러오는 중입니다...');
+
+    const getInitialBuildingInfo = async () => {
+      const initialBuildingData = await getBuildingInfo(Number(id));
+      setInitialBuildingInfo(initialBuildingData);
+      if (initialBuildingData) {
+        setTimeout(() => toast.remove(), 1500);
+      }
+    };
+
+    getInitialBuildingInfo();
+  }, []);
 
   return (
     <div>
@@ -138,7 +143,7 @@ function PostAndEditBuilding() {
             isRequired
           />
           <TextInput
-            register={{ ...register('coord') }}
+            register={{ ...register('scanUrl') }}
             label='3D 스캔 URL 주소'
             isRequired
           />
@@ -220,19 +225,12 @@ function PostAndEditBuilding() {
 
               {isPopupInfoOpen ? (
                 <div className='text-[12px] text-[#e63636]'>
-                  꼭 초기 JSON 텍스트 형식에 맞추어 수정해주세요! <p></p>
-                  <span className='font-600 underline'>
-                    {' '}
-                    주어진 JSON 형식에 맞춰 저장하지 않으면 DB 에러가
-                    발생합니다.
-                  </span>{' '}
-                  꼭 변경할 텍스트 부분만 바꿔주세요!
+                  현재는 팝업 정보 조회만 가능합니다.
                   <textarea
                     placeholder='해당 건물에 팝업 데이터가 없습니다'
                     className='mt-12 h-[250px] w-full border-[1px] p-4 text-[14px] text-black'
-                    defaultValue={popupJSONStrData ?? ''}
                     value={popupJSONStrData}
-                    onChange={(e) => setPopupJSONStrData(e.target.value)}
+                    // onChange={(e) => setPopupJSONStrData(e.target.value)}
                   />
                 </div>
               ) : (
