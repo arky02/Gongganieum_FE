@@ -5,7 +5,7 @@ import {
   ComboboxOptions,
 } from '@headlessui/react';
 import { useQuery } from '@tanstack/react-query';
-import { USER_LIST_HEADER } from 'constants/admin\bContentTableHeader';
+import { USER_LIST_HEADER } from 'constants/adminContentTableHeader';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import useHandleServerReq from 'hooks/useHandleServerReq';
@@ -42,7 +42,7 @@ const ShowAndDeleteUsers = () => {
         <ComboboxInput
           className={'mb-20 w-full rounded-16 px-20 py-12 placeholder-gray-300'}
           placeholder='이름(name)으로 원하는 유저 검색'
-          aria-label='Assignee'
+          aria-label='SearchInput'
           displayValue={(user: UserDataType) => user?.name ?? ''}
           onChange={(event) => setQuery(event.target.value)}
         />
@@ -88,7 +88,7 @@ const UserListCell = (props: { user: UserDataType }) => {
     <div
       className={`flex w-full rounded-4 p-8 text-center font-500 shadow ${user._id === 0 ? 'bg-[#4a4a4a] text-white' : 'bg-white'}`}
     >
-      <h5 className='w-40 overflow-ellipsis'>
+      <h5 className='w-40 overflow-ellipsis font-800'>
         {user._id === 0 ? '유저ID' : user._id}
       </h5>
       <h5 className='w-80 overflow-ellipsis'>{user.name}</h5>
@@ -108,7 +108,7 @@ const UserListCell = (props: { user: UserDataType }) => {
             const res = confirm(
               `[‼️유저 삭제]\n ID: ${user._id}, 이름: ${user.name} 유저를 DB에서 정말로 삭제하시겠습니까?`,
             );
-            if (res!) return;
+            if (!res) return;
 
             handleUserDelete(user._id);
           }}
