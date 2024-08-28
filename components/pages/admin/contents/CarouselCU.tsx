@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Control, Controller, SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import useHandleServerReq from 'hooks/useHandleServerReq';
 import { editCarouselData, postNewCarouselData } from 'apis/admin';
+import { getCarouselInfo } from 'apis/api';
 import { CarouselType } from 'types/client.types';
 import RequiredStar from 'components/commons/RequiredStar';
 import TextInput from '../TextInput';
@@ -26,11 +27,9 @@ function PostAndEditCarousel() {
   const router = useRouter();
 
   // 건물 정보 수정일때만 id param값 존재
-  const initialCarouselQueryData = router.query; // id params : 수정할 건물 id
+  const { id } = router.query; // id params : 수정할 건물 id
 
-  const [isPageTypeCarouselEdit] = useState(
-    initialCarouselQueryData !== undefined,
-  );
+  const [isPageTypeCarouselEdit] = useState(id !== undefined);
 
   const {
     register,
@@ -38,32 +37,40 @@ function PostAndEditCarousel() {
     formState: { isValid },
     control,
     reset,
+    getValues,
   } = useForm<postCarouselType>(
     isPageTypeCarouselEdit
       ? {
-          defaultValues: initialCarouselQueryData,
+          defaultValues: async () => {
+            const carouselToEdit = await getCarouselInfo(Number(id));
+
+            return {
+              pageType: await carouselToEdit.pageType,
+              carouselType: await carouselToEdit.carouselType,
+              contentType: await carouselToEdit.contentType,
+              contentId: await carouselToEdit.contentId,
+            };
+          },
         }
       : {},
   );
 
   const { handleServerReq } = useHandleServerReq({ router });
 
-  const handleFormSubmit: SubmitHandler<postCarouselType> = async (data) => {
+  const handleFormSubmit: SubmitHandler<postCarouselType> = (data) => {
     if (!checkIsFormValid()) return;
 
-    console.log(data);
-
     const reqFunc = isPageTypeCarouselEdit
-      ? async () =>
-          await editCarouselData({
+      ? () =>
+          editCarouselData({
             ...data,
-            id: parseInt(initialCarouselQueryData.id! as string),
+            id: parseInt(id as string),
           })
-      : async () => await postNewCarouselData(data);
+      : () => postNewCarouselData(data);
 
     handleServerReq({
       reqFunc,
-      toastMsg: '성공적으로 해당 건물 정보를 삭제하였습니다!',
+      toastMsg: '성공적으로 캐러셀 정보를 저장하였습니다!',
       queryKey: ['buildings'],
     });
   };
@@ -73,8 +80,29 @@ function PostAndEditCarousel() {
       toast.error('필수 입력 필드 값을 모두 입력해주세요!');
       return false;
     }
+    if (getValues('contentType') === 'Magazines') {
+      toast.error('현재 매거진은 캐러셀에 추가할 수 없습니다.');
+      return false;
+    }
+
     return true;
   };
+
+  useEffect(() => {
+    if (!isPageTypeCarouselEdit) return;
+
+    toast.loading('해당 캐러셀 정보를 불러오는 중입니다...');
+
+    const getInitialCarouselInfo = async () => {
+      const initialCarouselData = await getCarouselInfo(Number(id));
+
+      if (initialCarouselData) {
+        setTimeout(() => toast.remove(), 1000);
+      }
+    };
+
+    getInitialCarouselInfo();
+  }, []);
 
   return (
     <div>
