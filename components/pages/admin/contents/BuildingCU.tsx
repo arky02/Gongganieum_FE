@@ -58,7 +58,7 @@ function PostAndEditBuilding() {
     if (isPageTypeBuildingEdit) {
       buildingInfoData = {
         ...data,
-        img: editedImgList?.join(', '),
+        img: editedImgList?.join(','),
         popups: popupJSONStrData
           ? popupJSONStrData.replaceAll('},\n{', '},{')
           : '',
@@ -95,8 +95,9 @@ function PostAndEditBuilding() {
   // save initial values
   useEffect(() => {
     setEditedImgList(
-      initialBuildingInfo?.img ? initialBuildingInfo?.img?.split(', ') : [],
+      initialBuildingInfo?.img ? initialBuildingInfo?.img?.split(',') : [],
     );
+    // 팝업 정보 리스트 출력 할 때 팝업 구분을 위한 줄바꿈 추가
     setPopupJSONStrData(
       initialBuildingInfo?.popups
         ? JSON.stringify(initialBuildingInfo?.popups).replaceAll('},{', '},\n{')
