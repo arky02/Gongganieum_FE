@@ -103,4 +103,4 @@ $ npm run dev
 
 <img src="public/images/readme/IA.png" alt="환영 모달  스크린샷" />
 
-###### 팀원: 임건우 (FE), 송민혁 (FE), 김기연 (BE) (~ 24.08.05)
+###### 팀원: 임건우 (FE), 송민혁 (FE), 김기연 (BE, FE) (~ 24.08.05)
