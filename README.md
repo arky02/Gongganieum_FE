@@ -102,6 +102,12 @@ $ npm run dev
     <img src="public/images/readme/welcome-modal-screenshot.png" alt="환영 모달  스크린샷" />
   </div>
 </details>
+<br>
+
+
+### - 관리자 페이지 수정사항 적용 플로우 (Youtube Link)
+[![Video Label](http://img.youtube.com/vi/KsyVP3jeiKo/0.jpg)](https://youtu.be/KsyVP3jeiKo)
+
 
 ## 🗂️ IA (Information Architecture)
 
