@@ -46,6 +46,12 @@ $ npm install
 $ npm run dev
 ```
 
+## 🎉 최근 업데이트 내역 (관리자페이지 구현)
+> 🔻 관리자 페이지에서의 데이터 정보 조회/수정, 수정사항 실시간 반영 플로우 보기!
+
+[![Video Label](http://img.youtube.com/vi/KsyVP3jeiKo/0.jpg)](https://youtu.be/KsyVP3jeiKo)
+
+
 ## 📄 페이지별 스크린샷
 
 <details>
@@ -103,11 +109,6 @@ $ npm run dev
   </div>
 </details>
 <br>
-
-
-### - 관리자 페이지 수정사항 적용 플로우 (Youtube Link)
-[![Video Label](http://img.youtube.com/vi/KsyVP3jeiKo/0.jpg)](https://youtu.be/KsyVP3jeiKo)
-
 
 ## 🗂️ IA (Information Architecture)
 
